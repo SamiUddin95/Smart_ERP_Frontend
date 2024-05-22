@@ -1,0 +1,54 @@
+@import "~primeicons/primeicons.css";
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+  }
+
+.events-table td .p-dropdown.p-component {
+    display: flex !important;
+}
+.p-dropdown.p-component {
+    width: 100%;
+}
+.dropdown-toggle::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+.p-calendar {
+    position: relative !important;
+    display: inline-flex !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+.p-autocomplete {
+    position: relative;
+    display: inline-flex;
+    max-width: 100%;
+    width: 100%;
+}
+input.p-inputtext.p-component.p-element.p-inputmask {
+    width: 100%;
+}
+input.p-element.ng-tns-c110-7.p-autocomplete-input.p-inputtext.p-component.ng-star-inserted {
+    width: 100% !important;
+}
+input.p-element.ng-tns-c69-10.p-autocomplete-input.p-inputtext.p-component.ng-star-inserted {
+    width: 100% !important;
+}
+
+input.p-element.ng-tns-c110-31.p-autocomplete-input.p-inputtext.p-component.ng-star-inserted {
+    width: 100%;
+}
+.txt{
+    width: 100%;
+    height: 84%;
+}
+.pwd{
+    width: 100%;
+    height: 68%;
+}

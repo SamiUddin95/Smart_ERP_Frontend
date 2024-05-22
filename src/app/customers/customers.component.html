@@ -1,0 +1,71 @@
+<div class="container-fluid" style="width:100%">
+    <div class="d-flex justify-content-between p-2">
+        <h3>Customers</h3>
+    </div>
+    <div>
+        <button pButton pRipple type="button" icon="pi pi-plus" label="Add Customer"
+            class="p-button-sm p-button-success float-right"
+             (click)="addCustomer()"></button>
+    </div>
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <div class="pad-wrapper">
+            <div class="box">
+                <div class="content">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="customers" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                    <ng-template pTemplate="caption">
+                        <div class="flex">
+                            <!-- <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                            <button type="button" pButton pRipple icon="pi pi-file-excel" label="Export XLS" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                            <button type="button" pButton pRipple icon="pi pi-file" label="Export CSV" (click)="dt.exportCSV()"  class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>                         -->
+                        </div>
+                    </ng-template> 
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="name">Code <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Shop Name <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Primary Address <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Secondary Address <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Email <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="category">Phone<p-sortIcon field="category"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Customer Balance <p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-cust>
+                            <tr>
+                                <td>{{ cust.code }}</td>
+                                <td>{{ cust.shopName }}</td>
+                                <td>{{ cust.billTo }}</td>
+                                <td>{{ cust.shipTo }}</td>
+                                <td>{{ cust.email }}</td>
+                                <td>{{ cust.phone }}</td>
+                                <td>{{ cust.customerBalance }}</td>
+                                <td style="position: relative;" class="d-flex">
+                                    <button style="margin-right: 3px" pButton pRipple
+                                        icon="pi pi-pencil" class="p-button-rounded p-button-info"
+                                        (click)="editCustomers(cust.id)"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                        class="p-button-rounded p-button-danger" (click)="deleteCustomers(cust)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>
+<p-confirmDialog #cd [style]="{width: '30vw'}" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="header">
+        <h3>Alert</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-danger" label="No"
+            (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-success"
+            (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

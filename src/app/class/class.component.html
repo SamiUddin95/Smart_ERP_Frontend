@@ -1,0 +1,58 @@
+<div class="container-fluid" style="width:100%">
+    <div class="d-flex justify-content-between p-2">
+        <h3>Class</h3>
+    
+        <div class="button-container">
+            <button pButton pRipple type="button" icon="pi pi-plus" label="Add Class"
+                class="p-button-sm p-button-success float-left" (click)="addClass()"></button>
+        </div>
+    </div>
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <div class="pad-wrapper">
+            <div class="box">
+                <div class="content">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="class"  styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="name">Class Name <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="code">Department <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">Category <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Action <p-sortIcon field="name"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-cls>
+                            <tr>
+                                <td>{{cls.name}}</td>
+                                <td>{{cls.departmentId}}</td>
+                                <td>{{cls.categoryId}}</td>
+                                <td style="position: relative;" class="d-flex">
+                                    <button style="margin-right: 1px; font-size: 1px; padding: 1px 1px;" pButton pRipple
+                                        icon="pi pi-pencil" class="p-button-rounded p-button-info"
+                                        (click)="editClass(cls.id)"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                        class="p-button-rounded p-button-danger" (click)="deleteClass(cls)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>
+<p-confirmDialog #cd [style]="{width: '30vw'}" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="header">
+        <h3>Alert</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-danger" label="No"
+            (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-success"
+            (click)="cd.accept()"></button>
+    </ng-template>
+    
+</p-confirmDialog>
+

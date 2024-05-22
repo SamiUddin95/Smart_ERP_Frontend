@@ -1,0 +1,53 @@
+<div class="container-fluid" style="width:100%">
+    <div class="d-flex justify-content-between p-2">
+        <h3>Credit Notes</h3>
+    </div>
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <div class="pad-wrapper">
+            <div class="box">
+                <div class="content">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll"  styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="code">Date <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">Invoice# <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Customer Name <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="category">Status<p-sortIcon field="category"></p-sortIcon></th>
+                                <th pSortableColumn="category">Amount<p-sortIcon field="category"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Balance Due<p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Posting Date <p-sortIcon field="quantity"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-recon>
+                            <tr>
+                                <td>{{recon.reconcileJobDesc}}</td>
+                                <td>{{recon.sourceI}}</td>
+                                <td>{{recon.sourceIi}}</td>
+                                <td>{{recon.validFrom}}</td>
+                                <td>{{recon.validTo}}</td>
+                                <td>{{recon.startTime}}</td>
+                                <td>{{recon.scheduleTime}}</td>
+                                <td>{{recon.finishTime}}</td>
+                                <td>{{recon.nextRun}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>
+<p-confirmDialog #cd [style]="{width: '30vw'}" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="header">
+        <h3>Alert</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-danger" label="No"
+            (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-success"
+            (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

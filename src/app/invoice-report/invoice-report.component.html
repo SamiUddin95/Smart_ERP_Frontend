@@ -1,0 +1,78 @@
+<div class="container-fluid mt-2">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="bill-to" style="margin: 0px;">Big Box Souq Portal LLC</h2>
+            <h6 style="margin: 0px;">PO Box 232352, Dubai, UAE</h6>
+            <h6 style="margin: 0px;">hi@bigboxsouq.com</h6>
+        </div>
+        <div class="col-md-6 float-end">
+            <img src="https://admin.bigboxsouq.com/assets/images/logo.png" width="100px;" class="float-end">
+        </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="col-md-12">
+        <h2 style="text-align: center;">Invoice</h2>
+    </div>
+    <p-divider></p-divider>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="order-view p-2">
+                    <span>Invoice #: </span>
+                    <span>{{custInvoices[0].invoice}}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="order-view p-2">
+                    <span>Bill To : </span>
+                    <span>{{custInvoices[0].bill_To}}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="order-view p-2">
+                    <span>Date : </span>
+                    <span>{{custInvoices[0].date}}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="order-view p-2">
+                    <span>Bill To : </span>
+                    <span class="cust-address">I16 St Q54, Sector, I16 St, Dubai, Jumeirah Park , Villa Q54, district 8,</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="order-view p-2">
+                    <span>Suchitra Narayanan</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="order-view p-2">
+                    <span>Ship To : </span>
+                    <span>{{custInvoices[0].ship_To}}</span>
+                </div>
+            </div>
+        </div>
+        <p-divider></p-divider>
+        <div class="pad-wrapper">
+            <div class="box">
+                <div class="content">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="custInvoices"  styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="particulars">Description <p-sortIcon field="particulars"></p-sortIcon></th>
+                                <th pSortableColumn="unit_Price">Amount <p-sortIcon field="unit_Price"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-inv>
+                            <tr>
+                                <td>{{ inv.particulars }}</td>
+                                <td>{{inv.unit_Price}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

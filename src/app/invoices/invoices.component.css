@@ -1,0 +1,18 @@
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    margin-top: 20px; /* Adjust this margin as needed */
+  }
+  
+  .status-paid {
+    color: green;
+  }
+  
+  .status-unpaid {
+    color: red;
+  }
+  
+  .status-partially-paid {
+    color: blue;
+  }

@@ -1,0 +1,64 @@
+<div class="container-fluid" style="width:100%">
+    <div class="d-flex justify-content-between p-2">
+        <h3>Payment Received</h3>
+    </div>
+    <button pButton pRipple type="button" icon="pi pi-plus" label="NEW"
+            class="p-button-sm p-button-success float-right"
+             (click)="addPayreceived()"></button>
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <div class="pad-wrapper">
+            <div class="box">
+                <div class="content">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="payreceived" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="code">Date <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="code">Receipt No <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Customer Name <p-sortIcon field="quantity"></p-sortIcon></th>
+                                <!-- <th pSortableColumn="name">Payment# <p-sortIcon field="name"></p-sortIcon></th> -->
+                                <th pSortableColumn="category">Invoice<p-sortIcon field="category"></p-sortIcon></th>
+                                <th pSortableColumn="name">Type <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Mode<p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="category">Amount<p-sortIcon field="category"></p-sortIcon></th>
+                                <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-recpt>
+                            <tr>
+                                <td>{{recpt.date | date: 'yyyy-MM-dd'}}</td>
+                                <td>{{recpt.receiptNo}}</td>
+                                <td>{{recpt.customername1}}</td>
+                                <!-- <td>{{recpt.paymentNo}}</td> -->
+                                <td>{{recpt.invoice1}}</td>
+                                <td>{{recpt.type1}}</td>
+                                <td>{{recpt.mode1}}</td>
+                                <td>{{recpt.amount | number: '1.2-2'}}</td>
+                                <td style="position: relative;" class="d-flex">
+                                    <button style="margin-right: 3px" pButton pRipple
+                                        icon="pi pi-pencil" class="p-button-rounded p-button-info"
+                                        (click)="editInvoice(recpt.id)"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                        class="p-button-rounded p-button-danger" (click)="deletePayReceived(recpt)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>
+<p-confirmDialog #cd [style]="{width: '30vw'}" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="header">
+        <h3>Alert</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-danger" label="No"
+            (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-success"
+            (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

@@ -1,0 +1,105 @@
+<div class="container-fluid" style="width:100%">
+    <div class="flex justify-content-between p-2 ">
+        <h3> CREATE SHOP</h3>
+    </div>
+    <section>
+        <div class="card">
+            <div class="p-grid ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-3">
+                            <p-accordion>
+                                <p-accordionTab header="SHOP" [selected]="true">
+                                    <div class="card shadow-3">
+                                        <div class="card-header">Create Shop</div>
+                                        <div class="card-body">
+                                            <div class="grid">
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="shopname"><span class="text-danger">
+                                                            </span>ShopName</label>
+                                                        <input type="text" 
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Shop Name" id="Shop"
+                                                            [(ngModel)]="shopData.shopName">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="shopsize"><span class="text-danger">
+                                                            </span>Shop Size</label>
+                                                            <input type="text" 
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Shop Size" id="Shop"
+                                                            [(ngModel)]="shopData.shopSize">
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="shoplocation"><span class="text-danger">
+                                                        </span>Shop Location</label>
+                                                        <input type="text"
+                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Shop Location" id="shop"
+                                                            [(ngModel)]="shopData.shopLocation">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Shop Type</label>
+                                                        <p-dropdown [options]="shopTypes" [(ngModel)]="shopData.shopTypeId"
+                                                            placeholder="Select a Shop" optionLabel="shopType1"
+                                                            optionValue="shopTypeId"></p-dropdown>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="agreementdate">
+                                                            <span class="text-danger"></span>
+                                                            Agreement Start Date
+                                                        </label>
+                                                        <p-calendar [(ngModel)]="shopData.agreementStartDate"  [style]="{width:100}"
+                                                            dateFormat="yy-mm-dd"></p-calendar>
+                                                       </div>
+                                                       <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="shoplocation"><span class="text-danger">
+                                                        </span>Rent</label>
+                                                        <input type="text"
+                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Rent" id="shop"
+                                                            [(ngModel)]="shopData.rentDecided">
+                                                    </div> 
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12">
+                                                    
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="shoplocation"><span class="text-danger">
+                                                        </span>Balance</label>
+                                                        <input type="text"
+                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Balance" id="shop"
+                                                            [(ngModel)]="shopData.balance">
+                                                    </div> 
+                                                </div>                                                                                             
+                                            </div>
+                                            </div>
+                                        </div>
+                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
+                                        <div>
+                                            <button style="margin-right: 3px" pButton pRipple type="button"
+                                                icon="pi pi-arrow-left" (click)="cancel()" label="Back"
+                                                class="p-button-sm p-button-danger"> </button>
+                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addShop()"
+                                                label="Save" class="p-button-sm p-button-success"> </button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>

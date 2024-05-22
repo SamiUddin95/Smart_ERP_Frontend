@@ -1,0 +1,84 @@
+<div class="container-fluid" style="width:100%">
+    <div class="flex justify-content-between p-2 ">
+        <h3> Payement Receipt</h3>
+    </div>
+    <section>
+        <div class="card">
+            <div class="p-grid ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-3">
+                            <p-accordion>
+                                    <div class="card shadow-3">
+                                        <div class="card-header">Payment Receipt</div>
+                                        <div class="card-body">
+                                            <div class="grid">
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="date">
+                                                            <span class="text-danger"></span>
+                                                            Date
+                                                        </label>
+                                                        <p-calendar [(ngModel)]="payrecivedData.date" [style]="{width:100}"
+                                                            dateFormat="yy-mm-dd"></p-calendar>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 px-4">
+                                                        <label for="customername"><span class="text-danger">
+                                                            </span>Customer Name</label>
+                                                        <p-dropdown [options]="getcustomer" (onChange)="getInvoiceNumByCustomer($event)" [(ngModel)]="payrecivedData.customerName"
+                                                            placeholder="Select Customer" optionLabel="contactPerson"
+                                                            optionValue="id"></p-dropdown>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-12 px-4">
+                                                            <label for="customername"><span class="text-danger"></span>Invoice No</label>
+                                                            <p-dropdown [options]="getinvoice" [(ngModel)]="payrecivedData.invoiceNo"
+                                                              optionLabel="invoice1" optionValue="id"></p-dropdown>
+                                                          </div>
+                                                            <div class="col-md-4 col-sm-12 px-4">
+                                                                <label for="type"><span class="text-danger">
+                                                                    </span>Type</label>
+                                                                <p-dropdown [options]="getpaymenttype" [(ngModel)]="payrecivedData.type"
+                                                                    placeholder="Type" optionLabel="paymentType1"
+                                                                    optionValue="id"></p-dropdown>
+                                                                </div>
+                                                                <div class="col-md-4 col-sm-12 px-4">
+                                                                    <label for="mode"><span class="text-danger">
+                                                                        </span>Mode</label>
+                                                                    <p-dropdown [options]="getpaymentmode" [(ngModel)]="payrecivedData.mode"
+                                                                        placeholder="Mode" optionLabel="paymentMode1"
+                                                                        optionValue="id"></p-dropdown>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                                        <label for="amount"><span class="text-danger">
+                                                                            </span>Amount</label>
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                                            placeholder="Amount" [disabled]="false" [(ngModel)]="payrecivedData.amount">
+                                                                    </div>
+                                                </div>
+                                        
+                                            </div>
+                                            <div class="d-flex justify-content-end w-100" style="margin-top:10px">
+                                                <div>
+                                                    <button style="margin-right: 3px" pButton pRipple type="button"
+                                                        icon="pi pi-arrow-left" (click)="cancel()" label="Back"
+                                                        class="p-button-sm p-button-danger"> </button>
+                                                    <button pButton pRipple type="button" icon="pi pi-save" (click)="createPayReceived()"
+                                                        label="Save" class="p-button-sm p-button-success"> </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                             
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>

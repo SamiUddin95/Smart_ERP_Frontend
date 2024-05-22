@@ -1,0 +1,77 @@
+<div class="container-fluid" style="width:100%">
+    <div class="d-flex justify-content-between p-2">
+        <div>
+            <h3>Shop Rent Received Report</h3>
+        </div>        
+    </div>
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <p-accordion>
+            <p-accordionTab header="Search">
+                <div class="grid">
+                    <div class="row mt-1 px-2 col-12">
+                        <div class="col-md-6 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Month</label>
+                            <p-dropdown [options]="months" [(ngModel)]="filter.month_id"
+                                                        placeholder="Select a Month" optionLabel="monthName"
+                                                        optionValue="monthId"></p-dropdown>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Shop</label>
+                            <p-dropdown [options]="shops" [(ngModel)]="filter.shop_id"
+                                                        placeholder="Select a Shop" optionLabel="shopName"
+                                                        optionValue="shopId"></p-dropdown>
+                        </div>
+                        
+                         <div class="col-md-12 col-sm-12 text-right mt-1">
+                            <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4"
+                                style="width:130px" (click)="clearFilter()"></button>
+                            <button pButton pRipple type="button" icon="pi pi-search" label="Search"
+                                class="p-button-sm p-button-info float-right mx-1 mt-4"
+                                style="width:130px" (click)="getData()"></button>
+
+                        </div>
+                    </div>
+                </div>
+            </p-accordionTab>
+        </p-accordion>
+        <p-divider></p-divider>
+        <div class="pad-wrapper">
+            <div class="box">
+                <div class="content">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="rentedShops" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                    <ng-template pTemplate="caption">
+                        <div class="flex">
+                            <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                            <button type="button" pButton pRipple icon="pi pi-file-excel" label="Export XLS" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                            <button type="button" pButton pRipple icon="pi pi-file" label="Export CSV" (click)="dt.exportCSV()"  class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>                        </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="code">Shop <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">Month <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Rent <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="category">Date <p-sortIcon field="category"></p-sortIcon></th>
+                                <th pSortableColumn="category">Electricity Bill <p-sortIcon field="category"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Maintenance <p-sortIcon field="quantity"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rntshp>
+                            <tr>
+                                <td>{{rntshp.shop_name}}</td>
+                                <td>{{rntshp.month_name}}</td>
+                                <td>{{rntshp.rent}}</td>
+                                <td>{{rntshp.date}}</td>
+                                <td>{{rntshp.electricity_bill}}</td>
+                                <td>{{rntshp.maintenance}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>

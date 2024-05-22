@@ -1,0 +1,169 @@
+<div class="container-fluid" style="width:100%">
+    <div class="flex justify-content-between p-2 ">
+        <h3> Create Customer</h3>
+    </div>
+    <section>
+        <div class="card">
+            <div class="p-grid ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-3">
+                            <p-accordion>
+                                <p-accordionTab header="CUSTOMER" [selected]="true">
+                                    <div class="card shadow-3">
+                                        <div class="card-header">Create Customer</div>
+                                        <div class="card-body">
+                                            <div class="grid">
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="code"><span class="text-danger">
+                                                            </span>Code</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Code" [disabled]="false" [(ngModel)]="customerData.code">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="shopname"><span class="text-danger">
+                                                            </span>Shop Name</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="shopname" [disabled]="false" [(ngModel)]="customerData.shopName">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="shopNumber"><span class="text-danger">
+                                                            </span>Shop Number</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Code" [disabled]="false" [(ngModel)]="customerData.shopNumber">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="contactperson"><span class="text-danger">
+                                                            </span>Contact Person</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="ContactPerson" [disabled]="false" [(ngModel)]="customerData.contactPerson">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="billto"><span class="text-danger">
+                                                            </span>Bill To</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="BillTo" [disabled]="false" [(ngModel)]="customerData.billTo">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="shipto"><span class="text-danger">
+                                                            </span>Ship To</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="ShipTo" [disabled]="false" [(ngModel)]="customerData.shipTo">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="billto"><span class="text-danger">
+                                                            </span>Email</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Email" [disabled]="false" [(ngModel)]="customerData.email">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="phone"><span class="text-danger">
+                                                            </span>Phone</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Phone" [disabled]="false" [(ngModel)]="customerData.phone">
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <!-- <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="customerbalance"><span class="text-danger">
+                                                            </span>Customer Balance</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="CustomerBalance" [disabled]="false" [(ngModel)]="customerData.customerbalance">
+                                                    </div> -->
+                                                    <div class="col-md-4 col-sm-12 px-4">
+                                                        <label for="customername"><span class="text-danger">
+                                                            </span>Payment Terms</label>
+                                                        <p-dropdown [options]="paymentterms" [(ngModel)]="customerData.paymentTerms"
+                                                            placeholder="Payment Terms" optionLabel="paymentTerms1"
+                                                            optionValue="id"></p-dropdown>
+                                                        </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="BankDetails"><span class="text-danger">
+                                                            </span>Bank Details</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="BankDetails" [disabled]="false" [(ngModel)]="customerData.bankDetails">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="facebook"><span class="text-danger">
+                                                            </span>Facebook</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Facebook" [disabled]="false" [(ngModel)]="customerData.facebook">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="instagram"><span class="text-danger">
+                                                            </span>Instagram</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Instagram" [disabled]="false" [(ngModel)]="customerData.instagram">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="tiktok"><span class="text-danger">
+                                                            </span>TikTok</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="TikTok" [disabled]="false" [(ngModel)]="customerData.tikTok">
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="linkedin"><span class="text-danger">
+                                                            </span>Linkedin</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Linkedin" [disabled]="false" [(ngModel)]="customerData.linkedin">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="twitter"><span class="text-danger">
+                                                            </span>Twitter</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Twitter" [disabled]="false" [(ngModel)]="customerData.twitter">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="website"><span class="text-danger">
+                                                            </span>Website</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Website" [disabled]="false" [(ngModel)]="customerData.website">
+                                                    </div>
+                                                    
+                                                </div>
+                                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
+                                        <div>
+                                            <button style="margin-right: 3px" pButton pRipple type="button"
+                                                icon="pi pi-arrow-left" (click)="cancel()" label="Back"
+                                                class="p-button-sm p-button-danger"> </button>
+                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="createCustomer()"
+                                                label="Save" class="p-button-sm p-button-success"> </button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>

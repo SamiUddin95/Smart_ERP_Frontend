@@ -1,0 +1,87 @@
+<div class="container-fluid mt-2" style="width:100%">
+    <div class="flex justify-content-between p-2 ">
+        <h3> CREATE USER</h3>
+    </div>
+    <section>
+        <div class="card">
+            <div class="p-grid ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-3">
+                            <p-accordion>
+                                <p-accordionTab header="USER" [selected]="true">
+                                    <div class="card shadow-3">
+                                        <div class="card-header">Create User</div>
+                                        <div class="card-body">
+                                            <div class="grid">
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="username"><span class="text-danger">
+                                                            </span>Name</label>
+                                                        <input type="text" 
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Name" id="Name"
+                                                            [(ngModel)]="userData.name">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Email</label>
+                                                            <input type="text" 
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Email" id="Email"
+                                                            [(ngModel)]="userData.email">
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12" >
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="username"><span class="text-danger">
+                                                            </span>Password</label>
+                                                        <input type="password" 
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Password" id="Password"
+                                                            [(ngModel)]="userData.password">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="username"><span class="text-danger">
+                                                            </span>Gender</label>
+                                                            <p-dropdown [options]="genders" [(ngModel)]="userData.gender"
+                                                            placeholder="Select a Gender" optionLabel="label"
+                                                            optionValue="value"></p-dropdown>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 px-4">
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12" >
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="usertypr"><span class="text-danger">
+                                                            </span>User Type</label>
+                                                        <p-dropdown [options]="userTypes" [(ngModel)]="userData.userTypeId"
+                                                            placeholder="Select a User" optionLabel="userType1"
+                                                            optionValue="userTypeId"></p-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
+                                        <div>
+                                            <button style="margin-right: 3px" pButton pRipple type="button"
+                                                icon="pi pi-arrow-left" (click)="cancel()" label="Back"
+                                                class="p-button-sm p-button-danger"> </button>
+                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addUser()"
+                                                label="Save" class="p-button-sm p-button-success"> </button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>

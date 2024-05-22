@@ -1,0 +1,129 @@
+<div class="container-fluid" style="width:100%">
+    <div class="flex justify-content-between p-2 ">
+        <h3> ADD RENT</h3>
+    </div>
+    <section>
+        <div class="card">
+            <div class="p-grid ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-3">
+                            <p-accordion>
+                                <p-accordionTab header="RENT" [selected]="true">
+                                    <div class="card shadow-3">
+                                        <div class="card-header">Create Rent</div>
+                                        <div class="card-body">
+                                            <div class="grid">
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="Shop"><span class="text-danger">
+                                                            </span>Shop Type</label>
+                                                        <p-dropdown [options]="shopTypes"
+                                                            (onChange)="onShopChange($event)"
+                                                            [(ngModel)]="rentData.shopId" placeholder="Select a Shop"
+                                                            optionLabel="shopName" optionValue="shopId"></p-dropdown>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="month"><span class="text-danger">
+                                                            </span>Month</label>
+                                                        <p-dropdown [options]="months" [(ngModel)]="rentData.monthId"
+                                                            placeholder="Select a Month" optionLabel="monthName"
+                                                            optionValue="monthId"></p-dropdown>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="rent"><span class="text-danger">
+                                                            </span>Rent</label>
+                                                        <input type="number"
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Rent" [disabled]="true"
+                                                            [(ngModel)]="rentData.monthRent">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="electricitybill"><span class="text-danger">
+                                                            </span>Rent Received</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Balance" (input)="onRentReceivedChange($event)" [(ngModel)]="rentData.rentReceived">
+                                                    </div>
+
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="electricitybill"><span class="text-danger">
+                                                            </span>Balance</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Balance" [disabled]="true" [(ngModel)]="rentData.monthBalance">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="agreementtypeid"><span class="text-danger">
+                                                            </span>Agreement Type</label>
+                                                        <p-dropdown [options]="agreementTypes"
+                                                            [(ngModel)]="rentData.agreementTypeId"
+                                                            placeholder="Select agreementtype"
+                                                            optionLabel="agreementName"
+                                                            optionValue="agreementTypeId"></p-dropdown>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="electricitybill"><span class="text-danger">
+                                                            </span>Electricity bill</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Electricity Bill" id="electricitybill"
+                                                            [(ngModel)]="rentData.electricityBill">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="electricitybill"><span class="text-danger">
+                                                            </span>Maintenance</label>
+                                                        <input type="number"
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Maintenance" id="maintenance"
+                                                            [(ngModel)]="rentData.maintenance">
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="date">
+                                                            <span class="text-danger"></span>
+                                                            Date
+                                                        </label>
+                                                        <p-calendar [(ngModel)]="rentData.Date" [style]="{width:100}"
+                                                            dateFormat="yy-mm-dd"></p-calendar>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="year"><span class="text-danger">
+                                                            </span>Year</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Year" id="year" [(ngModel)]="rentData.Year">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
+                                        <div>
+                                            <button style="margin-right: 3px" pButton pRipple type="button"
+                                                icon="pi pi-arrow-left" (click)="cancel()" label="Back"
+                                                class="p-button-sm p-button-danger"> </button>
+                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addRent()"
+                                                label="Save" class="p-button-sm p-button-success"> </button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>

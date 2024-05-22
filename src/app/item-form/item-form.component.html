@@ -1,0 +1,160 @@
+<div class="container-fluid mt-2" style="width:100%">
+    <div class="flex justify-content-between p-2 ">
+        <h3> CREATE ITEM</h3>
+    </div>
+    <section>
+        <div class="card">
+            <div class="p-grid ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-3">
+                            <p-accordion>
+                                <p-accordionTab header="ITEM" [selected]="true">
+                                    <div class="card shadow-3">
+                                        <div class="card-header">Create Item</div>
+                                        <div class="card-body">
+                                            <div class="grid">
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Alias Name</label>
+                                                        <input type="text" class="form-control col-md-12 "
+                                                            placeholder="Name" [(ngModel)]="formData.aliasName">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Item Name</label>
+                                                        <input type="text" class="form-control col-md-12 "
+                                                            placeholder="Name" [(ngModel)]="formData.itemName">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Purchase Price</label>
+                                                        <input type="number" class="form-control col-md-12 "
+                                                            placeholder="Name" [(ngModel)]="formData.purchasePrice">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Sale Price</label>
+                                                        <input type="number" class="form-control col-md-12 "
+                                                            placeholder="Name" [(ngModel)]="formData.SalePrice">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="username"><span class="text-danger">
+                                                            </span>Category</label>
+                                                        <div class="d-flex">
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                for="username"><span class="text-danger">
+                                                                </span>{{formData.categoryId}}</label>
+                                                            <p-dropdown class="w-100" [options]="cat"
+                                                                [(ngModel)]="formData.categoryId" placeholder="Category"
+                                                                optionLabel="name" optionValue="id"></p-dropdown>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="username"><span class="text-danger">
+                                                            </span>Class</label>
+                                                        <div class="d-flex">
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                for="username"><span class="text-danger">
+                                                                </span>{{formData.classId}}</label>
+                                                            <p-dropdown class="w-100" [options]="clas"
+                                                                [(ngModel)]="formData.classId" placeholder="Class"
+                                                                optionLabel="name" optionValue="id"></p-dropdown>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="username"><span class="text-danger">
+                                                            </span>Manufacturer</label>
+                                                        <div class="d-flex">
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                for="username"><span class="text-danger">
+                                                                </span>{{formData.manufacturerId}}</label>
+                                                            <p-dropdown class="w-100" [options]="manu"
+                                                                [(ngModel)]="formData.manufacturerId" placeholder="Manufacturer"
+                                                                optionLabel="name" optionValue="id"></p-dropdown>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Remarks</label>
+                                                        <input type="text" class="form-control col-md-12 "
+                                                            placeholder="Remarks" [(ngModel)]="formData.remarks">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Recent Purchase</label>
+                                                        <input type="number" class="form-control col-md-12 "
+                                                            placeholder="Remarks" [(ngModel)]="formData.recentPurchase">
+                                                    </div>
+
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <label for="username"><span class="text-danger">
+                                                                </span>Brand</label>
+                                                            <div class="d-flex">
+                                                                <label
+                                                                    class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                    for="username"><span class="text-danger">
+                                                                    </span>{{formData.brandId}}</label>
+                                                                <p-dropdown class="w-100" [options]="brnd"
+                                                                    [(ngModel)]="formData.brandId" placeholder="Brand"
+                                                                    optionLabel="name" optionValue="id"></p-dropdown>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <label for="lastname"><span class="text-danger">
+                                                                </span>DiscFlat</label>
+                                                            <input type="number" class="form-control  col-md-12 "
+                                                                 [(ngModel)]="formData.discFlat">
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <label for="username"><span class="text-danger">
+                                                                </span>LockDisc</label>
+                                                            <div class="d-flex">
+                                                                <label
+                                                                    class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                    for="username"><span class="text-danger">
+                                                                    </span>{{formData.lockdisc}}</label>
+                                                                <p-dropdown class="w-100" [options]="act"
+                                                                    [(ngModel)]="formData.lockdisc" placeholder="LockDisc"
+                                                                    optionLabel="isActive" optionValue="id"></p-dropdown>
+                                                            </div>
+
+                                                        </div>
+                                                </div>
+                                               
+                                                
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
+                                        <div>
+                                            <button style="margin-right: 3px" pButton pRipple type="button"
+                                                icon="pi pi-arrow-left" (click)="cancel()" label="Back"
+                                                class="p-button-sm p-button-danger"> </button>
+                                            <button pButton pRipple type="button" icon="pi pi-save"
+                                                (click)="addItem()" label="Save"
+                                                class="p-button-sm p-button-success"> </button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>
