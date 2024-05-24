@@ -309,4 +309,11 @@ export class ApiService {
 	getManufactureById(id: any) {
 		return this.app.get('getManufacturerById?id=' + id, id);
 	} 
+	//Sales
+	createCounterSale(obj: any) {
+		return this.app.post('createCounterSale', obj);
+	}
+	getAllCounterSales() {
+		return this.app.get('getAllCounterSales');
+	} 
 }

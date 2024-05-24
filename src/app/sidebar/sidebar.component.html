@@ -82,6 +82,20 @@
             </ul>
             
         </li> 
+        <li *ngIf="userType == 2 || userType == 1" class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#Sales" data-bs-toggle="collapse" href="#">
+                <i class="pi pi-money-bill"></i><span>Sales</span><i class="pi pi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="Sales" class="nav-content collapse" data-bs-parent="#Finance">
+                <a routerLink="/counter-sales" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Sales</span>
+                </a>
+                <a routerLink="/counter-sales-form" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Counter Sales</span>
+                </a>
+
+            </ul>
+        </li>
         <!-- <li *ngIf="userType == 2 || userType == 1" class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#Finance" data-bs-toggle="collapse" href="#">
                 <i class="pi pi-money-bill"></i><span>FINANCE</span><i class="pi pi-chevron-down ms-auto"></i>

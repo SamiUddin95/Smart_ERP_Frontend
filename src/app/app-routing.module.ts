@@ -48,7 +48,8 @@ import { CategoryFormComponent } from './category-form/category-form.component';
 import { ClassFormComponent } from './class-form/class-form.component';
 import { ManufacturerFormComponent } from './manufacturer-form/manufacturer-form.component';
 import { ItemFormComponent } from './item-form/item-form.component';
-
+import { SaleListComponent } from './sale-list/sale-list.component';
+import { SaleFormComponent } from './sale-form/sale-form.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, },
@@ -118,6 +119,9 @@ const routes: Routes = [
   { path: 'manufacturer', component: ManufacturerComponent ,},
   { path: 'manufacturer-form', component: ManufacturerFormComponent,},
   { path: 'manufacturer-form/:id', component: ManufacturerFormComponent,},
+  { path: 'counter-sales', component: SaleListComponent,},
+  { path: 'counter-sales-form', component: SaleFormComponent,},
+  { path: 'counter-sales-form/:id', component: SaleFormComponent,},
 
 ];
 

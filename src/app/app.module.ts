@@ -66,6 +66,8 @@ import { CategoryComponent } from './category/category.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { ClassComponent } from './class/class.component';
 import { ClassFormComponent } from './class-form/class-form.component';
+import { SaleListComponent } from './sale-list/sale-list.component';
+import { SaleFormComponent } from './sale-form/sale-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,6 +104,8 @@ import { ClassFormComponent } from './class-form/class-form.component';
     AccountGroupFormComponent,
     AccountCatFormComponent,
     AccountCatListComponent,
+    SaleListComponent,
+    SaleFormComponent,
     SalesManFormComponent,CategoryComponent,CategoryFormComponent,ClassComponent,ClassFormComponent,
     SalesManListComponent, ItemComponent,ItemFormComponent,BrandsComponent,BrandsFormComponent,ManufacturerComponent,ManufacturerFormComponent,
     PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent, PurcOrderListComponent, PurcOrderFormComponent

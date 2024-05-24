@@ -1,0 +1,15 @@
+.summary-table {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    border-radius: 5px;
+}
+.summary-table h5 {
+    margin-bottom: 15px;
+}
+.summary-table p-table {
+    width: 100%;
+}
+.summary-table p-table td, .summary-table p-table th {
+    padding: 8px 10px;
+}
