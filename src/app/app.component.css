@@ -1252,11 +1252,13 @@ h6 {
 # Footer
 --------------------------------------------------------------*/
 .footer {
-	padding: 20px 0;
-	font-size: 14px;
-	transition: all 0.3s;
-	border-top: 1px solid #cddfff;
-}
+    padding: 20px 0 0 0;
+    font-size: 14px;
+    transition: all 0.3s;
+    border-top: 1px solid #cddfff;
+    text-align: center;
+    font-weight: bold;
+  }
 
 .footer .copyright {
 	text-align: center;
@@ -1411,19 +1413,3 @@ h6 {
 	cursor: not-allowed;
 	color: gray;
   }
-
-  .clickable {
-	cursor: pointer;
-	display: inline-block;
-	padding: 10px 20px;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	text-align: center;
-	text-decoration: none;
-	font-size: 16px;
-	transition: background-color 0.3s ease;
-  }
-  
-  
-  

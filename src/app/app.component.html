@@ -17,8 +17,7 @@
 				<p class="text-white mb-0 mr-5 lead font-bold">Test User</p>
 				<div class="line mr-4">
 				</div>
-				<p class="text-white mb-0 lead font-bold clickable" (click)="logout()">Log Out</p>
-				<!-- <button class="text-white mb-0 lead font-bold" (click)="logout()">Log Out</button> -->
+				<p class="text-white mb-0 lead font-bold">Log Out</p>
 			</div>
 			
 		</div>
@@ -31,11 +30,17 @@
 		  <router-outlet></router-outlet>
 		</div>
 	</div>
+	<div class="footer">
+		&copy;Aventech Software Company
+	</div>
 </div>
 <ng-template #loginComponent>
-	<div class="mt-5">
+	<div class="mt-4">
 		<div class="mx-0 row justify-content-center">
-		  <div class="col-md-6">
+			<img class="w-2" src="../assets/Logo.jpeg"/>
+		</div>
+		<div class="mx-0 row justify-content-center">
+		  <div class="col-md-5">
 			<div class="card">
 			  <div class="card-header">
 				Login
@@ -54,6 +59,11 @@
 					<button type="submit" (click)="login()" class="btn btn-primary">Login</button>
 				  </div>
 				</form>
+			  </div>
+			  <div class="card-footer">
+				<div class="footer">
+					Software Designed and Developed by Aventech Software Company
+				</div>
 			  </div>
 			</div>
 		  </div>
