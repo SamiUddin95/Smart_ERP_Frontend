@@ -43,19 +43,25 @@ export class SaleFormComponent {
     saleDtl.total=saleDtl.qty*saleDtl.salePrice;
     saleDtl.netTotal=saleDtl.qty*saleDtl.salePrice;
     this.grossSale=0;
+    this.grandTotal=0
     this.saleDtl.forEach(x=>{
-      this.grossSale=this.grossSale+x.netTotal;
+      this.grossSale=this.grossSale+(x.qty*x.salePrice);
     })
     this.grandTotal=this.grossSale-this.disc;
   }
   discChange(saleDtl:any){
     debugger
-    saleDtl.netTotal=saleDtl.total-saleDtl.disc;
+    // let disc=(saleDtl.total*saleDtl.disc)/100;
+    saleDtl.netTotal=(saleDtl.total)-(saleDtl.total*saleDtl.disc)/100;
     this.disc=0;
+    this.grandTotal=0;
+    let grandTotal=0;
     this.saleDtl.forEach(x=>{
       this.disc=this.disc+x.disc;
+      grandTotal=grandTotal+x.netTotal;
     })
-    this.grandTotal=this.grossSale-this.disc;
+    // this.grandTotal=this.grossSale-(this.grossSale*this.disc/100);
+    this.grandTotal=grandTotal;
   }
   earnedPointsChange(){
     this.netAmount=this.earnedPoints-this.return;
@@ -68,7 +74,7 @@ export class SaleFormComponent {
     this.saleDtl=[];
   }
   RemoveCol(index:number){
-    debugger
+    
     this.saleDtl.splice(index,1);
   }
   cancel(){
@@ -82,12 +88,12 @@ export class SaleFormComponent {
   }
   items:any=[]
   getAllItem(){
-    this.api.getAllItemsdetails().subscribe(res=>{
+    this.api.getAllItems().subscribe(res=>{
       this.items=res;
     })
   }
   addSale(){ 
-    debugger
+    
     this.urlId?this.formData.id=this.urlId:undefined;
     let formData:any={
       id:this.urlId?this.formData.id=this.urlId:undefined,
@@ -103,7 +109,7 @@ export class SaleFormComponent {
 
     }
 	this.api.createCounterSale(formData).subscribe(res=>{
-    debugger
+    
     this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Detail Saved Successfully" });	
 		this.router.navigate(['counter-sales']);
 		},err=>{
