@@ -78,7 +78,7 @@ export class SaleFormComponent {
     this.saleDtl.splice(index,1);
   }
   cancel(){
-    this.router.navigate(['account-cat-list']);
+    this.router.navigate(['counter-sales']);
   }
   party:any=[]
   getParty(){
@@ -108,11 +108,11 @@ export class SaleFormComponent {
       counterSaleDetails:this.saleDtl
 
     }
-	this.api.createCounterSale(formData).subscribe(res=>{
+	this.api.createCounterSale(formData).subscribe((res: any)=>{
     
     this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Detail Saved Successfully" });	
 		this.router.navigate(['counter-sales']);
-		},err=>{
+		},(err: any)=>{
 	
 		})
 

@@ -19,7 +19,7 @@ export class SaleListComponent {
 		this.getSalesDetail();
 	}
 	getSalesDetail(){
-		this.api.getAllCounterSales().subscribe(res=>{
+		this.api.getAllCounterSales().subscribe((res: any)=>{
 			this.saleDetails=res;
 		});
 	}
@@ -53,7 +53,7 @@ export class SaleListComponent {
 					this.partyPrice = this.partyPrice.filter((item: any) => item.userId !== user.userId);
 					this.messageService.add({ severity: 'success', summary: 'Success', detail: "Deleted Successfully" });
 					return;
-				}, err => { })
+				}, (err: any) => { })
 			},
 			reject: () => {
 
@@ -67,7 +67,7 @@ export class SaleListComponent {
 			autoTable(doc, {
 				head: head,
 				body: body,
-				didDrawCell: (data) => {
+				didDrawCell: (data: any) => {
 					data = this.partyPrice;
 				},
 			});
