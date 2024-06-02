@@ -88,7 +88,7 @@ export class SaleFormComponent {
   }
   items:any=[]
   getAllItem(){
-    this.api.getAllItems().subscribe(res=>{
+    this.api.getAllItemsdetails().subscribe((res: any)=>{
       this.items=res;
     })
   }
