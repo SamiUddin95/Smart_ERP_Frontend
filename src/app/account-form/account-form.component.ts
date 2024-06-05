@@ -32,7 +32,10 @@ export class AccountFormComponent {
     this.router.navigate(['account-list']);
   }
   addUser(){
-
+  if(this.formData.taxLimit>this.formData.taxAmount){
+		this.messageService.add({ severity: 'error', summary: 'Error', detail: "Tax Limit should not be greater then Tax Amount" });	
+    return;
+  }
 	this.urlId?this.formData.id=this.urlId:undefined;
 	this.api.createAccount(this.formData).subscribe(res=>{
 		this.router.navigate(['account-list']);
