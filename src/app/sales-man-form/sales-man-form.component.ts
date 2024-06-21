@@ -28,7 +28,7 @@ export class SalesManFormComponent {
 		})
 	}
   cancel(){
-    this.router.navigate(['account-cat-list']);
+    this.router.navigate(['sales-man-list']);
   }
   type:any=[]
   getAccountType(){

@@ -77,7 +77,7 @@ export class ApiService {
 	getAllParty() {
 		return this.app.get('getAllParty');
 	}
-	getRPartyById(id: any) {
+	getPartyById(id: any) {
 		return this.app.get('getRPartyById?id=' + id, id);
 	}
 	deletePartyById(id: any) {

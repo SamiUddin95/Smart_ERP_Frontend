@@ -1,6 +1,6 @@
 <div class="container-fluid mt-2" style="width:100%">
     <div class="flex justify-content-between p-2 ">
-        <h3>PARY</h3>
+        <h3>PARTY</h3>
     </div>
     <section>
         <div class="card">
@@ -9,7 +9,7 @@
                     <div class="col-md-12">
                         <div class="card shadow-3">
                             <p-accordion>
-                                <p-accordionTab header="USER" [selected]="true">
+                                <p-accordionTab header="PARTY" [selected]="true">
                                     <div class="card shadow-3">
                                         <div class="card-header">Create Party</div>
                                         <div class="card-body">
@@ -93,8 +93,8 @@
                                                             <div class="d-flex">
                                                                 <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
                                                                 </span>{{formData.areaId}}</label>
-                                                                <p-dropdown class="w-100" [options]="type" [(ngModel)]="formData.areaId"
-                                                                placeholder="Select a Type" optionLabel="name"
+                                                                <p-dropdown class="w-100" [options]="area" [(ngModel)]="formData.areaId"
+                                                                placeholder="Select a Area" optionLabel="name"
                                                                 optionValue="id"></p-dropdown>
                                                             </div>
                                                     </div>
@@ -104,8 +104,8 @@
                                                             <div class="d-flex">
                                                                 <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
                                                                 </span>{{formData.cityId}}</label>
-                                                                <p-dropdown class="w-100" [options]="type" [(ngModel)]="formData.cityId"
-                                                                placeholder="Select a Type" optionLabel="name"
+                                                                <p-dropdown class="w-100" [options]="city" [(ngModel)]="formData.cityId"
+                                                                placeholder="Select a City" optionLabel="name"
                                                                 optionValue="id"></p-dropdown>
                                                             </div>
                                                     </div>
@@ -115,8 +115,8 @@
                                                             <div class="d-flex">
                                                                 <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
                                                                 </span>{{formData.subAreaId}}</label>
-                                                                <p-dropdown class="w-100" [options]="type" [(ngModel)]="formData.subAreaId"
-                                                                placeholder="Select a Type" optionLabel="name"
+                                                                <p-dropdown class="w-100" [options]="subArea" [(ngModel)]="formData.subAreaId"
+                                                                placeholder="Select a Sub Area" optionLabel="name"
                                                                 optionValue="id"></p-dropdown>
                                                             </div>
                                                     </div>   
@@ -142,7 +142,7 @@
                                                             <div class="d-flex">
                                                                 <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
                                                                 </span>{{formData.categoryId}}</label>
-                                                                <p-dropdown class="w-100" [options]="type" [(ngModel)]="formData.categoryId"
+                                                                <p-dropdown class="w-100" [options]="accCat" [(ngModel)]="formData.categoryId"
                                                                 placeholder="Select a Type" optionLabel="name"
                                                                 optionValue="id"></p-dropdown>
                                                             </div>
