@@ -65,4 +65,11 @@ export class AppComponent {
       this.openAside=true;
       this.common.openSidebar();
   }
+
+  //loginData1 = { Password: '' };
+    passwordFieldType = 'password'; // Initially set to password type
+
+    togglePasswordVisibility(): void {
+        this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+    }
 }

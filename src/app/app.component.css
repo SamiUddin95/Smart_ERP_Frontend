@@ -1413,3 +1413,14 @@ h6 {
 	cursor: not-allowed;
 	color: gray;
   }
+
+  /* your-component.component.css */
+.input-group .btn {
+    border: none;
+    background: transparent;
+    padding: 0 0.5rem;
+}
+
+.input-group .btn .bi {
+    font-size: 1.2rem;
+}
