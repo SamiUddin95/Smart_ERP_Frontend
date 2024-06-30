@@ -55,7 +55,7 @@ export class ApiService {
 	}
 	//AccountGroup
 	getAllAccountGroup() {
-		return this.app.get('getAllAccGroup');
+		return this.app.get('getAllAccGroupCategory');
 	}
 
 	//Sales Man
