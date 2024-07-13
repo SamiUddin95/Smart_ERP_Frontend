@@ -84,6 +84,9 @@ export class ApiService {
 	getPurchaseOrderCategory() {
 		return this.app.get('getPurchaseOrderCategory');
 	}
+	getPurchaseOrderById(id: any) {
+		return this.app.get('getPurchaseOrderById?id=' + id, id);
+	}
 	getGoDown() {
 		return this.app.get('getGoDown');
 	}

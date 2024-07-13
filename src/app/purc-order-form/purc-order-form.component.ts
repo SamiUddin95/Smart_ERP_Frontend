@@ -26,8 +26,13 @@ export class PurcOrderFormComponent {
     }
 	}
   getUserById(id: any) {
-		this.api.getSalesManById(String(id)).subscribe(res => {
-			this.formData = res[0];
+		this.api.getPurchaseOrderById(id).subscribe(res => {
+      debugger;
+      var res=JSON.parse(res); 
+      this.purchOrderDtlData=res.purchaseOrderDetails;
+      this.formData.partyId=res.purchaseOrders[0].partyId;
+      this.formData.dateOfInvoice=res.purchaseOrders[0].dateOfInvoice;
+      this.formData.remarks=res.purchaseOrders[0].remarks; 
 		})
 	}
   cancel(){
