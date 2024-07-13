@@ -87,6 +87,14 @@ export class ApiService {
 	getGoDown() {
 		return this.app.get('getGoDown');
 	}
+	//Purchase Return
+
+	getAllPurchaseReturn() {
+		return this.app.get('getAllPurchaseReturn');
+	}
+	createPurchaseReturn(obj: any) {
+		return this.app.post('createPurchaseReturn', obj);
+	}
 	//Party
 		
 	getAllParty() {

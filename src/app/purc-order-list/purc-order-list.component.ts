@@ -23,6 +23,12 @@ export class PurcOrderListComponent {
 			this.purcOrder = res;
 		})
 	}
+	party: any = [];
+	getParty() {
+		this.api.getAllParty().subscribe((res: any) => { 
+			this.party = res;
+		})
+	}
 	addOrder() {
 		this.router.navigate(['purch-order-form']);
 	}

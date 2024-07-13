@@ -19,12 +19,12 @@ export class PurcReturnListComponent {
 	}
 	purcOrder: any = [];
 	getPurchaseOrderList() {
-		this.api.getAllPurchaseOrder().subscribe((res: any) => { 
+		this.api.getAllPurchaseReturn().subscribe((res: any) => { 
 			this.purcOrder = res;
 		})
 	}
 	addOrder() {
-		this.router.navigate(['purch-order-form']);
+		this.router.navigate(['purch-return-form']);
 	}
 	cancel() {
 
@@ -36,7 +36,7 @@ export class PurcReturnListComponent {
 
 	}
 	editUser(id: any) {
-		this.router.navigate(['purch-order-form/' + id]);
+		this.router.navigate(['purch-return-form/' + id]);
 	}
 	deleteUser(user: any) {
 		this.confirmationService.confirm({
