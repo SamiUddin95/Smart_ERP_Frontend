@@ -4,11 +4,11 @@ import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-purc-order-form',
-  templateUrl: './purc-order-form.component.html',
-  styleUrls: ['./purc-order-form.component.css']
+  selector: 'app-purc-return-form',
+  templateUrl: './purc-return-form.component.html',
+  styleUrls: ['./purc-return-form.component.css']
 })
-export class PurcOrderFormComponent {
+export class PurcReturnFormComponent {
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
   formData: any = {  };
   userTypes:any=[];
@@ -17,7 +17,7 @@ export class PurcOrderFormComponent {
   purchOrderDtlData: any[] = [];
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id'); 
-    this.getParty();
+    this.getAccountType();
     this.getUserGroup();
     this.getGoDown();
     this.getManufact();
@@ -33,16 +33,16 @@ export class PurcOrderFormComponent {
   cancel(){
     this.router.navigate(['purch-order-list']);
   }
-  party:any=[]
-  getParty(){
-    this.api.getAllParty().subscribe(res=>{
-      this.party=res;
+  poCat:any=[]
+  getAccountType(){
+    this.api.getPurchaseOrderCategory().subscribe(res=>{
+      this.poCat=res;
     })
   }
-  item:any=[]
+  goDown:any=[]
   getGoDown(){
-    this.api.getAllItemsdetails().subscribe(res=>{
-      this.item=res;
+    this.api.getGoDown().subscribe(res=>{
+      this.goDown=res;
     })
   }
   manufact:any=[]
@@ -65,9 +65,13 @@ export class PurcOrderFormComponent {
     let formData:any={
       id:this.urlId?this.formData.id=this.urlId:undefined,
       orderNo:this.formData.orderNo,
-      partyId:this.formData.partyId,
-      dateOfInvoice:this.formData.dateOfInvoice,
-      remarks:this.formData.remarks, 
+      poCategoryId:this.formData.poCategoryId,
+      date:this.formData.date,
+      fromDate:this.formData.fromDate,
+      toDate:this.formData.toDate,
+      goDownId:this.formData.goDownId,
+      vehicle:this.formData.vehicle,
+      projectionDays:this.formData.projectionDays,
       purcOrderDtlModel:this.purchOrderDtlData
     }
     this.api.createPurchaseOrder(formData).subscribe((res: any)=>{

@@ -7,11 +7,11 @@ import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable';
 
 @Component({
-  selector: 'app-purc-order-list',
-  templateUrl: './purc-order-list.component.html',
-  styleUrls: ['./purc-order-list.component.css']
+  selector: 'app-purc-return-list',
+  templateUrl: './purc-return-list.component.html',
+  styleUrls: ['./purc-return-list.component.css']
 })
-export class PurcOrderListComponent {
+export class PurcReturnListComponent {
   constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 	title = 'BMSFrontEnd';
 	ngOnInit(): void {

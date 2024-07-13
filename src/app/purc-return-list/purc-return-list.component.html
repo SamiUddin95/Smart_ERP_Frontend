@@ -1,7 +1,7 @@
 <div class="card container-fluid mt-2">
     <div class="d-flex justify-content-between p-2">
         <div>
-            <h3>PURCHASE ORDER</h3>
+            <h3>PURCHASE RETURN</h3>
         </div>
         <div>
             <button pButton pRipple type="button" icon="pi pi-plus" label="Add Order"
@@ -71,21 +71,21 @@
                     </ng-template>    
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">Id <p-sortIcon field="code"></p-sortIcon></th>
-                                <th pSortableColumn="name">Party <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Date of Invoice <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Remarks <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Created At <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="code">Order No <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">Start Date <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">End Date <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Vehicle <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Projection Days <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-data>
                             <tr>
-                                <td>{{data.id}}</td>
-                                <td>{{data.partyId}}</td>
-                                <td>{{data.dateOfInvoice | date:'yyyy-MM-dd'}}</td>
-                                <td>{{data.remarks}}</td>
-                                <td>{{data.createdAt | date:'yyyy-MM-dd'}}</td>
+                                <td>{{data.orderNo}}</td>
+                                <td>{{data.startDate ||'dd-MM-yyyy'}}</td>
+                                <td>{{data.endDate ||'DD-MM-yyyy'}}</td>
+                                <td>{{data.vehicle}}</td>
+                                <td>{{data.projectionDays}}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"

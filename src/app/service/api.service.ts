@@ -72,6 +72,21 @@ export class ApiService {
 	createSalesMan(obj: any) {
 		return this.app.post('createSalesMan', obj);
 	}
+
+	//Purchase Order
+
+	getAllPurchaseOrder() {
+		return this.app.get('getAllPurchaseOrder');
+	}
+	createPurchaseOrder(obj: any) {
+		return this.app.post('createPurchaseOrder', obj);
+	}
+	getPurchaseOrderCategory() {
+		return this.app.get('getPurchaseOrderCategory');
+	}
+	getGoDown() {
+		return this.app.get('getGoDown');
+	}
 	//Party
 		
 	getAllParty() {
