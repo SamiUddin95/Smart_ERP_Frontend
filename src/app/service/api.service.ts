@@ -95,6 +95,9 @@ export class ApiService {
 	getAllPurchaseReturn() {
 		return this.app.get('getAllPurchaseReturn');
 	}
+	getPurchaseReturnById(id: any) {
+		return this.app.get('getPurchaseReturnById?id=' + id, id);
+	}
 	createPurchaseReturn(obj: any) {
 		return this.app.post('createPurchaseReturn', obj);
 	}

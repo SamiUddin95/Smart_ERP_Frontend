@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
+import * as moment from 'moment'; 
 
 @Component({
   selector: 'app-purc-order-form',
@@ -32,7 +33,11 @@ export class PurcOrderFormComponent {
       this.purchOrderDtlData=res.purchaseOrderDetails;
       this.formData.partyId=res.purchaseOrders[0].partyId;
       this.formData.dateOfInvoice=res.purchaseOrders[0].dateOfInvoice;
+      this.formData.endDate=res.purchaseOrders[0].endDate;
+      this.formData.startDate=res.purchaseOrders[0].startDate;
       this.formData.remarks=res.purchaseOrders[0].remarks; 
+      this.formData.projectionDays=res.purchaseOrders[0].projectionDays; 
+      this.formData.paCategory=res.purchaseOrders[0].paCategory; 
 		})
 	}
   cancel(){
@@ -71,8 +76,12 @@ export class PurcOrderFormComponent {
       id:this.urlId?this.formData.id=this.urlId:undefined,
       orderNo:this.formData.orderNo,
       partyId:this.formData.partyId,
-      dateOfInvoice:this.formData.dateOfInvoice,
+      dateOfInvoice:moment(this.formData.dateOfInvoice).format('YYYY-MM-DD').toString(),
       remarks:this.formData.remarks, 
+      endDate:moment(this.formData.endDate).format('YYYY-MM-DD').toString(),
+      startDate:moment(this.formData.startDate).format('YYYY-MM-DD').toString(),
+      projectionDays:this.formData.projectionDays, 
+      paCategoryId:this.formData.paCategory,
       purcOrderDtlModel:this.purchOrderDtlData
     }
     this.api.createPurchaseOrder(formData).subscribe((res: any)=>{

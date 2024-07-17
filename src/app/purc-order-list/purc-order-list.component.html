@@ -71,11 +71,20 @@
                     </ng-template>    
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">Id <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="code">InvSno <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">Party <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Date of Invoice <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">SalesMan Sno <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">InvDate <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Remarks <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Created At <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="price">Pur Order Term<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Projection Days<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Zero Qty<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Start Date<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">End Date<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">PO Category<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Inv Total<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Disc Perc<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Posted<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
@@ -83,9 +92,18 @@
                             <tr>
                                 <td>{{data.id}}</td>
                                 <td>{{data.partyId}}</td>
+                                <td>{{data.salesManSno }}</td>
                                 <td>{{data.dateOfInvoice | date:'yyyy-MM-dd'}}</td>
-                                <td>{{data.remarks}}</td>
-                                <td>{{data.createdAt | date:'yyyy-MM-dd'}}</td>
+                                <td>{{data.remarks }}</td>
+                                <td>{{data.startDate | date:'yyyy-MM-dd' }}</td>
+                                <td>{{data.endDate | date:'yyyy-MM-dd' }}</td>
+                                <td>{{data.poCategory }}</td>
+                                <td>{{data.startDate }}</td>
+                                <td>{{data.endDate }}</td>
+                                <td>{{data.purOrderTerm }}</td>
+                                <td>{{data.invTotal }}</td>
+                                <td>{{data.disc }}</td>
+                                <td>{{data.purOrderTerm }}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"
