@@ -55,7 +55,7 @@ export class ApiService {
 	}
 	//AccountGroup
 	getAllAccountGroup() {
-		return this.app.get('getAllAccGroup');
+		return this.app.get('getAllAccGroupCategory');
 	}
 
 	//Sales Man
@@ -72,12 +72,41 @@ export class ApiService {
 	createSalesMan(obj: any) {
 		return this.app.post('createSalesMan', obj);
 	}
+
+	//Purchase Order
+
+	getAllPurchaseOrder() {
+		return this.app.get('getAllPurchaseOrder');
+	}
+	createPurchaseOrder(obj: any) {
+		return this.app.post('createPurchaseOrder', obj);
+	}
+	getPurchaseOrderCategory() {
+		return this.app.get('getPurchaseOrderCategory');
+	}
+	getPurchaseOrderById(id: any) {
+		return this.app.get('getPurchaseOrderById?id=' + id, id);
+	}
+	getGoDown() {
+		return this.app.get('getGoDown');
+	}
+	//Purchase Return
+
+	getAllPurchaseReturn() {
+		return this.app.get('getAllPurchaseReturn');
+	}
+	getPurchaseReturnById(id: any) {
+		return this.app.get('getPurchaseReturnById?id=' + id, id);
+	}
+	createPurchaseReturn(obj: any) {
+		return this.app.post('createPurchaseReturn', obj);
+	}
 	//Party
 		
 	getAllParty() {
 		return this.app.get('getAllParty');
 	}
-	getRPartyById(id: any) {
+	getPartyById(id: any) {
 		return this.app.get('getRPartyById?id=' + id, id);
 	}
 	deletePartyById(id: any) {

@@ -7,11 +7,11 @@ import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable';
 
 @Component({
-  selector: 'app-purc-order-list',
-  templateUrl: './purc-order-list.component.html',
-  styleUrls: ['./purc-order-list.component.css']
+  selector: 'app-purc-return-list',
+  templateUrl: './purc-return-list.component.html',
+  styleUrls: ['./purc-return-list.component.css']
 })
-export class PurcOrderListComponent {
+export class PurcReturnListComponent {
   constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 	title = 'BMSFrontEnd';
 	ngOnInit(): void {
@@ -19,18 +19,12 @@ export class PurcOrderListComponent {
 	}
 	purcOrder: any = [];
 	getPurchaseOrderList() {
-		this.api.getAllPurchaseOrder().subscribe((res: any) => { 
+		this.api.getAllPurchaseReturn().subscribe((res: any) => { 
 			this.purcOrder = res;
 		})
 	}
-	party: any = [];
-	getParty() {
-		this.api.getAllParty().subscribe((res: any) => { 
-			this.party = res;
-		})
-	}
 	addOrder() {
-		this.router.navigate(['purch-order-form']);
+		this.router.navigate(['purch-return-form']);
 	}
 	cancel() {
 
@@ -42,7 +36,7 @@ export class PurcOrderListComponent {
 
 	}
 	editUser(id: any) {
-		this.router.navigate(['purch-order-form/' + id]);
+		this.router.navigate(['purch-return-form/' + id]);
 	}
 	deleteUser(user: any) {
 		this.confirmationService.confirm({

@@ -1,12 +1,12 @@
 <div class="card container-fluid mt-2">
     <div class="d-flex justify-content-between p-2">
         <div>
-            <h3>SALES</h3>
+            <h3>PURCHASE RETURN</h3>
         </div>
         <div>
-            <button pButton pRipple type="button" icon="pi pi-plus" label="Add Sale"
+            <button pButton pRipple type="button" icon="pi pi-plus" label="Add Order"
                 class="p-button-sm p-button-success float-right"
-                 (click)="addUser()"></button>
+                 (click)="addOrder()"></button>
         </div>
     </div>
     <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
@@ -61,11 +61,8 @@
         <div class="pad-wrapper">
             <div class="box">
                 <div class="content">
-                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" 
-                    [value]="saleDetails" styleClass="p-datatable-sm p-datatable-gridlines" 
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
-                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]"
-                     [paginator]="true" [rows]="10">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="purcOrder" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
                     <ng-template pTemplate="caption">
                         <div class="flex">
                             <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
@@ -74,29 +71,40 @@
                     </ng-template>    
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">Order Code <p-sortIcon field="code"></p-sortIcon></th>
-                                <th pSortableColumn="name">Gross Sale <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Discount <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="price">grandTotal<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">return<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Earned Points<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="code">Order No <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">Party Name <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Invoice Total <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Users <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="price">Item Type<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Disc Perc<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Misc Changes<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Flat Disc<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Original Date<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">PartyInvDate<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-user>
+                        <ng-template pTemplate="body" let-data>
                             <tr>
-                                <td>{{user.id}}</td>
-                                <td>{{user.grossSale}}</td>
-                                <td>{{user.discount}}</td>
-                                <td>{{user.grandTotal}}</td>
-                                <td>{{user.return}}</td>
-                                <td>{{user.earnedPoints}}</td>
-                                <!-- <td style="position: relative;" class="d-flex">
+                                <td>{{data.id}}</td>
+                                <td>{{data.partyId}}</td>
+                                <td>{{data.date | date:'yyyy-MM-dd'}}</td>
+                                <td>{{data.grandTotal }}</td>
+                                <td>{{data.userId}}</td>
+                                <td>{{data.itemType}}</td>
+                                <td>{{data.disc}}</td>
+                                <td>{{data.miscChanges}}</td>
+                                <td>{{data.flatDisc}}</td>
+                                <td>{{data.date | date:'yyyy-MM-dd'}}</td>
+                                <td>{{data.date | date:'yyyy-MM-dd'}}</td>
+                                <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"
-                                        (click)="editUser(user.id)"></button>
+                                        (click)="editUser(data.id)"></button>
                                     <button pButton pRipple icon="pi pi-trash"
-                                        class="p-button-rounded p-button-danger" (click)="deleteUser(user)"></button>
-                                </td> -->
+                                        class="p-button-rounded p-button-danger" (click)="deleteUser(data)"></button>
+                                </td>
                             </tr>
                         </ng-template>
                     </p-table>

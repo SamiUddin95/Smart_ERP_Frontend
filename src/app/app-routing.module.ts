@@ -31,15 +31,20 @@ import { AccountGroupListComponent } from './account-group-list/account-group-li
 import { AccountGroupFormComponent } from './account-group-form/account-group-form.component';
 import { AccountCatFormComponent } from './account-cat-form/account-cat-form.component';
 import { SalesManListComponent } from './sales-man-list/sales-man-list.component';
-import { SalesManFormComponent } from './sales-man-form/sales-man-form.component';
+import { SalesManFormComponent } from './sales-man-form/sales-man-form.component';         
 import { PartyListComponent } from './party-list/party-list.component';
 import { PartyFormComponent } from './party-form/party-form.component';
 import { PartyPriceListComponent } from './party-price-list/party-price-list.component';
 import { PartyPriceFormComponent } from './party-price-form/party-price-form.component';
+<<<<<<< HEAD
 import { PurchaseComponent } from './Purchase/purchase/purchase.component';
 import { PurhaseFormComponent } from './Purchase/purhase-form/purhase-form.component';
 import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
 import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
+=======
+import { PurcReturnFormComponent } from './purc-return-form/purc-return-form.component';
+import { PurcReturnListComponent } from './purc-return-list/purc-return-list.component';
+>>>>>>> 2039eb66300034487ad12099c1fb1f2f84126518
 import { ItemComponent } from './item/item.component';
 import { BrandsComponent } from './brands/brands.component';
 import { CategoryComponent } from './category/category.component';
@@ -52,6 +57,8 @@ import { ManufacturerFormComponent } from './manufacturer-form/manufacturer-form
 import { ItemFormComponent } from './item-form/item-form.component';
 import { SaleListComponent } from './sale-list/sale-list.component';
 import { SaleFormComponent } from './sale-form/sale-form.component';
+import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
+import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, },
@@ -103,6 +110,9 @@ const routes: Routes = [
   { path: 'party-price-list', component: PartyPriceListComponent, },
   { path: 'party-price-form', component: PartyPriceFormComponent,},
   { path: 'party-price-form/:id', component: PartyPriceFormComponent ,},
+  { path: 'purch-return-list', component: PurcReturnListComponent, },
+  { path: 'purch-return-form', component: PurcReturnFormComponent,},
+  { path: 'purch-return-form/:id', component: PurcReturnFormComponent ,},
   { path: 'purch-order-list', component: PurcOrderListComponent, },
   { path: 'purch-order-form', component: PurcOrderFormComponent,},
   { path: 'purch-order-form/:id', component: PurcOrderFormComponent ,},

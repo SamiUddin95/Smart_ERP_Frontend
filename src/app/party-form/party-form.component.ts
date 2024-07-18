@@ -16,18 +16,21 @@ export class PartyFormComponent {
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id'); 
     this.getAccountType();
-    this.getUserGroup();
+    this.getAccCat();
+    this.getArea();
+    this.getSubArea();
+    this.getCity();
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
 	}
   getUserById(id: any) {
-		this.api.getSalesManById(String(id)).subscribe(res => {
+		this.api.getPartyById(Number(id)).subscribe(res => {
 			this.formData = res[0];
 		})
 	}
   cancel(){
-    this.router.navigate(['account-cat-list']);
+    this.router.navigate(['party-list']);
   }
   type:any=[]
   getAccountType(){
@@ -35,10 +38,29 @@ export class PartyFormComponent {
       this.type=res;
     })
   }
+  area:any=[]
+  getArea(){
+    this.api.getAllArea().subscribe(res=>{
+      this.area=res;
+    })
+  }
+  subArea:any=[]
+  getSubArea(){
+    this.api.getAllSubArea().subscribe(res=>{
+      this.subArea=res;
+    })
+  }
+  city:any=[]
+  getCity(){
+    this.api.getAllCity().subscribe(res=>{
+      this.city=res;
+    })
+  }
+  
   addUser(){ 
 	this.urlId?this.formData.id=this.urlId:undefined;
 	this.api.createParty(this.formData).subscribe(res=>{
-		this.router.navigate(['sales-man-list']);
+		this.router.navigate(['party-list']);
 		this.messageService.add({ severity: 'success', summary: 'Success', detail: "User Saved Successfully" });	
 		},err=>{
 	
@@ -46,10 +68,10 @@ export class PartyFormComponent {
 
   }
 
-  usrGrpCat:any=[];
-  getUserGroup(){
+  accCat:any=[];
+  getAccCat(){
     this.api.getAllAccountCat().subscribe(res=>{
-      this.usrGrpCat=res;
+      this.accCat=res;
     })
   }
 }

@@ -17,10 +17,10 @@ export class PartyListComponent {
 	ngOnInit(): void {
 		this.getUserList();
 	}
-	saleMan: any = [];
+	party: any = [];
 	getUserList() {
-		this.api.getAllSalesMan().subscribe((res: any) => { 
-			this.saleMan = res;
+		this.api.getAllParty().subscribe((res: any) => { 
+			this.party = res;
 		})
 	}
 	addUser() {
@@ -44,7 +44,7 @@ export class PartyListComponent {
 			accept: () => {
 				//Actual logic to perform a confirmation
 				this.api.deleteSalesManById(user.userId).subscribe(res => {
-					this.saleMan = this.saleMan.filter((item: any) => item.userId !== user.userId);
+					this.party = this.party.filter((item: any) => item.userId !== user.userId);
 					this.messageService.add({ severity: 'success', summary: 'Success', detail: "Deleted Successfully" });
 					return;
 				}, err => { })
@@ -57,12 +57,12 @@ export class PartyListComponent {
 	exportPdf() {
 		const doc = new jsPDF('l', 'mm', 'a4');
 		const head = [['userId', 'Name', 'Is Active', 'Name', 'Email', 'joiningDate', 'Phone']]
-		let body = this.saleMan.map((elemento: { [s: string]: unknown; } | ArrayLike<unknown>) => Object.values(elemento));
+		let body = this.party.map((elemento: { [s: string]: unknown; } | ArrayLike<unknown>) => Object.values(elemento));
 			autoTable(doc, {
 				head: head,
 				body: body,
 				didDrawCell: (data) => {
-					data = this.saleMan;
+					data = this.party;
 				},
 			});
 
@@ -71,7 +71,7 @@ export class PartyListComponent {
 
 	exportExcel() {
 		import('xlsx').then((xlsx) => {
-			const worksheet = xlsx.utils.json_to_sheet(this.saleMan);
+			const worksheet = xlsx.utils.json_to_sheet(this.party);
 			const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
 			const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
 			this.saveAsExcelFile(excelBuffer, 'products');

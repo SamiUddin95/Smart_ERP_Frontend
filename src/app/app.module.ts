@@ -54,10 +54,15 @@ import { PartyFormComponent } from './party-form/party-form.component';
 import { PartyListComponent } from './party-list/party-list.component';
 import { PartyPriceListComponent } from './party-price-list/party-price-list.component';
 import { PartyPriceFormComponent } from './party-price-form/party-price-form.component';
+<<<<<<< HEAD
 import { PurchaseComponent } from './Purchase/purchase/purchase.component';
 import { PurhaseFormComponent } from './Purchase/purhase-form/purhase-form.component';
 import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
 import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
+=======
+import { PurcReturnListComponent } from './purc-return-list/purc-return-list.component';
+import { PurcReturnFormComponent } from './purc-return-form/purc-return-form.component';
+>>>>>>> 2039eb66300034487ad12099c1fb1f2f84126518
 import { ItemComponent } from './item/item.component';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { BrandsComponent } from './brands/brands.component';
@@ -70,7 +75,12 @@ import { ClassComponent } from './class/class.component';
 import { ClassFormComponent } from './class-form/class-form.component';
 import { SaleListComponent } from './sale-list/sale-list.component';
 import { SaleFormComponent } from './sale-form/sale-form.component';
+<<<<<<< HEAD
 
+=======
+import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
+import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
+>>>>>>> 2039eb66300034487ad12099c1fb1f2f84126518
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,7 +123,7 @@ import { SaleFormComponent } from './sale-form/sale-form.component';
     SaleFormComponent,
     SalesManFormComponent,CategoryComponent,CategoryFormComponent,ClassComponent,ClassFormComponent,
     SalesManListComponent, ItemComponent,ItemFormComponent,BrandsComponent,BrandsFormComponent,ManufacturerComponent,ManufacturerFormComponent,
-    PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent, PurcOrderListComponent, PurcOrderFormComponent
+    PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent, PurcReturnListComponent, PurcReturnFormComponent, PurcOrderListComponent, PurcOrderFormComponent
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,

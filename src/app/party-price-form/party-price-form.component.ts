@@ -39,7 +39,7 @@ export class PartyPriceFormComponent {
     this.partyDtl.splice(index,1);
   }
   cancel(){
-    this.router.navigate(['account-cat-list']);
+    this.router.navigate(['party-price-list']);
   }
   party:any=[]
   getParty(){

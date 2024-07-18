@@ -11,11 +11,11 @@
                 <i class="pi pi-home"></i><span>DASHBOARD</span>
             </a>
         </li>
-        <li *ngIf="userType==1" class="nav-item">
+        <!-- <li *ngIf="userType==1" class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#Helmet" data-bs-toggle="collapse" href="#">
                 <i class="pi pi-cog"></i><span>SERVICES</span>
             </a>
-        </li>
+        </li> -->
         <li *ngIf="userType == 2 || userType == 1" class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#BasicData" data-bs-toggle="collapse" href="#">
                 <i class="pi pi-money-bill"></i><span>BASIC DATA</span><i class="pi pi-chevron-down ms-auto"></i>
@@ -84,7 +84,7 @@
         </li> 
         <li *ngIf="userType == 2 || userType == 1" class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#Sales" data-bs-toggle="collapse" href="#">
-                <i class="pi pi-money-bill"></i><span>Sales</span><i class="pi pi-chevron-down ms-auto"></i>
+                <i class="pi pi-money-bill"></i><span>SALES</span><i class="pi pi-chevron-down ms-auto"></i>
             </a>
             <ul id="Sales" class="nav-content collapse" data-bs-parent="#Finance">
                 <a routerLink="/counter-sales" routerLinkActive="active">
@@ -113,11 +113,20 @@
                 <i class="pi pi-shopping-cart"></i><span>PURCHASES</span><i class="pi pi-chevron-down ms-auto"></i>
             </a>
             <ul id="Purchases" class="nav-content collapse" data-bs-parent="#Finance">
+<<<<<<< HEAD
                 <a routerLink="/purchase" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Purchase</span>
                 </a>
+=======
+                <!-- <a routerLink="/expenses" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Purchase Expenses</span>
+                </a> -->
+>>>>>>> 2039eb66300034487ad12099c1fb1f2f84126518
                 <a routerLink="/purch-order-list" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Purchase Order</span>
+                </a>
+                <a routerLink="/purch-return-list" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Purchase Return</span>
                 </a>
             </ul>
         </li>
@@ -187,7 +196,7 @@
             </ul>
             
         </li> -->
-        <li *ngIf="userType==2||userType==1" class="nav-item"
+        <!-- <li *ngIf="userType==2||userType==1" class="nav-item"
             >
             <a class="nav-link collapsed" data-bs-target="#Tracking" data-bs-toggle="collapse" href="#">
                 <i class="pi pi-info-circle"></i><span>DETAILS</span><i
@@ -212,14 +221,14 @@
                 </li>
               
             </ul>
-        </li>
+        </li> -->
         
         <li *ngIf="userType==3||userType==1" class="nav-item"
             >
             <a class="nav-link collapsed" data-bs-target="#report" data-bs-toggle="collapse" href="#">
                 <i class="pi pi-book"></i><span>REPORT</span><i class="pi pi-chevron-down ms-auto"></i>
             </a>
-            <ul id="report" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <!-- <ul id="report" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li >
                     <a routerLink="/rnt-shp" routerLinkActive="active">
                         <i class="pi pi-map-marker"></i><span>Shop Rent Received Report </span>
@@ -250,12 +259,12 @@
                         <i class="fa fa-helmet-un"></i><span>View Rent Detail</span>
                       </a>
                 </li>
-            </ul>
+            </ul> -->
         </li>
 
         <li *ngIf="userType==1" class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#Helmet" data-bs-toggle="collapse" href="#">
-                <i class="pi pi-user"></i><span>Users</span><i class="pi pi-chevron-down ms-auto"></i>
+                <i class="pi pi-user"></i><span>USERS</span><i class="pi pi-chevron-down ms-auto"></i>
             </a>
             <ul id="Helmet" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
