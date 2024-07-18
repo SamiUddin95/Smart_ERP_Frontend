@@ -36,6 +36,8 @@ import { PartyListComponent } from './party-list/party-list.component';
 import { PartyFormComponent } from './party-form/party-form.component';
 import { PartyPriceListComponent } from './party-price-list/party-price-list.component';
 import { PartyPriceFormComponent } from './party-price-form/party-price-form.component';
+import { PurchaseComponent } from './Purchase/purchase/purchase.component';
+import { PurhaseFormComponent } from './Purchase/purhase-form/purhase-form.component';
 import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
 import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
 import { ItemComponent } from './item/item.component';
@@ -122,6 +124,8 @@ const routes: Routes = [
   { path: 'counter-sales', component: SaleListComponent,},
   { path: 'counter-sales-form', component: SaleFormComponent,},
   { path: 'counter-sales-form/:id', component: SaleFormComponent,},
+  {path: 'purchase', component: PurchaseComponent, },
+  {path: 'purchase-form', component: PurhaseFormComponent,},
 
 ];
 
