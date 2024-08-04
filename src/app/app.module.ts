@@ -70,6 +70,10 @@ import { SaleListComponent } from './sale-list/sale-list.component';
 import { SaleFormComponent } from './sale-form/sale-form.component';
 import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
 import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
+import { SaleCashInComponent } from './sale-cash-in/sale-cash-in.component';
+import { SaleCashOutComponent } from './sale-cash-out/sale-cash-out.component';
+import { SaleTillOpenComponent } from './sale-till-open/sale-till-open.component';
+import { SaleTillCloseComponent } from './sale-till-close/sale-till-close.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,7 +114,7 @@ import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.compon
     SaleFormComponent,
     SalesManFormComponent,CategoryComponent,CategoryFormComponent,ClassComponent,ClassFormComponent,
     SalesManListComponent, ItemComponent,ItemFormComponent,BrandsComponent,BrandsFormComponent,ManufacturerComponent,ManufacturerFormComponent,
-    PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent, PurcReturnListComponent, PurcReturnFormComponent, PurcOrderListComponent, PurcOrderFormComponent
+    PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent, PurcReturnListComponent, PurcReturnFormComponent, PurcOrderListComponent, PurcOrderFormComponent, SaleCashInComponent, SaleCashOutComponent, SaleTillOpenComponent, SaleTillCloseComponent
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,

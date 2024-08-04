@@ -52,6 +52,10 @@ import { SaleListComponent } from './sale-list/sale-list.component';
 import { SaleFormComponent } from './sale-form/sale-form.component';
 import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
 import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
+import { SaleCashInComponent } from './sale-cash-in/sale-cash-in.component';
+import { SaleCashOutComponent } from './sale-cash-out/sale-cash-out.component';
+import { SaleTillOpenComponent } from './sale-till-open/sale-till-open.component';
+import { SaleTillCloseComponent } from './sale-till-close/sale-till-close.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, },
@@ -127,6 +131,10 @@ const routes: Routes = [
   { path: 'counter-sales', component: SaleListComponent,},
   { path: 'counter-sales-form', component: SaleFormComponent,},
   { path: 'counter-sales-form/:id', component: SaleFormComponent,},
+  { path: 'cash-in', component: SaleCashInComponent ,},
+  { path: 'cash-out', component: SaleCashOutComponent ,},
+  { path: 'till-open', component: SaleTillOpenComponent ,},
+  { path: 'till-close', component: SaleTillCloseComponent ,},
 
 ];
 
