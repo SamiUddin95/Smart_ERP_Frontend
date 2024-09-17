@@ -54,13 +54,10 @@ import { PartyFormComponent } from './party-form/party-form.component';
 import { PartyListComponent } from './party-list/party-list.component';
 import { PartyPriceListComponent } from './party-price-list/party-price-list.component';
 import { PartyPriceFormComponent } from './party-price-form/party-price-form.component';
-<<<<<<< HEAD
 import { PurchaseComponent } from './Purchase/purchase/purchase.component';
 import { PurhaseFormComponent } from './Purchase/purhase-form/purhase-form.component';
 import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
 import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
-=======
->>>>>>> d84eec7126501b9201efa4d1eabf487c476f219d
 import { PurcReturnListComponent } from './purc-return-list/purc-return-list.component';
 import { PurcReturnFormComponent } from './purc-return-form/purc-return-form.component';
 import { ItemComponent } from './item/item.component';
@@ -75,16 +72,10 @@ import { ClassComponent } from './class/class.component';
 import { ClassFormComponent } from './class-form/class-form.component';
 import { SaleListComponent } from './sale-list/sale-list.component';
 import { SaleFormComponent } from './sale-form/sale-form.component';
-<<<<<<< HEAD
-
-=======
-import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
-import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
 import { SaleCashInComponent } from './sale-cash-in/sale-cash-in.component';
 import { SaleCashOutComponent } from './sale-cash-out/sale-cash-out.component';
 import { SaleTillOpenComponent } from './sale-till-open/sale-till-open.component';
 import { SaleTillCloseComponent } from './sale-till-close/sale-till-close.component';
->>>>>>> d84eec7126501b9201efa4d1eabf487c476f219d
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,7 +116,7 @@ import { SaleTillCloseComponent } from './sale-till-close/sale-till-close.compon
     SaleFormComponent,
     SalesManFormComponent,CategoryComponent,CategoryFormComponent,ClassComponent,ClassFormComponent,
     SalesManListComponent, ItemComponent,ItemFormComponent,BrandsComponent,BrandsFormComponent,ManufacturerComponent,ManufacturerFormComponent,
-    PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent, PurcReturnListComponent, PurcReturnFormComponent, PurcOrderListComponent, PurcOrderFormComponent, SaleCashInComponent, SaleCashOutComponent, SaleTillOpenComponent, SaleTillCloseComponent
+    PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent, PurcReturnListComponent, PurcReturnFormComponent, PurcOrderListComponent, PurcOrderFormComponent, SaleCashInComponent, SaleCashOutComponent, SaleTillOpenComponent, SaleTillCloseComponent,PurchaseComponent,PurhaseFormComponent
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,
