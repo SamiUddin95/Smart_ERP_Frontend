@@ -56,6 +56,7 @@ import { SaleCashInComponent } from './sale-cash-in/sale-cash-in.component';
 import { SaleCashOutComponent } from './sale-cash-out/sale-cash-out.component';
 import { SaleTillOpenComponent } from './sale-till-open/sale-till-open.component';
 import { SaleTillCloseComponent } from './sale-till-close/sale-till-close.component';
+import { RptBasicDataComponent } from './rpt-basic-data/rpt-basic-data.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, },
@@ -135,6 +136,7 @@ const routes: Routes = [
   { path: 'cash-out', component: SaleCashOutComponent ,},
   { path: 'till-open', component: SaleTillOpenComponent ,},
   { path: 'till-close', component: SaleTillCloseComponent ,},
+  { path:'rpt-basic-data',component:RptBasicDataComponent}
 
 ];
 

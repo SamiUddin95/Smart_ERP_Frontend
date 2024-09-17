@@ -183,6 +183,12 @@ export class ApiService {
 	getIncomeReport(obj: any) {
 		return this.app.post('getIncomeReport', obj);
 	}
+	getBasicDataReport(dateFrom:string,dateTo:string,brandId:number,
+		categoryId:number,classId:number,name:string) {
+		return this.app.get('getBasicDataReport?datefrom='+dateFrom+'&dateTo='+dateTo+'&brandId='+brandId+
+			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
+		);
+	}
 	deleteRentbyId(id: any) {
 		return this.app.get('deleteRentById?id=' + id, id);
 	}
