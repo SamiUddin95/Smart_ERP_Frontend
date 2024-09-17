@@ -14,7 +14,7 @@ export class PurhaseFormComponent {
   
   formData: any = {  };
   urlId: any;
-
+  party:any=[]
 ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.getCategory();
@@ -23,13 +23,35 @@ ngOnInit(): void {
   cancel(){
     this.router.navigate(['purchase']);
   }
-
+ 
+  getParty(){
+    this.api.getAllParty().subscribe(res=>{
+      this.party=res;
+    })
+  }
+  purchOrderDtlData: any[] = [];
+  AddData(){
+    this.purchOrderDtlData.push({no:0,barCode:'',itemName:'',bonusQty:'',
+    salePrice:0,desc:0,flatDesconeachQty:0,gST:0,gSTPer2:0,remakrs:''});
+  }
+  RemoveData(){
+    this.purchOrderDtlData=[];
+  }
+  RemoveCol(index:number){ 
+    this.purchOrderDtlData.splice(index,1);
+  }
+  item:any=[]
+  getGoDown(){
+    this.api.getAllItemsdetails().subscribe(res=>{
+      this.item=res;
+    })
+  }
   addPurchase(){
     debugger
         this.urlId?this.formData.id=this.urlId:undefined;
         this.api.createPurchase(this.formData).subscribe(res=>{
           this.router.navigate(['purchase']);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: "User Saved Successfully" });	
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Purchase Saved Successfully" });	
           },err=>{
         
           })

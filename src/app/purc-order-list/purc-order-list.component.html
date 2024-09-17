@@ -4,9 +4,9 @@
             <h3>PURCHASE ORDER</h3>
         </div>
         <div>
-            <button pButton pRipple type="button" icon="pi pi-plus" label="Add Order"
+            <button pButton pRipple type="button" icon="pi pi-plus" label="Add Purchase"
                 class="p-button-sm p-button-success float-right"
-                 (click)="addOrder()"></button>
+                 (click)="addPurchase()"></button>
         </div>
     </div>
     <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
@@ -61,7 +61,7 @@
         <div class="pad-wrapper">
             <div class="box">
                 <div class="content">
-                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="purcOrder" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="saleMan" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
                     <ng-template pTemplate="caption">
                         <div class="flex">
@@ -71,45 +71,21 @@
                     </ng-template>    
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">InvSno <p-sortIcon field="code"></p-sortIcon></th>
-                                <th pSortableColumn="name">Party <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">SalesMan Sno <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">InvDate <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Remarks <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="price">Pur Order Term<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Projection Days<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Zero Qty<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Start Date<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">End Date<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">PO Category<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Inv Total<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Disc Perc<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Posted<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="code">Name <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">Type <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-data>
+                        <ng-template pTemplate="body" let-user>
                             <tr>
-                                <td>{{data.id}}</td>
-                                <td>{{data.partyId}}</td>
-                                <td>{{data.salesManSno }}</td>
-                                <td>{{data.dateOfInvoice | date:'yyyy-MM-dd'}}</td>
-                                <td>{{data.remarks }}</td>
-                                <td>{{data.startDate | date:'yyyy-MM-dd' }}</td>
-                                <td>{{data.endDate | date:'yyyy-MM-dd' }}</td>
-                                <td>{{data.poCategory }}</td>
-                                <td>{{data.startDate }}</td>
-                                <td>{{data.endDate }}</td>
-                                <td>{{data.purOrderTerm }}</td>
-                                <td>{{data.invTotal }}</td>
-                                <td>{{data.disc }}</td>
-                                <td>{{data.purOrderTerm }}</td>
+                                <td>{{user.name}}</td>
+                                <td>{{user.salesManTypeId}}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"
-                                        (click)="editUser(data.id)"></button>
+                                        (click)="editUser(user.id)"></button>
                                     <button pButton pRipple icon="pi pi-trash"
-                                        class="p-button-rounded p-button-danger" (click)="deleteUser(data)"></button>
+                                        class="p-button-rounded p-button-danger" (click)="deleteUser(user)"></button>
                                 </td>
                             </tr>
                         </ng-template>

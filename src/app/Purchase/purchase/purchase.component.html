@@ -15,59 +15,48 @@
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Barcode</label>
+                            <label class="mb-0 mx-2" for="Name">Invoice No</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Item Name</label>
+                            <label class="mb-0 mx-2" for="Name">Date</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Quantity</label>
+                            <label class="mb-0 mx-2" for="Name">Invoice Total</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
                              </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Expiry</label>
+                            <label class="mb-0 mx-2" for="Name">Created By</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
                             </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Category</label>
+                            <label class="mb-0 mx-2" for="Name">Vendor</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
                             </div>
                             <div class="col-md-4 col-sm-12">
-                                <label class="mb-0 mx-2" for="Name">Class</label>
+                                <label class="mb-0 mx-2" for="Name">Posted Date</label>
                                 <input type="text"
                                 class="form-control p-inputtext p-component txt"
                                     placeholder="Search By Helmet Code">
                                 </div>
                                 <div class="col-md-4 col-sm-12">
-                                    <label class="mb-0 mx-2" for="Name">Manufacturer</label>
+                                    <label class="mb-0 mx-2" for="Name">Posted By</label>
                                     <input type="text"
                                     class="form-control p-inputtext p-component txt"
                                         placeholder="Search By Helmet Code">
                                     </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <label class="mb-0 mx-2" for="Name">Remarks</label>
-                                        <input type="text"
-                                        class="form-control p-inputtext p-component txt"
-                                            placeholder="Search By Helmet Code">
-                                        </div>
-                                        <div class="col-md-4 col-sm-12">
-                                            <label class="mb-0 mx-2" for="Name">Brand</label>
-                                            <input type="text"
-                                            class="form-control p-inputtext p-component txt"
-                                                placeholder="Search By Helmet Code">
-                                            </div>
+                                    
                          <div class="col-md-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
                                 class="p-button-sm p-button-secondary float-right mx-1  mt-4"
@@ -95,15 +84,13 @@
                     </ng-template>     -->
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">Barcode <p-sortIcon field="code"></p-sortIcon></th>
-                                <th pSortableColumn="name">Item Name <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="category">Quantity <p-sortIcon field="category"></p-sortIcon></th>
-                                <th pSortableColumn="quantity">Expiry <p-sortIcon field="quantity"></p-sortIcon></th>
-                                <th pSortableColumn="price">Bonus Quantity<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Purhase Price<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Sale Price<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Grand Total<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Remarks<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="code">Invoice No <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">Date <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="category">Invoice Total <p-sortIcon field="category"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Created By <p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="price">Vendor<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Posted Date<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Posted By<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>

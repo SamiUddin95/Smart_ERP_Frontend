@@ -15,21 +15,15 @@ export class PurcOrderListComponent {
   constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 	title = 'BMSFrontEnd';
 	ngOnInit(): void {
-		this.getPurchaseOrderList();
+		this.getUserList();
 	}
-	purcOrder: any = [];
-	getPurchaseOrderList() {
-		this.api.getAllPurchaseOrder().subscribe((res: any) => { 
-			this.purcOrder = res;
+	saleMan: any = [];
+	getUserList() { 	
+		this.api.getAllSalesMan().subscribe((res: any) => { 
+			this.saleMan = res;
 		})
 	}
-	party: any = [];
-	getParty() {
-		this.api.getAllParty().subscribe((res: any) => { 
-			this.party = res;
-		})
-	}
-	addOrder() {
+	addPurchase() {
 		this.router.navigate(['purch-order-form']);
 	}
 	cancel() {
@@ -50,7 +44,7 @@ export class PurcOrderListComponent {
 			accept: () => {
 				//Actual logic to perform a confirmation
 				this.api.deleteSalesManById(user.userId).subscribe(res => {
-					this.purcOrder = this.purcOrder.filter((item: any) => item.userId !== user.userId);
+					this.saleMan = this.saleMan.filter((item: any) => item.userId !== user.userId);
 					this.messageService.add({ severity: 'success', summary: 'Success', detail: "Deleted Successfully" });
 					return;
 				}, err => { })
@@ -63,12 +57,12 @@ export class PurcOrderListComponent {
 	exportPdf() {
 		const doc = new jsPDF('l', 'mm', 'a4');
 		const head = [['userId', 'Name', 'Is Active', 'Name', 'Email', 'joiningDate', 'Phone']]
-		let body = this.purcOrder.map((elemento: { [s: string]: unknown; } | ArrayLike<unknown>) => Object.values(elemento));
+		let body = this.saleMan.map((elemento: { [s: string]: unknown; } | ArrayLike<unknown>) => Object.values(elemento));
 			autoTable(doc, {
 				head: head,
 				body: body,
 				didDrawCell: (data) => {
-					data = this.purcOrder;
+					data = this.saleMan;
 				},
 			});
 
@@ -77,7 +71,7 @@ export class PurcOrderListComponent {
 
 	exportExcel() {
 		import('xlsx').then((xlsx) => {
-			const worksheet = xlsx.utils.json_to_sheet(this.purcOrder);
+			const worksheet = xlsx.utils.json_to_sheet(this.saleMan);
 			const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
 			const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
 			this.saveAsExcelFile(excelBuffer, 'products');
