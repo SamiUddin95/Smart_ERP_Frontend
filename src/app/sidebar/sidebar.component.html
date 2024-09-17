@@ -87,13 +87,24 @@
                 <i class="pi pi-money-bill"></i><span>SALES</span><i class="pi pi-chevron-down ms-auto"></i>
             </a>
             <ul id="Sales" class="nav-content collapse" data-bs-parent="#Finance">
-                <a routerLink="/counter-sales" routerLinkActive="active">
+                <!-- <a routerLink="/counter-sales" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Sales</span>
                 </a>
                 <a routerLink="/counter-sales-form" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Counter Sales</span>
+                </a> -->
+                <a routerLink="/cash-in" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Cash In</span>
                 </a>
-
+                <a routerLink="/cash-out" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Cash Out</span>
+                </a>
+                <a routerLink="/till-open" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Till Open</span>
+                </a>
+                <a routerLink="/till-close" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Till Close</span>
+                </a>
             </ul>
         </li>
         <li *ngIf="userType == 2 || userType == 1" class="nav-item">
@@ -116,9 +127,12 @@
                 <a routerLink="/purchase" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Purchase</span>
                 </a>
+<<<<<<< HEAD
                 <!-- <a routerLink="/expenses" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Purchase Expenses</span>
                 </a> -->
+=======
+>>>>>>> d84eec7126501b9201efa4d1eabf487c476f219d
                 <a routerLink="/purch-order-list" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Purchase Order</span>
                 </a>

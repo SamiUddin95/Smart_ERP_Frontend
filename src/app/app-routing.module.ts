@@ -36,10 +36,6 @@ import { PartyListComponent } from './party-list/party-list.component';
 import { PartyFormComponent } from './party-form/party-form.component';
 import { PartyPriceListComponent } from './party-price-list/party-price-list.component';
 import { PartyPriceFormComponent } from './party-price-form/party-price-form.component';
-import { PurchaseComponent } from './Purchase/purchase/purchase.component';
-import { PurhaseFormComponent } from './Purchase/purhase-form/purhase-form.component';
-import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
-import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
 import { PurcReturnFormComponent } from './purc-return-form/purc-return-form.component';
 import { PurcReturnListComponent } from './purc-return-list/purc-return-list.component';
 import { ItemComponent } from './item/item.component';
@@ -54,6 +50,12 @@ import { ManufacturerFormComponent } from './manufacturer-form/manufacturer-form
 import { ItemFormComponent } from './item-form/item-form.component';
 import { SaleListComponent } from './sale-list/sale-list.component';
 import { SaleFormComponent } from './sale-form/sale-form.component';
+import { PurcOrderListComponent } from './purc-order-list/purc-order-list.component';
+import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
+import { SaleCashInComponent } from './sale-cash-in/sale-cash-in.component';
+import { SaleCashOutComponent } from './sale-cash-out/sale-cash-out.component';
+import { SaleTillOpenComponent } from './sale-till-open/sale-till-open.component';
+import { SaleTillCloseComponent } from './sale-till-close/sale-till-close.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, },
@@ -129,8 +131,10 @@ const routes: Routes = [
   { path: 'counter-sales', component: SaleListComponent,},
   { path: 'counter-sales-form', component: SaleFormComponent,},
   { path: 'counter-sales-form/:id', component: SaleFormComponent,},
-  {path: 'purchase', component: PurchaseComponent, },
-  {path: 'purchase-form', component: PurhaseFormComponent,},
+  { path: 'cash-in', component: SaleCashInComponent ,},
+  { path: 'cash-out', component: SaleCashOutComponent ,},
+  { path: 'till-open', component: SaleTillOpenComponent ,},
+  { path: 'till-close', component: SaleTillCloseComponent ,},
 
 ];
 
