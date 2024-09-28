@@ -1,15 +1,20 @@
-table {
-    border: 1px solid black; /* Add a 1px black border */
-    width: 100%; /* Stretch table to full width */
-    table-layout: fixed; /* Fix column widths for horizontal scrolling */
-  }
-  th, td {
-    border: 1px solid black; /* Add border to each cell */
-    padding: 5px; /* Add some padding for readability */
-    white-space: nowrap; /* Prevent text wrapping in cells */
-  }
+.pad-wrapper {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-width: 100%; /* Prevent overflow from the container */
+  max-height: 600px; /* Set a max height for vertical scrolling */
+} 
+.p-table {
+  width: 100%; /* Make sure the table takes full width */
+  table-layout: auto; /* Adjust table layout */
+}
+td{
+  width: 100% !important;
+}
+:host ::ng-deep .p-table {
+  border: 1px solid #ccc;
+}
 
-.table-wrapper {
-    overflow-x: auto; /* Enable horizontal scrollbar */
-    display: block; /* Set display to block for proper scrolling */
-  }
+:host ::ng-deep .p-table .p-datatable-header {
+  background-color: #f4f4f4;
+}

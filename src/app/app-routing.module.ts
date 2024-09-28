@@ -57,6 +57,9 @@ import { SaleCashOutComponent } from './sale-cash-out/sale-cash-out.component';
 import { SaleTillOpenComponent } from './sale-till-open/sale-till-open.component';
 import { SaleTillCloseComponent } from './sale-till-close/sale-till-close.component';
 import { RptBasicDataComponent } from './rpt-basic-data/rpt-basic-data.component';
+import { PurchaseComponent } from './Purchase/purchase/purchase.component';
+import { PurhaseFormComponent } from './Purchase/purhase-form/purhase-form.component';
+
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, },
@@ -81,6 +84,9 @@ const routes: Routes = [
   {path: 'vendors', component: VendorsComponent,},
   {path:'expenses', component: ExpensesComponent,},
   {path:'purchaseorder', component: PurchaseOrderComponent,},
+  {path:'purchase-list', component: PurchaseComponent,},
+  {path:'purchase-form', component: PurhaseFormComponent,},
+  {path:'purchase-form/:id', component: PurhaseFormComponent,},
   {path: 'customers', component: CustomersComponent,},
   {path:'customerform', component: CustomerFormComponent,},
   {path:'customerform/:id', component: CustomerFormComponent,},

@@ -1,203 +1,312 @@
 <div class="container-fluid mt-2" style="width:100%">
-  <div class="flex justify-content-between p-2 ">
-      <h3>PURCHASE</h3>
-  </div>
-  <section>
-      <div class="card">
-          <div class="p-grid ">
-              <div class="row">
-                  <div class="col-md-12">
-                      <div class="card shadow-3">
-                          <p-accordion>
-                              <p-accordionTab header="Purchase" [selected]="true">
-                                  <div class="card shadow-3">
-                                      <div class="card-header">Add Purchase</div>
-                                      <div class="card-body">
-                                          <div class="grid">
-                                              <div class="row mt-1 px-2 col-12"> 
-                                                  <div class="col-md-4 col-sm-12">
-                                                      <label for="usertypr"><span class="text-danger">
-                                                          </span>Party Name</label>
-                                                      <div class="d-flex">
-                                                          <label
-                                                              class="mr-1 border w-25 d-flex align-items-center justify-content-center"
-                                                              for="username"><span class="text-danger">
-                                                              </span>{{formData.partyId}}</label>
-                                                          <p-dropdown class="w-100" [options]="party"
-                                                              [(ngModel)]="formData.partyId"
-                                                              placeholder="Select a Type" optionLabel="partyName"
-                                                              optionValue="id"></p-dropdown>
-                                                      </div>
-                                                  </div>
-                                                  <div class="col-md-4 col-sm-12 pl-2">
-                                                      <label for="lastname"><span class="text-danger">
-                                                          </span>Remarks</label>
-                                                      <input type="text" class="form-control col-md-12"
-                                                          placeholder="Remarks" [(ngModel)]="formData.remarks">
-                                                  </div>
-                                                  <div class="col-md-4 col-sm-12 pl-2">
-                                                      <label for="lastname"><span class="text-danger">
-                                                          </span>PartyInv</label>
-                                                      <input type="text" class="form-control col-md-12"
-                                                          placeholder="Inv" [(ngModel)]="formData.paCategory">
-                                                  </div>   
-                                                  
-                                                  <div class="col-md-12 mt-4 text-right col-sm-12">
-                                                      <button pButton pRipple type="button" icon="pi pi-save"
-                                                          (click)="AddData()" label="Add"
-                                                          class="p-button-sm p-button-success"> </button>
-                                                      <button pButton pRipple type="button" icon="pi pi-trash"
-                                                          (click)="RemoveData()" label="Remove"
-                                                          class="ml-2 p-button-sm p-button-danger"> </button>
-                                                  </div>
-                                                  <div class="col-md-12 mt-4">
-                                                      <div class="pad-wrapper">
-                                                          <div class="box">
-                                                              <div class="content">
-                                                                  <p-table #dt [scrollable]="true"
-                                                                      scrollHeight="600px" responsiveLayout="scroll"
-                                                                      [value]="purchOrderDtlData"
-                                                                      styleClass="p-datatable-sm p-datatable-gridlines"
-                                                                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                                                                      [rows]="10" [showCurrentPageReport]="true"
-                                                                      [rowsPerPageOptions]="[10, 25, 50]"
-                                                                      [paginator]="true" [rows]="10">
+    <div class="flex justify-content-between p-2 ">
+        <h3>PURCHASE</h3>
+    </div>
+    <section>
+        <div class="card">
+            <div class="p-grid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-3">
+                            <p-accordion>
+                                <p-accordionTab header="Purchase" [selected]="true">
+                                    <div class="card shadow-3">
+                                        <div class="card-header">Add Purchase</div>
+                                        <div class="card-body">
+                                            <div class="grid">
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="usertypr"><span class="text-danger">
+                                                            </span>Party Name</label>
+                                                        <div class="d-flex">
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                for="username"><span class="text-danger">
+                                                                </span>{{formData.partyId}}</label>
+                                                            <p-dropdown class="w-100" [options]="party"
+                                                                [(ngModel)]="formData.partyId"
+                                                                placeholder="Select a Type" optionLabel="partyName"
+                                                                optionValue="id"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Remarks</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Remarks" [(ngModel)]="formData.remarks">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>PartyInv</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Inv" [(ngModel)]="formData.paCategory">
+                                                    </div>
 
-                                                                      <ng-template pTemplate="header">
-                                                                          <tr> 
-                                                                              <th pSortableColumn="name">No
-                                                                                  <p-sortIcon
-                                                                                      field="name"></p-sortIcon></th>
-                                                                              <th pSortableColumn="name">Bar Code
-                                                                                  <p-sortIcon
-                                                                                      field="name"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Item Name<p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Quantity<p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Bonus Quantity<p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Purchase Price<p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Disc by %<p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Disc by Value<p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Total <p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Gst by % <p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Gst by Value <p-sortIcon
-                                                                                      field="price"></p-sortIcon></th> 
-                                                                              <th pSortableColumn="price">
-                                                                                  Net Rate <p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Sale Price <p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Sale Disc <p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Margin% <p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                              <th pSortableColumn="price">
-                                                                                  Net Sale Price <p-sortIcon
-                                                                                      field="price"></p-sortIcon></th>
-                                                                                      
-                                                                          </tr>
-                                                                      </ng-template>
-                                                                      <ng-template pTemplate="body" let-user let-i="rowIndex">
-                                                                          <tr>
-                                                                              <td>{{i+1}}</td>
-                                                                              <td> <input type="text"
-                                                                                      class="form-control form-control-sm col-md-12 pwd"
-                                                                                      placeholder="No"
-                                                                                      [disabled]="false"
-                                                                                      [(ngModel)]="user.barCode"></td>
-                                                                                      <td><p-dropdown class="w-100"
-                                                                                          [options]="item"
-                                                                                          [(ngModel)]="user.itemId"
-                                                                                          placeholder="----Select an Item----"
-                                                                                          optionLabel="itemName"
-                                                                                          optionValue="id"></p-dropdown>
-                                                                          </td>
-                                                                              <td> <input type="number"
-                                                                                      class="form-control form-control-sm col-md-12 pwd"
-                                                                                      placeholder="Item Name"
-                                                                                      [disabled]="false"
-                                                                                      [(ngModel)]="user.soldQty"></td>
-                                                                              <td> <input type="number"
-                                                                                      class="form-control form-control-sm col-md-12 pwd"
-                                                                                      placeholder="Bonus Qty"
-                                                                                      [disabled]="false"
-                                                                                      [(ngModel)]="user.rtnQty"></td>
-                                                                              <td> <input type="number"
-                                                                                      class="form-control form-control-sm col-md-12 pwd"
-                                                                                      placeholder="Sale Price"
-                                                                                      [disabled]="false"
-                                                                                      [(ngModel)]="user.netSaleQty"></td>
-                                                                              <td> <input type="number"
-                                                                                      class="form-control form-control-sm col-md-12 pwd"
-                                                                                      placeholder="Desc"
-                                                                                      [disabled]="false"
-                                                                                      [(ngModel)]="user.rate"></td> 
-                                                                              <td> <input type="number"
-                                                                                      class="form-control form-control-sm col-md-12 pwd"
-                                                                                      placeholder="GST"
-                                                                                      [disabled]="false"
-                                                                                      [(ngModel)]="user.currentStock"></td>
-                                                                              <td> <input type="number"
-                                                                                      class="form-control form-control-sm col-md-12 pwd"
-                                                                                      placeholder="GST Per 2"
-                                                                                      [disabled]="false"
-                                                                                      [(ngModel)]="user.requiredQty"></td>
-                                                                              <td> <input type="text"
-                                                                                      class="form-control form-control-sm col-md-12 pwd"
-                                                                                      placeholder="Remakrs"
-                                                                                      [disabled]="false"
-                                                                                      [(ngModel)]="user.total"></td> 
-                                                                              <td>  <button pButton pRipple type="button" icon="pi pi-trash" (click)="RemoveCol(i)"
-                                                                                  class="p-button-sm p-button-danger"> </button></td>
-                                                                          </tr>
-                                                                      </ng-template> 
-                                                                  </p-table>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="d-flex justify-content-end w-100" style="margin-top:10px">
-                                      <div>
-                                          <button style="margin-right: 3px" pButton pRipple type="button"
-                                              icon="pi pi-arrow-left" (click)="cancel()" label="Back"
-                                              class="p-button-sm p-button-danger"> </button>
-                                          <button pButton pRipple type="button" icon="pi pi-save" (click)="addPurchase()"
-                                              label="Save" class="p-button-sm p-button-success"> </button>
-                                      </div>
-                                  </div>
-                              </p-accordionTab>
-                          </p-accordion>
-                      </div>
-                  </div>
-              </div>
-          </div>
+                                                    <div class="col-md-12 mt-4 text-right col-sm-12">
+                                                        <button pButton pRipple type="button" icon="pi pi-save"
+                                                            (click)="AddData()" label="Add"
+                                                            class="p-button-sm p-button-success"> </button>
+                                                        <button pButton pRipple type="button" icon="pi pi-trash"
+                                                            (click)="RemoveData()" label="Remove"
+                                                            class="ml-2 p-button-sm p-button-danger"> </button>
+                                                    </div>
+                                                    <div class="col-md-12 mt-4">
+                                                        <div class="pad-wrapper">
+                                                            <div class="box">
+                                                                <div class="content">
+                                                                    <div class="row">
+                                                                        <div class="col-md-9">
+                                                                        <p-table #dt [scrollable]="true"
+                                                                        scrollHeight="600px" 
+                                                                        responsiveLayout="scroll"
+                                                                        [value]="purcDtl"
+                                                                        styleClass="p-datatable-sm p-datatable-gridlines"
+                                                                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                                                        [rows]="16" [showCurrentPageReport]="true"
+                                                                        [rowsPerPageOptions]="[10, 25, 50]"
+                                                                        [paginator]="true">
+                                                                        <ng-template pTemplate="header">
+                                                                            <tr>
+                                                                                <th pSortableColumn="name">No
+                                                                                    <p-sortIcon
+                                                                                        field="name"></p-sortIcon>
+                                                                                </th>
+                                                                                <th pSortableColumn="name">Bar Code
+                                                                                    <p-sortIcon
+                                                                                        field="name"></p-sortIcon>
+                                                                                </th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Item Name<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Quantity<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Bonus Quantity<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Purchase Price<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Disc%<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Disc Value<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Total <p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Gst % <p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Gst Value <p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Net Rate <p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Sale Price <p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Sale Disc <p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Margin% <p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Net Sale Price <p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                        <th pSortableColumn="price">
+                                                                                            Action </th>
 
-      </div>
+                                                                            </tr>
+                                                                        </ng-template>
+                                                                        <ng-template pTemplate="body" let-user
+                                                                            let-i="rowIndex">
+                                                                            <tr>
+                                                                                <td>{{i+1}}</td>
+                                                                                <td> <input type="text"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Barcode"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.barcode">
+                                                                                </td>
+                                                                                <td><p-dropdown class="w-100"
+                                                                                        [options]="items"
+                                                                                        [(ngModel)]="user.itemName"
+                                                                                        placeholder="----Select an Item----"
+                                                                                        optionLabel="itemName"
+                                                                                        optionValue="id"></p-dropdown>
+                                                                                </td>
+                                                                                <td> <input type="number"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Quantity"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.quantity" (input)="qtyChange()">
+                                                                                </td>
+                                                                                <td> <input type="number"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Bonus Qty"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.bonusQuantity">
+                                                                                </td>
+                                                                                <td> <input type="number"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Purchase Price"
+                                                                                        [disabled]="false" (input)="fullRateChange(purcDtl)"
+                                                                                        [(ngModel)]="user.purchasePrice">
+                                                                                </td>
+                                                                                <td> <input type="number"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Dis by %"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.discountByPercent">
+                                                                                </td>
+                                                                                <td> <input type="number"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Disc By Value"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.discountByValue">
+                                                                                </td>
+                                                                                <td> <input type="number"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Total"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.total"></td>
+                                                                                <td> <input type="text"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Gst By %"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.gstByPercent">
+                                                                                </td>
+                                                                                <td> <input type="text"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Gst By Value"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.gstByValue">
+                                                                                </td>
 
-  </section>
+                                                                                <td> <input type="text"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Net Rate"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.netRate"></td>
+                                                                                <td> <input type="text"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Sale Price"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.salePrice">
+                                                                                </td>
+
+                                                                                <td> <input type="text"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Sale disc"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.saleDiscountByValue">
+                                                                                </td>
+                                                                                <td> <input type="text"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Marg %"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.marginPercent">
+                                                                                </td>
+                                                                                <td> <input type="text"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Net Sale"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.netSalePrice">
+                                                                                </td>
+                                                                                <td> <button pButton pRipple
+                                                                                        type="button" icon="pi pi-trash"
+                                                                                        (click)="RemoveCol(i)"
+                                                                                        class="p-button-sm p-button-danger">
+                                                                                    </button></td>
+                                                                            </tr>
+                                                                        </ng-template>
+                                                                            </p-table>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <div class="border summary-table">
+                                                                                <h5 class="text-center p-1">Purchase Order Summary</h5>
+                                                                                <p-table #dt2 [scrollable]="true"
+                                                                                     scrollHeight="600px"
+                                                                                     responsiveLayout="scroll"
+                                                                                     styleClass="p-datatable-sm p-datatable-gridlines">
+                                                                
+                                                                                <ng-template pTemplate="header">
+                                                                                    <tr>
+                                                                                        <th>Qty Pack</th>
+                                                                                        <th>{{purcDtl.length}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Loose Qty</th>
+                                                                                        <th>{{looseQty}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Total Qty</th>
+                                                                                        <th>{{totalQty}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Bonus Qty</th>
+                                                                                        <th>{{bonusQty}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Disc</th>
+                                                                                        <th>{{disc}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Disc Flat Value</th>
+                                                                                        <th>{{flatDisc}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Total Exc Tax</th>
+                                                                                        <th>{{totalExcTax}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Total Inc Tax</th>
+                                                                                        <th>{{totalIncTax}}</th>
+                                                                                        
+                                                                                    </tr> 
+                                                                                    <tr>
+                                                                                        <th>Grand Total</th>
+                                                                                        <th>{{grandTotal}}</th>
+                                                                                    </tr> 
+                                                                                </ng-template> 
+                                                                            </p-table>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
+                                        <div>
+                                            <button style="margin-right: 3px" pButton pRipple type="button"
+                                                icon="pi pi-arrow-left" (click)="cancel()" label="Back"
+                                                class="p-button-sm p-button-danger"> </button>
+                                            <button pButton pRipple type="button" icon="pi pi-save"
+                                                (click)="addPurchase()" label="Save"
+                                                class="p-button-sm p-button-success"> </button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
 </div>
 
 <p-toast position="top-right"></p-toast>

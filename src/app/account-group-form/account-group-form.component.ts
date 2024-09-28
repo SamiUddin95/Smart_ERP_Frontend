@@ -19,6 +19,7 @@ export class AccountGroupFormComponent {
     this.getUserType();
     this.getAccountType();
     this.getUserGroup();
+    this.getAccountCategory();
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
@@ -35,6 +36,12 @@ export class AccountGroupFormComponent {
   getAccountType(){
     this.api.getAllAccountType().subscribe(res=>{
       this.accType=res;
+    })
+  }
+  accCategory:any=[]
+  getAccountCategory(){
+    this.api.getAllAccountCat().subscribe(res=>{
+      this.accCategory=res;
     })
   }
   addUser(){

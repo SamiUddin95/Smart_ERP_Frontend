@@ -77,6 +77,7 @@ import { SaleCashOutComponent } from './sale-cash-out/sale-cash-out.component';
 import { SaleTillOpenComponent } from './sale-till-open/sale-till-open.component';
 import { SaleTillCloseComponent } from './sale-till-close/sale-till-close.component';
 import { RptBasicDataComponent } from './rpt-basic-data/rpt-basic-data.component';
+import { PurchaseFormComponent } from './purchase-form/purchase-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -117,11 +118,12 @@ import { RptBasicDataComponent } from './rpt-basic-data/rpt-basic-data.component
     SaleFormComponent,
     SalesManFormComponent,CategoryComponent,CategoryFormComponent,ClassComponent,ClassFormComponent,
     SalesManListComponent, ItemComponent,ItemFormComponent,BrandsComponent,BrandsFormComponent,ManufacturerComponent,ManufacturerFormComponent,
-<<<<<<< Updated upstream
-    PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent, PurcReturnListComponent, PurcReturnFormComponent, PurcOrderListComponent, PurcOrderFormComponent, SaleCashInComponent, SaleCashOutComponent, SaleTillOpenComponent, SaleTillCloseComponent,PurchaseComponent,PurhaseFormComponent
-=======
-    PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent, PurcReturnListComponent, PurcReturnFormComponent, PurcOrderListComponent, PurcOrderFormComponent, SaleCashInComponent, SaleCashOutComponent, SaleTillOpenComponent, SaleTillCloseComponent, RptBasicDataComponent
->>>>>>> Stashed changes
+    PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent,
+     PurcReturnListComponent, PurcReturnFormComponent, PurcOrderListComponent, PurcOrderFormComponent, 
+     SaleCashInComponent, SaleCashOutComponent, SaleTillOpenComponent, SaleTillCloseComponent,
+     PurchaseComponent,PurhaseFormComponent,
+      RptBasicDataComponent,
+      PurchaseFormComponent,
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,

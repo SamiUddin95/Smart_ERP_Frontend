@@ -61,7 +61,7 @@
         <div class="pad-wrapper">
             <div class="box">
                 <div class="content">
-                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="saleMan" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="purchOrder" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
                     <ng-template pTemplate="caption">
                         <div class="flex">
@@ -71,15 +71,23 @@
                     </ng-template>    
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">Name <p-sortIcon field="code"></p-sortIcon></th>
-                                <th pSortableColumn="name">Type <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="code">Order ID <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="code">Party <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="code">Invoice Total <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">Date of Invoice <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Start Date <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">End Date <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-user>
                             <tr>
-                                <td>{{user.name}}</td>
-                                <td>{{user.salesManTypeId}}</td>
+                                <td>{{user.id}}</td>
+                                <td>{{user.partyId}}</td>
+                                <td>{{user.invTotal}}</td>
+                                <td>{{user.dateOfInvoice}}</td>
+                                <td>{{user.startDate}}</td>
+                                <td>{{user.endDate}}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"

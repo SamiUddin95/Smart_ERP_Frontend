@@ -71,7 +71,7 @@
                     </ng-template>    
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">Group Category <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="code">Group Name <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">Account Type <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="category">Manual Code <p-sortIcon field="category"></p-sortIcon></th>
                                 <th pSortableColumn="quantity">Priority <p-sortIcon field="quantity"></p-sortIcon></th>
@@ -80,7 +80,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-data>
                             <tr>
-                                <td>{{data.groupCategoryId}}</td>
+                                <td>{{data.name}}</td>
                                 <td>{{data.accountTypeId}}</td>
                                 <td>{{data.manualCode}}</td>
                                 <td>{{data.priority}}</td> 

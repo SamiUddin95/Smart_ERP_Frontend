@@ -18,13 +18,10 @@
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="username"><span class="text-danger">
                                                             </span>Group Name</label>
-                                                            <div class="d-flex">
-                                                                <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
-                                                                </span>{{formData.groupCategoryId}}</label>
-                                                                <p-dropdown class="w-100" [options]="usrGrpCat" [(ngModel)]="formData.groupCategoryId"
-                                                                placeholder="------ Please Select ------" optionLabel="name"
-                                                                optionValue="id"></p-dropdown>
-                                                            </div>
+                                                            <input type="text" 
+                                                            class="form-control  col-md-12 "
+                                                            placeholder="Enter Here"
+                                                            [(ngModel)]="formData.name">
                                                             
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
@@ -37,7 +34,18 @@
                                                                 placeholder="------ Please Select ------" optionLabel="name"
                                                                 optionValue="id"></p-dropdown>
                                                             </div>
-                                                    </div>  
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="usertypr"><span class="text-danger">
+                                                            </span>Account Category</label>
+                                                            <div class="d-flex">
+                                                                <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
+                                                                </span>{{formData.accountCategoryId}}</label>
+                                                                <p-dropdown class="w-100" [options]="accCategory" [(ngModel)]="formData.accountCategoryId"
+                                                                placeholder="------ Please Select ------" optionLabel="name"
+                                                                optionValue="id"></p-dropdown>
+                                                            </div>
+                                                    </div>   
                                                     <div class="col-md-6 col-sm-12 pl-2">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Manual Code</label>

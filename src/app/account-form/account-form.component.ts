@@ -51,10 +51,10 @@ export class AccountFormComponent {
       this.accType=res;
     })
   }
-  usrGrp:any=[];
+  accGrp:any=[];
   getUserGroup(){
-    this.api.getAllAccountGroup().subscribe(res=>{
-      this.usrGrp=res;
+    this.api.getAllAccGroup().subscribe(res=>{
+      this.accGrp=res;
     })
   }
   accCat:any=[];

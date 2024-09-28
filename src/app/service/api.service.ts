@@ -49,13 +49,16 @@ export class ApiService {
 	getAccountCatById(id: any) {
 		return this.app.get('getAccountCategoryById?id=' + id, id);
 	} 
+	deleteAccountCatById(id: any) {
+		return this.app.get('deleteAccountCategoryById?id=' + id, id);
+	} 
 	//AccountType
 	getAllAccountType() {
 		return this.app.get('getAllAccountType');
 	}
 	//AccountGroup
 	getAllAccountGroup() {
-		return this.app.get('getAllAccGroupCategory');
+		return this.app.get('getAllAccGroup');
 	}
 
 	//Sales Man
@@ -142,6 +145,12 @@ export class ApiService {
 	createAccountGroup(obj: any) {
 		return this.app.post('createAccGroup', obj);
 	}
+	getAllAccGroup() {
+		return this.app.get('getAllAccGroup');
+	}
+	deleteAccountGroupById(id: any) {
+		return this.app.get('deleteAccGroupById?id=' + id, id);
+	} 
 	//Shop
 
 	getAllShop() {

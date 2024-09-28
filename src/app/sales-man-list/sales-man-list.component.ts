@@ -43,8 +43,8 @@ export class SalesManListComponent {
 			message: 'Are you sure that you want to perform this action?',
 			accept: () => {
 				//Actual logic to perform a confirmation
-				this.api.deleteSalesManById(user.userId).subscribe(res => {
-					this.saleMan = this.saleMan.filter((item: any) => item.userId !== user.userId);
+				this.api.deleteSalesManById(user.id).subscribe(res => {
+					this.saleMan = this.saleMan.filter((item: any) => item.id !== user.id);
 					this.messageService.add({ severity: 'success', summary: 'Success', detail: "Deleted Successfully" });
 					return;
 				}, err => { })
