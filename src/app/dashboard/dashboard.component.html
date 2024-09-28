@@ -1,1 +1,69 @@
-<p-toast position="top-right"></p-toast>
+<div class="dashboard-container">
+    <div class="dashboard-block" *ngFor="let block of blocks" [style.--block-color]="block.color">
+      <!-- Upper part for the logo with white background -->
+      <div class="block-upper">
+        <img *ngIf="block.imageUrl" [src]="block.imageUrl" alt="{{ block.title }}" class="block-image" />
+        <mat-icon *ngIf="!block.imageUrl" class="block-icon">{{ block.icon }}</mat-icon>
+      </div>
+  
+      <!-- Lower part for the content with a colorful background -->
+      <div class="block-lower">
+        <h3 class="block-title">{{ block.title }}</h3>
+        
+        <!-- Nested links for Sale block -->
+        <div *ngIf="block.title === 'Sale'" class="nested-links">
+          <div class="nested-links-row">
+            <a *ngFor="let link of block.links?.slice(0, 2)" [routerLink]="link.url">{{ link.name }}</a>
+          </div>
+          <div class="nested-links-row">
+            <a *ngFor="let link of block.links?.slice(2, 4)" [routerLink]="link.url">{{ link.name }}</a>
+          </div>
+        </div>
+       <!-- Nested links for Purchase block -->
+       <div *ngIf="block.title === 'Purchase'" class="nested-links">
+        <div class="nested-links-row">
+          <a *ngFor="let link of block.links?.slice(0, 2)" [routerLink]="link.url">{{ link.name }}</a>
+        </div>
+        <div class="nested-links-row">
+          <a *ngFor="let link of block.links?.slice(2)" [routerLink]="link.url">{{ link.name }}</a>
+        </div>
+      </div>
+       <!-- Nested links for Account block -->
+       <div *ngIf="block.title === 'Account'" class="nested-links">
+        <div class="nested-links-row">
+          <a *ngFor="let link of block.links?.slice(0, 2)" [routerLink]="link.url">{{ link.name }}</a>
+        </div>
+        <div class="nested-links-row">
+          <a *ngFor="let link of block.links?.slice(2)" [routerLink]="link.url">{{ link.name }}</a>
+        </div>
+      </div>
+        <!-- Nested links for Party block -->
+        <div *ngIf="block.title === 'Party'" class="nested-links">
+          <div class="nested-links-row">
+            <a *ngFor="let link of block.links?.slice(0, 2)" [routerLink]="link.url">{{ link.name }}</a>
+          </div>
+          <div class="nested-links-row">
+            <a *ngFor="let link of block.links?.slice(2)" [routerLink]="link.url">{{ link.name }}</a>
+          </div>
+        </div>
+         <!-- Nested links for Item block -->
+         <div *ngIf="block.title === 'Item'" class="nested-links">
+          <div class="nested-links-row">
+            <a *ngFor="let link of block.links?.slice(0, 2)" [routerLink]="link.url">{{ link.name }}</a>
+          </div>
+          <div class="nested-links-row">
+            <a *ngFor="let link of block.links?.slice(2)" [routerLink]="link.url">{{ link.name }}</a>
+          </div>
+        </div>
+         <!-- Nested links for User block -->
+         <div *ngIf="block.title === 'User'" class="nested-links">
+          <div class="nested-links-row">
+            <a *ngFor="let link of block.links?.slice(0, 2)" [routerLink]="link.url">{{ link.name }}</a>
+          </div>
+          <div class="nested-links-row">
+            <a *ngFor="let link of block.links?.slice(2)" [routerLink]="link.url">{{ link.name }}</a>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
