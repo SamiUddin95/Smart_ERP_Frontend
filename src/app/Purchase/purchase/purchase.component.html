@@ -96,15 +96,13 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-itm>
                             <tr>
-                                <td>{{itm.aliasName}}</td>
-                                <td>{{itm.itemName}}</td>
-                                <td>{{itm.purchasePrice}}</td>
+                                <td>{{itm.invoiceNo}}</td>
+                                <td>{{itm.createdAt}}</td>
+                                <td>{{itm.billTotal}}</td>
                                 <td>{{itm.salePrice}}</td>
-                                <td>{{itm.categoryId}}</td>
-                                <td>{{itm.classId}}</td>
-                                <td>{{itm.manufacturerId}}</td>
-                                <td>{{itm.remarks}}</td>
-                                <td>{{itm.brandId}}</td>
+                                <td>{{itm.vendorId}}</td>
+                                <td>{{itm.createdAt}}</td>
+                                <td>{{itm.postedBy}}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"

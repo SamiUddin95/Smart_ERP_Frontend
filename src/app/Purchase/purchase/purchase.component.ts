@@ -17,12 +17,8 @@ export class PurchaseComponent {
 
   getPurhaseList() {
     this.api.getAllPurhasedetails().subscribe((res: any) => {
-      this.item = res.map((ele: any) => {
-        return {
-          id: ele.id,
-          barcode: ele.barcode
-        };
-      });
+      debugger
+      this.item=res;
     });
   }
 

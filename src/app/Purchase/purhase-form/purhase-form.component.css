@@ -1,20 +1,12 @@
-.pad-wrapper {
-  overflow-x: auto; /* Enable horizontal scrolling */
-  overflow-y: auto; /* Enable vertical scrolling */
-  max-width: 100%; /* Prevent overflow from the container */
-  max-height: 600px; /* Set a max height for vertical scrolling */
-} 
-.p-table {
-  width: 100%; /* Make sure the table takes full width */
-  table-layout: auto; /* Adjust table layout */
-}
-td{
-  width: 100% !important;
-}
-:host ::ng-deep .p-table {
-  border: 1px solid #ccc;
+.p-datatable th {
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
-:host ::ng-deep .p-table .p-datatable-header {
-  background-color: #f4f4f4;
+.p-datatable td {
+  white-space: nowrap; /* Prevent text from wrapping */
 }
+
+.p-datatable th, .p-datatable td {
+  padding: 8px; /* Adjust padding as needed */
+}
+

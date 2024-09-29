@@ -41,7 +41,6 @@ ngOnInit(): void {
     this.router.navigate(['purchase']);
   }
   fullRateChange(purcDtl:any){ 
-    debugger
     purcDtl.total=purcDtl.quantity*purcDtl.purchasePrice;
     purcDtl.netTotal=purcDtl.quantity*purcDtl.purchasePrice;
     this.grandTotal=0;
@@ -114,13 +113,12 @@ ngOnInit(): void {
     let formData: any = {
       id: this.urlId ? this.urlId : undefined, 
       barcode: this.formData.barcode,
-      // itemName: this.formData.itemName,
-      quantity: this.formData.quantity,
-      bonusQuantity: this.formData.bonusQuantity,
+      VendorId:this.formData.partyId, 
+      Remarks: this.formData.remarks,
+      InvoiceNo: this.formData.invoiceNo,
       purchasePrice: this.formData.purchasePrice,
-      discountByPercent: this.formData.discountByPercent,
-      discountByValue: this.formData.discountByValue,
-      total: this.formData.total,
+      ItemsQuantity: this.totalQty,
+      billTotal: this.grandTotal,
       gstByPercent: this.formData.gstByPercent,
       gstByValue: this.formData.gstByValue,
       netRate: this.formData.netRate,
@@ -132,8 +130,10 @@ ngOnInit(): void {
     };
   
     this.api.createPurchase(formData).subscribe(res => {
-      this.router.navigate(['purchase']);
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: "Purchase Saved Successfully" });
+      if(res.msg="Purchase Order processed successfully"){
+        this.router.navigate(['purchase-list']);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Purchase Saved Successfully" });
+      }
     }, err => {
       console.error("Error saving purchase", err);
     });
