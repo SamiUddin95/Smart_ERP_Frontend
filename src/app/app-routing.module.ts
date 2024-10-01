@@ -59,6 +59,9 @@ import { SaleTillCloseComponent } from './sale-till-close/sale-till-close.compon
 import { RptBasicDataComponent } from './rpt-basic-data/rpt-basic-data.component';
 import { PurchaseComponent } from './Purchase/purchase/purchase.component';
 import { PurhaseFormComponent } from './Purchase/purhase-form/purhase-form.component';
+import { RptPurchaseComponent } from './rpt-purchase/rpt-purchase.component';
+import { RptPurchaseOrderComponent } from './rpt-purchase-order/rpt-purchase-order.component';
+import { RptPurchaseReturnComponent } from './rpt-purchase-return/rpt-purchase-return.component';
 
 
 const routes: Routes = [
@@ -142,7 +145,15 @@ const routes: Routes = [
   { path: 'cash-out', component: SaleCashOutComponent ,},
   { path: 'till-open', component: SaleTillOpenComponent ,},
   { path: 'till-close', component: SaleTillCloseComponent ,},
-  { path:'rpt-basic-data',component:RptBasicDataComponent}
+  { path:'rpt-basic-data',component:RptBasicDataComponent},
+  { path:'rpt-purchase',component:RptPurchaseComponent},  
+  { path:'rpt-purch-order',component:RptPurchaseOrderComponent}, 
+  { path:'rpt-purch-return',component:RptPurchaseReturnComponent},
+
+  
+
+
+  
 
 ];
 

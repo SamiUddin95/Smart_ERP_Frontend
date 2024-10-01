@@ -198,6 +198,24 @@ export class ApiService {
 			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
 		);
 	}
+	getPurchaseReport(dateFrom:string,dateTo:string,brandId:number,
+		categoryId:number,classId:number,name:string) {
+		return this.app.get('getPurchaseReport?datefrom='+dateFrom+'&dateTo='+dateTo+'&brandId='+brandId+
+			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
+		);
+	}
+	getPurchaseOrderReport(dateFrom:string,dateTo:string,vendorId:number,
+		categoryId:number,classId:number,name:string) {
+		return this.app.get('getPurchaseOrderReport?datefrom='+dateFrom+'&dateTo='+dateTo+'&vendorId='+vendorId+
+			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
+		);
+	}
+	getPurchaseReturnReport(dateFrom:string,dateTo:string,vendorId:number,
+		categoryId:number,classId:number,name:string) {
+		return this.app.get('getPurchaseReturnReport?datefrom='+dateFrom+'&dateTo='+dateTo+'&vendorId='+vendorId+
+			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
+		);
+	}
 	deleteRentbyId(id: any) {
 		return this.app.get('deleteRentById?id=' + id, id);
 	}
