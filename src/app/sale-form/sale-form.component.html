@@ -84,12 +84,7 @@
                                                                 
                                                                                 <ng-template pTemplate="body" let-saleDtl let-i="rowIndex">
                                                                                     <tr>
-                                                                                        <td><input type="text"
-                                                                                                   class="form-control form-control-sm col-md-12 pwd"
-                                                                                                   placeholder="Amount"
-                                                                                                   [disabled]="false"
-                                                                                                   [(ngModel)]="saleDtl.no">
-                                                                                        </td>
+                                                                                        <td>{{ i + 1 }}</td>
                                                                                         <td><input type="text"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Bar Code"
