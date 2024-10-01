@@ -38,7 +38,7 @@ ngOnInit(): void {
 	}
 
   cancel(){
-    this.router.navigate(['purchase']);
+    this.router.navigate(['purchase-list']);
   }
   fullRateChange(purcDtl:any){ 
     purcDtl.total=purcDtl.quantity*purcDtl.purchasePrice;
