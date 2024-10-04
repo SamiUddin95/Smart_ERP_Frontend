@@ -82,6 +82,9 @@ import { SaleTillOpenListComponent } from './sale-till-open-list/sale-till-open-
 import { RptPurchaseComponent } from './rpt-purchase/rpt-purchase.component';
 import { RptPurchaseOrderComponent } from './rpt-purchase-order/rpt-purchase-order.component';
 import { RptPurchaseReturnComponent } from './rpt-purchase-return/rpt-purchase-return.component';
+import { UserReportComponent } from './user-report/user-report.component';
+import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
+import { SalaryReportComponent } from './salary-report/salary-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -132,6 +135,9 @@ import { RptPurchaseReturnComponent } from './rpt-purchase-return/rpt-purchase-r
       RptPurchaseComponent,
       RptPurchaseOrderComponent,
       RptPurchaseReturnComponent,
+      UserReportComponent,
+      AttendanceReportComponent,
+      SalaryReportComponent,
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,

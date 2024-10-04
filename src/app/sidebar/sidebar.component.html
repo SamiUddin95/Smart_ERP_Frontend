@@ -5,7 +5,7 @@
 	</div>
     <ul class="sidebar-nav mt-5" id="sidebar-nav">	
         <li *ngIf="userType==1" class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#Helmet">
+            <a routerLink="/dashboard" class="nav-link collapsed" data-bs-target="#Helmet">
                 <i class="pi pi-home"></i><span>DASHBOARD</span>
             </a>
         </li> 
@@ -110,6 +110,24 @@
                 </a>
             </ul>
         </li>
+        <li *ngIf="userType==1" class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#Helmet" data-bs-toggle="collapse" href="#">
+                <i class="pi pi-user"></i><span>USERS</span><i class="pi pi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="Helmet" class="nav-content collapse " data-bs-parent="#sidebar-nav"> 
+                <li>
+                    <a routerLink="/user-list" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>View Users</span>
+                        </a>
+                </li> 
+                <li>
+                    <a class="nav-link" routerLink="/user-form" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>View Groups</span>
+                      </a>
+                </li>
+                
+            </ul>
+        </li>
         <li *ngIf="userType == 2 || userType == 1" class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#Reports" data-bs-toggle="collapse" href="#">
                 <i class="pi pi-money-bill"></i><span>REPORTS</span><i class="pi pi-chevron-down ms-auto"></i>
@@ -162,31 +180,24 @@
                             <i class="fa fa-helmet-un"></i><span>Manufacturer</span>
                         </a>
                     </ul>
+                    <a class="nav-link collapsed" data-bs-target="#User" data-bs-toggle="collapse" href="#">
+                        <i class="pi pi-shopping-cart"></i><span>Operation/HR</span><i class="pi pi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="User" class="nav-content collapse" data-bs-parent="#Finance">
+                        <a routerLink="/user-report" routerLinkActive="active">
+                            <i class="fa fa-helmet-un"></i><span>Users Report</span>
+                        </a>
+                        <a routerLink="/att-report" routerLinkActive="active">
+                            <i class="fa fa-helmet-un"></i><span>Attendance Report</span>
+                        </a>
+                        <a routerLink="/salary-report" routerLinkActive="active">
+                            <i class="fa fa-helmet-un"></i><span>Salary Report</span>
+                        </a>
+                    </ul>
                 </li>
             </ul>
             
         </li>
-        <li *ngIf="userType==1" class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#Helmet" data-bs-toggle="collapse" href="#">
-                <i class="pi pi-user"></i><span>USERS</span><i class="pi pi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="Helmet" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a class="nav-link" routerLink="/user-form" routerLinkActive="active">
-                        <i class="fa fa-helmet-un"></i><span>Create User</span>
-                      </a>
-                </li>
-                <div>
-                    <li>
-                        <a routerLink="/user-list" routerLinkActive="active">
-                            <i class="fa fa-helmet-un"></i><span>View Users</span>
-                          </a>
-                    </li>
-                </div>
-                
-            </ul>
-        </li>
-
     </ul>
 	</aside>
 </div>
