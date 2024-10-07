@@ -198,9 +198,15 @@ export class ApiService {
 			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
 		);
 	}
+	getUserReport(dateFrom:string,dateTo:string,joiningDate:number,
+		userGroup:number,name:string) {
+		return this.app.get('getUserReport?datefrom='+dateFrom+'&dateTo='+dateTo+'&joiningDate='+joiningDate+
+			'&userGroup='+userGroup+'&name='+name
+		);
+	}
 	getPurchaseReport(dateFrom:string,dateTo:string,brandId:number,
 		categoryId:number,classId:number,name:string) {
-		return this.app.get('getPurchaseReport?datefrom='+dateFrom+'&dateTo='+dateTo+'&brandId='+brandId+
+		return this.app.get('getPurchaseReport?dateFrom='+dateFrom+'&dateTo='+dateTo+'&brandId='+brandId+
 			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
 		);
 	}

@@ -1,1 +1,101 @@
-<p>salary-report works!</p>
+<div class="container-fluid" style="width:100%">
+    <div class="d-flex justify-content-between p-2">
+        <div>
+            <h3>SALARY REPORT</h3>
+        </div>        
+    </div>
+    <section class="content-header">
+        <p-accordion>
+            <p-accordionTab header="Search">
+                <div class="grid">
+                    <div class="row px-2 col-12">
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0" for="DateFrom">Date From</label>
+                            <p-calendar [(ngModel)]="filter.dateFrom" [style]="{width:100}"
+                                dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="DateTo">Date To</label>
+                            <p-calendar [(ngModel)]="filter.dateTo" [style]="{width:100}"
+                                dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control form-control-sm col-md-12 txt"
+                                placeholder="Name" id="Name" [(ngModel)]="filter.name">
+                        </div>
+                        <div class="col-md-4 py-2 col-sm-12">
+                            <label class="mb-0 mx-2" for="Brand">Brand</label>
+                            <p-dropdown [options]="brands" [(ngModel)]="filter.brandId"
+                                        placeholder="Select a Brand" optionLabel="name"
+                                        optionValue="id"></p-dropdown>
+                        </div>
+                        <div class="col-md-4 py-2 col-sm-12">
+                            <label class="mb-0 mx-2" for="Category">Category</label>
+                            <p-dropdown [options]="categories" [(ngModel)]="filter.categoryId"
+                                        placeholder="Select a Category" optionLabel="name"
+                                        optionValue="id"></p-dropdown>
+                        </div>
+                        <div class="col-md-4 py-2 col-sm-12">
+                            <label class="mb-0 mx-2" for="Class">Class</label>
+                            <p-dropdown [options]="class" [(ngModel)]="filter.classId"
+                                        placeholder="Select a Class" optionLabel="name"
+                                        optionValue="id"></p-dropdown>
+                        </div> 
+                        <div class="col-md-12 col-sm-12 text-right mt-1">
+                            <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4"
+                                style="width:130px" (click)="clearFilter()"></button>
+                            <button pButton pRipple type="button" icon="pi pi-search" label="Search"
+                                class="p-button-sm p-button-info float-right mx-1 mt-4"
+                                style="width:130px" (click)="getData()"></button>
+                        </div>
+                    </div>
+                </div>
+            </p-accordionTab>
+        </p-accordion>
+        <p-divider></p-divider>
+        <div class="pad-wrapper">
+            <div class="box">
+                <div class="content">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="rptData" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="flex">
+                                <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file-excel" label="Export XLS" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file" label="Export CSV" (click)="dt.exportCSV()"  class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="itemSno">USER NAME <p-sortIcon field="itemSno"></p-sortIcon></th>
+                                <th pSortableColumn="name">GROUP NAME<p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="brand">PRESENTS <p-sortIcon field="brand"></p-sortIcon></th> 
+                                <th pSortableColumn="brand">LEAVES <p-sortIcon field="brand"></p-sortIcon></th> 
+                                <th pSortableColumn="brand">LATES <p-sortIcon field="brand"></p-sortIcon></th> 
+                                <th pSortableColumn="brand">SALARY PACKAGE AMOUNT <p-sortIcon field="brand"></p-sortIcon></th> 
+                                <th pSortableColumn="brand">DEDUCTION AMOUNT <p-sortIcon field="brand"></p-sortIcon></th> 
+                                <th pSortableColumn="brand">NET SALARY AMOUNT <p-sortIcon field="brand"></p-sortIcon></th> 
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data let-i="rowIndex">
+                            <tr>
+                                <td>{{i+1}}</td>
+                                <td>{{data.partyid}}</td>
+                                <td>{{data.suppliername}}</td>
+                                <td>{{data.totalamount}}</td> 
+                                <td>{{data.totalamount}}</td> 
+                                <td>{{data.totalamount}}</td> 
+                                <td>{{data.totalamount}}</td> 
+                                <td>{{data.totalamount}}</td> 
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>

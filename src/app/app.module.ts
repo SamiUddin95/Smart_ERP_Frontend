@@ -85,6 +85,7 @@ import { RptPurchaseReturnComponent } from './rpt-purchase-return/rpt-purchase-r
 import { UserReportComponent } from './user-report/user-report.component';
 import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
 import { SalaryReportComponent } from './salary-report/salary-report.component';
+import { UsrGroupListComponent } from './usr-group-list/usr-group-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -138,6 +139,7 @@ import { SalaryReportComponent } from './salary-report/salary-report.component';
       UserReportComponent,
       AttendanceReportComponent,
       SalaryReportComponent,
+      UsrGroupListComponent,
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,

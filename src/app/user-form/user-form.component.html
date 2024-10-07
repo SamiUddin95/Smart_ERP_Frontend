@@ -30,7 +30,37 @@
                                                             class="form-control form-control-sm col-md-12 txt"
                                                             placeholder="Email" id="Email"
                                                             [(ngModel)]="userData.email">
-                                                    </div>                                                    
+                                                    </div>  
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Joining Date</label> 
+                                                            <p-calendar [(ngModel)]="userData.joiningDate" [style]="{width:100}"
+                                                            dateFormat="yy-mm-dd"></p-calendar>
+                                                    </div> 
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Salary</label>
+                                                            <input type="number" 
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Salary" id="Salary"
+                                                            [(ngModel)]="userData.salary">
+                                                    </div> 
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Mobile Num</label>
+                                                            <input type="number" 
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Mobile Num" id="Salary"
+                                                            [(ngModel)]="userData.phone">
+                                                    </div> 
+                                                    <!-- <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Address</label>
+                                                            <input type="text" 
+                                                            class="form-control form-control-sm col-md-12 txt"
+                                                            placeholder="Address"
+                                                            [(ngModel)]="userData.address">
+                                                    </div>                                                     -->
                                                 </div>
                                                 <div class="row mt-1 px-2 col-12" >
                                                     <div class="col-md-6 col-sm-12 px-4">
@@ -54,7 +84,7 @@
                                                 <div class="row mt-1 px-2 col-12" >
                                                     <div class="col-md-6 col-sm-12 px-4">
                                                         <label for="usertypr"><span class="text-danger">
-                                                            </span>User Type</label>
+                                                            </span>User Group</label>
                                                         <p-dropdown [options]="userTypes" [(ngModel)]="userData.userTypeId"
                                                             placeholder="Select a User" optionLabel="userType1"
                                                             optionValue="userTypeId"></p-dropdown>

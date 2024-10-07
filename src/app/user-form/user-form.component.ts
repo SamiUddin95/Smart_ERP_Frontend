@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-user-form',
@@ -32,6 +33,8 @@ export class UserFormComponent {
   addUser(){
 
 	this.urlId?this.userData.id=this.urlId:undefined;
+  this.userData.joiningDate = moment(this?.userData.joiningDate).format('YYYY-MM-DD').toString();
+  this.userData.phone=this.userData.phone?Number(this.userData.phone):0;
 	this.api.createUser(this.userData).subscribe(res=>{
 		this.router.navigate(['user-list']);
 		this.messageService.add({ severity: 'success', summary: 'Success', detail: "User Saved Successfully" });	

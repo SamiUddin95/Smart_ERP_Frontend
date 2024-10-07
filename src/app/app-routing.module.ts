@@ -62,6 +62,10 @@ import { PurhaseFormComponent } from './Purchase/purhase-form/purhase-form.compo
 import { RptPurchaseComponent } from './rpt-purchase/rpt-purchase.component';
 import { RptPurchaseOrderComponent } from './rpt-purchase-order/rpt-purchase-order.component';
 import { RptPurchaseReturnComponent } from './rpt-purchase-return/rpt-purchase-return.component';
+import { UserReportComponent } from './user-report/user-report.component';
+import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
+import { SalaryReportComponent } from './salary-report/salary-report.component';
+import { UsrGroupListComponent } from './usr-group-list/usr-group-list.component';
 
 
 const routes: Routes = [
@@ -149,8 +153,18 @@ const routes: Routes = [
   { path:'rpt-purchase',component:RptPurchaseComponent},  
   { path:'rpt-purch-order',component:RptPurchaseOrderComponent}, 
   { path:'rpt-purch-return',component:RptPurchaseReturnComponent},
+  { path:'rpt-att-report',component:AttendanceReportComponent},
+  { path:'rpt-user-report',component:UserReportComponent},
+  { path:'rpt-salary-report',component:SalaryReportComponent},
+  { path:'usr-group-list',component:UsrGroupListComponent},
 
   
+
+  
+
+  
+
+
 
 
   
