@@ -11,6 +11,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class ItemComponent {
 
   constructor(private router: Router,private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  filter: any = {};
   ngOnInit(): void {
     this.getItemList();
 	}
@@ -18,7 +19,13 @@ export class ItemComponent {
   item: any = [];
 
   getItemList() {
-		this.api.getAllItemsdetails().subscribe((res: any) => {
+		this.api.getAllItemsdetailsFilterbased(
+      this.filter.itemName?this.filter.itemName:'All',
+      this.filter.aliasName?this.filter.aliasName:'All'
+      ,this.filter.purchasePrice?this.filter.purchasePrice:0
+      ,this.filter.salePrice?this.filter.salePrice:0
+
+    ).subscribe((res: any) => {
 			this.item = res.map((ele: any) => {
 			  return {
         id: ele.id,

@@ -5,8 +5,7 @@
         </div>
         <div>
             <button pButton pRipple type="button" icon="pi pi-plus" label="Add Item"
-                class="p-button-sm p-button-success float-right"
-                 (click)="addItem()"></button>
+                class="p-button-sm p-button-success float-right" (click)="addItem()"></button>
         </div>
     </div>
     <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
@@ -16,65 +15,56 @@
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Alias Name</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Alias Name" [(ngModel)]="filter.aliasName">
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Item Name</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                            <input type="text" [(ngModel)]="filter.itemName"
+                                class="form-control p-inputtext p-component txt" placeholder="Item Name">
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Purchase Price</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                             </div>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Purchase Price">
+                        </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Sale Price</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                            </div>
-                        <div class="col-md-4 col-sm-12">
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Sale Price">
+                        </div>
+                        <!-- <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Category</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
+                            <input type="text" class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
-                            </div>
-                            <div class="col-md-4 col-sm-12">
-                                <label class="mb-0 mx-2" for="Name">Class</label>
-                                <input type="text"
-                                class="form-control p-inputtext p-component txt"
-                                    placeholder="Search By Helmet Code">
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <label class="mb-0 mx-2" for="Name">Manufacturer</label>
-                                    <input type="text"
-                                    class="form-control p-inputtext p-component txt"
-                                        placeholder="Search By Helmet Code">
-                                    </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <label class="mb-0 mx-2" for="Name">Remarks</label>
-                                        <input type="text"
-                                        class="form-control p-inputtext p-component txt"
-                                            placeholder="Search By Helmet Code">
-                                        </div>
-                                        <div class="col-md-4 col-sm-12">
-                                            <label class="mb-0 mx-2" for="Name">Brand</label>
-                                            <input type="text"
-                                            class="form-control p-inputtext p-component txt"
-                                                placeholder="Search By Helmet Code">
-                                            </div>
-                         <div class="col-md-4 col-sm-12 text-right mt-1">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Class</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Search By Helmet Code">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Manufacturer</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Search By Helmet Code">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Remarks</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Search By Helmet Code">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Brand</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Search By Helmet Code">
+                        </div> -->
+                        <div class="col-md-4 offset-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
-                                class="p-button-sm p-button-secondary float-right mx-1  mt-4"
-                                style="width:130px" (click)="clearFilter()"></button>
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4" style="width:130px"
+                                (click)="clearFilter()"></button>
                             <button pButton pRipple type="button" icon="pi pi-search" label="Search"
-                                class="p-button-sm p-button-info float-right mx-1 mt-4"
-                                style="width:130px" (click)="getData()"></button>
+                                class="p-button-sm p-button-info float-right mx-1 mt-4" style="width:130px"
+                                (click)="getItemList()"></button>
 
                         </div>
                     </div>
@@ -85,20 +75,25 @@
         <div class="pad-wrapper">
             <div class="box">
                 <div class="content">
-                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="item" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
-                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
-                    <!-- <ng-template pTemplate="caption">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="item"
+                        styleClass="p-datatable-sm p-datatable-gridlines"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+                        [rows]="10">
+                        <!-- <ng-template pTemplate="caption">
                         <div class="flex">
                             <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
                             <button type="button" pButton pRipple icon="pi pi-file-excel" label="Export XLS" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
                             <button type="button" pButton pRipple icon="pi pi-file" label="Export CSV" (click)="dt.exportCSV()"  class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>                        </div>
                     </ng-template>     -->
-                    <ng-template pTemplate="header">
+                        <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="code">Alias Name <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">Item Name <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="category">Purchase Price <p-sortIcon field="category"></p-sortIcon></th>
-                                <th pSortableColumn="quantity">Sale Price <p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="category">Purchase Price <p-sortIcon field="category"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="quantity">Sale Price <p-sortIcon field="quantity"></p-sortIcon>
+                                </th>
                                 <th pSortableColumn="price">Category<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Class<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Manufacturer<p-sortIcon field="price"></p-sortIcon></th>
@@ -119,11 +114,10 @@
                                 <td>{{itm.remarks}}</td>
                                 <td>{{itm.brandId}}</td>
                                 <td style="position: relative;" class="d-flex">
-                                    <button style="margin-right: 3px" pButton pRipple
-                                        icon="pi pi-pencil" class="p-button-rounded p-button-info"
-                                        (click)="editItem(itm.id)"></button>
-                                    <button pButton pRipple icon="pi pi-trash"
-                                        class="p-button-rounded p-button-danger" (click)="deleteItems(itm)"></button>
+                                    <button style="margin-right: 3px" pButton pRipple icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-info" (click)="editItem(itm.id)"></button>
+                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                        (click)="deleteItems(itm)"></button>
                                 </td>
                             </tr>
                         </ng-template>

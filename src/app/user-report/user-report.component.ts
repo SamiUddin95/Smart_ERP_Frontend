@@ -27,10 +27,7 @@ export class UserReportComponent {
     this.getCategories();
     this.getClass();
   }
-  filter: any = {
-    month_id: undefined,
-    shop_id: undefined,
-  };
+  filter: any = {};
   rptData: any = [];
   getData() { 
     if (this.filter.dateFrom != null && this.filter.dateFrom !== '') {

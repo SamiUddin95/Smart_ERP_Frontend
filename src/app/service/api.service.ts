@@ -353,6 +353,11 @@ export class ApiService {
 		return this.app.get('getAllItems');
 	}
 
+	getAllItemsdetailsFilterbased(itemName:string,aliasName:string,purchasePrice:number,salePrice:number) {
+		return this.app.get('getAllItemsdetailsFilterbased?itemName='+itemName+'&aliasName='+aliasName+'&purchasePrice='+
+			purchasePrice+'&salePrice='+salePrice);
+	}
+
 	deleteItemsById(id: any) {
 		return this.app.get('deleteItemById?id=' + id, id);
 	}
