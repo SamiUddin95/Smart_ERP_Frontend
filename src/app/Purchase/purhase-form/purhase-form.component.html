@@ -145,20 +145,18 @@
                                                                                             <td><input type="text" class="w-100"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Enter Barcode Here"
-                                                                                                    [(ngModel)]="user.barcode">
+                                                                                                    [(ngModel)]="user.barCode" (input)="barCodeChange(user)">
                                                                                             </td>
-                                                                                            <td><p-dropdown
-                                                                                                    [options]="items"
-                                                                                                    [(ngModel)]="user.itemName"
-                                                                                                    placeholder="Select an Item"
-                                                                                                    optionLabel="itemName"
-                                                                                                    optionValue="id"></p-dropdown>
+                                                                                            <td><input type="text"
+                                                                                                class="form-control form-control-sm"
+                                                                                                placeholder="Item Name"
+                                                                                                [(ngModel)]="user.itemName">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Quantity"
                                                                                                     [(ngModel)]="user.quantity"
-                                                                                                    (input)="qtyChange()">
+                                                                                                    (input)="qtyChange(user)">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"

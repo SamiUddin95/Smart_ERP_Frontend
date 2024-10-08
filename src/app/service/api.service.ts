@@ -357,6 +357,9 @@ export class ApiService {
 		return this.app.get('getAllItemsdetailsFilterbased?itemName='+itemName+'&aliasName='+aliasName+'&purchasePrice='+
 			purchasePrice+'&salePrice='+salePrice);
 	}
+	getItemDetailbyBarCode(barCode:string){
+		return this.app.get('getItemDetailbyBarCode?barCode=' + barCode);
+	}
 
 	deleteItemsById(id: any) {
 		return this.app.get('deleteItemById?id=' + id, id);

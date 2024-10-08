@@ -36,7 +36,16 @@ ngOnInit(): void {
     this.getItems();
     this.getParty();
 	}
+  barCodeChange(user:any){ 
+    if(user.barCode.length>4){ 
+      this.api.getItemDetailbyBarCode(user.barCode).subscribe(res=>{
+        user.itemName=res[0].itemName;
+        user.purchasePrice=res[0].purchasePrice;
+        user.salePrice=res[0].salePrice
+      })
+    }
 
+  }
   cancel(){
     this.router.navigate(['purchase-list']);
   }
@@ -76,7 +85,10 @@ ngOnInit(): void {
       this.totalExcTax += x.total;
     });
   }
-  qtyChange() {  
+  qtyChange(user:any) { 
+    debugger
+    user.total=0;
+    user.total=user.quantity*user.purchasePrice; 
     this.totalQty = 0; 
     this.purcDtl.forEach(x => { 
         this.totalQty += x.quantity
@@ -108,11 +120,10 @@ ngOnInit(): void {
       this.items=res;
     })
   }
-  addPurchase() {
-    debugger
+  addPurchase() { 
     let formData: any = {
       id: this.urlId ? this.urlId : undefined, 
-      barcode: this.formData.barcode,
+      barCode: this.formData.barCode,
       VendorId:this.formData.partyId, 
       Remarks: this.formData.remarks,
       InvoiceNo: this.formData.invoiceNo,
