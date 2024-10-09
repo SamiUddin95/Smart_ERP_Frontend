@@ -30,11 +30,20 @@ export class BrandsFormComponent {
   }
 
   addBrand(){
-debugger
+    const requiredFields = [
+      { key: 'name', message: 'Name is required.' }
+  ];
+
+      for (const field of requiredFields) {
+          if (!this.formData[field.key]) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
+              return; 
+          }
+      }
     this.urlId?this.formData.id=this.urlId:undefined;
     this.api.createBrands(this.formData).subscribe(res=>{
       this.router.navigate(['brands']);
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: "User Saved Successfully" });	
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: "Brand Added Successfully" });	
       },err=>{
     
       })

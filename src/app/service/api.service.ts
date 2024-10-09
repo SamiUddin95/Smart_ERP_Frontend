@@ -368,6 +368,10 @@ export class ApiService {
 	createItems(obj: any) {
 		return this.app.post('createItems', obj);
 	}
+	checkDuplicateItemName(itemName: string) {
+		debugger
+    return this.app.get(`checkDuplicateItemName?itemName=`+ itemName);
+}
 	getItemsById(id: any) {
 		return this.app.get('getItemById?id=' + id, id);
 	} 

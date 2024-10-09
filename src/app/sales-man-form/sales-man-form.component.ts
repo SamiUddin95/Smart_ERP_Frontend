@@ -37,10 +37,22 @@ export class SalesManFormComponent {
     })
   }
   addUser(){ 
+    const requiredFields = [
+      { key: 'name', message: 'Name is required.' },
+      { key: 'salesManTypeId', message: 'Type is required.' },
+      { key: 'isActive', message: 'Active is required.' }
+  ];
+
+      for (const field of requiredFields) {
+          if (!this.formData[field.key]) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
+              return; 
+          }
+      }
 	this.urlId?this.formData.id=this.urlId:undefined;
 	this.api.createSalesMan(this.formData).subscribe(res=>{
 		this.router.navigate(['sales-man-list']);
-		this.messageService.add({ severity: 'success', summary: 'Success', detail: "User Saved Successfully" });	
+		this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sales Man Added Successfully" });	
 		},err=>{
 	
 		})

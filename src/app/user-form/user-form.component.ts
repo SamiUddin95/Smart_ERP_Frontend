@@ -31,7 +31,19 @@ export class UserFormComponent {
     this.router.navigate(['user-list']);
   }
   addUser(){
+    const requiredFields = [
+      { key: 'name', message: 'Name is required.' },
+      { key: 'password', message: 'Password is required.' },
+      { key: 'gender', message: 'Gender is required.' },
+      { key: 'userTypeId', message: 'User Group is required.' },
+    ];
 
+      for (const field of requiredFields) {
+          if (!this.userData[field.key]) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
+              return; 
+          }
+      }
 	this.urlId?this.userData.id=this.urlId:undefined;
   this.userData.joiningDate = moment(this?.userData.joiningDate).format('YYYY-MM-DD').toString();
   this.userData.phone=this.userData.phone?Number(this.userData.phone):0;

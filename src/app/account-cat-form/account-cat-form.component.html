@@ -9,23 +9,23 @@
                     <div class="col-md-12">
                         <div class="card shadow-3">
                             <p-accordion>
-                                <p-accordionTab header="USER" [selected]="true">
+                                <p-accordionTab header="Account Category" [selected]="true">
                                     <div class="card shadow-3">
                                         <div class="card-header">Create Account Category</div>
                                         <div class="card-body">
                                             <div class="grid">
                                                 <div class="row mt-1 px-2 col-12">  
                                                     <div class="col-md-6 col-sm-12 pl-2">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Name</label>
+                                                        <label for="lastname">Name <span class="text-danger">*
+                                                        </span></label>
                                                             <input type="text" 
                                                             class="form-control  col-md-12 "
                                                             placeholder="Name"
                                                             [(ngModel)]="formData.name">
                                                     </div> 
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="usertypr"><span class="text-danger">
-                                                            </span>Account Type</label>
+                                                        <label for="usertypr">Account Type <span class="text-danger">*
+                                                        </span></label>
                                                             <div class="d-flex">
                                                                 <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
                                                                 </span>{{formData.accountTypeId}}</label>
@@ -59,7 +59,7 @@
                                             <button style="margin-right: 3px" pButton pRipple type="button"
                                                 icon="pi pi-arrow-left" (click)="cancel()" label="Back"
                                                 class="p-button-sm p-button-danger"> </button>
-                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addUser()"
+                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addAccountCat()"
                                                 label="Save" class="p-button-sm p-button-success"> </button>
                                         </div>
                                     </div>

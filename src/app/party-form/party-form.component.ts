@@ -57,7 +57,17 @@ export class PartyFormComponent {
     })
   }
   
-  addUser(){ 
+  addParty(){ 
+    const requiredFields = [
+      { key: 'partyName', message: 'Party Name is required.' },
+    ];
+
+      for (const field of requiredFields) {
+          if (!this.formData[field.key]) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
+              return; 
+          }
+      }
 	this.urlId?this.formData.id=this.urlId:undefined;
 	this.api.createParty(this.formData).subscribe(res=>{
 		this.router.navigate(['party-list']);

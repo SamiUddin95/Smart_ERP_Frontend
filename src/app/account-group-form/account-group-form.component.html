@@ -9,15 +9,15 @@
                     <div class="col-md-12">
                         <div class="card shadow-3">
                             <p-accordion>
-                                <p-accordionTab header="USER" [selected]="true">
+                                <p-accordionTab header="Account Group" [selected]="true">
                                     <div class="card shadow-3">
                                         <div class="card-header">Create Account Group</div>
                                         <div class="card-body">
                                             <div class="grid">
                                                 <div class="row mt-1 px-2 col-12">  
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="username"><span class="text-danger">
-                                                            </span>Group Name</label>
+                                                        <label for="username">Group Name <span class="text-danger">*
+                                                        </span></label>
                                                             <input type="text" 
                                                             class="form-control  col-md-12 "
                                                             placeholder="Enter Here"
@@ -25,8 +25,8 @@
                                                             
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="usertypr"><span class="text-danger">
-                                                            </span>Account Type</label>
+                                                        <label for="usertypr">Account Type <span class="text-danger">*
+                                                        </span></label>
                                                             <div class="d-flex">
                                                                 <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
                                                                 </span>{{formData.accountTypeId}}</label>
@@ -36,8 +36,8 @@
                                                             </div>
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="usertypr"><span class="text-danger">
-                                                            </span>Account Category</label>
+                                                        <label for="usertypr">Account Category <span class="text-danger">*
+                                                        </span></label>
                                                             <div class="d-flex">
                                                                 <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
                                                                 </span>{{formData.accountCategoryId}}</label>

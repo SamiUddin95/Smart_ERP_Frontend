@@ -33,10 +33,23 @@ export class ClassFormComponent {
   }
 
   addClass(){
+    const requiredFields = [
+      { key: 'departmentId', message: 'Department is required.' },
+      { key: 'categoryId', message: 'Category is required.' },
+      { key: 'name', message: 'Name is required.' },
+  ];
+
+      for (const field of requiredFields) {
+          if (!this.formData[field.key]) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
+              return; 
+          }
+      }
+
         this.urlId?this.formData.id=this.urlId:undefined;
         this.api.createClass(this.formData).subscribe(res=>{
           this.router.navigate(['class']);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: "User Saved Successfully" });	
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Class Added Successfully" });	
           },err=>{
         
           })

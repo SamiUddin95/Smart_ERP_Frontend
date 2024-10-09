@@ -31,11 +31,20 @@ export class ManufacturerFormComponent {
   }
 
   addManufacturer(){
-    debugger
+    const requiredFields = [
+      { key: 'name', message: 'Name is required.' }
+    ];
+
+      for (const field of requiredFields) {
+          if (!this.formData[field.key]) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
+              return; 
+          }
+      }
         this.urlId?this.formData.id=this.urlId:undefined;
         this.api.createManufacturer(this.formData).subscribe(res=>{
           this.router.navigate(['manufacturer']);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: "User Saved Successfully" });	
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Manufacture Added Successfully" });	
           },err=>{
         
           })
