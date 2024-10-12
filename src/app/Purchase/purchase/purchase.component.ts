@@ -17,18 +17,16 @@ export class PurchaseComponent {
 
   getPurhaseList() {
     this.api.getAllPurhasedetails().subscribe((res: any) => {
-      debugger
       this.item=res;
     });
   }
 
   deleteItems(items: any) {
-    debugger
     this.confirmationService.confirm({
       message: 'Are you sure that you want to perform this action?',
       accept: () => {
-        this.api.deletePurhaseById(items.id).subscribe(res => {
-          this.item = this.item.filter((item: any) => item.id !== items.id);
+        this.api.deletePurhaseById(items.purchaseId).subscribe(res => {
+          this.item = this.item.filter((item: any) => item.purchaseId !== items.purchaseId);
           this.messageService.add({ severity: 'success', summary: 'Success', detail: "Deleted Successfully" });
           return;
         }, err => { })

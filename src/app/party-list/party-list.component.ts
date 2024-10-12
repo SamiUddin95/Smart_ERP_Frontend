@@ -14,12 +14,17 @@ import autoTable from 'jspdf-autotable';
 export class PartyListComponent {
   constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 	title = 'BMSFrontEnd';
+	filter: any = {};
 	ngOnInit(): void {
 		this.getUserList();
 	}
 	party: any = [];
 	getUserList() {
-		this.api.getAllParty().subscribe((res: any) => { 
+		this.api.getAllPartyFilterBased(this.filter.partyName?this.filter.partyName:'All',
+			this.filter.mobileNo?this.filter.mobileNo:'All',
+			this.filter.telephoneNo?this.filter.telephoneNo:'All', 
+			this.filter.nicNo?this.filter.nicNo:'All',
+			this.filter.contactPerson?this.filter.contactPerson:'All').subscribe((res: any) => { 
 			this.party = res;
 		})
 	}

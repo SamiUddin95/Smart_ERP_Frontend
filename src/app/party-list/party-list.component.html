@@ -15,34 +15,34 @@
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">User Name</label>
+                            <label class="mb-0 mx-2" for="Name">Party Name</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                                placeholder="Search By Party Name" [(ngModel)]="filter.partyName">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Email</label>
+                            <label class="mb-0 mx-2" for="Name">Mobile No</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                                placeholder="Search By Mobile No" [(ngModel)]="filter.mobileNo">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Phone</label>
+                            <label class="mb-0 mx-2" for="Name">Telephone No.</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                                placeholder="Search By Telephone Phone" [(ngModel)]="filter.telephoneNo">
                              </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Gender</label>
+                            <label class="mb-0 mx-2" for="Name">NIC. No</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                                placeholder="Search By NIC. No" [(ngModel)]="filter.nicNo">
                             </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Joining Date</label>
+                            <label class="mb-0 mx-2" for="Name">Contact Person</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                                placeholder="Search By Contact Person" [(ngModel)]="filter.contactPerson">
                             </div>
                          <div class="col-md-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
@@ -50,7 +50,7 @@
                                 style="width:130px" (click)="clearFilter()"></button>
                             <button pButton pRipple type="button" icon="pi pi-search" label="Search"
                                 class="p-button-sm p-button-info float-right mx-1 mt-4"
-                                style="width:130px" (click)="getData()"></button>
+                                style="width:130px" (click)="getUserList()"></button>
 
                         </div>
                     </div>

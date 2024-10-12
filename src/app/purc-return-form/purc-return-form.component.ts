@@ -40,7 +40,6 @@ export class PurcReturnFormComponent {
   getUserById(id: any) {
 		this.api.getPurchaseReturnById(String(id)).subscribe(res => { 
       var res=JSON.parse(res); 
-      debugger
       this.purcRetDtl=res.purchaseOrderDetails;
       this.formData.partyId=res.purchaseOrders[0].partyId;
       this.bonusQty=res.purchaseOrders[0].bonusQty;

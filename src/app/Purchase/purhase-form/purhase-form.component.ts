@@ -35,8 +35,19 @@ ngOnInit(): void {
     this.getCategory();
     this.getItems();
     this.getParty();
+    if(this.urlId)
+      this.getPurchaseById(this.urlId);
 	}
-  barCodeChange(user:any){ 
+  getPurchaseById(id:number){
+    this.api.getPurchaseById(id).subscribe(res=>{
+      var res=JSON.parse(res); 
+      this.formData.formData=res.purchase[0].vendorId;
+      this.purcDtl=res.purchaseDetails;
+    })
+  }
+  onKey(event: any,user:any) { 
+    debugger
+    user.barcode=event.target.value;
     if(user.barCode.length>4){ 
       this.api.getItemDetailbyBarCode(user.barCode).subscribe(res=>{
         user.itemName=res[0].itemName;
@@ -44,6 +55,10 @@ ngOnInit(): void {
         user.salePrice=res[0].salePrice
       })
     }
+  }
+  barCodeChange(user:any){
+    debugger 
+    
 
   }
   cancel(){
@@ -85,14 +100,24 @@ ngOnInit(): void {
       this.totalExcTax += x.total;
     });
   }
-  qtyChange(user:any) { 
-    debugger
-    user.total=0;
-    user.total=user.quantity*user.purchasePrice; 
+  qtyChange(user:any) {  
     this.totalQty = 0; 
-    this.purcDtl.forEach(x => { 
-        this.totalQty += x.quantity
-    }); 
+    user.total=user.quantity*user.purchasePrice;
+    user.netTotal=user.quantity*user.purchasePrice;
+    this.grandTotal=0;
+    this.totalExcTax=0;
+    this.totalIncTax=0;
+    this.purcDtl.forEach(x => {
+      if (typeof x.total === 'number' && !isNaN(x.total)) {
+          this.grandTotal += x.total;
+          this.totalIncTax += x.total; // Assuming tax included is the same
+          this.totalExcTax += x.total; // Adjust as necessary
+          if (typeof x.quantity === 'number' && !isNaN(x.quantity)) {
+              this.totalQty += x.quantity;
+          }
+      }
+  });
+  
 }
 
   earnedPointsChange(){

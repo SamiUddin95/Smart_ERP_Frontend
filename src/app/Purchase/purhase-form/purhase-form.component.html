@@ -144,13 +144,14 @@
                                                                                             <td>{{ i + 1 }}</td>
                                                                                             <td><input type="text" class="w-100"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Enter Barcode Here"
-                                                                                                    [(ngModel)]="user.barCode" (input)="barCodeChange(user)">
+                                                                                                    placeholder="Enter Barcode Here"  (keypress)="onKey($event,user)"  autofocus 
+                                                                                                    [(ngModel)]="user.barcode" (input)="barCodeChange(user)">
                                                                                             </td>
-                                                                                            <td><input type="text"
+                                                                                            <td>
+                                                                                                <input type="text"
                                                                                                 class="form-control form-control-sm"
                                                                                                 placeholder="Item Name"
-                                                                                                [(ngModel)]="user.itemName">
+                                                                                                [(ngModel)]="user.ItemName">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"

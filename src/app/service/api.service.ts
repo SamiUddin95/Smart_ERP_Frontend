@@ -90,6 +90,9 @@ export class ApiService {
 	getPurchaseOrderById(id: any) {
 		return this.app.get('getPurchaseOrderById?id=' + id, id);
 	}
+	getPurchaseById(id: any) {
+		return this.app.get('getPurchaseById?id=' + id, id);
+	}
 	getGoDown() {
 		return this.app.get('getGoDown');
 	}
@@ -108,6 +111,10 @@ export class ApiService {
 		
 	getAllParty() {
 		return this.app.get('getAllParty');
+	}
+	getAllPartyFilterBased(partyName:string,mobileNo:string,telephoneNo:string,nicNo:string,contactPerson:string) {
+		return this.app.get('getAllPartyFilterBased?partyName='+partyName+'&mobileNo='+mobileNo+'&telephoneNo='+
+			telephoneNo+'&nicNo='+nicNo+'&contactPerson='+contactPerson);
 	}
 	getPartyById(id: any) {
 		return this.app.get('getRPartyById?id=' + id, id);

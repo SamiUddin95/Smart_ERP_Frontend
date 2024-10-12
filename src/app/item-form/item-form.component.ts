@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 import { MessageService } from 'primeng/api';
@@ -26,6 +26,9 @@ export class ItemFormComponent {
       this.getItemsById(this.urlId);
     }
 	}
+  onKey(event: any) {
+    this.formData.aliasName=event.target.value;
+  }
   getItemsById(id: any) {
 		this.api.getItemsById(String(id)).subscribe(res => {
 			this.formData = res[0];

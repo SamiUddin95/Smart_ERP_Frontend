@@ -15,10 +15,14 @@
                                         <div class="card-body">
                                             <div class="grid">
                                                 <div class="row mt-1 px-2 col-12">
+                                                    <div class="row">
+                                                        <!-- <input type="text" (window:keypress)="onKey($event)"  autofocus /> -->
+                                                        <!-- <p (window:keypress)="onKey($event)"  autofocus>barcode: {{ barcode }}</p>  -->
+                                                    </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Alias Name</label>
-                                                        <input type="text" class="form-control col-md-12 "
+                                                        <input type="text" (keypress)="onKey($event)"  autofocus class="form-control col-md-12"
                                                             placeholder="Enter Here" [(ngModel)]="formData.aliasName">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
