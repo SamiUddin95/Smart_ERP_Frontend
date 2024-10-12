@@ -39,10 +39,24 @@ ngOnInit(): void {
       this.getPurchaseById(this.urlId);
 	}
   getPurchaseById(id:number){
+    debugger
     this.api.getPurchaseById(id).subscribe(res=>{
       var res=JSON.parse(res); 
       this.formData.formData=res.purchase[0].vendorId;
       this.purcDtl=res.purchaseDetails;
+      this.grandTotal = 0;
+      this.totalExcTax = 0;
+      this.totalIncTax = 0;
+      this.totalQty = 0;
+      this.purcDtl.forEach(x => { 
+        this.grandTotal += x.total;
+        this.totalIncTax += x.total; // Assuming totalIncTax is same as netTotal
+        this.totalExcTax += x.total; // Adjust this based on your tax logic
+    
+        if (typeof x.quantity === 'number' && !isNaN(x.quantity)) {
+          this.totalQty += x.quantity;
+        }
+      });
     })
   }
   onKey(event: any,user:any) { 
