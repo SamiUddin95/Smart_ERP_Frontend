@@ -16,16 +16,16 @@
                                             <div class="grid">
                                                 <div class="row mt-1 px-2 col-12">
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="username"><span class="text-danger">
-                                                            </span>Account Number</label>
+                                                        <label for="username">Account Number <span class="text-danger">*
+                                                        </span></label>
                                                         <input type="text" 
                                                             class="form-control col-md-12 "
                                                             placeholder="Enter Here" id="Name"
                                                             [(ngModel)]="formData.accountNumber">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Name</label>
+                                                        <label for="lastname">Name <span class="text-danger">*
+                                                        </span></label>
                                                             <input type="text" 
                                                             class="form-control col-md-12 "
                                                             placeholder="Enter Here"
@@ -57,8 +57,8 @@
                                                             </div>
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="usertypr"><span class="text-danger">
-                                                            </span>Account Category</label>
+                                                        <label for="usertypr">Account Category <span class="text-danger">*
+                                                        </span></label>
                                                             <div class="d-flex">
                                                                 <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
                                                                 </span>{{formData.accountCategoryId}}</label>
@@ -68,8 +68,8 @@
                                                             </div>
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="usertypr"><span class="text-danger">
-                                                            </span>Account Type</label>
+                                                        <label for="usertypr">Account Type <span class="text-danger">*
+                                                        </span></label>
                                                             <div class="d-flex">
                                                                 <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
                                                                 </span>{{formData.accountTypeId}}</label>
@@ -167,7 +167,7 @@
                                             <button style="margin-right: 3px" pButton pRipple type="button"
                                                 icon="pi pi-arrow-left" (click)="cancel()" label="Back"
                                                 class="p-button-sm p-button-danger"> </button>
-                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addUser()"
+                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addAcc()"
                                                 label="Save" class="p-button-sm p-button-success"> </button>
                                         </div>
                                     </div>

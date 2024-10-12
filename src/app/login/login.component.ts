@@ -16,6 +16,7 @@ export class LoginComponent {
   constructor(private router: Router,private common : CommonService, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService,private authService : AuthService) { }
   loginData: any = {};
   login() {
+    debugger
     this.api.login(this.loginData).subscribe(res=>{
       if(res.userType){
         const dataString = JSON.stringify(res.userType);

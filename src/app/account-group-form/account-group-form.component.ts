@@ -45,7 +45,18 @@ export class AccountGroupFormComponent {
     })
   }
   addUser(){
+    const requiredFields = [
+      { key: 'name', message: 'Name is required.' },
+      { key: 'accountTypeId', message: 'Acc Type is required.' },
+      { key: 'accountCategoryId', message: 'Acc Category is required.' },
+    ];
 
+      for (const field of requiredFields) {
+          if (!this.formData[field.key]) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
+              return; 
+          }
+      }
 	this.urlId?this.formData.id=this.urlId:undefined;
 	this.api.createAccountGroup(this.formData).subscribe(res=>{
 		this.router.navigate(['account-grp-list']);

@@ -33,11 +33,22 @@ export class CategoryFormComponent {
   }
 
   addCategory(){
-    debugger
+    const requiredFields = [
+      { key: 'departmentId', message: 'Department is required.' },
+      { key: 'name', message: 'Name is required.' },
+      { key: 'isActive', message: 'Active is required.' },
+    ];
+
+      for (const field of requiredFields) {
+          if (!this.formData[field.key]) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
+              return; 
+          }
+      }
         this.urlId?this.formData.id=this.urlId:undefined;
         this.api.createCategory(this.formData).subscribe(res=>{
           this.router.navigate(['category']);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: "User Saved Successfully" });	
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Category Added Successfully" });	
           },err=>{
         
           })

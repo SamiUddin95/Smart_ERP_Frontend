@@ -16,43 +16,49 @@
                                             <div class="grid">
                                                 <div class="row mt-1 px-2 col-12">
                                                     <div class="col-md-6 col-sm-12 px-4">
-                                                        <label for="username"><span class="text-danger">
-                                                            </span>Name</label>
-                                                        <input type="text" 
+                                                        <label for="username">Name <span class="text-danger">*
+                                                            </span></label>
+                                                        <input type="text"
                                                             class="form-control form-control-sm col-md-12 txt"
-                                                            placeholder="Name" id="Name"
-                                                            [(ngModel)]="userData.name">
+                                                            placeholder="Name" id="Name" [(ngModel)]="userData.name">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="username">Password <span class="text-danger">*
+                                                            </span></label>
+                                                        <input type="password"
+                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                            placeholder="Password" id="Password"
+                                                            [(ngModel)]="userData.password">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12 px-4">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Email</label>
-                                                            <input type="text" 
+                                                        <input type="text"
                                                             class="form-control form-control-sm col-md-12 txt"
-                                                            placeholder="Email" id="Email"
-                                                            [(ngModel)]="userData.email">
-                                                    </div>  
+                                                            placeholder="Email" id="Email" [(ngModel)]="userData.email">
+                                                    </div>
                                                     <div class="col-md-6 col-sm-12 px-4">
                                                         <label for="lastname"><span class="text-danger">
-                                                            </span>Joining Date</label> 
-                                                            <p-calendar [(ngModel)]="userData.joiningDate" [style]="{width:100}"
-                                                            dateFormat="yy-mm-dd"></p-calendar>
-                                                    </div> 
+                                                            </span>Joining Date</label>
+                                                        <p-calendar [(ngModel)]="userData.joiningDate"
+                                                            [style]="{width:100}" dateFormat="yy-mm-dd"></p-calendar>
+                                                    </div>
                                                     <div class="col-md-6 col-sm-12 px-4">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Salary</label>
-                                                            <input type="number" 
+                                                        <input type="number"
                                                             class="form-control form-control-sm col-md-12 txt"
                                                             placeholder="Salary" id="Salary"
                                                             [(ngModel)]="userData.salary">
-                                                    </div> 
+                                                    </div>
                                                     <div class="col-md-6 col-sm-12 px-4">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Mobile Num</label>
-                                                            <input type="number" 
+                                                        <input type="number"
                                                             class="form-control form-control-sm col-md-12 txt"
                                                             placeholder="Mobile Num" id="Salary"
                                                             [(ngModel)]="userData.phone">
-                                                    </div> 
+                                                    </div>
                                                     <!-- <div class="col-md-6 col-sm-12 px-4">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Address</label>
@@ -62,34 +68,25 @@
                                                             [(ngModel)]="userData.address">
                                                     </div>                                                     -->
                                                 </div>
-                                                <div class="row mt-1 px-2 col-12" >
+                                                <div class="row mt-1 px-2 col-12">
+
                                                     <div class="col-md-6 col-sm-12 px-4">
-                                                        <label for="username"><span class="text-danger">
-                                                            </span>Password</label>
-                                                        <input type="password" 
-                                                            class="form-control form-control-sm col-md-12 pwd"
-                                                            placeholder="Password" id="Password"
-                                                            [(ngModel)]="userData.password">
+                                                        <label for="username">Gender <span class="text-danger">*
+                                                            </span></label>
+                                                        <p-dropdown [options]="genders" [(ngModel)]="userData.gender"
+                                                            placeholder="------ Please Select ------"
+                                                            optionLabel="label" optionValue="value"></p-dropdown>
                                                     </div>
                                                     <div class="col-md-6 col-sm-12 px-4">
-                                                        <label for="username"><span class="text-danger">
-                                                            </span>Gender</label>
-                                                            <p-dropdown [options]="genders" [(ngModel)]="userData.gender"
-                                                            placeholder="------ Please Select ------" optionLabel="label"
-                                                            optionValue="value"></p-dropdown>
-                                                    </div>
-                                                    <div class="col-md-4 col-sm-12 px-4">
-                                                    </div>
-                                                </div>
-                                                <div class="row mt-1 px-2 col-12" >
-                                                    <div class="col-md-6 col-sm-12 px-4">
-                                                        <label for="usertypr"><span class="text-danger">
-                                                            </span>User Group</label>
-                                                        <p-dropdown [options]="userTypes" [(ngModel)]="userData.userTypeId"
+                                                        <label for="usertypr">User Group <span class="text-danger">*
+                                                            </span></label>
+                                                        <p-dropdown [options]="userTypes"
+                                                            [(ngModel)]="userData.userTypeId"
                                                             placeholder="Select a User" optionLabel="userType1"
                                                             optionValue="userTypeId"></p-dropdown>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>

@@ -37,8 +37,18 @@ export class AccountCatFormComponent {
       this.accType=res;
     })
   }
-  addUser(){
+  addAccountCat(){
+    const requiredFields = [
+      { key: 'name', message: 'Name is required.' },
+      { key: 'accountTypeId', message: 'Acc Type is required.' },
+    ];
 
+      for (const field of requiredFields) {
+          if (!this.formData[field.key]) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
+              return; 
+          }
+      }
 	this.urlId?this.formData.id=this.urlId:undefined;
 	this.api.createAccountCategory(this.formData).subscribe(res=>{
 		this.router.navigate(['account-cat-list']);

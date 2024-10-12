@@ -31,7 +31,20 @@ export class AccountFormComponent {
   cancel(){
     this.router.navigate(['account-list']);
   }
-  addUser(){
+  addAcc(){
+    const requiredFields = [
+      { key: 'accountNumber', message: 'Acc No is required.' },
+      { key: 'name', message: 'Name is required.' },
+      { key: 'accountCategoryId', message: 'Acc Category is required.' },
+      { key: 'accountTypeId', message: 'Acc Type is required.' },
+    ];
+
+      for (const field of requiredFields) {
+          if (!this.formData[field.key]) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
+              return; 
+          }
+      }
   if(this.formData.taxLimit>this.formData.taxAmount){
 		this.messageService.add({ severity: 'error', summary: 'Error', detail: "Tax Limit should not be greater then Tax Amount" });	
     return;

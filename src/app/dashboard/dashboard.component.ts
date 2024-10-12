@@ -16,8 +16,8 @@ export class DashboardComponent {
         { name: 'Sale', url: '/counter-sales' },
         { name: 'Cash-In', url: '/cash-in' },
         { name: 'Cash-Out', url: '/cash-out' },
-        { name: 'Till Open', url: '/till-open' },
-        { name: 'Till Close', url: '/till-close' }
+        { name: 'Till-Open', url: '/till-open' },
+        { name: 'Till-Close', url: '/till-close' }
       ]
     },
     { 

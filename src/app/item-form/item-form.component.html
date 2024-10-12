@@ -20,32 +20,36 @@
                                                         <!-- <p (window:keypress)="onKey($event)"  autofocus>barcode: {{ barcode }}</p>  -->
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Alias Name</label>
+                                                        
+                                                        <label for="lastname">
+                                                             Alias Name<span class="text-danger">*</span>
+                                                        </label>
                                                         <input type="text" (keypress)="onKey($event)"  autofocus class="form-control col-md-12"
-                                                            placeholder="Enter Here" [(ngModel)]="formData.aliasName">
+                                                               placeholder="Enter Here" [(ngModel)]="formData.aliasName">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Item Name</label>
+                                                        <label for="lastname">
+                                                             Item Name <span class="text-danger">*</span>
+                                                            </label>
                                                         <input type="text" class="form-control col-md-12 "
                                                             placeholder="Enter Here" [(ngModel)]="formData.itemName">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Purchase Price</label>
+                                                        <label for="lastname">Purchase Price 
+                                                            <span class="text-danger">*</span>
+                                                        </label>
                                                         <input type="number" class="form-control col-md-12 "
                                                             placeholder="Enter Here" [(ngModel)]="formData.purchasePrice">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Sale Price</label>
+                                                        <label for="lastname">Sale Price <span class="text-danger">*
+                                                        </span></label>
                                                         <input type="number" class="form-control col-md-12 "
                                                             placeholder="Enter Here" [(ngModel)]="formData.salePrice">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="username"><span class="text-danger">
-                                                            </span>Category</label>
+                                                        <label for="username">Category <span class="text-danger">*
+                                                        </span></label>
                                                         <div class="d-flex">
                                                             <label
                                                                 class="mr-1 border w-25 d-flex align-items-center justify-content-center"
@@ -58,8 +62,8 @@
 
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="username"><span class="text-danger">
-                                                            </span>Class</label>
+                                                        <label for="username">Class <span class="text-danger">*
+                                                        </span></label>
                                                         <div class="d-flex">
                                                             <label
                                                                 class="mr-1 border w-25 d-flex align-items-center justify-content-center"
@@ -72,8 +76,8 @@
 
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="username"><span class="text-danger">
-                                                            </span>Manufacturer</label>
+                                                        <label for="username">Manufacturer <span class="text-danger">*
+                                                        </span></label>
                                                         <div class="d-flex">
                                                             <label
                                                                 class="mr-1 border w-25 d-flex align-items-center justify-content-center"
@@ -99,8 +103,8 @@
                                                     </div>
 
                                                         <div class="col-md-6 col-sm-12">
-                                                            <label for="username"><span class="text-danger">
-                                                                </span>Brand</label>
+                                                            <label for="username">Brand <span class="text-danger">*
+                                                            </span></label>
                                                             <div class="d-flex">
                                                                 <label
                                                                     class="mr-1 border w-25 d-flex align-items-center justify-content-center"
