@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import autoTable from 'jspdf-autotable';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-purchase',
@@ -21,6 +23,10 @@ export class PurchaseComponent {
     });
   }
 
+
+
+  
+ 
   deleteItems(items: any) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to perform this action?',

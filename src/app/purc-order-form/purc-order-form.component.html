@@ -4,7 +4,7 @@
     </div>
     <section>
         <div class="card">
-            <div class="p-grid ">
+            <div class="p-grid">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card shadow-3">
@@ -128,15 +128,13 @@
                                                                                 <td>{{i+1}}</td>
                                                                                 <td> <input type="text"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
-                                                                                        placeholder="No"
+                                                                                        placeholder="No" (keypress)="onKey($event,user)" autofocus
                                                                                         [disabled]="false"
                                                                                         [(ngModel)]="user.barCode"></td>
-                                                                                        <td><p-dropdown class="w-100"
-                                                                                            [options]="item"
-                                                                                            [(ngModel)]="user.itemId"
-                                                                                            placeholder="----Select an Item----"
-                                                                                            optionLabel="itemName"
-                                                                                            optionValue="id"></p-dropdown>
+                                                                                        <td><input type="text"
+                                                                                            class="form-control form-control-sm"
+                                                                                            placeholder="Item Name"
+                                                                                            [(ngModel)]="user.itemName">
                                                                             </td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"

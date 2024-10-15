@@ -104,17 +104,16 @@
                                                                                         </td>
                                                                                         <td><input type="text"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
-                                                                                                   placeholder="Bar Code"
+                                                                                                   placeholder="Bar Code" (keypress)="onKey($event,purcRetDtl)"
                                                                                                    [disabled]="false"
-                                                                                                   [(ngModel)]="purcRetDtl.barCode">
+                                                                                                   [(ngModel)]="purcRetDtl.barcode">
                                                                                         </td>
                                                                                         <td>
-                                                                                            <p-dropdown class="w-100"
-                                                                                                        [options]="items"
-                                                                                                        [(ngModel)]="purcRetDtl.itemId"
-                                                                                                        placeholder="----Select an Item----"
-                                                                                                        optionLabel="itemName"
-                                                                                                        optionValue="id"></p-dropdown>
+                                                                                            <input type="text"
+                                                                                                class="form-control form-control-sm"
+                                                                                                placeholder="Item Name"
+                                                                                                [(ngModel)]="purcRetDtl.itemName">
+                                                                                            
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"

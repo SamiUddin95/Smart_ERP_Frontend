@@ -1,0 +1,48 @@
+.purchase-report-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  page-break-inside: avoid;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.left-header, .right-header {
+  width: 50%;
+}
+
+.left-header h1 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.right-header h2 {
+  margin: 0;
+  text-align: right;
+  font-size: 1.3em;
+}
+
+.table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+}
+
+.invoice-footer {
+  margin-top: 20px;
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.page-break {
+  page-break-after: always;
+}

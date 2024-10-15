@@ -9,14 +9,51 @@ import * as moment from 'moment';
 import html2canvas from 'html2canvas';
 import { HttpClient } from '@angular/common/http';
 
+
+interface InvoiceItem {
+  barcode: string;
+  description: string;
+  quantity: number;
+  purchaseUnit: number;
+  price: number;
+  discountPercentage: number;
+  flatDiscount: number;
+  gst: number;
+  value: number;
+  netRate: number;
+  netTotal: number;
+}
+
+interface Invoice {
+  invoiceNumber: string;
+  party: string;
+  invoiceType: string;
+  date: string;
+  userName: string;
+  remarks: string;
+  amountInWords: string;
+  total: number;
+  gst: number;
+  discPercentageValue: number;
+  discFlat: number;
+  discFlat2: number;
+  misc: number;
+  misc2: number;
+  items: InvoiceItem[];
+  page: number;
+}
+
+
 @Component({
   selector: 'app-rpt-purchase',
   templateUrl: './rpt-purchase.component.html',
   styleUrls: ['./rpt-purchase.component.css']
 })
+
 export class RptPurchaseComponent {
   constructor(private router: Router, private http: HttpClient,private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
   currentDate = new Date();
+  invoices: Invoice[] = [];
   ngOnInit(): void {
     this.currentDate.setHours(0, 0, 0, 0);
     this.filter.dateTo = moment(this?.currentDate).format('YYYY-MM-DD').toString();
@@ -26,10 +63,7 @@ export class RptPurchaseComponent {
     this.getCategories();
     this.getClass();
   }
-  filter: any = {
-    month_id: undefined,
-    shop_id: undefined,
-  };
+  filter: any = {};
   rptData: any = [];
   getData() {
     this.filter.dateFrom = moment(this?.filter?.dateFrom).format('YYYY-MM-DD').toString();
@@ -69,68 +103,128 @@ export class RptPurchaseComponent {
       this.class = res;
     })
   }
-  exportPdf() {
-    const doc = new jsPDF('l', 'mm', 'a4');
-    const margin = 10;
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const logoUrl = 'assets/Logo.png'; 
-
-    this.getImageBase64(logoUrl).then(logoBase64 => {
-      const logoWidth = 40;
-      const logoHeight = 20;
-      const logoX = pageWidth - logoWidth - margin;
-      const logoY = margin; 
-      doc.addImage(logoBase64, 'PNG', logoX, logoY, logoWidth, logoHeight); 
-      const headingText = 'BASIC DATA REPORT';
-      const headingX = margin;
-      const headingY = margin + logoHeight / 2;
-
-      doc.setFontSize(16);
-      doc.setTextColor('#000000');
-      doc.text(headingText, headingX, headingY); 
-      const headingHeight = 15;
-      const spaceBetweenHeadingAndTable = 5;
-      const tableYPosition = headingY + headingHeight + spaceBetweenHeadingAndTable;
-      const tableWidth = pageWidth - 2 * margin; 
-      const head = [['ITEM S.NO', 'ITEM NAME', 'BRAND NAME', 'MANUFACTURER', 'SALE PRICE', 'PURCHASE PRICE']];
-      const normalizedRptData = this.rptData.map((row: { itemname: any; brandname: any; manufacturername: any; saleprice: any; purchaseprice: any; }, index: number) => ({
-        "ITEM S.NO": index + 1,
-        "ITEM NAME": row.itemname,
-        "BRAND NAME": row.brandname,
-        "MANUFACTURER": row.manufacturername,
-        "SALE PRICE": row.saleprice,
-        "PURCHASE PRICE": row.purchaseprice
-      }));
-
-      const columns = [
-        { header: 'ITEM S.NO', dataKey: 'ITEM S.NO' },
-        { header: 'ITEM NAME', dataKey: 'ITEM NAME' },
-        { header: 'BRAND NAME', dataKey: 'BRAND NAME' },
-        { header: 'MANUFACTURER', dataKey: 'MANUFACTURER' },
-        { header: 'SALE PRICE', dataKey: 'SALE PRICE' },
-        { header: 'PURCHASE PRICE', dataKey: 'PURCHASE PRICE' }
-      ];
-
-      const options = {
-        head: head,
-        body: normalizedRptData.map((row: { [s: string]: unknown; } | ArrayLike<unknown>) => Object.values(row)),
-        startY: tableYPosition,
-        styles: {
-          cellPadding: 3,
-          lineWidth: 0.5,
-          lineColor: '#dddddd',
-          fontSize: 10
-        },
-        columns: columns,
-        margin: { left: margin, right: margin }
-      };
-
-      autoTable(doc, options);
-      doc.save('Basic Data '+ new Date().getTime()+' .pdf' );
-    }).catch(error => {
-      console.error('Error loading image:', error);
-    });
+  isPrint:boolean=false;
+  exportPdf() { 
+    this.isPrint = true; 
+    this.invoices = [
+      {
+        invoiceNumber: '6,370',
+        party: 'VISION MARKETING (VITAL TEA)',
+        invoiceType: 'Credit',
+        date: '01-Oct-2024 13:22',
+        userName: 'DANISH',
+        remarks: 'Post Y',
+        amountInWords: 'Eleven Thousand Four Hundred Twenty-Seven Only',
+        total: 11427,
+        gst: 0.00,
+        discPercentageValue: 0.00,
+        discFlat: 0.00,
+        discFlat2: 0.00,
+        misc: 0.00,
+        misc2: 0.00,
+        items: [
+          { barcode: '8964000008027', description: 'VITAL TEA POUCH 475G', quantity: 1, purchaseUnit: 825, price: 825, discountPercentage: 2.50, flatDiscount: 0, gst: 0, value: 804.38, netRate: 804.38, netTotal: 4826.25 },
+          { barcode: '8964000008072', description: 'VITAL TEA 385G', quantity: 2, purchaseUnit: 680, price: 680, discountPercentage: 2.50, flatDiscount: 0, gst: 0, value: 663, netRate: 663, netTotal: 1326 }
+        ],
+        page: 1
+      },
+      {
+        invoiceNumber: '6,371',
+        party: 'ABC MARKETING',
+        invoiceType: 'Credit',
+        date: '02-Oct-2024 14:22',
+        userName: 'ALI',
+        remarks: 'Post Z',
+        amountInWords: 'Twenty Thousand Five Hundred Only',
+        total: 20500,
+        gst: 500.00,
+        discPercentageValue: 2.00,
+        discFlat: 200.00,
+        discFlat2: 100.00,
+        misc: 0.00,
+        misc2: 0.00,
+        items: [
+          { barcode: '8964000009123', description: 'ABC TEA POUCH 250G', quantity: 3, purchaseUnit: 550, price: 550, discountPercentage: 2.00, flatDiscount: 10, gst: 50, value: 540, netRate: 540, netTotal: 1650 },
+          { barcode: '8964000009150', description: 'ABC TEA 1KG', quantity: 1, purchaseUnit: 1050, price: 1050, discountPercentage: 3.00, flatDiscount: 25, gst: 100, value: 1020, netRate: 1020, netTotal: 1050 }
+        ],
+        page: 2
+      },      {
+        invoiceNumber: '6,370',
+        party: 'VISION MARKETING (VITAL TEA)',
+        invoiceType: 'Credit',
+        date: '01-Oct-2024 13:22',
+        userName: 'DANISH',
+        remarks: 'Post Y',
+        amountInWords: 'Eleven Thousand Four Hundred Twenty-Seven Only',
+        total: 11427,
+        gst: 0.00,
+        discPercentageValue: 0.00,
+        discFlat: 0.00,
+        discFlat2: 0.00,
+        misc: 0.00,
+        misc2: 0.00,
+        items: [
+          { barcode: '8964000008027', description: 'VITAL TEA POUCH 475G', quantity: 1, purchaseUnit: 825, price: 825, discountPercentage: 2.50, flatDiscount: 0, gst: 0, value: 804.38, netRate: 804.38, netTotal: 4826.25 },
+          { barcode: '8964000008072', description: 'VITAL TEA 385G', quantity: 2, purchaseUnit: 680, price: 680, discountPercentage: 2.50, flatDiscount: 0, gst: 0, value: 663, netRate: 663, netTotal: 1326 }
+        ],
+        page: 1
+      },
+      {
+        invoiceNumber: '6,371',
+        party: 'ABC MARKETING',
+        invoiceType: 'Credit',
+        date: '02-Oct-2024 14:22',
+        userName: 'ALI',
+        remarks: 'Post Z',
+        amountInWords: 'Twenty Thousand Five Hundred Only',
+        total: 20500,
+        gst: 500.00,
+        discPercentageValue: 2.00,
+        discFlat: 200.00,
+        discFlat2: 100.00,
+        misc: 0.00,
+        misc2: 0.00,
+        items: [
+          { barcode: '8964000009123', description: 'ABC TEA POUCH 250G', quantity: 3, purchaseUnit: 550, price: 550, discountPercentage: 2.00, flatDiscount: 10, gst: 50, value: 540, netRate: 540, netTotal: 1650 },
+          { barcode: '8964000009150', description: 'ABC TEA 1KG', quantity: 1, purchaseUnit: 1050, price: 1050, discountPercentage: 3.00, flatDiscount: 25, gst: 100, value: 1020, netRate: 1020, netTotal: 1050 }
+        ],
+        page: 2
+      }
+    ];
+    setTimeout(() => {
+      const printArea = document.querySelector('.print-area'); 
+      if (printArea) {
+        html2canvas(printArea as HTMLElement).then(canvas => {
+          const pdf = new jsPDF('p', 'mm', 'a4'); // Initialize jsPDF
+          const imgData = canvas.toDataURL('image/png'); // Convert canvas to image
+          
+          const imgWidth = 210; // A4 width in mm
+          const pageHeight = 295; // A4 height in mm
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          let heightLeft = imgHeight;
+  
+          let position = 0;
+  
+          // First page
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+  
+          // Add more pages if necessary
+          while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+          }
+  
+          pdf.save('purchase-report.pdf'); 
+          this.isPrint=false;
+        });
+      }
+    }, 1000);
   }
+  
+
 
   private getImageBase64(imagePath: string): Promise<string> {
     return this.http.get(imagePath, { responseType: 'blob' }).toPromise().then(blob => {

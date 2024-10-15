@@ -1,6 +1,7 @@
 <div class="container-fluid mt-2" style="width:100%">
     <div class="flex justify-content-between p-2 ">
         <h3>PURCHASE</h3>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()" class="mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
     </div>
     <section>
         <div class="card">
@@ -144,7 +145,7 @@
                                                                                             <td>{{ i + 1 }}</td>
                                                                                             <td><input type="text" class="w-100"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Enter Barcode Here"  (keypress)="onKey($event,user)"  autofocus 
+                                                                                                    placeholder="Enter Barcode Here" (keypress)="onKey($event,user)"  autofocus 
                                                                                                     [(ngModel)]="user.barcode" (input)="barCodeChange(user)">
                                                                                             </td>
                                                                                             <td>

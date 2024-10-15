@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between p-2">
         <div>
             <h3>PURCHASE REPORT</h3>
-        </div>        
+        </div>
     </div>
     <section class="content-header">
         <p-accordion>
@@ -21,34 +21,31 @@
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control form-control-sm col-md-12 txt"
-                                placeholder="Name" id="Name" [(ngModel)]="filter.name">
+                            <input type="text" class="form-control form-control-sm col-md-12 txt" placeholder="Name"
+                                id="Name" [(ngModel)]="filter.name">
                         </div>
                         <div class="col-md-4 py-2 col-sm-12">
                             <label class="mb-0 mx-2" for="Brand">Brand</label>
-                            <p-dropdown [options]="brands" [(ngModel)]="filter.brandId"
-                                        placeholder="Select a Brand" optionLabel="name"
-                                        optionValue="id"></p-dropdown>
+                            <p-dropdown [options]="brands" [(ngModel)]="filter.brandId" placeholder="Select a Brand"
+                                optionLabel="name" optionValue="id"></p-dropdown>
                         </div>
                         <div class="col-md-4 py-2 col-sm-12">
                             <label class="mb-0 mx-2" for="Category">Category</label>
                             <p-dropdown [options]="categories" [(ngModel)]="filter.categoryId"
-                                        placeholder="Select a Category" optionLabel="name"
-                                        optionValue="id"></p-dropdown>
+                                placeholder="Select a Category" optionLabel="name" optionValue="id"></p-dropdown>
                         </div>
                         <div class="col-md-4 py-2 col-sm-12">
                             <label class="mb-0 mx-2" for="Class">Class</label>
-                            <p-dropdown [options]="class" [(ngModel)]="filter.classId"
-                                        placeholder="Select a Class" optionLabel="name"
-                                        optionValue="id"></p-dropdown>
-                        </div> 
+                            <p-dropdown [options]="class" [(ngModel)]="filter.classId" placeholder="Select a Class"
+                                optionLabel="name" optionValue="id"></p-dropdown>
+                        </div>
                         <div class="col-md-12 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
-                                class="p-button-sm p-button-secondary float-right mx-1  mt-4"
-                                style="width:130px" (click)="clearFilter()"></button>
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4" style="width:130px"
+                                (click)="clearFilter()"></button>
                             <button pButton pRipple type="button" icon="pi pi-search" label="Search"
-                                class="p-button-sm p-button-info float-right mx-1 mt-4"
-                                style="width:130px" (click)="getData()"></button>
+                                class="p-button-sm p-button-info float-right mx-1 mt-4" style="width:130px"
+                                (click)="getData()"></button>
                         </div>
                     </div>
                 </div>
@@ -58,21 +55,28 @@
         <div class="pad-wrapper">
             <div class="box">
                 <div class="content">
-                    <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="rptData" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
-                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="rptData"
+                        styleClass="p-datatable-sm p-datatable-gridlines"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
                         <ng-template pTemplate="caption">
                             <div class="flex">
-                                <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
-                                <button type="button" pButton pRipple icon="pi pi-file-excel" label="Export XLS" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
-                                <button type="button" pButton pRipple icon="pi pi-file" label="Export CSV" (click)="dt.exportCSV()"  class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF"
+                                    (click)="exportPdf()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file-excel" label="Export XLS"
+                                    (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS"
+                                    tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file" label="Export CSV"
+                                    (click)="dt.exportCSV()" class="p-button-warning mr-2" pTooltip="PDF"
+                                    tooltipPosition="bottom"></button>
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="itemSno">ITEM SNO <p-sortIcon field="itemSno"></p-sortIcon></th>
                                 <th pSortableColumn="name">SUPPLIER ID <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="brand">SUPPLIER NAME <p-sortIcon field="brand"></p-sortIcon></th> 
-                                <th pSortableColumn="brand">TOTAL AMOUNT <p-sortIcon field="brand"></p-sortIcon></th> 
+                                <th pSortableColumn="brand">SUPPLIER NAME <p-sortIcon field="brand"></p-sortIcon></th>
+                                <th pSortableColumn="brand">TOTAL AMOUNT <p-sortIcon field="brand"></p-sortIcon></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-data let-i="rowIndex">
@@ -80,7 +84,7 @@
                                 <td>{{i+1}}</td>
                                 <td>{{data.partyid}}</td>
                                 <td>{{data.suppliername}}</td>
-                                <td>{{data.totalamount}}</td> 
+                                <td>{{data.totalamount}}</td>
                             </tr>
                         </ng-template>
                     </p-table>
@@ -89,5 +93,104 @@
         </div>
     </section>
 </div>
-
 <p-toast position="top-right"></p-toast>
+
+<div *ngIf="isPrint" class="print-area">
+    <div class="purchase-report-container" *ngFor="let invoice of invoices">
+      <!-- Header Section -->
+      <div class="header">
+        <div class="left-header">
+          <h1>Saving Store</h1>
+          <p>House B-124 Bostan-e-Rafi Near Rewari Sweet Malir Karachi.</p>
+          <p>Phone: 0321-8260093 | Email: savingstore1@gmail.com</p>
+        </div>
+        <div class="right-header">
+          <h2>Purchase Report </h2>
+          <h2>Invoice Wise Detail</h2>
+          <p class="float-end"><strong>Printing Date:</strong> {{currentDate | date:'dd-MMM-yyyy'}}</p>
+          <!-- <p class="float-end"><strong>Page:</strong> {{invoice.page}}</p> -->
+        </div>
+      </div>
+      <p-divider></p-divider>
+      <!-- Itemized Table Section -->
+      <p-table [value]="invoice.items" [responsiveLayout]="'scroll'" class="table">
+        <!-- Table Header -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Barcode</th>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>P/U</th>
+            <th>Price</th>
+            <th>Disc %</th>
+            <th>Flat Disc</th>
+            <th>GST</th>
+            <th>Value</th>
+            <th>Net Rate</th>
+            <th>Net Total</th>
+          </tr>  
+          <!-- Second Row for Invoice Information -->
+          <tr>
+            <td colspan="11">
+              <table style="width: 100%;">
+                <!-- First Line -->
+                <tr>
+                  <td><strong>Invoice No:</strong> {{invoice.invoiceNumber}}</td>
+                  <td><strong>Invoice Type:</strong> {{invoice.invoiceType}}</td>
+                  <td><strong>Date:</strong> {{invoice.date}}</td>
+                  <td><strong>User Name:</strong> {{invoice.userName}}</td>
+                </tr>
+                <!-- Second Line (Party and Remarks) -->
+                <tr>
+                  <td><strong>Party:</strong> {{invoice.party}}</td>
+                  <td colspan="3"><strong>Remarks:</strong> {{invoice.remarks}}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </ng-template>
+  
+        <!-- Table Body -->
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{item.barcode}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.purchaseUnit}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.discountPercentage}}</td>
+            <td>{{item.flatDiscount}}</td>
+            <td>{{item.gst}}</td>
+            <td>{{item.value}}</td>
+            <td>{{item.netRate}}</td>
+            <td>{{item.netTotal}}</td>
+          </tr>
+        </ng-template>
+  
+        <!-- Table Footer (Totals) -->
+        <ng-template pTemplate="footer">
+          <tr>
+            <td colspan="2" style="text-align: left;"><strong>Totals:</strong></td>
+            <td><strong>Disc % Value :</strong> {{invoice.discPercentageValue | number:'1.2-2'}} </td>
+            <td><strong>Disc Flat :</strong> {{invoice.discFlat | number:'1.2-2'}}</td>
+            <td><strong>Disc Flat2 :</strong> {{invoice.discFlat2 | number:'1.2-2'}}</td>
+            <td><strong>GST :</strong> {{invoice.gst | number:'1.2-2'}}</td>
+            <td><strong>Misc :</strong> {{invoice.misc | number:'1.2-2'}}</td>
+            <td><strong>Misc2 :</strong> {{invoice.misc2 | number:'1.2-2'}}</td>
+            <td colspan="3" style="text-align: right;"><strong>Inv Total :</strong> {{invoice.total | number:'1.2-2'}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+  
+      <!-- Footer with Amount in Words -->
+      <div class="invoice-footer">
+        <p><strong>Amount in Words:</strong> {{invoice.amountInWords}}</p>
+      </div>
+      <p-divider></p-divider>
+      <!-- Page Break after each invoice -->
+      <!-- <div class="page-break"></div> -->
+    </div>
+  </div>
+  
+
+

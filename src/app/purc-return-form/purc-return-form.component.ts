@@ -37,6 +37,16 @@ export class PurcReturnFormComponent {
       this.getUserById(this.urlId);
     }
 	}
+  onKey(event: any, user: any) { 
+    user.barcode = event.target.value;
+    if (user.barcode.length > 4) {
+      this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
+        user.itemName = res[0].itemName;
+        user.purchasePrice = res[0].purchasePrice;
+        user.salePrice = res[0].salePrice
+      })
+    }
+  }
   getUserById(id: any) {
 		this.api.getPurchaseReturnById(String(id)).subscribe(res => { 
       var res=JSON.parse(res); 

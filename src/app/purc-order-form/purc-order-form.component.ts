@@ -71,6 +71,17 @@ export class PurcOrderFormComponent {
 		})
 
   }
+  onKey(event: any, user: any) {
+    debugger
+    user.barcode = event.target.value;
+    if (user.barcode.length > 4) {
+      this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
+        user.itemName = res[0].itemName;
+        user.purchasePrice = res[0].purchasePrice;
+        user.salePrice = res[0].salePrice
+      })
+    }
+  }
   addPurchaseOrder(){
     let formData:any={
       id:this.urlId?this.formData.id=this.urlId:undefined,
