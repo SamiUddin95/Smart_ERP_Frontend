@@ -91,11 +91,11 @@
                         <ng-template pTemplate="body" let-itm>
                             <tr>
                                 <td>{{itm.invoiceNo}}</td>
-                                <td>{{itm.createdAt}}</td>
+                                <td>{{ itm.createdAt | date:'dd-MMM-yyyy' }} </td>
                                 <td>{{itm.billTotal}}</td>
                                 <td>{{itm.salePrice}}</td>
                                 <td>{{itm.vendorId}}</td>
-                                <td>{{itm.createdAt | date:'DD-MMM-YYYY'}}</td>
+                                <td>{{itm.createdAt | date:'dd-MMM-yyyy' }}</td>
                                 <td>{{itm.postedBy}}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
