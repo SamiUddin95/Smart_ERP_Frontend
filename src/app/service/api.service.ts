@@ -364,6 +364,10 @@ export class ApiService {
 		return this.app.get('getAllItemsdetailsFilterbased?itemName='+itemName+'&aliasName='+aliasName+'&purchasePrice='+
 			purchasePrice+'&salePrice='+salePrice);
 	}
+
+	getAllBrandsdetailsFilterbased(brandName:string) {
+		return this.app.get('getAllBrandsdetailsFilterbased?brandName='+brandName);
+	}
 	getItemDetailbyBarCode(barCode:string){
 		return this.app.get('getItemDetailbyBarCode?barCode=' + barCode);
 	}
@@ -375,10 +379,7 @@ export class ApiService {
 	createItems(obj: any) {
 		return this.app.post('createItems', obj);
 	}
-	checkDuplicateItemName(itemName: string) {
-		debugger
-    return this.app.get(`checkDuplicateItemName?itemName=`+ itemName);
-}
+	
 	getItemsById(id: any) {
 		return this.app.get('getItemById?id=' + id, id);
 	} 

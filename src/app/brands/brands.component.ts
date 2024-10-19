@@ -14,10 +14,11 @@ export class BrandsComponent {
   ngOnInit(): void {
     this.getBrandList();
 	}
+  filter: any = {};
   brands: any = [];
   getBrandList() {
     debugger
-		this.api.getAllBrandsdetails().subscribe((res: any) => {
+		this.api.getAllBrandsdetailsFilterbased(this.filter.brandName?this.filter.brandName:'All').subscribe((res: any) => {
 			this.brands = res.map((ele: any) => {
         debugger
 			  return {

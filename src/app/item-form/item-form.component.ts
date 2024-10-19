@@ -60,22 +60,19 @@ export class ItemFormComponent {
         this.formData.id = this.urlId;
     }
 
-    this.api.checkDuplicateItemName(this.formData.itemName).subscribe(duplicate => {
-        if (duplicate) {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Item Name already exists.' });
-            return; 
-        }
-
-        this.api.createItems(this.formData).subscribe(
-            res => {
-                this.router.navigate(['item']);
-                this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Item Added Successfully' });
-            },
-            err => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add item.' });
-            }
-        );
-    });
+    this.api.createItems(this.formData).subscribe(
+      (res: any) => {
+          if (res?.msg === "An item with this name already exists.") {
+              this.messageService.add({ severity: 'warn', summary: 'Warning', detail: res.msg });
+          } else {
+              this.router.navigate(['item']);
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Item Added Successfully' });
+          }
+      },
+      err => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add item.' });
+      }
+  );
 }
 
         cat:any=[];
