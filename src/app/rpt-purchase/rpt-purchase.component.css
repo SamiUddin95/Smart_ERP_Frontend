@@ -3,6 +3,18 @@
   font-family: Arial, sans-serif;
   page-break-inside: avoid;
 }
+.print-area {
+  color: #000000; /* Apply dark black color globally */
+}
+
+.print-area h1, 
+.print-area h2, 
+.print-area p, 
+.print-area td, 
+.print-area strong {
+  color: #000000; /* Ensure all headings, paragraphs, table data, and bold text are in dark black */
+}
+
 
 .header {
   display: flex;

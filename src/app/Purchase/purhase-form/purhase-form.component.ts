@@ -134,7 +134,57 @@ export class PurhaseFormComponent {
     });
 
   }
+  bonusQtyChange(user:any){
+    this.totalQty = 0;
+    user.total = user.quantity * user.purchasePrice;
+    user.netTotal = user.quantity * user.purchasePrice;
+    this.grandTotal = 0;
+    this.totalExcTax = 0;
+    this.totalIncTax = 0;
+    this.bonusQty=0;
+    this.purcDtl.forEach(x => {
+      if (typeof x.total === 'number' && !isNaN(x.total)) {
+        this.grandTotal += x.total;
+        this.totalIncTax += x.total; // Assuming tax included is the same
+        this.totalExcTax += x.total; // Adjust as necessary
+        if (typeof x.quantity === 'number' && !isNaN(x.quantity)) {
+          this.totalQty += x.quantity;
+        }
+        if (typeof x.bonusQuantity === 'number' && !isNaN(x.bonusQuantity)) {
+          this.bonusQty += x.bonusQuantity;
+        }
+      }
+    });
 
+  }
+  discountChange(user:any){
+    user.total = user.quantity * user.purchasePrice;
+    user.netTotal = user.quantity * user.purchasePrice;
+    user.total=user.total-(user.discountByPercent/100)*user.purchasePrice;
+    user.discountByValue=(user.discountByPercent/100)*user.purchasePrice;
+    this.totalQty = 0;
+    this.grandTotal = 0;
+    this.totalExcTax = 0;
+    this.totalIncTax = 0;
+    this.bonusQty=0;
+    this.disc=0;
+    this.purcDtl.forEach(x => {
+      if (typeof x.total === 'number' && !isNaN(x.total)) {
+        this.grandTotal += x.total;
+        this.totalIncTax += x.total; // Assuming tax included is the same
+        this.totalExcTax += x.total; // Adjust as necessary
+        if (typeof x.quantity === 'number' && !isNaN(x.quantity)) {
+          this.totalQty += x.quantity;
+        }
+        if (typeof x.bonusQuantity === 'number' && !isNaN(x.bonusQuantity)) {
+          this.bonusQty += x.bonusQuantity;
+        }
+        if (typeof x.discountByValue === 'number' && !isNaN(x.discountByValue)) {
+          this.disc += x.discountByValue;
+        }
+      }
+    });
+  }
   earnedPointsChange() {
     this.netAmount = this.earnedPoints - this.return;
   }
@@ -152,6 +202,12 @@ export class PurhaseFormComponent {
   }
   RemoveData() {
     this.purcDtl = [];
+    this.totalQty = 0;
+    this.grandTotal = 0;
+    this.totalExcTax = 0;
+    this.totalIncTax = 0;
+    this.bonusQty=0;
+    this.disc=0;
   }
   RemoveCol(index: number) {
     this.purcDtl.splice(index, 1);

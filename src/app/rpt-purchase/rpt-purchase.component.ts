@@ -148,7 +148,8 @@ export class RptPurchaseComponent {
           { barcode: '8964000009150', description: 'ABC TEA 1KG', quantity: 1, purchaseUnit: 1050, price: 1050, discountPercentage: 3.00, flatDiscount: 25, gst: 100, value: 1020, netRate: 1020, netTotal: 1050 }
         ],
         page: 2
-      },      {
+      },      
+      {
         invoiceNumber: '6,370',
         party: 'VISION MARKETING (VITAL TEA)',
         invoiceType: 'Credit',
@@ -221,7 +222,7 @@ export class RptPurchaseComponent {
           this.isPrint=false;
         });
       }
-    }, 1000);
+    }, 100);
   }
   
 
