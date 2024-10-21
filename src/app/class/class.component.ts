@@ -16,10 +16,11 @@ export class ClassComponent {
 	}
 
   class: any = [];
+  filter: any = {};
 
   getClassList() {
     debugger
-		this.api.getAllClassdetails().subscribe((res: any) => {
+		this.api.getAllClassdetailsFilterbased(this.filter.name?this.filter.name:'All').subscribe((res: any) => {
 			this.class = res.map((ele: any) => {
         debugger
 			  return {

@@ -14,10 +14,11 @@ export class ManufacturerComponent {
     this.getManufacturerList();
 	}
   manufacturer: any = [];
-
+  filter: any = [];
   getManufacturerList() {
     debugger
-		this.api.getAllIManufacturerdetails().subscribe((res: any) => {
+		this.api.getAllManufacturedetailsFilterbased(this.filter.name?this.filter.name:'All',
+      this.filter.email?this.filter.email:'All').subscribe((res: any) => {
 			this.manufacturer = res.map((ele: any) => {
         debugger
 			  return {

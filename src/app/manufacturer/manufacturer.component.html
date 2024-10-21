@@ -8,6 +8,34 @@
         </div>
     </div>
     <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <p-accordion>
+            <p-accordionTab header="Search">
+                <div class="grid">
+                    <div class="row mt-1 px-2 col-12">
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Manufacture</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Name" [(ngModel)]="filter.name">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Email</label>
+                            <input type="text" [(ngModel)]="filter.email"
+                                class="form-control p-inputtext p-component txt" 
+                                placeholder="Email">
+                        </div>
+                        <div class="col-md-4 offset-4 col-sm-12 text-right mt-1">
+                            <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4" style="width:130px"
+                                (click)="clearFilter()"></button>
+                            <button pButton pRipple type="button" icon="pi pi-search" label="Search"
+                                class="p-button-sm p-button-info float-right mx-1 mt-4" style="width:130px"
+                                (click)="getManufacturerList()"></button>
+
+                        </div>
+                    </div>
+                </div>
+            </p-accordionTab>
+        </p-accordion>
         <div class="pad-wrapper">
             <div class="box">
                 <div class="content">

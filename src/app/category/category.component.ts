@@ -15,9 +15,11 @@ export class CategoryComponent {
     this.getCategoryList();
 	}
   category: any = [];
+  filter: any = {};
 
   getCategoryList() {
-		this.api.getAllCategorydetails().subscribe((res: any) => {
+		this.api.getAllCategorydetailsFilterbased(this.filter.name?this.filter.name:'All',
+      this.filter.description?this.filter.description:'All').subscribe((res: any) => {
 			this.category = res.map((ele: any) => {
 			  return {
         id: ele.id,

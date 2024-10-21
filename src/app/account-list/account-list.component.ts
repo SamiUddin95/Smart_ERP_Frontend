@@ -18,8 +18,15 @@ export class AccountListComponent {
 		this.getAccountList();
 	}
 	account: any = [];
+	filter: any = {};
+
 	getAccountList() {
-		this.api.getAllAccount().subscribe((res: any) => { 
+		this.api.getAllAccountFilterbased(this.filter.name?this.filter.name:'All',
+			this.filter.accountNumber?this.filter.accountNumber:'All',
+			this.filter.taxAmount?this.filter.taxAmount:0,
+			this.filter.taxLimit?this.filter.taxLimit:0,
+			this.filter.manualCode?this.filter.manualCode:'All',
+			this.filter.kindCode?this.filter.kindCode:'All').subscribe((res: any) => { 
 			this.account = res;
 		})
 	}

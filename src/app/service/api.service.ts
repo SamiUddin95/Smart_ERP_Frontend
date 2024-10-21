@@ -26,6 +26,12 @@ export class ApiService {
 		return this.app.get('deleteUserById?id=' + id, id);
 	}
 	//Account
+	getAllAccountFilterbased(Name:string,accNo:string,taxAmount:number,taxLimit:number, manualCode:string, kindCode:string) {
+		return this.app.get('getAllAccountFilterbased?Name='+Name+'&accNo='+accNo+'&taxAmount='+
+			taxAmount+'&taxLimit='+taxLimit +'&manualCode='+manualCode+'&kindCode='+kindCode);
+	}
+
+
 	getAllAccount() {
 		return this.app.get('getAllAccount');
 	}
@@ -40,6 +46,10 @@ export class ApiService {
 	}
 
 	//AccountCategory
+	getAllAccountCategoryFilterbased(Name:string,accType:string, manualCode:string, priority:string) {
+		return this.app.get('getAllAccountCategoryFilterbased?Name='+Name+'&accType='+accType+'&manualCode='+manualCode+'&priority='+priority);
+	}
+
 	getAllAccountCat() {
 		return this.app.get('getAllAccountCategory');
 	}
@@ -57,6 +67,10 @@ export class ApiService {
 		return this.app.get('getAllAccountType');
 	}
 	//AccountGroup
+	getAllAccountGroupFilterbased(Name:string,accType:number, manualCode:string, priority:string) {
+		return this.app.get('getAllAccountGroupFilterbased?Name='+Name+'&accType='+accType+'&manualCode='+manualCode+'&priority='+priority);
+	}
+
 	getAllAccountGroup() {
 		return this.app.get('getAllAccGroup');
 	}
@@ -317,7 +331,15 @@ export class ApiService {
 	getBrandsById(id: any) {
 		return this.app.get('getBrandById?id=' + id, id);
 	} 
+
+	getAllBrandsdetailsFilterbased(brandName:string) {
+		return this.app.get('getAllBrandsdetailsFilterbased?brandName='+brandName);
+	}
 	//Category
+
+	getAllCategorydetailsFilterbased(Name:string, description:string) {
+		return this.app.get('getAllCategorydetailsFilterbased?Name='+Name+'&description='+description);
+	}
 	getAllCategorydetails() {
 		return this.app.get('getAllCategory');
 	}
@@ -341,6 +363,10 @@ export class ApiService {
 	}
 
 	//Class
+	getAllClassdetailsFilterbased(className:string) {
+		return this.app.get('getAllClassdetailsFilterbased?className='+className);
+	}
+
 	getAllClassdetails() {
 		return this.app.get('getAllClass');
 	}
@@ -365,9 +391,6 @@ export class ApiService {
 			purchasePrice+'&salePrice='+salePrice);
 	}
 
-	getAllBrandsdetailsFilterbased(brandName:string) {
-		return this.app.get('getAllBrandsdetailsFilterbased?brandName='+brandName);
-	}
 	getItemDetailbyBarCode(barCode:string){
 		return this.app.get('getItemDetailbyBarCode?barCode=' + barCode);
 	}
@@ -384,6 +407,10 @@ export class ApiService {
 		return this.app.get('getItemById?id=' + id, id);
 	} 
 	//Manufactutrer
+	getAllManufacturedetailsFilterbased(name:string, email:string) {
+		return this.app.get('getAllManufacturedetailsFilterbased?name='+name+'&email='+email);
+	}
+
 	getAllIManufacturerdetails() {
 		return this.app.get('getAllManufacturer');
 	}

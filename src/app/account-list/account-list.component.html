@@ -15,42 +15,42 @@
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">User Name</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                            <label class="mb-0 mx-2" for="Name">Account</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Name" [(ngModel)]="filter.name">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Email</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                            <label class="mb-0 mx-2" for="Name">Account No</label>
+                            <input type="text" [(ngModel)]="filter.accountNumber"
+                                class="form-control p-inputtext p-component txt" placeholder="Account No">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Phone</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                             </div>
+                            <label class="mb-0 mx-2" for="Name">Tax Amount</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Tax Amount" [(ngModel)]="filter.taxAmount">
+                        </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Gender</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                            </div>
+                            <label class="mb-0 mx-2" for="Name">Tax Limit</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Tax Limit" [(ngModel)]="filter.taxLimit">
+                        </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Joining Date</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                            </div>
-                         <div class="col-md-4 col-sm-12 text-right mt-1">
+                            <label class="mb-0 mx-2" for="Name">Manual Code</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Manual Code" [(ngModel)]="filter.manualCode">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Kind Code</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Kind Code" [(ngModel)]="filter.kindCode">
+                        </div>
+                        <div class="col-md-4 offset-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
-                                class="p-button-sm p-button-secondary float-right mx-1  mt-4"
-                                style="width:130px" (click)="clearFilter()"></button>
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4" style="width:130px"
+                                (click)="clearFilter()"></button>
                             <button pButton pRipple type="button" icon="pi pi-search" label="Search"
-                                class="p-button-sm p-button-info float-right mx-1 mt-4"
-                                style="width:130px" (click)="getData()"></button>
+                                class="p-button-sm p-button-info float-right mx-1 mt-4" style="width:130px"
+                                (click)="getAccountList()"></button>
 
                         </div>
                     </div>

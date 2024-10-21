@@ -15,15 +15,20 @@ export class AccountGroupListComponent {
 	constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 	title = 'BMSFrontEnd';
 	ngOnInit(): void {
-		this.getUserList();
+		this.getAccgroup();
 	}
 	accGrp: any = [];
-	getUserList() {
-		this.api.getAllAccountGroup().subscribe((res: any) => { 
+	filter: any = {};
+
+	getAccgroup() {
+		this.api.getAllAccountGroupFilterbased(this.filter.name?this.filter.name:'All',
+			this.filter.accountTypeId?this.filter.accountTypeId:0,
+			this.filter.manualCode?this.filter.manualCode:'All',
+			this.filter.priority?this.filter.priority:'All').subscribe((res: any) => { 
 			this.accGrp = res;
 		})
 	}
-	addUser() {
+	addAccGroup() {
 		this.router.navigate(['account-grp-form']);
 	}
 	cancel() {

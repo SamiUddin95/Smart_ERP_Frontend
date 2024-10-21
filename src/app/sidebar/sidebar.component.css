@@ -619,7 +619,7 @@
   .sidebar {
 	position: relative;
 	/* top: 60px; */
-	height: calc(125vh - 50px);
+	height: calc(172vh - 50px);
 	background-color: rgb(55, 79, 127);
 	/* background: linear-gradient(45deg,#3018f5,#4b3ffff2,#1a20e8); */
 	background-repeat: no-repeat;

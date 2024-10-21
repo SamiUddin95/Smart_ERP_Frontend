@@ -6,7 +6,7 @@
         <div>
             <button pButton pRipple type="button" icon="pi pi-plus" label="Add Account Group"
                 class="p-button-sm p-button-success float-right"
-                 (click)="addUser()"></button>
+                 (click)="addAccGroup()"></button>
         </div>
     </div>
     <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
@@ -15,49 +15,38 @@
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">User Name</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                            <label class="mb-0 mx-2" for="Name">Group Name</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Group Name" [(ngModel)]="filter.name">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Email</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                            <label class="mb-0 mx-2" for="Name">Account Type</label>
+                            <input type="text" [(ngModel)]="filter.accountTypeId"
+                                class="form-control p-inputtext p-component txt" placeholder="Account Type">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Phone</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                             </div>
+                            <label class="mb-0 mx-2" for="Name">Manual Code</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Manual Code" [(ngModel)]="filter.manualCode">
+                        </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Gender</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                            </div>
-                        <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Joining Date</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                            </div>
-                         <div class="col-md-4 col-sm-12 text-right mt-1">
+                            <label class="mb-0 mx-2" for="Name">Priority</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Priority" [(ngModel)]="filter.priority">
+                        </div>
+                        <div class="col-md-4 offset-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
-                                class="p-button-sm p-button-secondary float-right mx-1  mt-4"
-                                style="width:130px" (click)="clearFilter()"></button>
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4" style="width:130px"
+                                (click)="clearFilter()"></button>
                             <button pButton pRipple type="button" icon="pi pi-search" label="Search"
-                                class="p-button-sm p-button-info float-right mx-1 mt-4"
-                                style="width:130px" (click)="getData()"></button>
+                                class="p-button-sm p-button-info float-right mx-1 mt-4" style="width:130px"
+                                (click)="getAccgroup()"></button>
 
                         </div>
                     </div>
                 </div>
             </p-accordionTab>
         </p-accordion>
-        <p-divider></p-divider>
         <div class="pad-wrapper">
             <div class="box">
                 <div class="content">

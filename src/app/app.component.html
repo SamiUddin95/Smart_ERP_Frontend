@@ -39,39 +39,37 @@
 </div>
 <ng-template #loginComponent>
 	<div class="mt-4">
-		<div class="mx-0 row justify-content-center">
-			<img class="w-2" src="../assets/Logo.jpeg"/>
-		</div>
-		<div class="mx-0 row justify-content-center">
-		  <div class="col-md-5">
-			<div class="card">
-			  <div class="card-header">
-				Login
-			  </div>
-			  <div class="card-body">
-				<form>
-				  <div class="mb-3">
-					<label for="username" class="form-label">Username</label>
-					<input type="text" class="form-control form-control-sm col-md-12 pwd" id="username" [(ngModel)]="loginData.Email" name="username" required>
-				  </div>
-				  <div class="mb-3">
-					<label for="password" class="form-label">Password</label>
-					<div class="input-group">
-						<input type="password" class="form-control form-control-sm col-md-12 pwd" id="password" [(ngModel)]="loginData.Password" name="password" required [type]="passwordFieldType">
-						<button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
-							<i class="bi" [ngClass]="passwordFieldType === 'password' ? 'bi-eye' : 'bi-eye-slash'"></i>
-						</button>
-					</div>
-				  </div>
-				  <div class="d-grid">
-					<button type="submit" (click)="login()" class="btn btn-primary">Login</button>
-				  </div>
-				</form>
-			  </div>
-			  <div class="card-footer">
-				<div class="footer">
-					&copy; 2024 Aventech Software Company
+		<!-- <div class="mx-0 row justify-content-center">
+			<img class="w-2" src="../assets/Background.jpeg"/>
+		</div> -->	
+		<div class="col-md-5">
+		  <div class="card">
+			<div class="card-header">
+			  <h3>Login to Smart ERP</h3>
+			</div>
+			<div class="card-body">
+			  <form (ngSubmit)="login()">
+				<div class="mb-3">
+				  <label for="username" class="form-label">Username</label>
+				  <input type="text" class="form-control form-control-sm col-md-12" id="username" [(ngModel)]="loginData.Email" name="username" required>
 				</div>
+				<div class="mb-3">
+				  <label for="password" class="form-label">Password</label>
+				  <div class="input-group">
+					<input type="password" class="form-control form-control-sm col-md-12 pwd" id="password" [(ngModel)]="loginData.Password" name="password" required [type]="passwordFieldType">
+					<button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+						<i class="bi" [ngClass]="passwordFieldType === 'password' ? 'bi-eye' : 'bi-eye-slash'"></i>
+					</button>
+				</div>
+				</div>
+				<div class="d-grid">
+				  <button type="submit" class="btn btn-primary">Login</button>
+				</div>
+			  </form>
+			</div>
+			<div class="card-footer">
+			  <div class="footer">
+				&copy; 2024 Aventech Software Company
 			  </div>
 			</div>
 		  </div>
@@ -79,6 +77,7 @@
 	  </div>
 </ng-template>
 <p-toast position="top-right"></p-toast>
+
 
 
 

@@ -15,11 +15,16 @@ export class AccountCatListComponent {
   constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 	title = 'BMSFrontEnd';
 	ngOnInit(): void {
-		this.getUserList();
+		this.getAccCatList();
 	}
 	accCat: any = [];
-	getUserList() {
-		this.api.getAllAccountCat().subscribe((res: any) => { 
+	filter: any = {};
+
+	getAccCatList() {
+		this.api.getAllAccountCategoryFilterbased(this.filter.name?this.filter.name:'All',
+			this.filter.accountTypeId?this.filter.accountTypeId:0,
+			this.filter.manualCode?this.filter.manualCode:'All',
+			this.filter.priority?this.filter.priority:'All').subscribe((res: any) => { 
 			this.accCat = res;
 		})
 	}
