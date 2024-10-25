@@ -1,7 +1,8 @@
 <div class="container-fluid mt-2" style="width:100%">
     <div class="flex justify-content-between p-2 ">
         <h3>PURCHASE</h3>
-        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()" class="mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()"
+            class="mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
     </div>
     <section>
         <div class="card">
@@ -56,13 +57,13 @@
                                                             <div class="box">
                                                                 <div class="content">
                                                                     <div class="row">
-                                                                        <div class="col-md-9">
+                                                                        <div class="col-md-10">
                                                                             <div class="table-scroll-container">
                                                                                 <p-table #dt [scrollable]="true"
                                                                                     scrollHeight="600px"
                                                                                     responsiveLayout="scroll"
                                                                                     [value]="purcDtl"
-                                                                                    [tableStyle]="{ 'width': '100%', 'min-width': '100rem' }"
+                                                                                    [tableStyle]="{ 'width': '150%', 'min-width': '100rem' }"
                                                                                     styleClass="p-datatable-sm p-datatable-gridlines"
                                                                                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                                                                                     [rows]="16"
@@ -72,58 +73,75 @@
 
                                                                                     <ng-template pTemplate="header">
                                                                                         <tr>
-                                                                                            <th>
-                                                                                                No</th>
-                                                                                            <th style="width: 10% !important;">
+                                                                                            <th
+                                                                                                >
                                                                                                 Bar Code </th>
-                                                                                            <th style="width: 12% !important;">
+                                                                                            <th
+                                                                                                >
                                                                                                 Item Name </th>
-                                                                                            <th style="width: 3% !important;">
+                                                                                            <th
+                                                                                               >
                                                                                                 Quantity </th>
-                                                                                            <th style="width: 6% !important;" >
-                                                                                                Bonus Quantity 
+                                                                                            <th
+                                                                                                >
+                                                                                                Bonus Qty
                                                                                             </th>
-                                                                                            <th style="width: 6% !important">
-                                                                                                Purchase Price 
+                                                                                            <th
+                                                                                                >
+                                                                                                Net Qty
                                                                                             </th>
-                                                                                            <th style="width:6% !important">
-                                                                                                Disc% 
+                                                                                            <th
+                                                                                                >
+                                                                                                Purchase Price
                                                                                             </th>
-                                                                                            <th style="width: 6% !important;">
+                                                                                            <th
+                                                                                                >
+                                                                                                Sub Total
+                                                                                            </th>
+                                                                                            <th
+                                                                                                >
+                                                                                                Disc%
+                                                                                            </th>
+                                                                                            <th
+                                                                                                >
                                                                                                 Disc Value
                                                                                             </th>
-                                                                                            <th style="width: 6% !important;" >
-                                                                                                Total 
-                                                                                            </th>
-                                                                                            <th style="width: 6% !important;"
+                                                                                            <th
                                                                                                 >
-                                                                                                Gst % 
+                                                                                                Total Inc Disc
                                                                                             </th>
-                                                                                            <th style="width: 6% !important;"
+                                                                                            <th
                                                                                                 >
-                                                                                                Gst Value 
+                                                                                                Gst %
                                                                                             </th>
-                                                                                            <th style="width: 6% !important;"
+                                                                                            <th
                                                                                                 >
-                                                                                                Net Rate 
+                                                                                                Gst Value
                                                                                             </th>
-                                                                                            <th style="width: 6% !important;"
+                                                                                            <th
                                                                                                 >
-                                                                                                Sale Price 
+                                                                                                Total Inc GST
                                                                                             </th>
-                                                                                            <th style="width: 6% !important;"
+                                                                                            <th
                                                                                                 >
-                                                                                                Sale Disc 
+                                                                                                Net Rate
                                                                                             </th>
-                                                                                            <th style="width: 6% !important;"
+                                                                                            <th
                                                                                                 >
-                                                                                                Margin% 
+                                                                                                Sale Price
                                                                                             </th>
-                                                                                            <th style="width: 6% !important;">
-                                                                                                Net Sale Price 
+                                                                                            <th
+                                                                                                >
+                                                                                                Sale Disc
+                                                                                            </th>
+                                                                                            <th >
+                                                                                                Net Sale Price
+                                                                                            </th>
+                                                                                            <th >
+                                                                                                Margin%
                                                                                             </th>
                                                                                             <th>
-                                                                                                Action 
+                                                                                                Action
                                                                                             </th>
                                                                                         </tr>
                                                                                     </ng-template>
@@ -131,17 +149,20 @@
                                                                                     <ng-template pTemplate="body"
                                                                                         let-user let-i="rowIndex">
                                                                                         <tr>
-                                                                                            <td>{{ i + 1 }}</td>
-                                                                                            <td><input type="text" class="w-100"
+                                                                                            <td><input type="text"
+                                                                                                    class="w-100"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Enter Barcode Here" (keypress)="onKey($event,user)"  autofocus 
-                                                                                                    [(ngModel)]="user.barcode" (input)="barCodeChange(user)">
+                                                                                                    placeholder="Enter Barcode Here"
+                                                                                                    (keypress)="onKey($event,user)"
+                                                                                                    autofocus
+                                                                                                    [(ngModel)]="user.barcode"
+                                                                                                    (input)="barCodeChange(user)">
                                                                                             </td>
                                                                                             <td>
                                                                                                 <input type="text"
-                                                                                                class="form-control form-control-sm"
-                                                                                                placeholder="Item Name"
-                                                                                                [(ngModel)]="user.ItemName">
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Item Name"
+                                                                                                    [(ngModel)]="user.ItemName">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
@@ -151,39 +172,61 @@
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Bonus Qty" (input)="bonusQtyChange(user)"
+                                                                                                    placeholder="Bonus Qty"
+                                                                                                    (input)="bonusQtyChange(user)"
                                                                                                     [(ngModel)]="user.bonusQuantity">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Net Qty"
+                                                                                                    (input)="bonusQtyChange(user)"
+                                                                                                    [(ngModel)]="user.netQuantity">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Purchase Price"
                                                                                                     [(ngModel)]="user.purchasePrice"
-                                                                                                    (input)="fullRateChange(purcDtl)">
+                                                                                                    (input)="purchasePriceChange(purcDtl)">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Disc%"(input)="discountChange(user)"
+                                                                                                    placeholder="Sub Total"
+                                                                                                    (input)="discountChange(user)"
+                                                                                                    [(ngModel)]="user.subTotal">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Disc%"
+                                                                                                    (input)="discPerChange(user)"
                                                                                                     [(ngModel)]="user.discountByPercent">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Disc Value"
+                                                                                                    (input)="discvallueChange(user)"
                                                                                                     [(ngModel)]="user.discountByValue">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Total"
-                                                                                                    [(ngModel)]="user.total">
+                                                                                                    [(ngModel)]="user.totalIncDisc">
                                                                                             </td>
-                                                                                            <td><input type="text"
+                                                                                            <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Gst %" (input)="gstChange(user)"
+                                                                                                    placeholder="Gst %"
+                                                                                                    (input)="gstPerChange(user)"
                                                                                                     [(ngModel)]="user.gstByPercent">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Gst Value"
+                                                                                                    (input)="gstValueChange(user)"
                                                                                                     [(ngModel)]="user.gstByValue">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Gst Value"
+                                                                                                    [(ngModel)]="user.totalIncGst">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
@@ -197,18 +240,19 @@
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Sale disc" (input)="saleDiscountByValueChange(user)"
+                                                                                                    placeholder="Sale disc"
+                                                                                                    (input)="saleDiscountByValueChange(user)"
                                                                                                     [(ngModel)]="user.saleDiscountByValue">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Net Sale Price" (input)="netSalePriceChange(user)"
+                                                                                                    [(ngModel)]="user.netSalePrice">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Margin %"
                                                                                                     [(ngModel)]="user.marginPercent">
-                                                                                            </td>
-                                                                                            <td><input type="number"
-                                                                                                    class="form-control form-control-sm"
-                                                                                                    placeholder="Net Sale"
-                                                                                                    [(ngModel)]="user.netSalePrice">
                                                                                             </td>
                                                                                             <td><button pButton pRipple
                                                                                                     type="button"
@@ -223,7 +267,7 @@
 
 
                                                                         </div>
-                                                                        <div class="col-md-3">
+                                                                        <div class="col-md-2">
                                                                             <div class="border summary-table">
                                                                                 <h5 class="text-center p-1">Purchase
                                                                                     Order Summary</h5>
@@ -238,38 +282,32 @@
                                                                                             <th>{{purcDtl.length}}</th>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <th>Loose Qty</th>
-                                                                                            <th>{{looseQty}}</th>
+                                                                                            <th>Net Qty</th>
+                                                                                            <th>{{netQuantity}}</th>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <th>Total Qty</th>
-                                                                                            <th>{{totalQty}}</th>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <th>Bonus Qty</th>
-                                                                                            <th>{{bonusQty}}</th>
-                                                                                        </tr>
-                                                                                        <!-- <tr>
-                                                                                            <th>Disc</th>
-                                                                                            <th>{{disc}}</th>
-                                                                                        </tr> -->
-                                                                                        <tr>
-                                                                                            <th>Disc Flat Value</th>
-                                                                                            <th>{{flatDisc}}</th>
+                                                                                            <th>Total Disc</th>
+                                                                                            <th>{{totalDisc}}</th>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th>Total GST</th>
                                                                                             <th>{{totalGST}}</th>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <th>Total Earnings(%)</th>
-                                                                                            <th>{{totalEarnings}}</th>
-
+                                                                                            <th>Net Cost Total</th>
+                                                                                            <th>{{netCostTotal}}</th>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <th>Total Net Sale Price</th>
-                                                                                            <th>{{totalNetSalePrice}}</th>
+                                                                                            <th>Net Sale Total</th>
+                                                                                            <th>{{netSaleTotal}}</th>
                                                                                         </tr>
+                                                                                        <tr>
+                                                                                            <th>Net Profit in Value</th>
+                                                                                            <th>{{netProfitInValue}}
+                                                                                            </th>
+
+                                                                                        </tr>
+
                                                                                     </ng-template>
                                                                                 </p-table>
                                                                             </div>
@@ -306,5 +344,4 @@
 
     </section>
 </div>
-
 <p-toast position="top-right"></p-toast>
