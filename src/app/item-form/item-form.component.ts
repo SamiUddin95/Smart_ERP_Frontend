@@ -42,8 +42,6 @@ export class ItemFormComponent {
     const requiredFields = [
       { key: 'aliasName', message: 'Alias Name is required.' },
       { key: 'itemName', message: 'Item Name is required.' },
-      { key: 'purchasePrice', message: 'Purchase Price is required.' },
-      { key: 'salePrice', message: 'Sale Price is required.' },
       { key: 'categoryId', message: 'Category is required.' },
       { key: 'classId', message: 'Class is required.' },
       { key: 'manufacturerId', message: 'Manufacturer is required.' },

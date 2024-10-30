@@ -22,7 +22,7 @@ export class AccountListComponent {
 
 	getAccountList() {
 		this.api.getAllAccountFilterbased(this.filter.name?this.filter.name:'All',
-			this.filter.accountNumber?this.filter.accountNumber:'All',
+			this.filter.accountNumber?this.filter.accountNumber:0,
 			this.filter.taxAmount?this.filter.taxAmount:0,
 			this.filter.taxLimit?this.filter.taxLimit:0,
 			this.filter.manualCode?this.filter.manualCode:'All',

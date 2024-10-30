@@ -26,7 +26,7 @@ export class ApiService {
 		return this.app.get('deleteUserById?id=' + id, id);
 	}
 	//Account
-	getAllAccountFilterbased(Name:string,accNo:string,taxAmount:number,taxLimit:number, manualCode:string, kindCode:string) {
+	getAllAccountFilterbased(Name:string,accNo:number,taxAmount:number,taxLimit:number, manualCode:string, kindCode:string) {
 		return this.app.get('getAllAccountFilterbased?Name='+Name+'&accNo='+accNo+'&taxAmount='+
 			taxAmount+'&taxLimit='+taxLimit +'&manualCode='+manualCode+'&kindCode='+kindCode);
 	}
