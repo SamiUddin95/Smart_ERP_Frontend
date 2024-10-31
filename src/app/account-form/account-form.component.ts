@@ -33,7 +33,6 @@ export class AccountFormComponent {
   }
   addAcc(){
     const requiredFields = [
-      { key: 'accountNumber', message: 'Acc No is required.' },
       { key: 'name', message: 'Name is required.' },
       { key: 'accountCategoryId', message: 'Acc Category is required.' },
       { key: 'accountTypeId', message: 'Acc Type is required.' },

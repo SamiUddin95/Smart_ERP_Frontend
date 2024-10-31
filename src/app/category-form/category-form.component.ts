@@ -68,4 +68,11 @@ export class CategoryFormComponent {
             this.act=res;
           })
         }
+
+        priorities = [
+          { label: 'Select Priority', value: '' },
+          { label: 'High', value: 'High' },
+          { label: 'Medium', value: 'Medium' },
+          { label: 'Low', value: 'Low' }
+        ];
 }

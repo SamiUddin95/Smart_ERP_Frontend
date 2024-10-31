@@ -51,25 +51,11 @@
 
                                                         </div>
                                                         <div class="col-md-6 col-sm-12">
-                                                            <label for="lastname"><span class="text-danger">
-                                                                </span>Priority</label>
-                                                            <input type="number" class="form-control  col-md-12 "
-                                                                placeholder="Priority" [(ngModel)]="formData.priority">
+                                                            <label for="priority"><span class="text-danger"></span>Priority</label>
+                                                            <p-dropdown [options]="priorities" [(ngModel)]="formData.priority" placeholder="Select Priority" 
+                                                                        class="w-100"></p-dropdown>
                                                         </div>
-                                                
-                                               
-                                                <div class="col-md-4 col-sm-12">
-                                                    <label for="lastname"><span class="text-danger">
-                                                        </span>Height</label>
-                                                    <input type="number" class="form-control  col-md-12 "
-                                                         [(ngModel)]="formData.height">
-                                                </div>
-                                                <div class="col-md-4 col-sm-12">
-                                                    <label for="lastname"><span class="text-danger">
-                                                        </span>Width</label>
-                                                    <input type="number" class="form-control  col-md-12 "
-                                                         [(ngModel)]="formData.width">
-                                                </div>
+                                                        
                                                 <div class="col-md-4 col-sm-12">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Description</label>
