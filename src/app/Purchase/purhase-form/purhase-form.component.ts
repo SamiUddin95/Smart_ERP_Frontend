@@ -51,9 +51,10 @@ export class PurhaseFormComponent {
     user.barcode = event.target.value;
     if (user.barcode.length > 4) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
+        console.log(res);
         user.ItemName = res[0].itemName;
         user.purchasePrice = res[0].purchasePrice;
-        user.salePrice = res[0].salePrice
+        user.netRate = res[0].salePrice
       })
     }
   }
