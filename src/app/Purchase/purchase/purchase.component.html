@@ -5,8 +5,7 @@
         </div>
         <div>
             <button pButton pRipple type="button" icon="pi pi-plus" label="Add Purhase"
-                class="p-button-sm p-button-success float-right"
-                 (click)="addItem()"></button>
+                class="p-button-sm p-button-success float-right" (click)="addItem()"></button>
         </div>
     </div>
     <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
@@ -16,54 +15,41 @@
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Invoice No</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                            <input type="text" [(ngModel)]="filter.invoiceNo" class="form-control p-inputtext p-component txt"
+                                placeholder="Search By Invoice No">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Date</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                            <label class="mb-0 mx-2" for="Name">Party Name</label>
+                            <p-dropdown [options]="party" [(ngModel)]="filter.partyId" placeholder="Select a Party Name"
+                                optionLabel="partyName" optionValue="id"></p-dropdown>
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Invoice Total</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                             </div>
+                            <label class="mb-0 mx-2" for="Name">Posted Date</label>
+                            <p-calendar placeholder="Select Posted Date" [(ngModel)]="filter.postedDate" [style]="{width:100}"
+                                dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Created By</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                            </div>
+                            <label class="mb-0 mx-2" for="Name">From Date</label>
+                            <p-calendar [(ngModel)]="filter.dateFrom" [style]="{width:100}"
+                            placeholder="Select From Date" dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Vendor</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                            </div>
-                            <div class="col-md-4 col-sm-12">
-                                <label class="mb-0 mx-2" for="Name">Posted Date</label>
-                                <input type="text"
-                                class="form-control p-inputtext p-component txt"
-                                    placeholder="Search By Helmet Code">
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <label class="mb-0 mx-2" for="Name">Posted By</label>
-                                    <input type="text"
-                                    class="form-control p-inputtext p-component txt"
-                                        placeholder="Search By Helmet Code">
-                                    </div>
-                                    
-                         <div class="col-md-4 col-sm-12 offset-4 text-right mt-1 pr-1">
+                            <label class="mb-0 mx-2" for="Name">To Date</label>
+                            <p-calendar [(ngModel)]="filter.dateTo" [style]="{width:100}"
+                            placeholder="Select To Date" dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Posted By</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                            [(ngModel)]="filter.postedBy" placeholder="Search By Posted By">
+                        </div>
+                        <div class="col-md-4 col-sm-12 offset-8 text-right mt-1 pr-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
-                                class="p-button-sm p-button-secondary float-right mx-1  mt-4"
-                                style="width:130px" (click)="clearFilter()"></button>
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4" style="width:130px"
+                                (click)="clearFilter()"></button>
                             <button pButton pRipple type="button" icon="pi pi-search" label="Search"
-                                class="p-button-sm p-button-info float-right mx-1 mt-4"
-                                style="width:130px" (click)="getData()"></button>
+                                class="p-button-sm p-button-info float-right mx-1 mt-4" style="width:130px"
+                                (click)="getData()"></button>
 
                         </div>
                     </div>
@@ -74,17 +60,23 @@
         <div class="pad-wrapper">
             <div class="box">
                 <div class="content">
-                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="item" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
-                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">    
-                    <ng-template pTemplate="header">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="item"
+                        styleClass="p-datatable-sm p-datatable-gridlines"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+                        [rows]="10">
+                        <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="code">Invoice No <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">Net Quantity <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="category">Total Disc<p-sortIcon field="category"></p-sortIcon></th>
                                 <th pSortableColumn="quantity">Total GST <p-sortIcon field="quantity"></p-sortIcon></th>
-                                <th pSortableColumn="quantity">Net Cost Total <p-sortIcon field="quantity"></p-sortIcon></th>
-                                <th pSortableColumn="quantity">Net Sale Total<p-sortIcon field="quantity"></p-sortIcon></th>
-                                <th pSortableColumn="quantity">Net Profit In Value <p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Net Cost Total <p-sortIcon field="quantity"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="quantity">Net Sale Total<p-sortIcon field="quantity"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="quantity">Net Profit In Value <p-sortIcon
+                                        field="quantity"></p-sortIcon></th>
                                 <th pSortableColumn="price">Party<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Posted Date<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Posted By<p-sortIcon field="price"></p-sortIcon></th>
@@ -101,14 +93,14 @@
                                 <td>{{itm.netSaleTotal}}</td>
                                 <td>{{itm.netProfitInValue}}</td>
                                 <td>{{itm.vendorId}}</td>
-                                <td>{{ itm.createdAt | date:'dd-MMM-yyyy' }} </td> 
+                                <td>{{ itm.postedDate | date:'dd-MMM-yyyy' }} </td>
                                 <td>{{itm.postedBy}}</td>
                                 <td style="position: relative;" class="d-flex">
-                                    <button style="margin-right: 3px" pButton pRipple
-                                        icon="pi pi-pencil" class="p-button-rounded p-button-info"
+                                    <button style="margin-right: 3px" pButton pRipple icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-info"
                                         (click)="editItem(itm.purchaseId)"></button>
-                                    <button pButton pRipple icon="pi pi-trash"
-                                        class="p-button-rounded p-button-danger" (click)="deleteItems(itm)"></button>
+                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                        (click)="deleteItems(itm)"></button>
                                 </td>
                             </tr>
                         </ng-template>

@@ -306,8 +306,10 @@ export class ApiService {
 	getCustomerLedgerByCustomerId(id:number) {
 		return this.app.get('getCustomerLedgerByCustomerId?id='+id);
 	}
-	getAllPurhasedetails() {
-		return this.app.get('getAllPurchases');
+	getAllPurhasedetails(dateFrom:string,dateTo:string,postedDate:string,postedBy:number,partyId:number,
+		invNo:number) {
+		return this.app.get('getAllPurchases?dateFrom='+dateFrom+'&dateTo='+dateTo+
+			'&postedDate='+postedDate+'&postedBy='+postedBy+'&partyId='+partyId+'&invNo='+invNo);
 	}
 	deletePurhaseById(id: any) {
 		return this.app.get('deletePurchaseById?id=' + id, id);

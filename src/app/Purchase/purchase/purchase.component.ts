@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-purchase',
@@ -12,13 +13,36 @@ import jsPDF from 'jspdf';
 })
 export class PurchaseComponent {
   constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  currentDate = new Date();
   ngOnInit(): void {
+    this.currentDate.setHours(0, 0, 0, 0);
+    this.filter.dateTo = moment(this?.currentDate).format('YYYY-MM-DD').toString();
+    const dateFrom = moment(this?.currentDate).subtract(10, 'days').toDate();
+    this.filter.dateFrom = moment(dateFrom).format('YYYY-MM-DD').toString();
     this.getPurhaseList();
+    this.getParty();
   }
   item: any = [];
-
+  party:any=[];
+  filter: any = {
+  }; 
+  getParty(){
+    this.api.getAllParty().subscribe(res=>{
+      this.party=res;
+    })
+  }
   getPurhaseList() {
-    this.api.getAllPurhasedetails().subscribe((res: any) => {
+    this.filter.dateFrom = moment(this?.filter?.dateFrom).format('YYYY-MM-DD').toString();
+		this.filter.dateTo = moment(this?.filter?.dateTo).format('YYYY-MM-DD').toString();;
+		this.filter.postedDate = this.filter.postedDate ? moment(this.filter.postedDate).format('YYYY-MM-DD').toString() : '';
+    this.api.getAllPurhasedetails(
+      this.filter?.dateFrom,
+      this.filter?.dateTo,
+      this.filter?.postedDate,
+      this.filter?.postedBy ? this.filter?.postedBy : '',
+      this.filter?.partyId ? this.filter?.partyId : 0,
+      this.filter?.invoiceNo ? this.filter?.invoiceNo : 0,
+    ).subscribe((res: any) => {
       this.item=res;
     });
   }
@@ -54,7 +78,7 @@ export class PurchaseComponent {
 
   }
   getData() {
-
+    this.getPurhaseList();
   }
   clearFilter() {
 
