@@ -1,0 +1,12 @@
+.table-responsive {
+    overflow-x: auto;
+    margin: 10px 0;
+}
+
+.table {
+    width: 100%;
+}
+
+.p-tabview .p-tabview-nav li {
+    font-weight: bold;
+}
