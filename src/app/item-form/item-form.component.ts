@@ -13,7 +13,7 @@ export class ItemFormComponent {
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
   
   formData: any = {  };
-  alternateItems: any = {};
+  alternateItems: any = [];
   urlId: any;
   
   ngOnInit(): void {
@@ -32,7 +32,11 @@ export class ItemFormComponent {
   }
   getItemsById(id: any) {
 		this.api.getItemsById(String(id)).subscribe(res => {
-			this.formData = res[0];
+      debugger
+      var res = JSON.parse(res);
+			this.formData = res.item[0];
+      this.altrnateBarCodeData=res.altItem;
+
 		})
 	}
   cancel(){
@@ -59,8 +63,20 @@ export class ItemFormComponent {
         this.formData.id = this.urlId;
     }
     const payload = {
-      item: this.formData,
-      alternateItems: this.alternateItems 
+      aliasName: this.formData.aliasName,
+      itemName:this.formData.itemName,
+      purchasePrice:this.formData.purchasePrice,
+      salePrice:this.formData.salePrice,
+      categoryId:this.formData.categoryId,
+      classId:this.formData.classId,
+      manufacturerId:this.formData.manufacturerId,
+      remarks:this.formData.remarks,
+      recentPurchase:this.formData.recentPurchase,
+      brandId:this.formData.brandId,
+      discflat:this.formData.discflat,
+      lockdisc:this.formData.lockdisc,
+      alternateItem: this.altrnateBarCodeData,
+
   };
     this.api.createItems(payload).subscribe(
       (res: any) => {
@@ -108,12 +124,12 @@ export class ItemFormComponent {
           })
         }
 
-        altrnatebarcodeData: any[] = [
+        altrnateBarCodeData: any[] = [
           { aliasName: '', qty: 0, saleDiscPerc: 0, saleDiscFlat: 0, remarks: '' }
       ];
       
       addRow() {
-          this.altrnatebarcodeData.push({
+          this.altrnateBarCodeData.push({
               aliasName: '',
               qty: 0,
               saleDiscPerc: 0,
@@ -122,6 +138,6 @@ export class ItemFormComponent {
           });
       }
       deleteRow(index: number) {
-        this.altrnatebarcodeData.splice(index, 1);
+        this.altrnateBarCodeData.splice(index, 1);
       }
 }
