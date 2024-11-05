@@ -136,12 +136,56 @@
 
                                                         </div>
                                                 </div>
-                                               
-                                                
-
                                             </div>
                                         </div>
                                     </div>
+                                    <p-tabView>
+                                        <!-- Alternate Barcode Tab -->
+                                        <p-tabPanel header="Alternate Barcode">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Alias Name</th>
+                                                            <th>Qty</th>
+                                                            <th>SaleDiscPerc</th>
+                                                            <th>SaleDiscFlat</th>
+                                                            <th>Remarks</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of altrnatebarcodeData; let i = index">
+                                                            <td>
+                                                                <input type="text" class="form-control" [(ngModel)]="item.aliasName" placeholder="Alias Name">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" class="form-control" [(ngModel)]="item.qty" placeholder="Quantity">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" class="form-control" [(ngModel)]="item.saleDiscPerc" placeholder="Discount Percentage">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" class="form-control" [(ngModel)]="item.saleDiscFlat" placeholder="Flat Discount">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" [(ngModel)]="item.remarks" placeholder="Remarks">
+                                                            </td>
+                                                            <td>
+                                                                <button pButton icon="pi pi-trash" class="p-button-sm p-button-danger" (click)="deleteRow(i)"></button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button pButton icon="pi pi-plus" label="Add Row" (click)="addRow()" class="p-button-sm p-button-secondary mt-2"></button>
+                                            </div>
+                                        </p-tabPanel>
+                                    
+                                        <!-- Child And Parent Tab -->
+                                        <p-tabPanel header="Child And Parent">
+                                            <p>No content available in this tab.</p>
+                                        </p-tabPanel>
+                                    </p-tabView>
                                     <div class="d-flex justify-content-end w-100" style="margin-top:10px">
                                         <div>
                                             <button style="margin-right: 3px" pButton pRipple type="button"

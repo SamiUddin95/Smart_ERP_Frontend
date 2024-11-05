@@ -86,6 +86,7 @@ import { UserReportComponent } from './user-report/user-report.component';
 import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
 import { SalaryReportComponent } from './salary-report/salary-report.component';
 import { UsrGroupListComponent } from './usr-group-list/usr-group-list.component';
+import { TabViewModule } from 'primeng/tabview';
 @NgModule({
   declarations: [
     AppComponent,
@@ -145,7 +146,7 @@ import { UsrGroupListComponent } from './usr-group-list/usr-group-list.component
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,
     BrowserModule,AnimateModule,BrowserAnimationsModule,ToastModule,ConfirmDialogModule,CalendarModule,
     ButtonModule,DividerModule,DialogModule,
-    AppRoutingModule
+    AppRoutingModule,TabViewModule
   ],
   providers: [ConfirmationService,MessageService,DatePipe],
   bootstrap: [AppComponent],

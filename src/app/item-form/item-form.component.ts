@@ -13,8 +13,9 @@ export class ItemFormComponent {
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
   
   formData: any = {  };
+  alternateItems: any = {};
   urlId: any;
-
+  
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.getBrand();
@@ -57,8 +58,11 @@ export class ItemFormComponent {
     if (this.urlId) {
         this.formData.id = this.urlId;
     }
-
-    this.api.createItems(this.formData).subscribe(
+    const payload = {
+      item: this.formData,
+      alternateItems: this.alternateItems 
+  };
+    this.api.createItems(payload).subscribe(
       (res: any) => {
           if (res?.msg === "An item with this name already exists.") {
               this.messageService.add({ severity: 'warn', summary: 'Warning', detail: res.msg });
@@ -103,4 +107,21 @@ export class ItemFormComponent {
             this.act=res;
           })
         }
+
+        altrnatebarcodeData: any[] = [
+          { aliasName: '', qty: 0, saleDiscPerc: 0, saleDiscFlat: 0, remarks: '' }
+      ];
+      
+      addRow() {
+          this.altrnatebarcodeData.push({
+              aliasName: '',
+              qty: 0,
+              saleDiscPerc: 0,
+              saleDiscFlat: 0,
+              remarks: ''
+          });
+      }
+      deleteRow(index: number) {
+        this.altrnatebarcodeData.splice(index, 1);
+      }
 }
