@@ -42,24 +42,24 @@
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">Department <p-sortIcon field="code"></p-sortIcon></th>
+                                <!-- <th pSortableColumn="code">Department <p-sortIcon field="code"></p-sortIcon></th> -->
                                 <th pSortableColumn="name">Category Name <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Active <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Priority <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Height <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Width <p-sortIcon field="name"></p-sortIcon></th>
+                                <!-- <th pSortableColumn="name">Height <p-sortIcon field="name"></p-sortIcon></th> -->
+                                <!-- <th pSortableColumn="name">Width <p-sortIcon field="name"></p-sortIcon></th> -->
                                 <th pSortableColumn="name">Description <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Action <p-sortIcon field="name"></p-sortIcon></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-cat>
                             <tr>
-                                <td>{{cat.departmentId}}</td>
+                                <!-- <td>{{cat.departmentId}}</td> -->
                                 <td>{{cat.name}}</td>
                                 <td>{{cat.isActive}}</td>
                                 <td>{{cat.priority}}</td>
-                                <td>{{cat.height}}</td>
-                                <td>{{cat.width}}</td>
+                                <!-- <td>{{cat.height}}</td> -->
+                                <!-- <td>{{cat.width}}</td> -->
                                 <td>{{cat.description}}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 1px; font-size: 1px; padding: 1px 1px;" pButton pRipple

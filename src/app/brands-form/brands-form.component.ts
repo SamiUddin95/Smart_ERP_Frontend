@@ -19,7 +19,14 @@ export class BrandsFormComponent {
     if (this.urlId) {
       this.getBrandsById(this.urlId);
     }
+    this.getManufacturer();
 	}
+  manufac:any=[];
+  getManufacturer(){
+    this.api.getAllIManufacturerdetails().subscribe(res=>{
+      this.manufac=res;
+    })
+  }
   getBrandsById(id: any) {
 		this.api.getBrandsById(String(id)).subscribe(res => {
 			this.formData = res[0];

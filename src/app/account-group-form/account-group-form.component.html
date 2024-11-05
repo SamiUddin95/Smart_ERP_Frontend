@@ -16,6 +16,14 @@
                                             <div class="grid">
                                                 <div class="row mt-1 px-2 col-12">  
                                                     <div class="col-md-6 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Group Number</label>
+                                                            <input type="number" 
+                                                            class="form-control  col-md-12 "
+                                                            placeholder="Enter Here"
+                                                            [(ngModel)]="formData.groupNumber">
+                                                    </div> 
+                                                    <div class="col-md-6 col-sm-12">
                                                         <label for="username">Group Name <span class="text-danger">*
                                                         </span></label>
                                                             <input type="text" 
@@ -56,11 +64,11 @@
                                                     </div> 
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
-                                                            </span>Priority</label>
+                                                            </span>Remarks</label>
                                                             <input type="text" 
                                                             class="form-control  col-md-12 "
                                                             placeholder="Enter Here"
-                                                            [(ngModel)]="formData.priority">
+                                                            [(ngModel)]="formData.remarks">
                                                     </div>                                        
                                                 </div> 
                                             </div>

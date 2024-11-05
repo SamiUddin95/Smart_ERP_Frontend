@@ -22,6 +22,25 @@
                                                             class="form-control  col-md-12 "
                                                             placeholder="Enter Here"
                                                             [(ngModel)]="formData.name">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="usertypr">Branc <span class="text-danger">*
+                                                        </span></label>
+                                                            <div class="d-flex">
+                                                                <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
+                                                                </span>{{formData.manufacturerId}}</label>
+                                                                <p-dropdown class="w-100" [options]="manufac" [(ngModel)]="formData.manufacturerId"
+                                                                placeholder="------ Please Select ------" optionLabel="name"
+                                                                optionValue="id"></p-dropdown>
+                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <label for="lastname">Remarks <span class="text-danger">*
+                                                        </span></label>
+                                                            <input type="text" 
+                                                            class="form-control  col-md-12 "
+                                                            placeholder="Enter Here"
+                                                            [(ngModel)]="formData.remarks">
                                                     </div>                                        
                                                 </div> 
                                             </div>

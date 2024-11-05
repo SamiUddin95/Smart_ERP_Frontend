@@ -23,12 +23,12 @@ export class ApiService {
 		return this.app.post('createUser', obj);
 	}
 	deleteUserById(id: any) {
-		return this.app.get('deleteUserById?id=' + id, id);
+		return this.app.get('deleteAccountById?id=' + id, id);
 	}
 	//Account
-	getAllAccountFilterbased(Name:string,accNo:number,taxAmount:number,taxLimit:number, manualCode:string, kindCode:string) {
-		return this.app.get('getAllAccountFilterbased?Name='+Name+'&accNo='+accNo+'&taxAmount='+
-			taxAmount+'&taxLimit='+taxLimit +'&manualCode='+manualCode+'&kindCode='+kindCode);
+	getAllAccountFilterbased(Name:string,accNo:number,groupId:number,categoryId:number) {
+		return this.app.get('getAllAccountFilterbased?Name='+Name+'&accNo='+accNo+'&groupId='+
+			groupId+'&categoryId='+categoryId);
 	}
 
 

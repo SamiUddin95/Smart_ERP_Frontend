@@ -15,34 +15,24 @@
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Account Name</label>
-                            <input type="text" class="form-control p-inputtext p-component txt"
-                                placeholder="Name" [(ngModel)]="filter.name">
-                        </div>
-                        <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Account No</label>
                             <input type="text" [(ngModel)]="filter.accountNumber"
                                 class="form-control p-inputtext p-component txt" placeholder="Account No">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Tax Amount</label>
+                            <label class="mb-0 mx-2" for="Name">Account Name</label>
                             <input type="text" class="form-control p-inputtext p-component txt"
-                                placeholder="Tax Amount" [(ngModel)]="filter.taxAmount">
+                                placeholder="Name" [(ngModel)]="filter.name">
+                        </div>  
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Group</label>
+                            <p-dropdown [options]="group" [(ngModel)]="filter.groupId" placeholder="Select a Party Name"
+                                optionLabel="name" optionValue="id"></p-dropdown>
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Tax Limit</label>
-                            <input type="text" class="form-control p-inputtext p-component txt"
-                                placeholder="Tax Limit" [(ngModel)]="filter.taxLimit">
-                        </div>
-                        <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Manual Code</label>
-                            <input type="text" class="form-control p-inputtext p-component txt"
-                                placeholder="Manual Code" [(ngModel)]="filter.manualCode">
-                        </div>
-                        <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Kind Code</label>
-                            <input type="text" class="form-control p-inputtext p-component txt"
-                                placeholder="Kind Code" [(ngModel)]="filter.kindCode">
+                            <label class="mb-0 mx-2" for="Name">Category</label>
+                            <p-dropdown [options]="category" [(ngModel)]="filter.categoryId" placeholder="Select a Party Name"
+                                optionLabel="name" optionValue="id"></p-dropdown>
                         </div>
                         <div class="col-md-4 offset-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
@@ -73,8 +63,10 @@
                             <tr>
                                 <th pSortableColumn="code">Name <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">Account Number <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="category">Tax Amount <p-sortIcon field="category"></p-sortIcon></th>
-                                <th pSortableColumn="quantity">Tax Limit <p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="name">Account Group <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Account Category <p-sortIcon field="name"></p-sortIcon></th>
+                                <!-- <th pSortableColumn="category">Tax Amount <p-sortIcon field="category"></p-sortIcon></th> -->
+                                <!-- <th pSortableColumn="quantity">Tax Limit <p-sortIcon field="quantity"></p-sortIcon></th> -->
                                 <th pSortableColumn="price">Manual Code<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Kind Code<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
@@ -84,8 +76,10 @@
                             <tr>
                                 <td>{{acc.name}}</td>
                                 <td>{{acc.accountNumber}}</td>
-                                <td>{{acc.taxAmount}}</td>
-                                <td>{{acc.taxLimit}}</td>
+                                <td>{{acc.accGroupId}}</td>
+                                <td>{{acc.accCategoryId}}</td>
+                                <!-- <td>{{acc.taxAmount}}</td>
+                                <td>{{acc.taxLimit}}</td> -->
                                 <td>{{acc.manualCode}}</td>
                                 <td>{{acc.kindCode}}</td>
                                 <td style="position: relative;" class="d-flex">

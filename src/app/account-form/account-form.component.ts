@@ -35,7 +35,7 @@ export class AccountFormComponent {
     const requiredFields = [
       { key: 'name', message: 'Name is required.' },
       { key: 'accountCategoryId', message: 'Acc Category is required.' },
-      { key: 'accountTypeId', message: 'Acc Type is required.' },
+      // { key: 'accountTypeId', message: 'Acc Type is required.' },
     ];
 
       for (const field of requiredFields) {

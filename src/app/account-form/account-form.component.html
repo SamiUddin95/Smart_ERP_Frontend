@@ -16,36 +16,36 @@
                                             <div class="grid">
                                                 <div class="row mt-1 px-2 col-12">
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="username">Account Number <span class="text-danger">*</span></label>
-                                                        <input type="text" 
-                                                               class="form-control col-md-12"
-                                                               placeholder="Account Number" id="Name"
-                                                               [(ngModel)]="formData.accountNumber"
-                                                               disabled>
+                                                        <label for="username">Account Number <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Account Number" id="Name"
+                                                            [(ngModel)]="formData.accountNumber" disabled>
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="lastname">Name <span class="text-danger">*
-                                                        </span></label>
-                                                            <input type="text" 
-                                                            class="form-control col-md-12 "
-                                                            placeholder="Enter Here"
-                                                            [(ngModel)]="formData.name">
-                                                    </div>                                                    
+                                                            </span></label>
+                                                        <input type="text" class="form-control col-md-12 "
+                                                            placeholder="Enter Here" [(ngModel)]="formData.name">
+                                                    </div>
                                                 </div>
-                                                <div class="row mt-1 px-2 col-12" >
+                                                <div class="row mt-1 px-2 col-12">
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="username"><span class="text-danger">
                                                             </span>Group Name</label>
-                                                            <div class="d-flex">
-                                                                <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
+                                                        <div class="d-flex">
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                for="username"><span class="text-danger">
                                                                 </span>{{formData.groupId}}</label>
-                                                                <p-dropdown class="w-100" [options]="accGrp" [(ngModel)]="formData.groupId"
-                                                                placeholder="------ Please Select ------" optionLabel="name"
-                                                                optionValue="id"></p-dropdown>
-                                                            </div>
-                                                            
+                                                            <p-dropdown class="w-100" [options]="accGrp"
+                                                                [(ngModel)]="formData.groupId"
+                                                                placeholder="------ Please Select ------"
+                                                                optionLabel="name" optionValue="id"></p-dropdown>
+                                                        </div>
+
                                                     </div>
-                                                    <div class="col-md-6 col-sm-12">
+                                                    <!-- <div class="col-md-6 col-sm-12">
                                                         <label for="username"><span class="text-danger">
                                                             </span>Sub Group Name</label>
                                                             <div class="d-flex">
@@ -55,19 +55,23 @@
                                                                 placeholder="------ Please Select ------" optionLabel="name"
                                                                 optionValue="id"></p-dropdown>
                                                             </div>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="usertypr">Account Category <span class="text-danger">*
-                                                        </span></label>
-                                                            <div class="d-flex">
-                                                                <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span class="text-danger">
+                                                        <label for="usertypr">Account Category <span
+                                                                class="text-danger">*
+                                                            </span></label>
+                                                        <div class="d-flex">
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                for="username"><span class="text-danger">
                                                                 </span>{{formData.accountCategoryId}}</label>
-                                                                <p-dropdown class="w-100" [options]="accCat" [(ngModel)]="formData.accountCategoryId"
-                                                                placeholder="------ Please Select ------" optionLabel="name"
-                                                                optionValue="id"></p-dropdown>
-                                                            </div>
+                                                            <p-dropdown class="w-100" [options]="accCat"
+                                                                [(ngModel)]="formData.accountCategoryId"
+                                                                placeholder="------ Please Select ------"
+                                                                optionLabel="name" optionValue="id"></p-dropdown>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6 col-sm-12">
+                                                    <!-- <div class="col-md-6 col-sm-12">
                                                         <label for="usertypr">Account Type <span class="text-danger">*
                                                         </span></label>
                                                             <div class="d-flex">
@@ -77,87 +81,77 @@
                                                                 placeholder="------ Please Select ------" optionLabel="name"
                                                                 optionValue="id"></p-dropdown>
                                                             </div>
-                                                    </div>
-                                                </div>  
+                                                    </div> -->
+                                                </div>
                                                 <div class="col-md-4 col-sm-12 pl-2">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Manual Code</label>
-                                                        <input type="text" 
-                                                        class="form-control  col-md-12 "
-                                                        placeholder="Enter Here"
-                                                        [(ngModel)]="formData.manualCode">
+                                                    <input type="text" class="form-control  col-md-12 "
+                                                        placeholder="Enter Here" [(ngModel)]="formData.manualCode">
                                                 </div>
                                                 <div class="col-md-4 col-sm-12 px-4">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Kind Code</label>
-                                                        <input type="text" 
-                                                        class="form-control  col-md-12 "
-                                                        placeholder="Enter Here"
-                                                        [(ngModel)]="formData.kindCode">
-                                                </div> 
+                                                    <input type="text" class="form-control  col-md-12 "
+                                                        placeholder="Enter Here" [(ngModel)]="formData.kindCode">
+                                                </div>
                                                 <div class="col-md-4 col-sm-12 px-4">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Priority</label>
-                                                        <input type="text" 
-                                                        class="form-control  col-md-12 "
-                                                        placeholder="Enter Here"
-                                                        [(ngModel)]="formData.priority">
+                                                    <input type="text" class="form-control  col-md-12 "
+                                                        placeholder="Enter Here" [(ngModel)]="formData.priority">
                                                 </div>
                                                 <div class="col-md-4 col-sm-12 pl-2">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Type</label>
-                                                        <input type="text" 
-                                                        class="form-control  col-md-12 "
-                                                        placeholder="Enter Here"
-                                                        [(ngModel)]="formData.type">
+                                                    <input type="text" class="form-control  col-md-12 "
+                                                        placeholder="Enter Here" [(ngModel)]="formData.type">
                                                 </div>
-                                                <div class="col-md-4 col-sm-12 px-4">
+                                                <!-- <div class="col-md-4 col-sm-12 px-4">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Sub Cd Type</label>
                                                         <input type="text" 
                                                         class="form-control  col-md-12 "
                                                         placeholder="Enter Here"
                                                         [(ngModel)]="formData.subCdType">
-                                                </div>
-                                                <div class="col-md-4 col-sm-12 px-4">
+                                                </div> -->
+                                                <!-- <div class="col-md-4 col-sm-12 px-4">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Disc No</label>
                                                         <input type="text" 
                                                         class="form-control  col-md-12 "
                                                         placeholder="Enter Here"
                                                         [(ngModel)]="formData.discNo">
-                                                </div>
-                                                <div class="col-md-4 col-sm-12 pl-2">
+                                                </div> -->
+                                                <!-- <div class="col-md-4 col-sm-12 pl-2">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Balance Limit</label>
                                                         <input type="number" 
                                                         class="form-control  col-md-12 "
                                                         placeholder="Enter Here"
                                                         [(ngModel)]="formData.balanceLimit">
-                                                </div>
-                                                <div class="col-md-4 col-sm-12 px-4">
+                                                </div> -->
+                                                <!-- <div class="col-md-4 col-sm-12 px-4">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Tax Limit</label>
                                                         <input type="number" 
                                                         class="form-control col-md-12"
                                                         placeholder="Enter Here"
                                                         [(ngModel)]="formData.taxLimit">
-                                                </div>
-                                                <div class="col-md-4 col-sm-12 px-4">
+                                                </div> -->
+                                                <!-- <div class="col-md-4 col-sm-12 px-4">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Tax Amount</label>
                                                         <input type="number" 
                                                         class="form-control  col-md-12 "
                                                         placeholder="Enter Here"
                                                         [(ngModel)]="formData.taxAmount">
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 pl-2">
+                                                </div> -->
+                                                <div class="col-md-4 pl-4 col-sm-12">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Remarks</label>
-                                                        <input type="text" 
-                                                        class="form-control  col-md-12 "
-                                                        placeholder="Enter Here"
-                                                        [(ngModel)]="formData.remarks">
+                                                    <input type="text" class="form-control  col-md-12 "
+                                                        placeholder="Enter Here" [(ngModel)]="formData.remarks">
                                                 </div>
                                             </div>
                                         </div>

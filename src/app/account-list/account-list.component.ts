@@ -7,28 +7,40 @@ import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable';
 
 @Component({
-  selector: 'app-account-list',
-  templateUrl: './account-list.component.html',
-  styleUrls: ['./account-list.component.css']
+	selector: 'app-account-list',
+	templateUrl: './account-list.component.html',
+	styleUrls: ['./account-list.component.css']
 })
 export class AccountListComponent {
-  constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+	constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 	title = 'BMSFrontEnd';
 	ngOnInit(): void {
 		this.getAccountList();
+		this.getCategory();
+		this.getGroup();
 	}
 	account: any = [];
 	filter: any = {};
+	group:any=[];
+	getGroup(){
+		this.api.getAllAccountGroup().subscribe(res=>{
 
-	getAccountList() {
-		this.api.getAllAccountFilterbased(this.filter.name?this.filter.name:'All',
-			this.filter.accountNumber?this.filter.accountNumber:0,
-			this.filter.taxAmount?this.filter.taxAmount:0,
-			this.filter.taxLimit?this.filter.taxLimit:0,
-			this.filter.manualCode?this.filter.manualCode:'All',
-			this.filter.kindCode?this.filter.kindCode:'All').subscribe((res: any) => { 
-			this.account = res;
 		})
+	}
+	category:any=[];
+	getCategory(){
+		this.api.getAllAccountCat().subscribe(res=>{
+
+		})
+
+	}
+	getAccountList() {
+		this.api.getAllAccountFilterbased(this.filter.name ? this.filter.name : 'All',
+			this.filter.accountNumber ? this.filter.accountNumber : 0,
+			this.filter.groupId ? this.filter.groupId : 0,
+			this.filter.categoryId ? this.filter.categoryId : 0).subscribe((res: any) => {
+				this.account = res;
+			})
 	}
 	addUser() {
 		this.router.navigate(['account-form']);
@@ -50,8 +62,8 @@ export class AccountListComponent {
 			message: 'Are you sure that you want to perform this action?',
 			accept: () => {
 				//Actual logic to perform a confirmation
-				this.api.deleteUserById(user.userId).subscribe(res => {
-					this.account = this.account.filter((item: any) => item.userId !== user.userId);
+				this.api.deleteUserById(user.id).subscribe(res => {
+					this.account = this.account.filter((item: any) => item.id !== user.id);
 					this.messageService.add({ severity: 'success', summary: 'Success', detail: "Deleted Successfully" });
 					return;
 				}, err => { })
@@ -65,13 +77,13 @@ export class AccountListComponent {
 		const doc = new jsPDF('l', 'mm', 'a4');
 		const head = [['userId', 'Name', 'Is Active', 'Name', 'Email', 'joiningDate', 'Phone']]
 		let body = this.account.map((elemento: { [s: string]: unknown; } | ArrayLike<unknown>) => Object.values(elemento));
-			autoTable(doc, {
-				head: head,
-				body: body,
-				didDrawCell: (data) => {
-					data = this.account;
-				},
-			});
+		autoTable(doc, {
+			head: head,
+			body: body,
+			didDrawCell: (data) => {
+				data = this.account;
+			},
+		});
 
 		doc.save('Gro.pdf');
 	}

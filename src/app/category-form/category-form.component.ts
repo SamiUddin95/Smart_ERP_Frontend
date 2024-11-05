@@ -34,7 +34,7 @@ export class CategoryFormComponent {
 
   addCategory(){
     const requiredFields = [
-      { key: 'departmentId', message: 'Department is required.' },
+      // { key: 'departmentId', message: 'Department is required.' },
       { key: 'name', message: 'Name is required.' },
       { key: 'isActive', message: 'Active is required.' },
     ];
