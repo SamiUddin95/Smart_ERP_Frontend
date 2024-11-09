@@ -17,7 +17,8 @@ export class ItemFormComponent {
   urlId: any;
   
   ngOnInit(): void {
-    this.urlId = this.route.snapshot.paramMap.get('id');
+    this.urlId = Number(this.route.snapshot.paramMap.get('id'));
+    debugger
     this.getBrand();
     this.getCategory();
     this.getClass();
@@ -34,6 +35,7 @@ export class ItemFormComponent {
 		this.api.getItemsById(String(id)).subscribe(res => {
       debugger
       var res = JSON.parse(res);
+      this.formData.Id=this.urlId;
 			this.formData = res.item[0];
       this.altrnateBarCodeData=res.altItem;
 
@@ -63,6 +65,7 @@ export class ItemFormComponent {
         this.formData.id = this.urlId;
     }
     const payload = {
+      Id:this.urlId,
       aliasName: this.formData.aliasName,
       itemName:this.formData.itemName,
       purchasePrice:this.formData.purchasePrice,
