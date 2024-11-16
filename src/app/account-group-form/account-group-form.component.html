@@ -14,15 +14,22 @@
                                         <div class="card-header">Create Account Group</div>
                                         <div class="card-body">
                                             <div class="grid">
-                                                <div class="row mt-1 px-2 col-12">  
+                                                <div class="row mt-1 px-2 col-12">
                                                     <div class="col-md-6 col-sm-12">
+                                                        <label for="username">Group Number<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="number" class="form-control col-md-12"
+                                                            placeholder="Group Number" id="Name"
+                                                            [(ngModel)]="formData.groupNumber" disabled>
+                                                    </div>  
+                                                    <!-- <div class="col-md-6 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Group Number</label>
                                                             <input type="number" 
                                                             class="form-control  col-md-12 "
                                                             placeholder="Enter Here"
                                                             [(ngModel)]="formData.groupNumber">
-                                                    </div> 
+                                                    </div>  -->
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="username">Group Name <span class="text-danger">*
                                                         </span></label>

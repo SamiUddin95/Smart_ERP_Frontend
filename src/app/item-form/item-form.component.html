@@ -139,7 +139,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p-tabView>
+                                    <p-tabView (onChange)="onTabChange($event)">
                                         <!-- Alternate Barcode Tab -->
                                         <p-tabPanel header="Alternate Barcode">
                                             <div class="table-responsive">
@@ -183,9 +183,159 @@
                                     
                                         <!-- Child And Parent Tab -->
                                         <p-tabPanel header="Child And Parent">
-                                            <p>No content available in this tab.</p>
                                         </p-tabPanel>
                                     </p-tabView>
+                                    <p-dialog [(visible)]="displayPopup" [modal]="true" [style]="{width: '81vw'}" [closable]="false">
+                                        <!-- Custom Header -->
+                                        <div class="header-content" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px;">
+                                            <span><h2>Child And Parent Item </h2></span>
+                                            <div class="text-boxes" style="display: flex; gap: 10px;">
+                                                <input type="text" [(ngModel)]="formData.aliasName" class="form-control" style="width: 150px;">
+                                                <input type="text" [value]="combinedItemInfo" class="form-control" style="width: 300px;">
+                                            </div>
+                                            <button 
+                                            class="close-button" 
+                                            (click)="displayPopup = false" 
+                                            style="background-color: red; color: white; border: none; width: 35px; height: 35px; cursor: pointer; font-size: 18px; font-weight: bold; display: flex; justify-content: center; align-items: center; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+                                            X
+                                        </button>
+                                        </div>
+                                        <hr style="margin: 15px 0; border: 1px solid #ccc;">
+                                        <div class="popup-content">
+                                            <!-- Second Line: Parent Item Title -->
+                                            <div class="second-line">
+                                                <h4>Parent Item</h4>
+                                            </div>
+
+                                            <!-- Third Line: Parent Item Fields -->
+                                            <div class="parent-item-fields" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Barcode</label>
+                                                    <!-- <p-inputText [(ngModel)]="parentBarcode" style="width: 100px;"></p-inputText> -->
+                                                    <input type="text" [(ngModel)]="formData.aliasName" class="form-control" style="width: 100px; height: 30px; font-size: 12px;">
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Parent Name</label>
+                                                    <input type="text" [(ngModel)]="formData.itemName" class="form-control" style="width: 190px; height: 30px; font-size: 12px;">
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>UOM</label>
+                                                    <p-dropdown
+                                                        class="uom-dropdown"
+                                                        [options]="uomOptions"
+                                                        [(ngModel)]="selectedUOM"
+                                                        [style]="{ width: '80px', height: '30px', 'display': 'flex', 'align-items': 'center' }"
+                                                        [panelStyle]="{ fontSize: '12px' }">
+                                                        <ng-template pTemplate="selectedItem" let-selectedOption>
+                                                            <span style="font-size: 11px; line-height: 30px; display: flex; align-items: center;">
+                                                                {{ selectedOption }}
+                                                            </span>
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Weight</label>
+                                                    <input type="text" [(ngModel)]="childParentData.weight" [value]="selectedWeight" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Net Cost</label>
+                                                    <input type="text" [(ngModel)]="childParentData.netCost" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Sale Price</label>
+                                                    <input type="text" [(ngModel)]="childParentData.salePrice" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Disc%</label>
+                                                    <input type="text" [(ngModel)]="childParentData.discPerc" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Disc Value</label>
+                                                    <input type="text" [(ngModel)]="childParentData.discValue" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Misc</label>
+                                                    <input type="text" [(ngModel)]="childParentData.misc" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Net Sale Price</label>
+                                                    <input type="text" [(ngModel)]="childParentData.netSalePrice" class="form-control" style="width: 80px; height: 30px; font-size: 12px;">
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Manual Sale Price</label>
+                                                    <input type="text" [(ngModel)]="childParentData.manualSalePrice" class="form-control" style="width: 80px; height: 30px; font-size: 12px;">
+                                                </div>
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Profit</label>
+                                                    <input type="text" [(ngModel)]="childParentData.profit" class="form-control" style="width: 80px; height: 30px; font-size: 12px;">
+                                                </div>
+                                            </div>
+                                            <hr style="margin: 15px 0; border: 1px solid #ccc;">
+                                            
+                                           <!-- Fourth Line: Child Item Title -->
+                                            <div class="fourth-line">
+                                                <h4>Child Item</h4>
+                                            </div>
+
+                                            <!-- Fifth Line: Child Items Table with Add Row Button -->
+                                            <div class="child-items-section" style="font-size: 12px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-top: 10px;">
+                                                <table class="child-items-table" style="width: 100%; border-collapse: collapse;">
+                                                    <tr>
+                                                        <th>Barcode</th>
+                                                        <th>Child Name</th>
+                                                        <th>UOM</th>
+                                                        <th>Weight</th>
+                                                        <th>Net Cost</th>
+                                                        <th>Sale Price</th>
+                                                        <th>Disc%</th>
+                                                        <th>Disc Value</th>
+                                                        <th>Misc</th>
+                                                        <th>Net Sale Price</th>
+                                                        <th>Profit</th>
+                                                        <th>Material Sale Price</th>
+                                                    </tr>
+                                                    <tr *ngFor="let child of childData; let i = index">
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.barcode"></td>
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.childName"></td>
+                                                            <p-dropdown
+                                                                class="uom-dropdown"
+                                                                [options]="uomOptions"
+                                                                [(ngModel)]="child.uom"
+                                                                [style]="{ width: '70px', height: '30px', 'display': 'flex', 'align-items': 'center' }"
+                                                                [panelStyle]="{ fontSize: '12px' }">
+                                                                <ng-template pTemplate="selectedItem" let-selectedOption>
+                                                                    <span style="font-size: 11px; line-height: 5px;flex-direction: column; display: flex; align-items: center;">
+                                                                        {{ selectedOption }}
+                                                                    </span>
+                                                                </ng-template>
+                                                            </p-dropdown>
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.weight"></td>
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.netCost"></td>
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.salePrice"></td>
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.discPerc"></td>
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.discValue"></td>
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.misc"></td>
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.netSalePrice"></td>
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.profit"></td>
+                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.manualSalePrice"></td>
+                                                        <td>
+                                                            <button pButton icon="pi pi-trash" class="p-button-sm p-button-danger" (click)="deletehildRow(i)"></button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <p-button label="Add Row" (click)="addChildRow()"></p-button>
+                                            </div>
+                                             <!-- Final OK Button -->
+                                                <div class="popup-footer" style="text-align: right; margin-top: 20px;">
+                                                    <button pButton pRipple type="button" icon="pi pi-save"
+                                                    (click)="addParentChild()" label="Submit" 
+                                                    class="p-button-sm p-button-success"> </button>
+                                                </div>
+                                                
+                                        </div>
+                                    </p-dialog>
+                                    
+
                                     <div class="d-flex justify-content-end w-100" style="margin-top:10px">
                                         <div>
                                             <button style="margin-right: 3px" pButton pRipple type="button"

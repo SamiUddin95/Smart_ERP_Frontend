@@ -404,7 +404,9 @@ export class ApiService {
 	createItems(obj: any) {
 		return this.app.post('createItems', obj);
 	}
-	
+	createParentChildItems(obj: any) {
+		return this.app.post('createChildParentItem', obj);
+	}
 	getItemsById(id: any) {
 		return this.app.get('getItemById?id=' + id, id);
 	} 
