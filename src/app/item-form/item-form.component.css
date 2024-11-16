@@ -10,3 +10,15 @@
 .p-tabview .p-tabview-nav li {
     font-weight: bold;
 }
+
+
+::ng-deep .field-row .p-dropdown .p-dropdown-trigger {
+    font-size: 11px !important; 
+    width: 25px !important;
+}
+
+::ng-deep .child-items-section .p-dropdown .p-dropdown-trigger {
+    font-size: 11px !important; 
+    width: 25px !important;
+}
+

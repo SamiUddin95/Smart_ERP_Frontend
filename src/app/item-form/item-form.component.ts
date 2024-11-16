@@ -15,7 +15,14 @@ export class ItemFormComponent {
   formData: any = {  };
   alternateItems: any = [];
   urlId: any;
-  
+  childParentData: any={ };
+  uomOptions: string[] = ['Gm', 'Kg', 'Ltr', 'ml', 'Ctn', 'Box', 'Pack','Loose','Pcs']; 
+  selectedUOM: string = 'Kg'; 
+  selectedChildUOM: string = 'Kg';
+  selectedWeight: number = 1;
+  get combinedItemInfo(): string {
+    return `${this.formData.itemName} ${this.selectedWeight} ${this.selectedUOM}`;
+  }
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.getBrand();
@@ -140,4 +147,74 @@ export class ItemFormComponent {
       deleteRow(index: number) {
         this.altrnateBarCodeData.splice(index, 1);
       }
+
+      //child and parent Item
+      displayPopup: boolean = false;
+      childData: any[] = [
+        { barcode: '', childName: '', uom: 'Kg', weight: 1, netCost: 0, salePrice: 0, discPerc: 0, discValue: 0, misc: 0, netSalePrice: 0, profit:0, manualSalePrice:0 }
+    ];
+    addChildRow() {
+      this.childData.push({
+        barcode: '',
+        childName: '',
+        uom: 'Kg',
+        weight: 1, 
+        netCost: 0, 
+        salePrice: 0, 
+        discPerc: 0, 
+        discValue: 0, 
+        misc: 0, 
+        netSalePrice: 0,
+        profit:0,
+        manualSalePrice:0
+      });
+  }
+  deletehildRow(index: number) {
+    this.childData.splice(index, 1);
+  }
+      onTabChange(event: any) {
+        const selectedTabIndex = event.index;
+        // Assuming "Child And Parent" tab is the second tab (index 1)
+        if (selectedTabIndex === 1) {
+          this.displayPopup = true;
+        }
+      }
+
+      // add parent child item
+      addParentChild() {   
+        
+        if (this.urlId) {
+            this.childParentData.id = this.urlId;
+        }
+        debugger
+        const payload = {
+          barcode: this.formData.aliasName,
+          parentName:this.formData.itemName,
+          uom:this.selectedUOM,
+          weight:this.childParentData.weight,
+          netCost:this.childParentData.netCost,
+          salePrice:this.childParentData.salePrice,
+          discPerc:this.childParentData.discPerc,
+          discValue:this.childParentData.discValue,
+          misc:this.childParentData.misc,
+          netSalePrice:this.childParentData.netSalePrice,
+          profit:this.childParentData.profit,
+          manualSalePrice:this.childParentData.manualSalePrice,
+          childItem: this.childData,
+    
+      };
+        this.api.createParentChildItems(payload).subscribe(
+          (res: any) => {
+              if (res?.msg === "An item with this name already exists.") {
+                  this.messageService.add({ severity: 'warn', summary: 'Warning', detail: res.msg });
+              } else {
+                  this.router.navigate(['item']);
+                  this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Item Added Successfully' });
+              }
+          },
+          err => {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add item.' });
+          }
+      );
+    }
 }
