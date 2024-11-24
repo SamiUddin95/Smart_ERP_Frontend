@@ -45,6 +45,11 @@ export class ItemFormComponent {
       this.formData.Id=this.urlId;
 			this.formData = res.item[0];
       this.altrnateBarCodeData=res.altItem;
+      if (res.parentItem && res.parentItem.length > 0) {
+        this.childParentData = res.parentItem[0];
+      }
+       //this.childParentData = res.parentItem[0];
+       this.childData = res.childItem;
 
 		})
 	}
