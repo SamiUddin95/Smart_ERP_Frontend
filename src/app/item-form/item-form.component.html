@@ -273,8 +273,9 @@
                                             <hr style="margin: 15px 0; border: 1px solid #ccc;">
                                             
                                            <!-- Fourth Line: Child Item Title -->
-                                            <div class="fourth-line">
-                                                <h4>Child Item</h4>
+                                            <div class="fourth-line" style="display: flex; align-items: center; justify-content: space-between;">
+                                                <h4 style="margin: 0;">Child Item</h4>
+                                                <p-button icon="pi pi-plus" (click)="addChildRow()" styleClass="p-button-sm" [style]="{'width': '15px', 'height': '20px', 'font-size': '10px'}"></p-button>
                                             </div>
 
                                             <!-- Fifth Line: Child Items Table with Add Row Button -->
@@ -323,7 +324,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                                <p-button label="Add Row" (click)="addChildRow()"></p-button>
+                                               
                                             </div>
                                              <!-- Final OK Button -->
                                                 <div class="popup-footer" style="text-align: right; margin-top: 20px;">

@@ -10,8 +10,8 @@ export class AppService {
 
   constructor(private http: HttpClient) { }
   //urlBase = "http://103.143.76.242:4322/api/";
-  urlBase = "http://localhost:4100/api/";
-  //urlBase = "https://localhost:44315/api/";
+  //urlBase = "http://localhost:4100/api/";
+  urlBase = "https://localhost:44315/api/";
   auth: any = '';
   setAuthToken() {
     this.auth = (localStorage.getItem('token')) ? localStorage.getItem('token') : '';
