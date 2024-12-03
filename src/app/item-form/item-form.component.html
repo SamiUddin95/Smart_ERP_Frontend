@@ -148,28 +148,32 @@
                                                         <tr>
                                                             <th>Alias Name</th>
                                                             <th>Qty</th>
-                                                            <th>SaleDiscPerc</th>
-                                                            <th>SaleDiscFlat</th>
+                                                            <th>Sale Price</th>
+                                                            <th>Sale Disc</th>
+                                                            <th>Net Sale Price</th>
                                                             <th>Remarks</th>
-                                                            <th>Actions</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr *ngFor="let item of altrnateBarCodeData; let i = index">
                                                             <td>
-                                                                <input type="text" class="form-control" [(ngModel)]="item.aliasName" placeholder="Alias Name">
+                                                                <input type="text" class="form-control" [value]="formData.itemName + ' ' + item.remarks" readonly>
                                                             </td>
                                                             <td>
-                                                                <input type="number" class="form-control" [(ngModel)]="item.qty" placeholder="Quantity">
+                                                                <input type="number" class="form-control" [(ngModel)]="item.qty" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Quantity">
                                                             </td>
                                                             <td>
-                                                                <input type="number" class="form-control" [(ngModel)]="item.saleDiscPerc" placeholder="Discount Percentage">
+                                                                <input type="number" class="form-control" [(ngModel)]="item.salePrice" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Sale Price">
                                                             </td>
                                                             <td>
-                                                                <input type="number" class="form-control" [(ngModel)]="item.saleDiscFlat" placeholder="Flat Discount">
+                                                                <input type="number" class="form-control" [(ngModel)]="item.saleDisc" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Sale Discount">
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="form-control" [(ngModel)]="item.remarks" placeholder="Remarks">
+                                                                <input type="number" class="form-control" [(ngModel)]="item.netSalePrice" readonly>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" [(ngModel)]="item.remarks" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Remarks">
                                                             </td>
                                                             <td>
                                                                 <button pButton icon="pi pi-trash" class="p-button-sm p-button-danger" (click)="deleteRow(i)"></button>
@@ -211,7 +215,6 @@
                                             <div class="parent-item-fields" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Barcode</label>
-                                                    <!-- <p-inputText [(ngModel)]="parentBarcode" style="width: 100px;"></p-inputText> -->
                                                     <input type="text" [(ngModel)]="formData.aliasName" class="form-control" style="width: 100px; height: 30px; font-size: 12px;">
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
@@ -224,6 +227,7 @@
                                                         class="uom-dropdown"
                                                         [options]="uomOptions"
                                                         [(ngModel)]="selectedUOM"
+                                                        (ngModelChange)="onParentInputChange()"
                                                         [style]="{ width: '80px', height: '30px', 'display': 'flex', 'align-items': 'center' }"
                                                         [panelStyle]="{ fontSize: '12px' }">
                                                         <ng-template pTemplate="selectedItem" let-selectedOption>
@@ -235,39 +239,35 @@
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Weight</label>
-                                                    <input type="text" [(ngModel)]="childParentData.weight" [value]="selectedWeight" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                    <input type="number" [(ngModel)]="childParentData.weight" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Net Cost</label>
-                                                    <input type="text" [(ngModel)]="childParentData.netCost" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                    <input type="number" [(ngModel)]="childParentData.netCost" [readonly]="true" class="form-control" style="width: 50px; height: 30px; font-size: 12px; background-color: #f0f0f0;">
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Sale Price</label>
-                                                    <input type="text" [(ngModel)]="childParentData.salePrice" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Disc%</label>
-                                                    <input type="text" [(ngModel)]="childParentData.discPerc" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                    <input type="number" [(ngModel)]="childParentData.salePrice" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Disc Value</label>
-                                                    <input type="text" [(ngModel)]="childParentData.discValue" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                    <input type="number" [(ngModel)]="childParentData.discValue" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 70px; height: 30px; font-size: 12px;">
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Misc</label>
-                                                    <input type="text" [(ngModel)]="childParentData.misc" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                    <input type="number" [(ngModel)]="childParentData.misc" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Net Sale Price</label>
-                                                    <input type="text" [(ngModel)]="childParentData.netSalePrice" class="form-control" style="width: 80px; height: 30px; font-size: 12px;">
+                                                    <input type="number" [(ngModel)]="childParentData.netSalePrice" [readonly]="true" class="form-control" style="width: 80px; height: 30px; font-size: 12px; background-color: #f0f0f0;">
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Manual Sale Price</label>
-                                                    <input type="text" [(ngModel)]="childParentData.manualSalePrice" class="form-control" style="width: 80px; height: 30px; font-size: 12px;">
+                                                    <input type="number" [(ngModel)]="childParentData.manualSalePrice" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 80px; height: 30px; font-size: 12px;">
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Profit</label>
-                                                    <input type="text" [(ngModel)]="childParentData.profit" class="form-control" style="width: 80px; height: 30px; font-size: 12px;">
+                                                    <input type="number" [(ngModel)]="childParentData.profit" [readonly]="true" class="form-control" style="width: 80px; height: 30px; font-size: 12px; background-color: #f0f0f0;">
                                                 </div>
                                             </div>
                                             <hr style="margin: 15px 0; border: 1px solid #ccc;">
@@ -287,7 +287,6 @@
                                                         <th>Weight</th>
                                                         <th>Net Cost</th>
                                                         <th>Sale Price</th>
-                                                        <th>Disc%</th>
                                                         <th>Disc Value</th>
                                                         <th>Misc</th>
                                                         <th>Net Sale Price</th>
@@ -296,11 +295,12 @@
                                                     </tr>
                                                     <tr *ngFor="let child of childData; let i = index">
                                                         <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.barcode"></td>
-                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.childName"></td>
+                                                        <td><input type="text" class="form-control" [(ngModel)]="child.childName" (ngModelChange)="onChildInputChange(child)" style="font-size: 12px; width: 150px; height: 30px;"></td>
+                                                        <td>
                                                             <p-dropdown
-                                                                class="uom-dropdown"
                                                                 [options]="uomOptions"
                                                                 [(ngModel)]="child.uom"
+                                                                (ngModelChange)="onChildInputChange(child)"
                                                                 [style]="{ width: '70px', height: '30px', 'display': 'flex', 'align-items': 'center' }"
                                                                 [panelStyle]="{ fontSize: '12px' }">
                                                                 <ng-template pTemplate="selectedItem" let-selectedOption>
@@ -309,15 +309,15 @@
                                                                     </span>
                                                                 </ng-template>
                                                             </p-dropdown>
-                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.weight"></td>
-                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.netCost"></td>
-                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.salePrice"></td>
-                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.discPerc"></td>
-                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.discValue"></td>
-                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.misc"></td>
-                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.netSalePrice"></td>
-                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.profit"></td>
-                                                        <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.manualSalePrice"></td>
+                                                        </td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.weight" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.weight"></td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.netCost" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px', 'background-color': '#f0f0f0'}" [value]="child.netCost" readonly></td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.salePrice" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.salePrice"></td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.discValue" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.discValue"></td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.misc" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.misc"></td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.netSalePrice" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px', 'background-color': '#f0f0f0'}" [value]="child.netSalePrice" readonly></td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.profit" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px', 'background-color': '#f0f0f0'}" [value]="child.profit" readonly></td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.manualSalePrice" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.manualSalePrice"></td>
                                                         <td>
                                                             <button pButton icon="pi pi-trash" class="p-button-sm p-button-danger" (click)="deletehildRow(i)"></button>
                                                         </td>

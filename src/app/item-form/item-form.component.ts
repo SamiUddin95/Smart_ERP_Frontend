@@ -34,6 +34,20 @@ export class ItemFormComponent {
     if (this.urlId) {
       this.getItemsById(this.urlId);
     }
+    
+    // Initialize childParentData with default values if not set
+    if (!this.childParentData.weight) {
+      this.childParentData = {
+        weight: 1,
+        netCost: 0,
+        salePrice: 0,
+        discValue: 0,
+        misc: 0,
+        netSalePrice: 0,
+        profit: 0,
+        manualSalePrice: 0
+      };
+    }
 	}
   onKey(event: any) {
     this.formData.aliasName=event.target.value;
@@ -161,25 +175,58 @@ export class ItemFormComponent {
       childData: any[] = [
         { barcode: '', childName: '', uom: 'Kg', weight: 1, netCost: 0, salePrice: 0, discPerc: 0, discValue: 0, misc: 0, netSalePrice: 0, profit:0, manualSalePrice:0 }
     ];
+
     addChildRow() {
-      this.childData.push({
+      if (!this.childData) {
+        this.childData = [];
+      }
+      const newChild = {
         barcode: '',
         childName: '',
         uom: 'Kg',
-        weight: 1, 
-        netCost: 0, 
-        salePrice: 0, 
-        discPerc: 0, 
-        discValue: 0, 
-        misc: 0, 
+        weight: 1,
+        cost: 0,
+        netCost: 0,
+        salePrice: 0,
+        discPerc: 0,
+        discValue: 0,
+        misc: 0,
         netSalePrice: 0,
-        profit:0,
-        manualSalePrice:0
-      });
-  }
-  deletehildRow(index: number) {
-    this.childData.splice(index, 1);
-  }
+        profit: 0,
+        manualSalePrice: 0
+      };
+      this.calculateChildValues(newChild);
+      this.childData.push(newChild);
+    }
+
+    calculateChildValues(child: any) {
+      // 1. Update child name
+      child.childName = this.formData.itemName;
+      child.childName = `${child.childName} ${child.weight} ${child.uom}`;
+
+      // 2. Calculate cost based on weight and UOM
+      const weightInGrams = child.uom === 'Kg' ? child.weight * 1000 : child.weight;
+      const parentCost = this.formData.purchasePrice || 0;
+      child.cost = (parentCost / 1000) * weightInGrams;
+
+      // 3. Calculate net cost
+      child.netCost = child.cost + (child.misc || 0);
+
+      // 4. Calculate disc value and net sale price
+      //child.discValue = (child.salePrice * (child.discPerc || 0)) / 100;
+      child.netSalePrice = child.salePrice - child.discValue;
+
+      // 5. Calculate profit
+      child.profit = child.netSalePrice - child.netCost;
+    }
+
+    onChildInputChange(child: any) {
+      this.calculateChildValues(child);
+    }
+
+    deletehildRow(index: number) {
+      this.childData.splice(index, 1);
+    }
       onTabChange(event: any) {
         const selectedTabIndex = event.index;
         // Assuming "Child And Parent" tab is the second tab (index 1)
@@ -196,6 +243,7 @@ export class ItemFormComponent {
         }
         debugger
         const payload = {
+          Id:this.childParentData.id,
           barcode: this.formData.aliasName,
           parentName:this.formData.itemName,
           uom:this.selectedUOM,
@@ -224,5 +272,44 @@ export class ItemFormComponent {
               this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add item.' });
           }
       );
+    }
+
+    // Add new method for parent calculations
+    calculateParentValues() {
+      // 1. Calculate weight in grams
+      const weightInGrams = this.selectedUOM === 'Kg' ? 
+        (this.childParentData.weight || 1) * 1000 : 
+        (this.childParentData.weight || 1);
+
+      // 2. Calculate cost based on weight
+      const parentCost = this.formData.purchasePrice || 0;
+      const cost = (parentCost / 1000) * weightInGrams;
+
+      // 3. Calculate net cost
+      this.childParentData.netCost = cost + (this.childParentData.misc || 0);
+
+      // 4. Calculate net sale price
+      this.childParentData.netSalePrice = 
+        (this.childParentData.salePrice || 0) - (this.childParentData.discValue || 0);
+
+      // 5. Calculate profit
+      this.childParentData.profit = 
+        this.childParentData.netSalePrice - this.childParentData.netCost;
+    }
+
+    // Add event handler for parent input changes
+    onParentInputChange() {
+      this.calculateParentValues();
+    }
+
+    calculateAlternateItemPrices(item: any) {
+      // Calculate sale price (sale price * qty)
+      const totalSalePrice = (item.salePrice || 0) * (item.qty || 0);
+      
+      // Calculate net sale price (sale price - sale disc)
+      item.netSalePrice = totalSalePrice - (item.saleDisc || 0);
+      
+      // Update alias name (item name + remarks)
+      item.aliasName = `${this.formData.itemName} ${item.remarks || ''}`.trim();
     }
 }
