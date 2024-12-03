@@ -27,6 +27,7 @@ export class PurhaseFormComponent {
   netSaleTotal: number = 0;
   netProfitInValue: number = 0;
   purcDtl: any[] = [];
+  recentItem:any={};
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.getCategory();
@@ -47,10 +48,21 @@ export class PurhaseFormComponent {
       this.calculateTotals();
     })
   }
-  onKey(event: any, user: any) {
+  onKey(event: any, user: any) { 
     user.barcode = event.target.value;
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
+        this.recentItem=res;
+        user.ItemName = res[0]?.itemName;
+        user.purchasePrice = res[0]?.purchasePrice;
+        user.netRate = res[0]?.salePrice
+      })
+    }
+  }
+  tdChange(user: any) { 
+    if (user.barcode.length >= 2) {
+      this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
+        this.recentItem=res;
         user.ItemName = res[0]?.itemName;
         user.purchasePrice = res[0]?.purchasePrice;
         user.netRate = res[0]?.salePrice
@@ -334,6 +346,20 @@ export class PurhaseFormComponent {
   getCategory() {
     this.api.getAllCategorydetails().subscribe(res => {
       this.cat = res;
+    })
+  }
+  barCodes:string='';
+  currentStock:string='';
+  salePrice:string='';
+  purchasePrice:string='';
+  postPurchase(){ 
+    this.barCodes = this.purcDtl.map(x => x.barcode).join(',');
+    this.purchasePrice = this.purcDtl.map(x => x.purchasePrice).join(',');
+    this.salePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
+    this.currentStock = this.purcDtl.map(x => x.netQuantity).join(',');
+    this.api.postPurchase(this.barCodes,this.currentStock,this.salePrice,this.purchasePrice).subscribe(res=>{
+      if(res=="Items Posted successfully")
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Items Posted successfully!!" });
     })
   }
   exportPdf() {

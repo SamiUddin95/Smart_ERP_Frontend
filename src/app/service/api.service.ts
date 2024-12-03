@@ -317,6 +317,9 @@ export class ApiService {
 	createPurchase(obj: any) {
 		return this.app.post('createPurchase', obj);
 	}
+	postPurchase(barCodes: any,currentStock:any,lastNetSalePrice:any,lastNetCost:any) {
+		return this.app.get('postPurchase?barCodes='+barCodes+"&currentStock="+currentStock+"&lastNetSalePrice="+lastNetSalePrice+"&lastNetCost="+lastNetCost);
+	}
 	//Brands
 	getAllBrandsdetails() {
 		return this.app.get('getAllBrands');

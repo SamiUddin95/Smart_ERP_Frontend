@@ -1,7 +1,7 @@
 <div class="container-fluid mt-2" style="width:100%">
     <div class="flex justify-content-between p-2 ">
         <h3>PURCHASE</h3>
-        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()"
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" (click)="postPurchase()"
             class="mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
     </div>
     <section>
@@ -43,8 +43,55 @@
                                                         <input type="text" class="form-control col-md-12"
                                                             placeholder="Inv" [(ngModel)]="formData.invoiceNo">
                                                     </div>
-
-                                                    <div class="col-md-12 mt-4 text-right col-sm-12">
+                                                    <div class="col-md-9 col-sm-9">
+                                                        <div class="mt-1 table-scroll-container">
+                                                            <p-table #dt [scrollable]="true"
+                                                                scrollHeight="600px"
+                                                                responsiveLayout="scroll"
+                                                                [value]="recentItem" 
+                                                                styleClass="p-datatable-sm p-datatable-gridlines"
+                                                                > 
+                                                                <ng-template pTemplate="header">
+                                                                    <tr>
+                                                                        <th
+                                                                            >
+                                                                            Current Stock </th>
+                                                                        <th
+                                                                            >
+                                                                            Last Net Sale Price </th>
+                                                                        <th
+                                                                           >
+                                                                            Last Net Cost </th>
+                                                                        
+                                                                    </tr>
+                                                                </ng-template> 
+                                                                <ng-template pTemplate="body"
+                                                                    let-user let-i="rowIndex">
+                                                                    <tr>
+                                                                        <td><input type="text"
+                                                                                class="w-100"
+                                                                                class="form-control form-control-sm"
+                                                                                placeholder="Enter Barcode Here" 
+                                                                                [(ngModel)]="user.currentStock" >
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text"
+                                                                                class="form-control form-control-sm"
+                                                                                placeholder="Item Name"
+                                                                                [(ngModel)]="user.salePrice">
+                                                                        </td>
+                                                                        <td><input type="number"
+                                                                                class="form-control form-control-sm"
+                                                                                placeholder="Quantity"
+                                                                                [(ngModel)]="user.purchasePrice"
+                                                                                >
+                                                                        </td> 
+                                                                    </tr>
+                                                                </ng-template>
+                                                            </p-table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mt-4 text-right col-sm-3">
                                                         <button pButton pRipple type="button" icon="pi pi-save"
                                                             (click)="AddData()" label="Add"
                                                             class="p-button-sm p-button-success"> </button>
@@ -57,7 +104,7 @@
                                                             <div class="box">
                                                                 <div class="content">
                                                                     <div class="row">
-                                                                        <div class="col-md-10">
+                                                                        <div class="col-md-9">
                                                                             <div class="table-scroll-container">
                                                                                 <p-table #dt [scrollable]="true"
                                                                                     scrollHeight="600px"
@@ -148,7 +195,7 @@
 
                                                                                     <ng-template pTemplate="body"
                                                                                         let-user let-i="rowIndex">
-                                                                                        <tr>
+                                                                                        <tr (click)="tdChange(user)">
                                                                                             <td><input type="text"
                                                                                                     class="w-100"
                                                                                                     class="form-control form-control-sm"
@@ -263,11 +310,9 @@
                                                                                         </tr>
                                                                                     </ng-template>
                                                                                 </p-table>
-                                                                            </div>
-
-
+                                                                            </div> 
                                                                         </div>
-                                                                        <div class="col-md-2">
+                                                                        <div class="col-md-3">
                                                                             <div class="border summary-table">
                                                                                 <h5 class="text-center p-1">Purchase Summary</h5>
                                                                                 <p-table #dt2 [scrollable]="true"
