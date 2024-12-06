@@ -3,11 +3,11 @@
         <div>
             <h3>GROUPS</h3>
         </div>
-        <!-- <div>
+        <div>
             <button pButton pRipple type="button" icon="pi pi-plus" label="Add User"
                 class="p-button-sm p-button-success float-right"
                  (click)="addUser()"></button>
-        </div> -->
+        </div>
     </div>
     <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
         <p-accordion>
@@ -73,22 +73,22 @@
                             <tr>
                                 <th pSortableColumn="code">S.NO <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="code">Group Name <p-sortIcon field="code"></p-sortIcon></th>
-                                <!-- <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th> -->
+                                <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-user let-i="rowIndex">
                             <tr>
                                 <td>{{i+1}}</td>
-                                <td>{{user.userType1}}</td>
+                                <td>{{user.name}}</td>
                                 <!-- <td>{{user.email}}</td> -->
                                 <!-- <td>{{user.joiningDate}}</td> -->
-                                <!-- <td style="position: relative;" class="d-flex">
+                                <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"
-                                        (click)="editUser(user.userId)"></button>
+                                        (click)="editUser(user.id)"></button>
                                     <button pButton pRipple icon="pi pi-trash"
                                         class="p-button-rounded p-button-danger" (click)="deleteUser(user)"></button>
-                                </td> -->
+                                </td>
                             </tr>
                         </ng-template>
                     </p-table>
