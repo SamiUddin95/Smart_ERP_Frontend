@@ -87,6 +87,7 @@ import { AttendanceReportComponent } from './attendance-report/attendance-report
 import { SalaryReportComponent } from './salary-report/salary-report.component';
 import { UsrGroupListComponent } from './usr-group-list/usr-group-list.component';
 import { TabViewModule } from 'primeng/tabview';
+import { UsrGroupFormComponent } from './usr-group-form/usr-group-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -141,6 +142,7 @@ import { TabViewModule } from 'primeng/tabview';
       AttendanceReportComponent,
       SalaryReportComponent,
       UsrGroupListComponent,
+      UsrGroupFormComponent,
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,

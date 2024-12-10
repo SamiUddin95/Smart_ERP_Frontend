@@ -66,6 +66,7 @@ import { UserReportComponent } from './user-report/user-report.component';
 import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
 import { SalaryReportComponent } from './salary-report/salary-report.component';
 import { UsrGroupListComponent } from './usr-group-list/usr-group-list.component';
+import { UsrGroupFormComponent } from './usr-group-form/usr-group-form.component';
 
 
 const routes: Routes = [
@@ -157,6 +158,8 @@ const routes: Routes = [
   { path:'rpt-user-report',component:UserReportComponent},
   { path:'rpt-salary-report',component:SalaryReportComponent},
   { path:'usr-group-list',component:UsrGroupListComponent},
+  { path:'usr-group-form',component:UsrGroupFormComponent},
+  { path:'usr-group-form/:id',component:UsrGroupFormComponent},
 
   
 

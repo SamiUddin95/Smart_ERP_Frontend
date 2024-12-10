@@ -13,19 +13,18 @@ import autoTable from 'jspdf-autotable';
 })
 export class UsrGroupListComponent {
   constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
-	title = 'BMSFrontEnd';
 	ngOnInit(): void {
 		this.getUserList();
 	}
 	users: any = [];
 	getUserList() {
-		this.api.getAllUserType().subscribe((res: any) => {
+		this.api.getAllGroup().subscribe((res: any) => {
 			console.log(res);
 			this.users = res;
 		})
 	}
 	addUser() {
-		this.router.navigate(['user-form']);
+		this.router.navigate(['usr-group-form']);
 	}
 	cancel() {
 
@@ -37,7 +36,7 @@ export class UsrGroupListComponent {
 
 	}
 	editUser(id: any) {
-		this.router.navigate(['user-form/' + id]);
+		this.router.navigate(['usr-group-form/' + id]);
 	}
 	deleteUser(user: any) {
 		this.confirmationService.confirm({

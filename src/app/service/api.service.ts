@@ -16,14 +16,26 @@ export class ApiService {
 	getUserById(id: any) {
 		return this.app.get('getUserById?id=' + id, id);
 	}
+	getGroupById(id: any) {
+		return this.app.get('getGroupById?id=' + id, id);
+	}
 	getAllUserType() {
 		return this.app.get('getAllUserType');
+	}
+	getAllGroup() {
+		return this.app.get('getAllGroup');
 	}
 	createUser(obj: any) {
 		return this.app.post('createUser', obj);
 	}
+	createGroup(obj: any) {
+		return this.app.post('createGroup', obj);
+	}
 	deleteUserById(id: any) {
 		return this.app.get('deleteAccountById?id=' + id, id);
+	}
+	deleteGroupById(id: any) {
+		return this.app.get('deleteGroupById?id=' + id, id);
 	}
 	//Account
 	getAllAccountFilterbased(Name:string,accNo:number,groupId:number,categoryId:number) {
