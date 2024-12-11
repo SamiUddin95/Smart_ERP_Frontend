@@ -11,7 +11,7 @@ import { MessageService } from 'primeng/api';
 export class ItemFormComponent {
 
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
-  
+  status:any=[{label:"Active",value:1},{label:"Not Active",value:0}];
   formData: any = {  };
   alternateItems: any = [];
   urlId: any;

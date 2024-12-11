@@ -13,7 +13,6 @@ import jsPDF from 'jspdf';
 export class PurhaseFormComponent {
 
   constructor(private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
-
   formData: any = {};
   urlId: any;
   party: any = [];
