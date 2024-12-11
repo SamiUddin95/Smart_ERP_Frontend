@@ -53,9 +53,10 @@ export class PurhaseFormComponent {
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         this.recentItem=res;
-        user.ItemName = res[0]?.itemName;
+        user.ItemName = res[0]?.itemName?res[0]?.itemName:res[0].aliasName;
         user.purchasePrice = res[0]?.purchasePrice;
-        user.netRate = res[0]?.salePrice
+        user.netRate = res[0]?.salePrice;
+        user.quantity =res[0]?.itemName?res[0]:res[0]?.qty
       })
     }
   }

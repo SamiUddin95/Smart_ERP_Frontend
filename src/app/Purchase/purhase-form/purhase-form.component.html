@@ -1,8 +1,8 @@
 <div class="container-fluid mt-2" style="width:100%">
     <div class="flex justify-content-between p-2 ">
         <h3>PURCHASE</h3>
-        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" (click)="postPurchase()"
-            class="mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" (click)="postPurchase()" class="mr-2"
+            pTooltip="PDF" tooltipPosition="bottom"></button>
     </div>
     <section>
         <div class="card">
@@ -43,55 +43,7 @@
                                                         <input type="text" class="form-control col-md-12"
                                                             placeholder="Inv" [(ngModel)]="formData.invoiceNo">
                                                     </div>
-                                                    <div class="col-md-9 col-sm-9">
-                                                        <div class="mt-1 table-scroll-container">
-                                                            <p-table #dt [scrollable]="true"
-                                                                scrollHeight="600px"
-                                                                responsiveLayout="scroll"
-                                                                [value]="recentItem" 
-                                                                styleClass="p-datatable-sm p-datatable-gridlines"
-                                                                > 
-                                                                <ng-template pTemplate="header">
-                                                                    <tr>
-                                                                        <th
-                                                                            >
-                                                                            Current Stock </th>
-                                                                        <th
-                                                                            >
-                                                                            Last Net Sale Price </th>
-                                                                        <th
-                                                                           >
-                                                                            Last Net Cost </th>
-                                                                        
-                                                                    </tr>
-                                                                </ng-template> 
-                                                                <ng-template pTemplate="body"
-                                                                    let-user let-i="rowIndex">
-                                                                    <tr>
-                                                                        <td><input type="text"
-                                                                                class="w-100"
-                                                                                class="form-control form-control-sm"
-                                                                                placeholder="Enter Barcode Here" 
-                                                                                [(ngModel)]="user.currentStock" >
-                                                                        </td>
-                                                                        <td>
-                                                                            <input type="text"
-                                                                                class="form-control form-control-sm"
-                                                                                placeholder="Item Name"
-                                                                                [(ngModel)]="user.salePrice">
-                                                                        </td>
-                                                                        <td><input type="number"
-                                                                                class="form-control form-control-sm"
-                                                                                placeholder="Quantity"
-                                                                                [(ngModel)]="user.purchasePrice"
-                                                                                >
-                                                                        </td> 
-                                                                    </tr>
-                                                                </ng-template>
-                                                            </p-table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 mt-4 text-right col-sm-3">
+                                                    <div class="col-md-3 mt-4 offset-9 text-right col-sm-3">
                                                         <button pButton pRipple type="button" icon="pi pi-save"
                                                             (click)="AddData()" label="Add"
                                                             class="p-button-sm p-button-success"> </button>
@@ -120,71 +72,55 @@
 
                                                                                     <ng-template pTemplate="header">
                                                                                         <tr>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Bar Code </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Item Name </th>
-                                                                                            <th
-                                                                                               >
+                                                                                            <th>
                                                                                                 Quantity </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Bonus Qty
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Net Qty
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Purchase Price
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Sub Total
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Disc%
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Disc Value
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Total Inc Disc
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Gst %
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Gst Value
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Total Inc GST
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Net Rate
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Sale Price
                                                                                             </th>
-                                                                                            <th
-                                                                                                >
+                                                                                            <th>
                                                                                                 Sale Disc
                                                                                             </th>
-                                                                                            <th >
+                                                                                            <th>
                                                                                                 Net Sale Price
                                                                                             </th>
-                                                                                            <th >
+                                                                                            <th>
                                                                                                 Margin%
                                                                                             </th>
                                                                                             <th>
@@ -225,7 +161,8 @@
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Net Qty" [disabled]="true"
+                                                                                                    placeholder="Net Qty"
+                                                                                                    [disabled]="true"
                                                                                                     (input)="bonusQtyChange(user)"
                                                                                                     [(ngModel)]="user.netQuantity">
                                                                                             </td>
@@ -253,7 +190,8 @@
                                                                                                     (input)="discvallueChange(user)"
                                                                                                     [(ngModel)]="user.discountByValue">
                                                                                             </td>
-                                                                                            <td><input type="number" [disabled]="true"
+                                                                                            <td><input type="number"
+                                                                                                    [disabled]="true"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Total Inc Disc"
                                                                                                     [(ngModel)]="user.totalIncDisc">
@@ -270,19 +208,22 @@
                                                                                                     (input)="gstValueChange(user)"
                                                                                                     [(ngModel)]="user.gstByValue">
                                                                                             </td>
-                                                                                            <td><input type="number" [disabled]="true"
+                                                                                            <td><input type="number"
+                                                                                                    [disabled]="true"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Gst Value"
                                                                                                     [(ngModel)]="user.totalIncGst">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Net Rate" [disabled]="true"
+                                                                                                    placeholder="Net Rate"
+                                                                                                    [disabled]="true"
                                                                                                     [(ngModel)]="user.netRate">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Sale Price" (input)="salePriceChange(user)"
+                                                                                                    placeholder="Sale Price"
+                                                                                                    (input)="salePriceChange(user)"
                                                                                                     [(ngModel)]="user.salePrice">
                                                                                             </td>
                                                                                             <td><input type="number"
@@ -293,7 +234,8 @@
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Net Sale Price" (input)="netSalePriceChange(user)"
+                                                                                                    placeholder="Net Sale Price"
+                                                                                                    (input)="netSalePriceChange(user)"
                                                                                                     [(ngModel)]="user.netSalePrice">
                                                                                             </td>
                                                                                             <td><input type="number"
@@ -310,11 +252,12 @@
                                                                                         </tr>
                                                                                     </ng-template>
                                                                                 </p-table>
-                                                                            </div> 
+                                                                            </div>
                                                                         </div>
                                                                         <div class="col-md-3">
                                                                             <div class="border summary-table">
-                                                                                <h5 class="text-center p-1">Purchase Summary</h5>
+                                                                                <h5 class="text-center p-1">Purchase
+                                                                                    Summary</h5>
                                                                                 <p-table #dt2 [scrollable]="true"
                                                                                     scrollHeight="600px"
                                                                                     responsiveLayout="scroll"
@@ -367,16 +310,58 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
-                                        <div>
-                                            <button style="margin-right: 3px" pButton pRipple type="button"
-                                                icon="pi pi-arrow-left" (click)="cancel()" label="Back"
-                                                class="p-button-sm p-button-danger"> </button>
-                                            <button pButton pRipple type="button" icon="pi pi-save"
-                                                (click)="addPurchase()" label="Save"
-                                                class="p-button-sm p-button-success"> </button>
+                                    <div class="row mt-3">
+                                        <div class="col-md-9 col-sm-9">
+                                            <div class="mt-1 table-scroll-container">
+                                                <p-table #dt [scrollable]="true" scrollHeight="600px"
+                                                    responsiveLayout="scroll" [value]="recentItem"
+                                                    styleClass="p-datatable-sm p-datatable-gridlines">
+                                                    <ng-template pTemplate="header">
+                                                        <tr>
+                                                            <th>
+                                                                Current Stock </th>
+                                                            <th>
+                                                                Last Net Sale Price </th>
+                                                            <th>
+                                                                Last Net Cost </th>
+    
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-user let-i="rowIndex">
+                                                        <tr>
+                                                            <td><input type="text" class="w-100"
+                                                                    class="form-control form-control-sm"
+                                                                    placeholder="Enter Barcode Here"
+                                                                    [(ngModel)]="user.currentStock">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text"
+                                                                    class="form-control form-control-sm"
+                                                                    placeholder="Item Name"
+                                                                    [(ngModel)]="user.salePrice">
+                                                            </td>
+                                                            <td><input type="number"
+                                                                    class="form-control form-control-sm"
+                                                                    placeholder="Quantity"
+                                                                    [(ngModel)]="user.purchasePrice">
+                                                            </td>
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 d-flex justify-content-end">
+                                            <div>
+                                                <button style="margin-right: 3px" pButton pRipple type="button"
+                                                    icon="pi pi-arrow-left" (click)="cancel()" label="Back"
+                                                    class="p-button-sm p-button-danger"> </button>
+                                                <button pButton pRipple type="button" icon="pi pi-save"
+                                                    (click)="addPurchase()" label="Save"
+                                                    class="p-button-sm p-button-success"> </button>
+                                            </div>
                                         </div>
                                     </div>
+                                    
                                 </p-accordionTab>
                             </p-accordion>
                         </div>

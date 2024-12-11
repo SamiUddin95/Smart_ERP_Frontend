@@ -22,7 +22,7 @@
                                                     <div class="col-md-6 col-sm-12">
                                                         
                                                         <label for="lastname">
-                                                             Barcode <span class="text-danger">*</span>
+                                                             Alias Name<span class="text-danger">*</span>
                                                         </label>
                                                         <input type="text" (keypress)="onKey($event)"  autofocus class="form-control col-md-12"
                                                                placeholder="Alias Name" [(ngModel)]="formData.aliasName">
@@ -35,7 +35,7 @@
                                                             placeholder="Item Name" [(ngModel)]="formData.itemName">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname">Net Cost
+                                                        <label for="lastname">Purchase Price 
                                                         </label>
                                                         <input type="number" class="form-control col-md-12 "
                                                             placeholder="Purchase Price" [(ngModel)]="formData.purchasePrice">
@@ -47,35 +47,15 @@
                                                             placeholder="Sale Price" [(ngModel)]="formData.salePrice">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Sale Disc</label> 
-                                                        <input type="number" class="form-control  col-md-12 " placeholder="DiscFlat"
-                                                             [(ngModel)]="formData.discflat">
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <label for="username">Brand <span class="text-danger">*
+                                                        <label for="username">Category <span class="text-danger">*
                                                         </span></label>
                                                         <div class="d-flex">
                                                             <label
                                                                 class="mr-1 border w-25 d-flex align-items-center justify-content-center"
                                                                 for="username"><span class="text-danger">
-                                                                </span>{{formData.brandId}}</label>
-                                                            <p-dropdown class="w-100" [options]="brnd"
-                                                                [(ngModel)]="formData.brandId" placeholder="Brand"
-                                                                optionLabel="name" optionValue="id"></p-dropdown>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <label for="username">Manufacturer <span class="text-danger">*
-                                                        </span></label>
-                                                        <div class="d-flex">
-                                                            <label
-                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
-                                                                for="username"><span class="text-danger">
-                                                                </span>{{formData.manufacturerId}}</label>
-                                                            <p-dropdown class="w-100" [options]="manu"
-                                                                [(ngModel)]="formData.manufacturerId" placeholder="Manufacturer"
+                                                                </span>{{formData.categoryId}}</label>
+                                                            <p-dropdown class="w-100" [options]="cat"
+                                                                [(ngModel)]="formData.categoryId" placeholder="Category"
                                                                 optionLabel="name" optionValue="id"></p-dropdown>
                                                         </div>
 
@@ -95,40 +75,24 @@
 
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="username">Category <span class="text-danger">*
+                                                        <label for="username">Manufacturer <span class="text-danger">*
                                                         </span></label>
                                                         <div class="d-flex">
                                                             <label
                                                                 class="mr-1 border w-25 d-flex align-items-center justify-content-center"
                                                                 for="username"><span class="text-danger">
-                                                                </span>{{formData.categoryId}}</label>
-                                                            <p-dropdown class="w-100" [options]="cat"
-                                                                [(ngModel)]="formData.categoryId" placeholder="Category"
+                                                                </span>{{formData.manufacturerId}}</label>
+                                                            <p-dropdown class="w-100" [options]="manu"
+                                                                [(ngModel)]="formData.manufacturerId" placeholder="Manufacturer"
                                                                 optionLabel="name" optionValue="id"></p-dropdown>
                                                         </div>
 
                                                     </div>
-                                                   
-                                                    
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Remarks</label>
                                                         <input type="text" class="form-control col-md-12 "
                                                             placeholder="Remarks" [(ngModel)]="formData.remarks">
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <label for="username"><span class="text-danger">
-                                                            </span>LockDisc</label>
-                                                        <div class="d-flex">
-                                                            <label
-                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
-                                                                for="username"><span class="text-danger">
-                                                                </span>{{formData.lockdisc}}</label>
-                                                            <p-dropdown class="w-100" [options]="act"
-                                                                [(ngModel)]="formData.lockdisc" placeholder="LockDisc"
-                                                                optionLabel="isActive" optionValue="id"></p-dropdown>
-                                                        </div>
-
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
@@ -137,9 +101,46 @@
                                                             placeholder="Recent Purchase" [(ngModel)]="formData.recentPurchase">
                                                     </div>
 
-                                                        
-                                                       
-                                                      
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <label for="username">Brand <span class="text-danger">*
+                                                            </span></label>
+                                                            <div class="d-flex">
+                                                                <label
+                                                                    class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                    for="username"><span class="text-danger">
+                                                                    </span>{{formData.brandId}}</label>
+                                                                <p-dropdown class="w-100" [options]="brnd"
+                                                                    [(ngModel)]="formData.brandId" placeholder="Brand"
+                                                                    optionLabel="name" optionValue="id"></p-dropdown>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <label for="lastname"><span class="text-danger">
+                                                                </span>Current Stock</label> 
+                                                            <input type="number" class="form-control  col-md-12 " placeholder="Current Stock"
+                                                                 [(ngModel)]="formData.currentStock">
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <label for="lastname"><span class="text-danger">
+                                                                </span>DiscFlat</label> 
+                                                            <input type="number" class="form-control  col-md-12 " placeholder="DiscFlat"
+                                                                 [(ngModel)]="formData.discflat">
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <label for="username"><span class="text-danger">
+                                                                </span>LockDisc</label>
+                                                            <div class="d-flex">
+                                                                <label
+                                                                    class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                    for="username"><span class="text-danger">
+                                                                    </span>{{formData.lockdisc}}</label>
+                                                                <p-dropdown class="w-100" [options]="act"
+                                                                    [(ngModel)]="formData.lockdisc" placeholder="LockDisc"
+                                                                    optionLabel="isActive" optionValue="id"></p-dropdown>
+                                                            </div>
+
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -151,22 +152,17 @@
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
-                                                            <th>Barcode</th>
                                                             <th>Qty</th>
                                                             <th>Sale Price</th>
                                                             <th>Sale Disc</th>
                                                             <th>Net Sale Price</th>
                                                             <th>Remarks</th>
-                                                            <th>Alternate Item Name</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr *ngFor="let item of altrnateBarCodeData; let i = index">
                                                            
-                                                            <td>
-                                                                <input type="text" class="form-control" [(ngModel)]="item.barcode" placeholder="Barcode">
-                                                            </td>
                                                             <td>
                                                                 <input type="number" class="form-control" [(ngModel)]="item.qty" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Quantity">
                                                             </td>
@@ -183,12 +179,8 @@
                                                                 <input type="text" class="form-control" [(ngModel)]="item.remarks" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Remarks">
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="form-control" [value]="formData.itemName + ' ' + item.remarks" readonly>
-                                                            </td>
-                                                            <td>
                                                                 <button pButton icon="pi pi-trash" class="p-button-sm p-button-danger" (click)="deleteRow(i)"></button>
                                                             </td>
-                                                           
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -252,10 +244,9 @@
                                                     <label>Weight</label>
                                                     <input type="number" [(ngModel)]="childParentData.weight" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 60px; height: 30px; font-size: 12px;">
                                                 </div>
-                                               
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Misc</label>
-                                                    <input type="number" [(ngModel)]="childParentData.misc" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 70px; height: 30px; font-size: 12px;">
+                                                    <input type="number" [(ngModel)]="childParentData.misc" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" (ngOnInit)="onParentInputChange()">
                                                     <label>Net Cost</label>
@@ -269,20 +260,22 @@
                                                     <label>Disc Value</label>
                                                     <input type="number" [(ngModel)]="childParentData.discValue" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 70px; height: 30px; font-size: 12px;">
                                                 </div>
-                                           
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Misc</label>
+                                                    <input type="number" [(ngModel)]="childParentData.misc" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
+                                                </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Net Sale Price</label>
                                                     <input type="number" [(ngModel)]="childParentData.netSalePrice" [readonly]="true" class="form-control" style="width: 80px; height: 30px; font-size: 12px; background-color: #f0f0f0;">
                                                 </div>
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Profit</label>
-                                                    <input type="number" [(ngModel)]="childParentData.profit" [readonly]="true" class="form-control" style="width: 80px; height: 30px; font-size: 12px; background-color: #f0f0f0;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Manual Sale Price</label>
                                                     <input type="number" [(ngModel)]="childParentData.manualSalePrice" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 80px; height: 30px; font-size: 12px;">
                                                 </div>
-                                                
+                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
+                                                    <label>Profit</label>
+                                                    <input type="number" [(ngModel)]="childParentData.profit" [readonly]="true" class="form-control" style="width: 80px; height: 30px; font-size: 12px; background-color: #f0f0f0;">
+                                                </div>
                                             </div>
                                             <hr style="margin: 15px 0; border: 1px solid #ccc;">
                                             
@@ -300,10 +293,10 @@
                                                         <th>Child Name</th>
                                                         <th>UOM</th>
                                                         <th>Weight</th>
-                                                        <th>Misc</th>
                                                         <th>Net Cost</th>
                                                         <th>Sale Price</th>
                                                         <th>Disc Value</th>
+                                                        <th>Misc</th>
                                                         <th>Net Sale Price</th>
                                                         <th>Profit</th>
                                                         <th>Material Sale Price</th>
@@ -327,9 +320,10 @@
                                                         </td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.weight" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.weight"></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.misc" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.misc"></td>
-                                                        <td><input type="number" class="form-control" [(ngModel)]="child.netCost" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.netCost"></td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.netCost" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px', 'background-color': '#f0f0f0'}" [value]="child.netCost" readonly></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.salePrice" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.salePrice"></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.discValue" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.discValue"></td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.misc" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.misc"></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.netSalePrice" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px', 'background-color': '#f0f0f0'}" [value]="child.netSalePrice" readonly></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.profit" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px', 'background-color': '#f0f0f0'}" [value]="child.profit" readonly></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.manualSalePrice" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.manualSalePrice"></td>

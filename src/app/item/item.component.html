@@ -16,22 +16,22 @@
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Alias Name</label>
                             <input type="text" class="form-control p-inputtext p-component txt"
-                                placeholder="Alias Name" [(ngModel)]="filter.aliasName">
+                                placeholder="Alias Name" [(ngModel)]="filter.aliasName" (input)="getItemList()">
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Item Name</label>
-                            <input type="text" [(ngModel)]="filter.itemName"
+                            <input type="text" [(ngModel)]="filter.itemName" (input)="getItemList()"
                                 class="form-control p-inputtext p-component txt" placeholder="Item Name">
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Purchase Price</label>
                             <input type="text" class="form-control p-inputtext p-component txt"
-                                placeholder="Purchase Price" [(ngModel)]="filter.purchasePrice">
+                                placeholder="Purchase Price" [(ngModel)]="filter.purchasePrice" (input)="getItemList()">
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Sale Price</label>
                             <input type="text" class="form-control p-inputtext p-component txt"
-                                placeholder="Sale Price" [(ngModel)]="filter.salePrice">
+                                placeholder="Sale Price" [(ngModel)]="filter.salePrice" (input)="getItemList()">
                         </div>
                         <!-- <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Category</label>

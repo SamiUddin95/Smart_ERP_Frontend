@@ -55,11 +55,11 @@ export class ItemFormComponent {
   }
   getItemsById(id: any) {
 		this.api.getItemsById(String(id)).subscribe(res => {
-      debugger
       var res = JSON.parse(res);
       this.formData.Id=this.urlId;
 			this.formData = res.item[0];
       this.altrnateBarCodeData=res.altItem;
+      debugger
       if (res.parentItem && res.parentItem.length > 0) {
         this.childParentData = res.parentItem[0];
       }
