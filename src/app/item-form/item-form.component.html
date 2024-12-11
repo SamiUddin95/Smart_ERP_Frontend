@@ -150,39 +150,59 @@
                                         <p-tabPanel header="Alternate Barcode">
                                             <div class="table-responsive">
                                                 <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Qty</th>
-                                                            <th>Sale Price</th>
-                                                            <th>Sale Disc</th>
-                                                            <th>Net Sale Price</th>
-                                                            <th>Remarks</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr *ngFor="let item of altrnateBarCodeData; let i = index">
-                                                           
-                                                            <td>
-                                                                <input type="number" class="form-control" [(ngModel)]="item.qty" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Quantity">
-                                                            </td>
-                                                            <td>
-                                                                <input type="number" class="form-control" [(ngModel)]="item.salePrice" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Sale Price">
-                                                            </td>
-                                                            <td>
-                                                                <input type="number" class="form-control" [(ngModel)]="item.saleDisc" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Sale Discount">
-                                                            </td>
-                                                            <td>
-                                                                <input type="number" class="form-control" [(ngModel)]="item.netSalePrice" placeholder="Net Sale Price" readonly>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control" [(ngModel)]="item.remarks" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Remarks">
-                                                            </td>
-                                                            <td>
-                                                                <button pButton icon="pi pi-trash" class="p-button-sm p-button-danger" (click)="deleteRow(i)"></button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Barcode</th>
+                                                                <th>Qty</th>
+                                                                <th>Sale Price</th>
+                                                                <th>Sale Disc</th>
+                                                                <th>Net Sale Price</th>
+                                                                <th>Remarks</th>
+                                                                <th>Alternate Item Name</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of altrnateBarCodeData; let i = index">
+                                                                <td>
+                                                                    <input type="text" class="form-control" [(ngModel)]="item.barcode" placeholder="Barcode">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" class="form-control" [(ngModel)]="item.qty" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Quantity">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" class="form-control" [(ngModel)]="item.salePrice" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Sale Price">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" class="form-control" [(ngModel)]="item.saleDisc" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Sale Discount">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" class="form-control" [(ngModel)]="item.netSalePrice" placeholder="Net Sale Price" readonly>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control" [(ngModel)]="item.remarks" (ngModelChange)="calculateAlternateItemPrices(item)" placeholder="Remarks">
+                                                                </td>
+                                                                <td>
+                                                                    <input 
+                                                                        type="text" 
+                                                                        class="form-control" 
+                                                                        [value]="formData.itemName + ' ' + item.remarks" 
+                                                                        placeholder="Alternate Item Name" 
+                                                                        readonly>
+                                                                </td>
+                                                                <td>
+                                                                    <button 
+                                                                        pButton 
+                                                                        icon="pi pi-trash" 
+                                                                        class="p-button-sm p-button-danger" 
+                                                                        (click)="deleteRow(i)">
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    
                                                 </table>
                                                 <button pButton icon="pi pi-plus" label="Add Row" (click)="addRow()" class="p-button-sm p-button-secondary mt-2"></button>
                                             </div>
