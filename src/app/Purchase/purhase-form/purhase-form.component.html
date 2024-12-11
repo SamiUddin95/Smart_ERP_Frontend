@@ -121,6 +121,9 @@
                                                                                                 Net Sale Price
                                                                                             </th>
                                                                                             <th>
+                                                                                                Total Sale Price
+                                                                                            </th>
+                                                                                            <th>
                                                                                                 Margin%
                                                                                             </th>
                                                                                             <th>
@@ -133,13 +136,11 @@
                                                                                         let-user let-i="rowIndex">
                                                                                         <tr (click)="tdChange(user)">
                                                                                             <td><input type="text"
-                                                                                                    class="w-100"
-                                                                                                    class="form-control form-control-sm"
-                                                                                                    placeholder="Enter Barcode Here"
-                                                                                                    (keypress)="onKey($event,user)"
-                                                                                                    autofocus
-                                                                                                    [(ngModel)]="user.barcode"
-                                                                                                    (input)="barCodeChange(user)">
+                                                                                                class="form-control form-control-sm w-100"
+                                                                                                placeholder="Enter Barcode Here"
+                                                                                                (keydown.enter)="onKey($event, user)"
+                                                                                                autofocus
+                                                                                                [(ngModel)]="user.barcode"> 
                                                                                             </td>
                                                                                             <td>
                                                                                                 <input type="text"
@@ -238,6 +239,11 @@
                                                                                                     (input)="netSalePriceChange(user)"
                                                                                                     [(ngModel)]="user.netSalePrice">
                                                                                             </td>
+                                                                                            <td><input type="number"
+                                                                                                class="form-control form-control-sm"
+                                                                                                placeholder="Total sale Price"
+                                                                                                [(ngModel)]="user.totalSalePrice">
+                                                                                        </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Margin %"

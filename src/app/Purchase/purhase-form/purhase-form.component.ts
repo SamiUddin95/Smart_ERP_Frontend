@@ -52,13 +52,25 @@ export class PurhaseFormComponent {
     user.barcode = event.target.value;
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
-        this.recentItem=res;
-        user.ItemName = res[0]?.itemName?res[0]?.itemName:res[0].aliasName;
-        user.purchasePrice = res[0]?.purchasePrice;
-        user.netRate = res[0]?.salePrice;
-        user.quantity =res[0]?.itemName?res[0]:res[0]?.qty
+        if(res.length>0)
+        {
+          this.recentItem=res; 
+          user.ItemName = res[0]?.itemName?res[0]?.itemName:res[0].aliasName;
+          user.purchasePrice = res[0]?.purchasePrice;
+          user.netRate = res[0]?.salePrice;
+          user.quantity =res[0]?.itemName?res[0]:res[0]?.qty
+        }
+        else
+        {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: "No data found" });
+          return;
+        }
+        
+        
       })
     }
+
+    
   }
   tdChange(user: any) { 
     if (user.barcode.length >= 2) {
@@ -88,11 +100,12 @@ export class PurhaseFormComponent {
         this.netQuantity += x.netQuantity;
       }
     });
-
+    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
     user.netRate = parseFloat((user.totalIncGst / this.netQuantity).toFixed(2));
     user.salePrice = user.netRate.toFixed(2);
     user.netSalePrice = parseFloat((user.salePrice * user.quantity).toFixed(2));
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
+    user.totalSalePrice=parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    user.marginPercent = parseFloat((((user.netSalePrice-user.netRate)/(user.netSalePrice*100))).toFixed(2));
     this.resetTotals();
     this.calculateTotals();
 
@@ -110,7 +123,8 @@ export class PurhaseFormComponent {
     user.netRate = parseFloat((user.totalIncGst / this.netQuantity).toFixed(2));
     user.salePrice = user.netRate.toFixed(2);
     user.netSalePrice = parseFloat((user.salePrice * user.quantity).toFixed(2));
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
+    user.totalSalePrice=parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    user.marginPercent = parseFloat((((user.netSalePrice-user.netRate)/(user.netSalePrice*100))).toFixed(2));
     this.resetTotals();
     this.calculateTotals();
   }
@@ -123,11 +137,12 @@ export class PurhaseFormComponent {
         this.netQuantity += x.netQuantity;
       }
     });
-
+    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
     user.netRate = parseFloat((user.totalIncGst / this.netQuantity).toFixed(2));
     user.salePrice = user.netRate.toFixed(2);
     user.netSalePrice = parseFloat((user.salePrice * user.quantity).toFixed(2));
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
+    user.totalSalePrice=parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    user.marginPercent = parseFloat((((user.netSalePrice-user.netRate)/(user.netSalePrice*100))).toFixed(2));
     this.resetTotals();
     this.calculateTotals();
   }
@@ -143,11 +158,12 @@ export class PurhaseFormComponent {
         this.netQuantity += x.netQuantity;
       }
     });
-
+    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
     user.netRate = parseFloat((user.totalIncGst / this.netQuantity).toFixed(2));
     user.salePrice = user.netRate.toFixed(2);
     user.netSalePrice = parseFloat((user.salePrice * user.quantity).toFixed(2));
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
+    user.totalSalePrice=parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    user.marginPercent = parseFloat((((user.netSalePrice-user.netRate)/(user.netSalePrice*100))).toFixed(2));
     this.resetTotals();
     this.calculateTotals();
   }
@@ -163,10 +179,12 @@ export class PurhaseFormComponent {
         this.netQuantity += x.netQuantity;
       }
     });
+    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
     user.netRate = parseFloat((user.totalIncGst / this.netQuantity).toFixed(2));
     user.salePrice = user.netRate.toFixed(2);
     user.netSalePrice = parseFloat((user.salePrice * user.quantity).toFixed(2));
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
+    user.totalSalePrice=parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    user.marginPercent = parseFloat((((user.netSalePrice-user.netRate)/(user.netSalePrice*100))).toFixed(2));
     this.resetTotals();
     this.calculateTotals();
   }
@@ -181,11 +199,12 @@ export class PurhaseFormComponent {
         this.netQuantity += x.netQuantity;
       }
     });
-
+    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
     user.netRate = parseFloat((user.totalIncGst / this.netQuantity).toFixed(2));
     user.salePrice = user.netRate.toFixed(2);
     user.netSalePrice = parseFloat((user.salePrice * user.quantity).toFixed(2));
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
+    user.totalSalePrice=parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    user.marginPercent = parseFloat((((user.netSalePrice-user.netRate)/(user.netSalePrice*100))).toFixed(2));
     this.resetTotals();
     this.calculateTotals();
 
@@ -197,7 +216,8 @@ export class PurhaseFormComponent {
     user.netRate = parseFloat((user.totalIncGst / this.netQuantity).toFixed(2));
     user.salePrice = user.netRate.toFixed(2);
     user.netSalePrice = parseFloat((user.salePrice * user.quantity).toFixed(2));
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
+    user.totalSalePrice=parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    user.marginPercent = parseFloat((((user.netSalePrice-user.netRate)/(user.netSalePrice*100))).toFixed(2));
     this.resetTotals();
     this.calculateTotals();
   }
@@ -213,7 +233,8 @@ export class PurhaseFormComponent {
     user.netRate = parseFloat((user.totalIncGst / this.netQuantity).toFixed(2));
     user.salePrice = user.netRate.toFixed(2);
     user.netSalePrice = parseFloat((user.salePrice * user.quantity).toFixed(2));
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
+    user.totalSalePrice=parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    user.marginPercent = parseFloat((((user.netSalePrice-user.netRate)/(user.netSalePrice*100))).toFixed(2));
     this.resetTotals();
     this.calculateTotals();
   }
@@ -223,18 +244,20 @@ export class PurhaseFormComponent {
     user.netRate = parseFloat((user.totalIncGst / this.netQuantity).toFixed(2));
     user.salePrice = user.netRate.toFixed(2);
     user.netSalePrice = parseFloat((user.salePrice * user.quantity).toFixed(2));
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
+    user.totalSalePrice=parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    user.marginPercent = parseFloat((((user.netSalePrice-user.netRate)/(user.netSalePrice*100))).toFixed(2));
     this.resetTotals();
     this.calculateTotals();
 
   }
 
   netSalePriceChange(user: any) {
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
     user.netRate = parseFloat((user.totalIncGst / this.netQuantity).toFixed(2));
     user.salePrice = user.netRate.toFixed(2);
     user.netSalePrice = parseFloat((user.salePrice * user.quantity).toFixed(2));
-    user.marginPercent = parseFloat((user.netSalePrice - user.netRate).toFixed(2));
+    user.totalSalePrice=parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    var margin1=user.netSalePrice-user.netRate;
+    user.marginPercent = parseFloat((((user.netSalePrice-user.netRate)/(user.netSalePrice*100))).toFixed(2));
     this.resetTotals();
     this.calculateTotals();
   }
@@ -256,13 +279,13 @@ export class PurhaseFormComponent {
       if (typeof x.discountByValue === 'number' && !isNaN(x.discountByValue)) {
         this.totalDisc += x.discountByValue;
       }
-      if (typeof x.gstByValue === 'number' && !isNaN(x.gstByValue)) {
-        this.totalGST += x.gstByValue;
+      if (typeof x.totalIncGst === 'number' && !isNaN(x.totalIncGst)) {
+        this.totalGST += x.totalIncGst;
       }
       if (typeof x.totalIncGst === 'number' && !isNaN(x.totalIncGst)) {
         this.netCostTotal += x.totalIncGst;
         if (typeof x.netSalePrice === 'number' && !isNaN(x.netSalePrice)) {
-          this.netSaleTotal += x.netSalePrice*x.quantity;
+          this.netSaleTotal += x.totalSalePrice;
         }
       }
     });
