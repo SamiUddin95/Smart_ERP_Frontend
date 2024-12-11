@@ -25,6 +25,7 @@ export class ItemFormComponent {
   }
   ngOnInit(): void {
     this.urlId = Number(this.route.snapshot.paramMap.get('id'));
+    this.calculateParentValues();
     debugger
     this.getBrand();
     this.getCategory();
@@ -154,16 +155,18 @@ export class ItemFormComponent {
         }
 
         altrnateBarCodeData: any[] = [
-          { aliasName: '', qty: 0, saleDiscPerc: 0, saleDiscFlat: 0, remarks: '' }
+          { alternateItemName: '', qty: 0, salePrice: 0, saleDisc: 0, remarks: '', barcode: '',netSalePrice: '' }
       ];
       
       addRow() {
           this.altrnateBarCodeData.push({
-              aliasName: '',
+            alternateItemName: '',
               qty: 0,
-              saleDiscPerc: 0,
-              saleDiscFlat: 0,
-              remarks: ''
+              salePrice: 0,
+              saleDisc: 0,
+              remarks: '',
+              barcode: '',
+              netSalePrice: '',
           });
       }
       deleteRow(index: number) {
