@@ -46,7 +46,7 @@ export class ItemFormComponent {
         misc: 0,
         netSalePrice: 0,
         profit: 0,
-        manualSalePrice: 0
+        cost: 0
       };
     }
 	}
@@ -176,7 +176,7 @@ export class ItemFormComponent {
       //child and parent Item
       displayPopup: boolean = false;
       childData: any[] = [
-        { barcode: '', childName: '', uom: 'Kg', weight: 1, netCost: 0, salePrice: 0, discPerc: 0, discValue: 0, misc: 0, netSalePrice: 0, profit:0, manualSalePrice:0 }
+        { barcode: '', childName: '', uom: 'Kg', weight: 1, cost:0 , netCost: 0, salePrice: 0, discPerc: 0, discValue: 0, misc: 0, netSalePrice: 0, profit:0}
     ];
 
     addChildRow() {
@@ -188,15 +188,15 @@ export class ItemFormComponent {
         childName: '',
         uom: 'Kg',
         weight: 1,
-        cost: 0,
+        Calcost: 0,
+        cost:0,
         netCost: 0,
         salePrice: 0,
         discPerc: 0,
         discValue: 0,
         misc: 0,
         netSalePrice: 0,
-        profit: 0,
-        manualSalePrice: 0
+        profit: 0
       };
       this.calculateChildValues(newChild);
       this.childData.push(newChild);
@@ -210,10 +210,10 @@ export class ItemFormComponent {
       // 2. Calculate cost based on weight and UOM
       const weightInGrams = child.uom === 'Kg' ? child.weight * 1000 : child.weight;
       const parentCost = this.formData.purchasePrice || 0;
-      child.cost = (parentCost / 1000) * weightInGrams;
+      child.Calcost = (parentCost / 1000) * weightInGrams;
 
       // 3. Calculate net cost
-      child.netCost = child.cost + (child.misc || 0);
+      child.netCost = child.Calcost + (child.misc || 0);
 
       // 4. Calculate disc value and net sale price
       //child.discValue = (child.salePrice * (child.discPerc || 0)) / 100;
@@ -246,20 +246,22 @@ export class ItemFormComponent {
         }
         debugger
         const payload = {
-          Id:this.childParentData.id,
-          barcode: this.formData.aliasName,
-          parentName:this.formData.itemName,
-          uom:this.selectedUOM,
-          weight:this.childParentData.weight,
-          netCost:this.childParentData.netCost,
-          salePrice:this.childParentData.salePrice,
-          discPerc:this.childParentData.discPerc,
-          discValue:this.childParentData.discValue,
-          misc:this.childParentData.misc,
-          netSalePrice:this.childParentData.netSalePrice,
-          profit:this.childParentData.profit,
-          manualSalePrice:this.childParentData.manualSalePrice,
-          childItem: this.childData,
+          // Id:this.childParentData.id,
+          // barcode: this.formData.aliasName,
+          // parentName:this.formData.itemName,
+          // uom:this.selectedUOM,
+          // weight:this.childParentData.weight,
+          // netCost:this.childParentData.netCost,
+          // salePrice:this.childParentData.salePrice,
+          // discPerc:this.childParentData.discPerc,
+          // discValue:this.childParentData.discValue,
+          // misc:this.childParentData.misc,
+          // netSalePrice:this.childParentData.netSalePrice,
+          // profit:this.childParentData.profit,
+          // manualSalePrice:this.childParentData.manualSalePrice,
+          Id: this.urlId,
+          ItemId: this.urlId,
+          ChildItems: this.childData
     
       };
         this.api.createParentChildItems(payload).subscribe(

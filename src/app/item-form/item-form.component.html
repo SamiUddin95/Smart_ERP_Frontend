@@ -228,12 +228,12 @@
                                         <hr style="margin: 15px 0; border: 1px solid #ccc;">
                                         <div class="popup-content">
                                             <!-- Second Line: Parent Item Title -->
-                                            <div class="second-line">
+                                            <!-- <div class="second-line">
                                                 <h4>Parent Item</h4>
-                                            </div>
+                                            </div> -->
 
                                             <!-- Third Line: Parent Item Fields -->
-                                            <div class="parent-item-fields" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                            <!-- <div class="parent-item-fields" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                                 <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
                                                     <label>Barcode</label>
                                                     <input type="text" [(ngModel)]="formData.aliasName" class="form-control" style="width: 100px; height: 30px; font-size: 12px;">
@@ -292,7 +292,7 @@
                                                 </div>
                                               
                                             </div>
-                                            <hr style="margin: 15px 0; border: 1px solid #ccc;">
+                                            <hr style="margin: 15px 0; border: 1px solid #ccc;"> -->
                                             
                                            <!-- Fourth Line: Child Item Title -->
                                             <div class="fourth-line" style="display: flex; align-items: center; justify-content: space-between;">
@@ -308,13 +308,14 @@
                                                         <th>Child Name</th>
                                                         <th>UOM</th>
                                                         <th>Weight</th>
+                                                        <th>Cost</th>
                                                         <th>Misc</th>
                                                         <th>Net Cost</th>
                                                         <th>Sale Price</th>
                                                         <th>Disc Value</th>
                                                         <th>Net Sale Price</th>
                                                         <th>Profit</th>
-                                                        <th>Material Sale Price</th>
+                                                        
                                                     </tr>
                                                     <tr *ngFor="let child of childData; let i = index">
                                                         <td><input type="text" class="form-control" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" [(ngModel)]="child.barcode"></td>
@@ -334,13 +335,13 @@
                                                             </p-dropdown>
                                                         </td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.weight" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.weight"></td>
+                                                        <td><input type="number" class="form-control" [(ngModel)]="child.cost" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.cost"></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.misc" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.misc"></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.netCost" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px', 'background-color': '#f0f0f0'}" [value]="child.netCost" readonly></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.salePrice" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.salePrice"></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.discValue" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.discValue"></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.netSalePrice" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px', 'background-color': '#f0f0f0'}" [value]="child.netSalePrice" readonly></td>
                                                         <td><input type="number" class="form-control" [(ngModel)]="child.profit" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px', 'background-color': '#f0f0f0'}" [value]="child.profit" readonly></td>
-                                                        <td><input type="number" class="form-control" [(ngModel)]="child.manualSalePrice" (ngModelChange)="onChildInputChange(child)" [style]="{'width': '80px', 'height': '30px', 'font-size': '12px'}" [value]="child.manualSalePrice"></td>
                                                         <td>
                                                             <button pButton icon="pi pi-trash" class="p-button-sm p-button-danger" (click)="deletehildRow(i)"></button>
                                                         </td>
