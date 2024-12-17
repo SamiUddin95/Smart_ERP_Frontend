@@ -1,7 +1,7 @@
 <div class="container-fluid mt-2" style="width:100%">
     <div class="flex justify-content-between p-2 ">
         <h3>PURCHASE</h3>
-        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" (click)="postPurchase()" class="mr-2"
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" [disabled]="purcDtl.length<0" (click)="postPurchase()" class="mr-2"
             pTooltip="PDF" tooltipPosition="bottom"></button>
     </div>
     <section>
