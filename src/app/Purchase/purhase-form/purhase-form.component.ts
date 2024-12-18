@@ -25,6 +25,7 @@ export class PurhaseFormComponent {
   netCostTotal: number = 0;
   netSaleTotal: number = 0;
   netProfitInValue: number = 0;
+  totalSalePrice: number = 0;
   purcDtl: any[] = [];
   recentItem: any = {};
   ngOnInit(): void {
@@ -87,11 +88,12 @@ export class PurhaseFormComponent {
     this.router.navigate(['purchase-list']);
   }
   purchasePriceChange(user: any) {
-    user[0].subTotal = parseFloat((user[0].purchasePrice * user[0].quantity).toFixed(2));
-    user[0].discountByValue = parseFloat(((user[0].discountByValue * 100) / user[0].subTotal).toFixed(2));
-    user[0].discountByPercent = parseFloat(((user[0].subTotal * user[0].discountByValue) / 100).toFixed(2));
-    user[0].total = parseFloat((user[0].quantity * user[0].purchasePrice).toFixed(2));
-    user[0].netTotal = user[0].total;
+    debugger
+    user.subTotal = parseFloat((user.purchasePrice * user.quantity).toFixed(2));
+    user.discountByValue = parseFloat(((user.discountByValue * 100) / user.subTotal).toFixed(2));
+    user.discountByPercent = parseFloat(((user.subTotal * user.discountByValue) / 100).toFixed(2));
+    user.total = parseFloat((user.quantity * user.purchasePrice).toFixed(2));
+    user.netTotal = user.total;
     this.purcDtl.forEach(x => {
       if (typeof x.netQuantity === 'number' && !isNaN(x.netQuantity)) {
         this.netQuantity += x.netQuantity;
@@ -280,8 +282,8 @@ export class PurhaseFormComponent {
       }
       if (typeof x.totalIncGst === 'number' && !isNaN(x.totalIncGst)) {
         this.netCostTotal += x.totalIncGst;
-        if (typeof x.netSalePrice === 'number' && !isNaN(x.netSalePrice)) {
-          this.netSaleTotal += x.totalSalePrice;
+        if (typeof x.totalSalePrice === 'number' && !isNaN(x.totalSalePrice)) {
+          this.totalSalePrice += x.totalSalePrice;
         }
       }
     });
@@ -360,6 +362,7 @@ export class PurhaseFormComponent {
       netCostTotal: this.netCostTotal,
       netSaleTotal: this.netSaleTotal,
       netProfitInValue: this.netProfitInValue,
+      totalSaleprice: this.totalSalePrice,
       PurchaseDetailModel: this.purcDtl
     };
 
@@ -382,14 +385,19 @@ export class PurhaseFormComponent {
   currentStock: string = '';
   salePrice: string = '';
   purchasePrice: string = '';
+  saleDisc: string = '';
+  netSalePrice: string = '';
   postPurchase() {
     this.barCodes = this.purcDtl.map(x => x.barcode).join(',');
     this.purchasePrice = this.purcDtl.map(x => x.purchasePrice).join(',');
     this.salePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
     this.currentStock = this.purcDtl.map(x => x.netQuantity).join(',');
-    this.api.postPurchase(this.barCodes, this.currentStock, this.salePrice, this.purchasePrice).subscribe(res => {
-      if (res == "Items Posted successfully")
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Items Posted successfully!!" });
+    this.saleDisc = this.purcDtl.map(x => x.saleDiscountByValue).join(',');
+    this.netSalePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
+    this.api.postPurchase(this.barCodes, this.currentStock, this.salePrice, 
+      this.purchasePrice,this.saleDisc,this.netSalePrice).subscribe(res => {
+      if (res.status == "OK")
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
     })
   }
   exportPdf() {

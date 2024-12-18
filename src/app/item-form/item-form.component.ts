@@ -189,7 +189,7 @@ export class ItemFormComponent {
         uom: 'Kg',
         weight: 1,
         Calcost: 0,
-        cost:0,
+        cost:this.formData.salePrice,
         netCost: 0,
         salePrice: 0,
         discPerc: 0,

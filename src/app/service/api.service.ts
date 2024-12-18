@@ -329,8 +329,9 @@ export class ApiService {
 	createPurchase(obj: any) {
 		return this.app.post('createPurchase', obj);
 	}
-	postPurchase(barCodes: any,currentStock:any,lastNetSalePrice:any,lastNetCost:any) {
-		return this.app.get('postPurchase?barCodes='+barCodes+"&currentStock="+currentStock+"&lastNetSalePrice="+lastNetSalePrice+"&lastNetCost="+lastNetCost);
+	postPurchase(barCodes: any,currentStock:any,lastNetSalePrice:any,lastNetCost:any,saleDisc:any,netSalePrice:any) {
+		return this.app.get('postPurchase?barCodes='+barCodes+"&currentStock="+currentStock+
+			"&lastNetSalePrice="+lastNetSalePrice+"&lastNetCost="+lastNetCost+'&saleDisc='+saleDisc+'&netSaleePrice='+netSalePrice);
 	}
 	//Brands
 	getAllBrandsdetails() {

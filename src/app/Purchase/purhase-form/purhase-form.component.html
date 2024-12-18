@@ -1,7 +1,7 @@
 <div class="container-fluid mt-2" style="width:100%">
     <div class="flex justify-content-between p-2 ">
         <h3>PURCHASE</h3>
-        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" [disabled]="purcDtl.length<0" (click)="postPurchase()" class="mr-2"
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" [disabled]="this.urlId==0" (click)="postPurchase()" class="mr-2"
             pTooltip="PDF" tooltipPosition="bottom"></button>
     </div>
     <section>
@@ -134,7 +134,8 @@
 
                                                                                     <ng-template pTemplate="body"
                                                                                         let-user let-i="rowIndex">
-                                                                                        <tr (click)="tdChange(user)">
+                                                                                        <!-- <tr (click)="tdChange(user)"> -->
+                                                                                            <tr >
                                                                                             <td><input type="text"
                                                                                                 class="form-control form-control-sm w-100"
                                                                                                 placeholder="Enter Barcode Here"
@@ -171,7 +172,7 @@
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Purchase Price"
                                                                                                     [(ngModel)]="user.purchasePrice"
-                                                                                                    (input)="purchasePriceChange(purcDtl)">
+                                                                                                    (input)="purchasePriceChange(user)">
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
@@ -292,7 +293,7 @@
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th>Net Sale Total</th>
-                                                                                            <th>{{netSaleTotal}}</th>
+                                                                                            <th>{{totalSalePrice}}</th>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th>Net Profit in Value</th>
