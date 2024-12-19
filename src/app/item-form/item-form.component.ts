@@ -21,7 +21,8 @@ export class ItemFormComponent {
   selectedChildUOM: string = 'Kg';
   selectedWeight: number = 1;
   get combinedItemInfo(): string {
-    return `${this.formData.itemName} ${this.selectedWeight} ${this.selectedUOM}`;
+    // return `${this.formData.itemName} ${this.selectedWeight} ${this.selectedUOM}`;
+    return `${this.formData.itemName}`;
   }
   ngOnInit(): void {
     this.urlId = Number(this.route.snapshot.paramMap.get('id'));
@@ -310,12 +311,12 @@ export class ItemFormComponent {
 
     calculateAlternateItemPrices(item: any) {
       // Calculate sale price (sale price * qty)
-      const totalSalePrice = (item.salePrice || 0) * (item.qty || 0);
-      
+      //const totalSalePrice = (item.salePrice || 0) * (item.qty || 0);
+      item.salePrice = this.formData.salePrice * item.qty
       // Calculate net sale price (sale price - sale disc)
-      item.netSalePrice = totalSalePrice - (item.saleDisc || 0);
+      item.netSalePrice = item.salePrice - (item.saleDisc || 0);
       
       // Update alias name (item name + remarks)
-      item.aliasName = `${this.formData.itemName} ${item.remarks || ''}`.trim();
+      item.alternateItemName = `${this.formData.itemName} ${item.remarks || ''}`.trim();
     }
 }
