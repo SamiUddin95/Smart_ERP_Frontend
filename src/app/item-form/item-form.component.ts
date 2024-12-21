@@ -211,7 +211,7 @@ export class ItemFormComponent {
       // 2. Calculate cost based on weight and UOM
       const weightInGrams = child.uom === 'Kg' ? child.weight * 1000 : child.weight;
       //const parentCost = this.formData.purchasePrice || 0;
-      const parentCost = child.cost || 0;
+      const parentCost = this.formData.purchasePrice || 0;
       child.cost = parseFloat(((parentCost / 1000) * weightInGrams).toFixed(2));
 
       // 3. Calculate net cost
