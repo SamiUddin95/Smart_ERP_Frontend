@@ -412,7 +412,9 @@ export class ApiService {
 	getItemDetailbyBarCode(barCode:string){
 		return this.app.get('getItemDetailbyBarCode?barCode=' + barCode);
 	}
-
+	getChildItemDetailbyBarCode(barCode:string){
+		return this.app.get('getChildItemDetailbyBarCode?barCode=' + barCode);
+	}
 	deleteItemsById(id: any) {
 		return this.app.get('deleteItemById?id=' + id, id);
 	}
