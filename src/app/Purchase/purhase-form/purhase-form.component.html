@@ -377,9 +377,9 @@
         </div> 
     </section>
 </div>
-<p-dialog header="Search Child Item" [modal]="true" [(visible)]="visible" [style]="{ width: '75rem' }">
+<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visible" [style]="{ width: '75rem' }">
     <div class="flex items-center gap-4 mb-4">
-        <label for="username" class="font-semibold w-25">Bar Code Search</label>
+        <label for="username" class="font-semibold w-25">Searching Criteria</label>
         <input type="text" class="w-75" (input)="searchChildItem(childItemSearch)"
             class="form-control form-control-sm"
             placeholder="Enter Barcode Here"
@@ -406,8 +406,8 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-itm>
                         <tr>
-                            <td>{{itm.barcode}}</td>
-                            <td>{{itm.childName}}</td>
+                            <td>{{itm.barCode}}</td>
+                            <td>{{itm.itemName}}</td>
                             <td>{{itm.cost}}</td>
                             <td>{{itm.salePrice}}</td>
                             <button style="margin-right: 3px" pButton pRipple label="Add"
