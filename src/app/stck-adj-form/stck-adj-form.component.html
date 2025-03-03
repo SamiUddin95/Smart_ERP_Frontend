@@ -1,0 +1,392 @@
+<div class="container-fluid mt-2" style="width:100%">
+    <div class="flex justify-content-between p-2 ">
+        <h3>STOCK ADJUSTMENT FORM</h3>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" [disabled]="this.urlId==0"
+            (click)="postPurchase()" class="mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+    </div>
+    <section>
+        <div class="card">
+            <div class="p-grid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-3">
+                            <p-accordion>
+                                <p-accordionTab header="Purchase" [selected]="true">
+                                    <div class="card shadow-3">
+                                        <div class="card-header">Add Stock Adjustment</div>
+                                        <div class="card-body">
+                                            <div class="grid">
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Serial No.</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Serial No" [(ngModel)]="formData.serialNo">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Date</label>
+                                                        <p-calendar [(ngModel)]="formData.date"
+                                                            [style]="{width:100}" dateFormat="yy-mm-dd"></p-calendar>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>User</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="User" [(ngModel)]="formData.userId">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Location</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Location" [(ngModel)]="formData.location">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Remarks</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Remarks" [(ngModel)]="formData.remarks">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2 mt-4 pt-2 pl-4">
+                                                        <label class="mr-3" for="lastname"><span class="text-danger">
+                                                            </span>Active/InActive</label>
+                                                        <p-checkbox [(ngModel)]="formData.status"
+                                                            value="1" size="large" />
+                                                    </div>
+                                                    <div class="col-md-3 mt-4 offset-9 text-right col-sm-3">
+                                                        <button pButton pRipple type="button" icon="pi pi-save"
+                                                            (click)="AddData()" label="Add"
+                                                            class="p-button-sm p-button-success"> </button>
+                                                        <button pButton pRipple type="button" icon="pi pi-trash"
+                                                            (click)="RemoveData()" label="Remove"
+                                                            class="ml-2 p-button-sm p-button-danger"> </button>
+                                                    </div>
+                                                    <div class="col-md-12 mt-4">
+                                                        <div class="pad-wrapper">
+                                                            <div class="box">
+                                                                <div class="content">
+                                                                    <div class="row">
+                                                                        <div class="col-md-9">
+                                                                            <div class="table-scroll-container">
+                                                                                <p-table #dt [scrollable]="true"
+                                                                                    scrollHeight="600px"
+                                                                                    responsiveLayout="scroll"
+                                                                                    [value]="stckAdjDtl"
+                                                                                    [tableStyle]="{ 'width': '250rem', 'min-width': '100rem' }"
+                                                                                    styleClass="p-datatable-sm p-datatable-gridlines"
+                                                                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                                                                    [rows]="16"
+                                                                                    [showCurrentPageReport]="true"
+                                                                                    [rowsPerPageOptions]="[10, 25, 50]"
+                                                                                    [paginator]="true">
+
+                                                                                    <ng-template pTemplate="header">
+                                                                                        <tr>
+                                                                                            <th>
+                                                                                                Bar Code </th>
+                                                                                            <th>
+                                                                                                Item Name </th>
+                                                                                            <th>
+                                                                                                Location </th>
+                                                                                            <th>
+                                                                                                Batch
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Expiry
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Stock In Hand
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Stock in Shelf
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Adjustment Qty
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Purchase Price
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Sale Price
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Total
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Action
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                    </ng-template>
+
+                                                                                    <ng-template pTemplate="body"
+                                                                                        let-user let-i="rowIndex">
+                                                                                        <!-- <tr (click)="tdChange(user)"> -->
+                                                                                        <tr>
+                                                                                            <td><input type="text"
+                                                                                                    class="form-control form-control-sm w-100"
+                                                                                                    placeholder="Enter Barcode Here"
+                                                                                                    (keydown.enter)="onKey($event, user)"
+                                                                                                    autofocus
+                                                                                                    [(ngModel)]="user.barcode">
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input type="text"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Item Name"
+                                                                                                    [(ngModel)]="user.ItemName">
+                                                                                            </td>
+                                                                                            <td><input type="text"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Location"
+                                                                                                    [(ngModel)]="user.location"
+                                                                                                    (input)="qtyChange(user)">
+                                                                                            </td>
+                                                                                            <td><input type="text"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Batch"
+                                                                                                    (input)="bonusQtyChange(user)"
+                                                                                                    [(ngModel)]="user.batch">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Expory"
+                                                                                                    [disabled]="true"
+                                                                                                    (input)="bonusQtyChange(user)"
+                                                                                                    [(ngModel)]="user.expiry">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Stock In Hand"
+                                                                                                    [(ngModel)]="user.stockInHand"
+                                                                                                    (input)="stockInHandChange(user)">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Stock In Shelf"
+                                                                                                    (input)="stockInShelfChange(user)"
+                                                                                                    [(ngModel)]="user.stockInShelf">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Adjustment Qty"
+                                                                                                    (input)="discPerChange(user)"
+                                                                                                    [(ngModel)]="user.adjustmetnQty">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Purchase Price"
+                                                                                                    (input)="discvallueChange(user)"
+                                                                                                    [(ngModel)]="user.purchasePrice">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    [disabled]="true"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Sale Price"
+                                                                                                    [(ngModel)]="user.salePrice">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Total"
+                                                                                                    (input)="gstPerChange(user)"
+                                                                                                    [(ngModel)]="user.total">
+                                                                                            </td>
+                                                                                            <td><button pButton pRipple
+                                                                                                    type="button"
+                                                                                                    icon="pi pi-trash"
+                                                                                                    (click)="RemoveCol(i)"
+                                                                                                    class="p-button-sm p-button-danger"></button>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </ng-template>
+                                                                                </p-table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <div class="border summary-table">
+                                                                                <h5 class="text-center p-1">Stock
+                                                                                    Adjustment
+                                                                                    Summary</h5>
+                                                                                <p-table #dt2 [scrollable]="true"
+                                                                                    scrollHeight="600px"
+                                                                                    responsiveLayout="scroll"
+                                                                                    styleClass="p-datatable-sm p-datatable-gridlines">
+
+                                                                                    <ng-template pTemplate="header">
+                                                                                        <tr>
+                                                                                            <th>Stock in Hand</th>
+                                                                                            <th>{{stockInHand}}</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>Stock in Shelf</th>
+                                                                                            <th>{{stockInShelf}}</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>Stock in Hand Amount
+                                                                                            </th>
+                                                                                            <th>{{stockInHandAmount}}</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>Stock in Shlef Amount
+                                                                                            </th>
+                                                                                            <th>{{stockInShelfAmount}}</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>Difference Qty</th>
+                                                                                            <th>{{differQty}}</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>Difference Qty Amount
+                                                                                            </th>
+                                                                                            <th>{{differQtyAmount}}</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>Total Amount of Increase
+                                                                                            </th>
+                                                                                            <th>{{totalAmountIncrease}}
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>Total Amount of Decrease
+                                                                                            </th>
+                                                                                            <th>{{totalAmountDecrease}}
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                    </ng-template>
+                                                                                </p-table>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
+                                        <div>
+                                            <button style="margin-right: 3px" pButton pRipple type="button"
+                                                    icon="pi pi-arrow-left" (click)="cancel()" label="Back"
+                                                    class="p-button-sm p-button-danger"> </button>
+                                                <button pButton pRipple type="button" icon="pi pi-save"
+                                                    (click)="addStock()" label="Save"
+                                                    class="p-button-sm p-button-success"> </button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visible" [style]="{ width: '75rem' }">
+    <div class="flex items-center gap-4 mb-4">
+        <label for="username" class="font-semibold w-25">Searching Criteria</label>
+        <input type="text" class="w-75" (input)="searchChildItem(childItemSearch)" class="form-control form-control-sm"
+            placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
+    </div>
+    <div class="pad-wrapper">
+        <div class="box">
+            <div class="content">
+                <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
+                    styleClass="p-datatable-sm p-datatable-gridlines"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="code">Bar Code <p-sortIcon field="code"></p-sortIcon></th>
+                            <th pSortableColumn="name">Child Name <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="category">Purchase Price <p-sortIcon field="category"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="quantity">Sale Price <p-sortIcon field="quantity"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-itm>
+                        <tr>
+                            <td>{{itm.barCode}}</td>
+                            <td>{{itm.itemName}}</td>
+                            <td>{{itm.cost}}</td>
+                            <td>{{itm.salePrice}}</td>
+                            <button style="margin-right: 3px" pButton pRipple label="Add"
+                                class="p-button-rounded p-button-info"
+                                (click)="addChildItemToPurchaseList(itm)"></button>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog">
+    <div class="card shadow-3">
+        <div class="card-body">
+            <div class="grid">
+                <div class="row px-2 col-12">
+                    <div class="col-md-12">
+                        <input type="text"
+                            class="p-3 form-control form-control-sm"
+                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
+                            [(ngModel)]="searchedItemName">
+                    </div>
+                    <div class="mt-2 col-md-12">
+                        <div class="mt-2 pad-wrapper">
+                            <div class="box">
+                                <div class="content">
+                                    <div class="row">
+                                        <p-table #dt responsiveLayout="scroll" [value]="itemDtl"
+                                            styleClass="p-datatable-sm p-datatable-gridlines"
+                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                            [rows]="10" [showCurrentPageReport]="true"
+                                            [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
+
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th pSortableColumn="code">No.
+                                                        <p-sortIcon field="code"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="name">BarCode
+                                                        <p-sortIcon field="name"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="price">Item Name
+                                                        <p-sortIcon field="price"></p-sortIcon>
+                                                    </th> 
+                                                    <th pSortableColumn="price">Purchase Price
+                                                        <p-sortIcon field="price"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="price">Sale Price
+                                                        <p-sortIcon field="price"></p-sortIcon>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="body" let-itm let-i="rowIndex">
+                                                <tr>
+                                                    <td>{{ i + 1 }}</td>
+                                                    <td>{{itm.aliasName}}</td>
+                                                    <td>{{itm.itemName}}</td>
+                                                    <td>{{itm.purchasePrice}}</td>
+                                                    <td>{{itm.salePrice}}</td>
+                                                </tr>
+                                            </ng-template>
+
+                                        </p-table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<p-toast position="top-right"></p-toast>

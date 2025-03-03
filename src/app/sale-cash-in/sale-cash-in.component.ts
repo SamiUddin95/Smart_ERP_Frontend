@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import { ApiService } from '../service/api.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import * as FileSaver from 'file-saver';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable';
+
 
 @Component({
   selector: 'app-sale-cash-in',
@@ -6,6 +13,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./sale-cash-in.component.css']
 })
 export class SaleCashInComponent {
+  constructor(private route: ActivatedRoute,private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+
   cashInForm = {
     five000: 5000,five000v: 0,    five000t: 0,    one0000: 1000,    one0000v: 0,    one0000t: 0,
     five00: 500,    five00v: 0,    five00t: 0,    one00: 100,
@@ -17,9 +26,32 @@ export class SaleCashInComponent {
     one: 1,    onev: 0,
     onet: 0
 };
+  urlId: any;
+  ngOnInit(): void {
+    this.urlId = this.route.snapshot.paramMap.get('id'); 
+    this.getCurrentUser();
+  }
 formData:any={};
+createCashIn(){
+  this.formData.userId=this.currentUser.userId;
+  this.formData.id=this.urlId?this.urlId:0;
+  this.api.createCashIn(this.formData).subscribe(res=>{
+    if(res.id>0){
+      this.router.navigate(['cash-in-list']);
+    } else
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "There should be one cash in for a day!" });
+
+  })
+}
+currentUser:any={};
+getCurrentUser(){
+  this.api.getUserById(Number(localStorage.getItem("loginId"))).subscribe(res=>{
+    this.currentUser=res[0];
+    this.formData.userId=this.currentUser.name;
+  })
+}
 updateTotal() {
-  this.formData.amount = this.cashInForm.five000t + this.cashInForm.one0000t + 
+  this.formData.cashInAmount = this.cashInForm.five000t + this.cashInForm.one0000t + 
                          this.cashInForm.five00t + this.cashInForm.one00t + 
                          this.cashInForm.five0t + this.cashInForm.two0t + 
                          this.cashInForm.one0t + this.cashInForm.fivet + 
@@ -76,5 +108,7 @@ amountfive000Changes(e:any){
     this.updateTotal();
   }
   add(){}
-  cancel(){}
+  cancel(){
+    this.router.navigate(['cash-in-list']);
+  }
 }

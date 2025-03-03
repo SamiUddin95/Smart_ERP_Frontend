@@ -1,0 +1,98 @@
+<div class="card container-fluid mt-2">
+    <div class="d-flex justify-content-between p-2">
+        <div>
+            <h3>CASH IN</h3>
+        </div>
+        <div>
+            <button pButton pRipple type="button" icon="pi pi-plus" label="Add Cash In"
+                class="p-button-sm p-button-success float-right"
+                 (click)="addCash()"></button>
+        </div>
+    </div>
+    <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
+        <p-accordion>
+            <p-accordionTab header="Search">
+                <div class="grid">
+                    <div class="row mt-1 px-2 col-12">
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0" for="DateFrom">Date From</label>
+                            <p-calendar [(ngModel)]="filter.dateFrom" [style]="{width:100}"
+                                dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="DateTo">Date To</label>
+                            <p-calendar [(ngModel)]="filter.dateTo" [style]="{width:100}"
+                                dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">User Name</label>
+                            <input type="text"
+                            class="form-control p-inputtext p-component txt"
+                                placeholder="Search By User Name">
+                        </div> 
+                         <div class="col-md-4 col-sm-12 text-right mt-1">
+                            <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4"
+                                style="width:130px" (click)="clearFilter()"></button>
+                            <button pButton pRipple type="button" icon="pi pi-search" label="Search"
+                                class="p-button-sm p-button-info float-right mx-1 mt-4"
+                                style="width:130px" (click)="getData()"></button>
+
+                        </div>
+                    </div>
+                </div>
+            </p-accordionTab>
+        </p-accordion>
+        <p-divider></p-divider>
+        <div class="pad-wrapper">
+            <div class="box">
+                <div class="content">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="saleMan" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                    <ng-template pTemplate="caption">
+                        <div class="flex">
+                            <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                            <button type="button" pButton pRipple icon="pi pi-file-excel" label="Export XLS" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                            <button type="button" pButton pRipple icon="pi pi-file" label="Export CSV" (click)="dt.exportCSV()"  class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>                        </div>
+                    </ng-template>    
+                    <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="code">Date <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">User <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Cash In Serial No <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Till Open No <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Till Close No <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Amount <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Note <p-sortIcon field="name"></p-sortIcon></th>
+                                </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-user>
+                            <tr>
+                                <td>{{user.cashInDateTime | date:'dd-MMM-yyyy:hh:mm'}}</td>
+                                <td>{{user.userId}}</td>
+                                <td>{{user.id}}</td>  
+                                <td>{{user.tillOpenNo}}</td> 
+                                <td>{{user.tillCloseNo}}</td>
+                                <td>{{user.cashInAmount}}</td>
+                                <td>{{user.notes}}</td> 
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>
+<p-confirmDialog #cd [style]="{width: '30vw'}" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="header">
+        <h3>Alert</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-danger" label="No"
+            (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-success"
+            (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

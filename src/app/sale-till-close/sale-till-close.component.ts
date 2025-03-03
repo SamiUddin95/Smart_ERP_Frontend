@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import { ApiService } from '../service/api.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import * as FileSaver from 'file-saver';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-sale-till-close',
@@ -6,19 +12,38 @@ import { Component } from '@angular/core';
   styleUrls: ['./sale-till-close.component.css']
 })
 export class SaleTillCloseComponent {
-  tillCloseForm:any={    
-    five000: 5000,five000v: 0,    five000t: 0,    one0000: 1000,    one0000v: 0,    one0000t: 0,
+  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
+  urlId: any;
+  ngOnInit(): void {
+    this.urlId = this.route.snapshot.paramMap.get('id'); 
+    this.getCurrentUser();
+  }
+  createSaleTIll(){
+    this.formData.userId=this.currentUser.userId;
+    this.formData.id=this.urlId;
+    this.api.createSaleTillClose(this.formData).subscribe(res=>{
+      if(res.id>0){
+        this.router.navigate(['till-close-list']);
+      } 
+    })
+  } 
+  currentUser:any={};
+  getCurrentUser(){
+    this.api.getUserById(Number(localStorage.getItem("loginId"))).subscribe(res=>{
+      this.currentUser=res[0];
+      this.formData.userId=this.currentUser.name;
+    })
+  }
+  tillCloseForm:any={    five000: 5000,five000v: 0,    five000t: 0,    one0000: 1000,    one0000v: 0,    one0000t: 0,
     five00: 500,    five00v: 0,    five00t: 0,    one00: 100,
     one00v: 0,    one00t: 0,    five0: 50,
     five0v: 0,    five0t: 0,    two0: 20,    two0v: 0,    two0t: 0,
     one0: 10,    one0v: 0,    one0t: 0,    five: 5,    fivev: 0,
-    fivet: 0,    two: 2,
-    twov: 0,    twot: 0,
-    one: 1,    onev: 0,
+    fivet: 0,    two: 2,    twov: 0,    twot: 0,    one: 1,    onev: 0,
     onet: 0};
     formData:any={};
     updateTotal() {
-      this.formData.amount = this.tillCloseForm.five000t + this.tillCloseForm.one0000t + 
+      this.formData.tillCloseAmount = this.tillCloseForm.five000t + this.tillCloseForm.one0000t + 
                              this.tillCloseForm.five00t + this.tillCloseForm.one00t + 
                              this.tillCloseForm.five0t + this.tillCloseForm.two0t + 
                              this.tillCloseForm.one0t + this.tillCloseForm.fivet + 
@@ -75,5 +100,7 @@ export class SaleTillCloseComponent {
     this.updateTotal();
   }
   add(){}
-  cancel(){}
+  cancel(){
+    this.router.navigate(['till-open-list']);
+  }
 }

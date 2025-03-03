@@ -79,17 +79,21 @@
             <ul id="Sales" class="nav-content collapse" data-bs-parent="#Finance">
                 <a routerLink="/counter-sales" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Sales</span>
-                </a> 
-                <a routerLink="/cash-in" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Cash In</span>
                 </a>
-                <a routerLink="/cash-out" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Cash Out</span>
-                </a>
-                <a routerLink="/till-open" routerLinkActive="active">
+                <a routerLink="/sale-return-list" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Sales Return</span>
+                </a>  
+                <a routerLink="/till-open-list" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Till Open</span>
                 </a>
-                <a routerLink="/till-close" routerLinkActive="active">
+                <a routerLink="/cash-in-list" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Cash In</span>
+                </a>
+                <a routerLink="/cash-out-list" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Cash Out</span>
+                </a>
+                
+                <a routerLink="/till-close-list" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Till Close</span>
                 </a>
             </ul>
@@ -107,6 +111,19 @@
                 </a>
                 <a routerLink="/purch-return-list" routerLinkActive="active">
                     <i class="fa fa-helmet-un"></i><span>Purchase Return</span>
+                </a>
+            </ul>
+        </li>
+        <li *ngIf="userType == 2 || userType == 1" class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#Stocks" data-bs-toggle="collapse" href="#">
+                <i class="pi pi-shopping-cart"></i><span>STOCKS</span><i class="pi pi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="Stocks" class="nav-content collapse" data-bs-parent="#Finance">
+                <a routerLink="/stck-adj-list" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Stock Adjustment</span>
+                </a>
+                <a routerLink="/jurn-vuchr-list" routerLinkActive="active">
+                    <i class="fa fa-helmet-un"></i><span>Journal Voucher</span>
                 </a>
             </ul>
         </li>

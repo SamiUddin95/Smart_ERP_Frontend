@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../service/api.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-sale-till-open',
@@ -6,6 +9,31 @@ import { Component } from '@angular/core';
   styleUrls: ['./sale-till-open.component.css']
 })
 export class SaleTillOpenComponent {
+  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
+
+  urlId: any;
+  ngOnInit(): void {
+    this.urlId = this.route.snapshot.paramMap.get('id'); 
+    this.getCurrentUser();
+  }
+  createSaleTIll(){
+    this.formData.userId=this.currentUser.userId;
+    this.formData.id=this.urlId?this.urlId:0;
+    this.api.createSaleTillOpen(this.formData).subscribe(res=>{
+      if(res.id>0){
+        this.router.navigate(['till-open-list']);
+      } else
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: "There should be one sale open for a day!" });
+
+    })
+  }
+  currentUser:any={};
+  getCurrentUser(){
+    this.api.getUserById(Number(localStorage.getItem("loginId"))).subscribe(res=>{
+      this.currentUser=res[0];
+      this.formData.userId=this.currentUser.name;
+    })
+  }
   tillOpenForm:any={    five000: 5000,five000v: 0,    five000t: 0,    one0000: 1000,    one0000v: 0,    one0000t: 0,
     five00: 500,    five00v: 0,    five00t: 0,    one00: 100,
     one00v: 0,    one00t: 0,    five0: 50,
@@ -15,7 +43,7 @@ export class SaleTillOpenComponent {
     onet: 0};
     formData:any={};
     updateTotal() {
-      this.formData.amount = this.tillOpenForm.five000t + this.tillOpenForm.one0000t + 
+      this.formData.tillOpenAmount = this.tillOpenForm.five000t + this.tillOpenForm.one0000t + 
                              this.tillOpenForm.five00t + this.tillOpenForm.one00t + 
                              this.tillOpenForm.five0t + this.tillOpenForm.two0t + 
                              this.tillOpenForm.one0t + this.tillOpenForm.fivet + 
@@ -72,5 +100,7 @@ export class SaleTillOpenComponent {
     this.updateTotal();
   }
   add(){}
-  cancel(){}
+  cancel(){
+    this.router.navigate(['till-open-list']);
+  }
 }

@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import { ApiService } from '../service/api.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import * as FileSaver from 'file-saver';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-sale-cash-out',
@@ -6,6 +12,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./sale-cash-out.component.css']
 })
 export class SaleCashOutComponent {
+    constructor(private route: ActivatedRoute,private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  
   cashOutForm:any={
     five000: 5000,five000v: 0,    five000t: 0,    one0000: 1000,    one0000v: 0,    one0000t: 0,
     five00: 500,    five00v: 0,    five00t: 0,    one00: 100,
@@ -17,9 +25,32 @@ export class SaleCashOutComponent {
     one: 1,    onev: 0,
     onet: 0
   };
+  urlId: any;
+  ngOnInit(): void {
+    this.urlId = this.route.snapshot.paramMap.get('id'); 
+    this.getCurrentUser();
+  }
+  currentUser:any={};
+  getCurrentUser(){
+    this.api.getUserById(Number(localStorage.getItem("loginId"))).subscribe(res=>{
+      this.currentUser=res[0];
+      this.formData.userId=this.currentUser.name;
+    })
+  }
   formData:any={};
+  createCashIn(){
+    this.formData.userId=this.currentUser.userId;
+    this.formData.id=this.urlId?this.urlId:0;
+    this.api.createCashOut(this.formData).subscribe(res=>{
+      if(res.id>0){
+        this.router.navigate(['cash-out-list']);
+      } else
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: "There should be one cash out for a day!" });
+  
+    })
+  }
   updateTotal() {
-    this.formData.amount = this.cashOutForm.five000t + this.cashOutForm.one0000t + 
+    this.formData.cashOutAmount = this.cashOutForm.five000t + this.cashOutForm.one0000t + 
                            this.cashOutForm.five00t + this.cashOutForm.one00t + 
                            this.cashOutForm.five0t + this.cashOutForm.two0t + 
                            this.cashOutForm.one0t + this.cashOutForm.fivet + 
@@ -80,5 +111,7 @@ export class SaleCashOutComponent {
     this.updateTotal();
   }
   add(){}
-  cancel(){}
+  cancel(){
+    this.router.navigate(['cash-out-list']);
+  }
 }

@@ -15,35 +15,33 @@
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
+                            <label class="mb-0" for="DateFrom">Date From</label>
+                            <p-calendar [(ngModel)]="filter.dateFrom" [style]="{width:100}"
+                                dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="DateTo">Date To</label>
+                            <p-calendar [(ngModel)]="filter.dateTo" [style]="{width:100}"
+                                dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">User Name</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                                placeholder="Search By User Name">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Email</label>
+                            <label class="mb-0 mx-2" for="Name">Cash/Credit</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                                placeholder="Search By Cash/Credit">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Phone</label>
+                            <label class="mb-0 mx-2" for="Name">Invoice No</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
+                                placeholder="Search By Invoice No">
                              </div>
-                        <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Gender</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                            </div>
-                        <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Joining Date</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Helmet Code">
-                            </div>
                          <div class="col-md-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
                                 class="p-button-sm p-button-secondary float-right mx-1  mt-4"
@@ -74,22 +72,24 @@
                     </ng-template>    
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">Order Code <p-sortIcon field="code"></p-sortIcon></th>
-                                <th pSortableColumn="name">Gross Sale <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Discount <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="price">grandTotal<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">return<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Earned Points<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="code">Date <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">User Name <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Sale Invoice No.<p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="price">Sale Invoice Type<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Invoice Amount<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Cash Received<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Cash Return<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-user>
                             <tr>
-                                <td>{{user.id}}</td>
-                                <td>{{user.grossSale}}</td>
+                                <td>{{user.createdAt| date:'dd-MMM-yyyy:hh:mm'}}</td>
                                 <td>{{user.discount}}</td>
+                                <td>{{user.id}}</td>
+                                <td>{{user.invoiceType}}</td>
                                 <td>{{user.grandTotal}}</td>
-                                <td>{{user.return}}</td>
-                                <td>{{user.earnedPoints}}</td>
+                                <td>{{user.cashReceived}}</td>
+                                <td>{{user.cashBack}}</td>
                                 <!-- <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"
@@ -118,3 +118,4 @@
             (click)="cd.accept()"></button>
     </ng-template>
 </p-confirmDialog>
+<p-toast position="top-right"></p-toast>

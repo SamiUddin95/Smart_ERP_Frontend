@@ -18,6 +18,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CalendarModule } from 'primeng/calendar';
 import { ToastModule } from 'primeng/toast';
+import { CheckboxModule } from 'primeng/checkbox';
 import { ShopListComponent } from './shop-list/shop-list.component';
 import { ShopFormComponent } from './shop-form/shop-form.component';
 import { RentListComponent } from './rent-list/rent-list.component';
@@ -88,6 +89,15 @@ import { SalaryReportComponent } from './salary-report/salary-report.component';
 import { UsrGroupListComponent } from './usr-group-list/usr-group-list.component';
 import { TabViewModule } from 'primeng/tabview';
 import { UsrGroupFormComponent } from './usr-group-form/usr-group-form.component';
+import { SaleTillCloseListComponent } from './sale-till-close-list/sale-till-close-list.component';
+import { SaleReturnListComponent } from './sale-return-list/sale-return-list.component';
+import { SaleReturnFormComponent } from './sale-return-form/sale-return-form.component';
+import { SaleCashInListComponent } from './sale-cash-in-list/sale-cash-in-list.component';
+import { SaleCashOutListComponent } from './sale-cash-out-list/sale-cash-out-list.component';
+import { StckAdjListComponent } from './stck-adj-list/stck-adj-list.component';
+import { StckAdjFormComponent } from './stck-adj-form/stck-adj-form.component';
+import { JurnVuchrListComponent } from './jurn-vuchr-list/jurn-vuchr-list.component';
+import { JurnVuchrFormComponent } from './jurn-vuchr-form/jurn-vuchr-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -143,12 +153,21 @@ import { UsrGroupFormComponent } from './usr-group-form/usr-group-form.component
       SalaryReportComponent,
       UsrGroupListComponent,
       UsrGroupFormComponent,
+      SaleTillCloseListComponent,
+      SaleReturnListComponent,
+      SaleReturnFormComponent,
+      SaleCashInListComponent,
+      SaleCashOutListComponent,
+      StckAdjListComponent,
+      StckAdjFormComponent,
+      JurnVuchrListComponent,
+      JurnVuchrFormComponent,
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,
     BrowserModule,AnimateModule,BrowserAnimationsModule,ToastModule,ConfirmDialogModule,CalendarModule,
     ButtonModule,DividerModule,DialogModule,
-    AppRoutingModule,TabViewModule
+    AppRoutingModule,TabViewModule,CheckboxModule 
   ],
   providers: [ConfirmationService,MessageService,DatePipe],
   bootstrap: [AppComponent],

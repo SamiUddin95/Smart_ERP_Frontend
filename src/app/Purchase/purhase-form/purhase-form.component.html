@@ -1,8 +1,8 @@
 <div class="container-fluid mt-2" style="width:100%">
     <div class="flex justify-content-between p-2 ">
         <h3>PURCHASE</h3>
-        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" [disabled]="this.urlId==0" (click)="postPurchase()" class="mr-2"
-            pTooltip="PDF" tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" [disabled]="this.urlId==0"
+            (click)="postPurchase()" class="mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
     </div>
     <section>
         <div class="card">
@@ -58,7 +58,7 @@
                                                                     <div class="row">
                                                                         <div class="col-md-9">
                                                                             <div class="table-scroll-container">
-                                                                                <p-table #dt [scrollable]="true"
+                                                                                <p-table #tableRef #dt [scrollable]="true"
                                                                                     scrollHeight="600px"
                                                                                     responsiveLayout="scroll"
                                                                                     [value]="purcDtl"
@@ -134,14 +134,15 @@
 
                                                                                     <ng-template pTemplate="body"
                                                                                         let-user let-i="rowIndex">
-                                                                                        <!-- <tr (click)="tdChange(user)"> -->
-                                                                                            <tr >
-                                                                                            <td><input type="text"
-                                                                                                class="form-control form-control-sm w-100"
-                                                                                                placeholder="Enter Barcode Here"
-                                                                                                (keydown.enter)="onKey($event, user)"
-                                                                                                autofocus  
-                                                                                                [(ngModel)]="user.barcode"> 
+                                                                                        <tr #rowElement [id]="'row-' + i">
+                                                                                            <td
+                                                                                                [ngClass]="{'highlighted': user.barcode== searchedItemName}">
+                                                                                                <input type="text"
+                                                                                                    class="form-control form-control-sm w-100"
+                                                                                                    placeholder="Enter Barcode Here"
+                                                                                                    (keydown.enter)="onKey($event, user)"
+                                                                                                    autofocus
+                                                                                                    [(ngModel)]="user.barcode">
                                                                                             </td>
                                                                                             <td>
                                                                                                 <input type="text"
@@ -241,13 +242,14 @@
                                                                                                     [(ngModel)]="user.netSalePrice">
                                                                                             </td>
                                                                                             <td><input type="number"
-                                                                                                class="form-control form-control-sm"
-                                                                                                placeholder="Total sale Price"
-                                                                                                [(ngModel)]="user.totalSalePrice">
-                                                                                        </td>
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Total sale Price"
+                                                                                                    [(ngModel)]="user.totalSalePrice">
+                                                                                            </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Margin %"
+                                                                                                    (input)="marginPerentChange(user)"
                                                                                                     [(ngModel)]="user.marginPercent">
                                                                                             </td>
                                                                                             <td><button pButton pRipple
@@ -331,7 +333,7 @@
                                                                 Last Net Sale Price </th>
                                                             <th>
                                                                 Last Net Cost </th>
-    
+
                                                         </tr>
                                                     </ng-template>
                                                     <ng-template pTemplate="body" let-user let-i="rowIndex">
@@ -342,8 +344,7 @@
                                                                     [(ngModel)]="user.currentStock">
                                                             </td>
                                                             <td>
-                                                                <input type="text"
-                                                                    class="form-control form-control-sm"
+                                                                <input type="text" class="form-control form-control-sm"
                                                                     placeholder="Item Name"
                                                                     [(ngModel)]="user.salePrice">
                                                             </td>
@@ -367,23 +368,21 @@
                                                     class="p-button-sm p-button-success"> </button>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </p-accordionTab>
                             </p-accordion>
                         </div>
                     </div>
                 </div>
-            </div> 
-        </div> 
+            </div>
+        </div>
     </section>
 </div>
 <p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visible" [style]="{ width: '75rem' }">
     <div class="flex items-center gap-4 mb-4">
         <label for="username" class="font-semibold w-25">Searching Criteria</label>
-        <input type="text" class="w-75" (input)="searchChildItem(childItemSearch)"
-            class="form-control form-control-sm"
-            placeholder="Enter Barcode Here"
-            [(ngModel)]="childItemSearch">
+        <input type="text" class="w-75" (input)="searchChildItem(childItemSearch)" class="form-control form-control-sm"
+            placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
     </div>
     <div class="pad-wrapper">
         <div class="box">
@@ -391,8 +390,7 @@
                 <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
                     styleClass="p-datatable-sm p-datatable-gridlines"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
-                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
-                    [rows]="10"> 
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
                     <ng-template pTemplate="header">
                         <tr>
                             <th pSortableColumn="code">Bar Code <p-sortIcon field="code"></p-sortIcon></th>
@@ -411,10 +409,74 @@
                             <td>{{itm.cost}}</td>
                             <td>{{itm.salePrice}}</td>
                             <button style="margin-right: 3px" pButton pRipple label="Add"
-                                class="p-button-rounded p-button-info" (click)="addChildItemToPurchaseList(itm)"></button>
+                                class="p-button-rounded p-button-info"
+                                (click)="addChildItemToPurchaseList(itm)"></button>
                         </tr>
                     </ng-template>
                 </p-table>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog">
+    <div class="card shadow-3">
+        <div class="card-body">
+            <div class="grid">
+                <div class="row px-2 col-12">
+                    <div class="col-md-12">
+                        <input type="text" class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
+                            (input)="itemSearchFromDialog($event)" (keydown.enter)="onSearchDialogEnter($event)" [(ngModel)]="searchedItemName">
+                    </div>
+                    <div class="mt-2 col-md-12">
+                        <div class="mt-2 pad-wrapper">
+                            <div class="box">
+                                <div class="content">
+                                    <div class="row">
+                                        <p-table #dt responsiveLayout="scroll" [value]="itemDtl"
+                                            styleClass="p-datatable-sm p-datatable-gridlines"
+                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                            [rows]="10" [showCurrentPageReport]="true"
+                                            [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
+
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th pSortableColumn="code">No.
+                                                        <p-sortIcon field="code"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="name">BarCode
+                                                        <p-sortIcon field="name"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="price">Item Name
+                                                        <p-sortIcon field="price"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="price">Purchase Price
+                                                        <p-sortIcon field="price"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="price">Sale Price
+                                                        <p-sortIcon field="price"></p-sortIcon>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="body" let-itm let-i="rowIndex">
+                                                <tr>
+                                                    <td>{{ i + 1 }}</td>
+                                                    <td>{{itm.aliasName}}</td>
+                                                    <td>{{itm.itemName}}</td>
+                                                    <td>{{itm.purchasePrice}}</td>
+                                                    <td>{{itm.salePrice}}</td>
+                                                </tr>
+                                            </ng-template>
+
+                                        </p-table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

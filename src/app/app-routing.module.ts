@@ -67,6 +67,16 @@ import { AttendanceReportComponent } from './attendance-report/attendance-report
 import { SalaryReportComponent } from './salary-report/salary-report.component';
 import { UsrGroupListComponent } from './usr-group-list/usr-group-list.component';
 import { UsrGroupFormComponent } from './usr-group-form/usr-group-form.component';
+import { SaleTillOpenListComponent } from './sale-till-open-list/sale-till-open-list.component';
+import { SaleTillCloseListComponent } from './sale-till-close-list/sale-till-close-list.component';
+import { SaleReturnFormComponent } from './sale-return-form/sale-return-form.component';
+import { SaleReturnListComponent } from './sale-return-list/sale-return-list.component';
+import { SaleCashInListComponent } from './sale-cash-in-list/sale-cash-in-list.component';
+import { SaleCashOutListComponent } from './sale-cash-out-list/sale-cash-out-list.component';
+import { StckAdjListComponent } from './stck-adj-list/stck-adj-list.component';
+import { StckAdjFormComponent } from './stck-adj-form/stck-adj-form.component';
+import { JurnVuchrFormComponent } from './jurn-vuchr-form/jurn-vuchr-form.component';
+import { JurnVuchrListComponent } from './jurn-vuchr-list/jurn-vuchr-list.component';
 
 
 const routes: Routes = [
@@ -131,6 +141,12 @@ const routes: Routes = [
   { path: 'item', component: ItemComponent ,},
   { path: 'item-form', component: ItemFormComponent,},
   { path: 'item-form/:id', component: ItemFormComponent,},
+  { path: 'stck-adj-list', component: StckAdjListComponent ,},
+  { path: 'stck-adj-form', component: StckAdjFormComponent,},
+  { path: 'stck-adj-form/:id', component: StckAdjFormComponent,},
+  { path: 'jurn-vuchr-list', component: JurnVuchrListComponent ,},
+  { path: 'jurn-vuchr-form', component: JurnVuchrFormComponent,},
+  { path: 'jurn-vuchr-form/:id', component: JurnVuchrFormComponent,},
   { path: 'brands', component: BrandsComponent ,},
   { path: 'brands-form', component: BrandsFormComponent,},
   { path: 'brands-form/:id', component: BrandsFormComponent,},
@@ -146,10 +162,20 @@ const routes: Routes = [
   { path: 'counter-sales', component: SaleListComponent,},
   { path: 'counter-sales-form', component: SaleFormComponent,},
   { path: 'counter-sales-form/:id', component: SaleFormComponent,},
-  { path: 'cash-in', component: SaleCashInComponent ,},
-  { path: 'cash-out', component: SaleCashOutComponent ,},
-  { path: 'till-open', component: SaleTillOpenComponent ,},
-  { path: 'till-close', component: SaleTillCloseComponent ,},
+  { path: 'sale-return-list', component: SaleReturnListComponent,},
+  { path: 'sale-return-form', component: SaleReturnFormComponent,},
+  { path: 'sale-return-form/:id', component: SaleReturnFormComponent,},
+  { path: 'cash-in-form', component: SaleCashInComponent ,},
+  { path: 'cash-out-form', component: SaleCashOutComponent ,},
+  { path: 'cash-out-form/:id', component: SaleCashOutComponent ,},
+  { path: 'cash-in-list', component: SaleCashInListComponent ,},
+  { path: 'cash-out-list', component: SaleCashOutListComponent ,},
+  { path: 'till-open-form', component: SaleTillOpenComponent ,},
+  { path: 'till-open-form/:id', component: SaleTillOpenComponent ,},
+  { path: 'till-close-form', component: SaleTillCloseComponent ,},
+  { path: 'till-close-form/:id', component: SaleTillCloseComponent ,},
+  { path: 'till-open-list', component: SaleTillOpenListComponent ,},
+  { path: 'till-close-list', component: SaleTillCloseListComponent ,},
   { path:'rpt-basic-data',component:RptBasicDataComponent},
   { path:'rpt-purchase',component:RptPurchaseComponent},  
   { path:'rpt-purch-order',component:RptPurchaseOrderComponent}, 

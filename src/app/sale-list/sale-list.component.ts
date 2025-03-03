@@ -14,6 +14,7 @@ import autoTable from 'jspdf-autotable';
 export class SaleListComponent {
   constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 	title = 'BMSFrontEnd';
+	filter: any={};
 	saleDetails:any=[];
 	ngOnInit(): void {
 		this.getSalesDetail();
@@ -29,8 +30,18 @@ export class SaleListComponent {
 			this.partyPrice = res;
 		})
 	}
-	addUser() {
-		this.router.navigate(['counter-sales-form']);
+	chkTillOpen:any=[]
+	addUser() {  
+		this.api.getCheckTillOpen().subscribe((res: any)=>{
+			this.chkTillOpen=res;
+			if(res.msg=="please till open first!")
+				this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please Till Oprn First" });
+			else
+			{
+				this.router.navigate(['counter-sales-form']);
+
+			}
+		  }) 
 	}
 	cancel() {
 

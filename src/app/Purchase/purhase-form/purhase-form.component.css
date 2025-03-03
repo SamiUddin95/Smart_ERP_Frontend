@@ -10,3 +10,6 @@
   padding: 8px; /* Adjust padding as needed */
 }
 
+.highlighted {
+  background-color: yellow !important;
+}

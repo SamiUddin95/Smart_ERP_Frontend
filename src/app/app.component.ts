@@ -20,7 +20,9 @@ export class AppComponent {
   title = 'BMSFrontEnd';
   sidebarActive: boolean = false;
   currentDateTime: any = '';
-  ngOnInit(): void {
+  currentUser: any = '';
+  ngOnInit(): void { 
+    this.currentUser=localStorage.getItem("Name");
     this.openAside = true;
     setInterval(() => {
       this.currentDateTime = this.datePipe.transform(new Date(), 'EEE dd-MMMM-yyyy hh:mm:ss a');
@@ -31,9 +33,13 @@ export class AppComponent {
   loginData: any = {};
   login() {
     this.api.login(this.loginData).subscribe(res => {
-      if (res.msg!="Invalid Login Credentials" ) {
+      if (res.msg!="Invalid Login Credentials" ) { 
         const dataString = JSON.stringify(res.msg);
         localStorage.setItem("userType",dataString);
+        const dataString2=JSON.stringify(res.msg2);
+        localStorage.setItem("loginId",dataString2);
+        const dataString3=JSON.stringify(res.msg3);
+        localStorage.setItem("Name",dataString3);
         this.router.navigate(['dashboard']);
         this.isLoggedIn = true;
         this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Login successfully' });

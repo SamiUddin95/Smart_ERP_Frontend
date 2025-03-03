@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
@@ -158,4 +158,23 @@ export class PurcReturnFormComponent {
 		})
 
   }
+
+  itemSearchDialog: boolean = false;
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+      event.preventDefault();
+      this.itemSearchDialog=true;
+    }
+  }
+  itemDtl:any=[];
+  searchedItemName:string='';
+  itemSearchFromDialog(e:any){
+    debugger
+    this.api.getAllItemsdetailsFilterbased(e.target.value,'All',0,0).subscribe(res=>{
+      this.itemDtl=res;
+
+    })
+  }
+  
 }

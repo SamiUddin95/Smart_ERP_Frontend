@@ -1,0 +1,260 @@
+<div class="container-fluid mt-2" style="width:100%">
+    <div class="flex justify-content-between p-2 ">
+        <h3>STOCK ADJUSTMENT FORM</h3>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" [disabled]="this.urlId==0"
+            (click)="postPurchase()" class="mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+    </div>
+    <section>
+        <div class="card">
+            <div class="p-grid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-3">
+                            <p-accordion>
+                                <p-accordionTab header="Purchase" [selected]="true">
+                                    <div class="card shadow-3">
+                                        <div class="card-header">Add Stock Adjustment</div>
+                                        <div class="card-body">
+                                            <div class="grid">
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>DateTime</label>
+                                                        <p-calendar [(ngModel)]="formData.dateTime"
+                                                            [style]="{width:100}" dateFormat="yy-mm-dd"></p-calendar>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Creation Date</label>
+                                                        <p-calendar [(ngModel)]="formData.creationDate"
+                                                            [style]="{width:100}" dateFormat="yy-mm-dd"></p-calendar>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Posting Date</label>
+                                                        <p-calendar [(ngModel)]="formData.postingDate"
+                                                            [style]="{width:100}" dateFormat="yy-mm-dd"></p-calendar>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>User</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Remarks" [(ngModel)]="formData.userId">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Location</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Inv" [(ngModel)]="formData.location">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Reference No.</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Remarks" [(ngModel)]="formData.referenceNo">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Description</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Remarks" [(ngModel)]="formData.description">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Created By</label>
+                                                            <input type="text" class="form-control col-md-12"
+                                                            placeholder="Remarks" [(ngModel)]="formData.createdBy">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Posted By</label>
+                                                            <input type="text" class="form-control col-md-12"
+                                                            placeholder="Remarks" [(ngModel)]="formData.postedBy">
+                                                    </div>
+                                                    <div class="col-md-3 mt-4 offset-9 text-right col-sm-3">
+                                                        <button pButton pRipple type="button" icon="pi pi-save"
+                                                            (click)="AddData()" label="Add"
+                                                            class="p-button-sm p-button-success"> </button>
+                                                        <button pButton pRipple type="button" icon="pi pi-trash"
+                                                            (click)="RemoveData()" label="Remove"
+                                                            class="ml-2 p-button-sm p-button-danger"> </button>
+                                                    </div>
+                                                    <div class="col-md-12 mt-4">
+                                                        <div class="pad-wrapper">
+                                                            <div class="box">
+                                                                <div class="content">
+                                                                    <div class="row">
+                                                                        <div class="col-md-9">
+                                                                            <div class="table-scroll-container">
+                                                                                <p-table #dt [scrollable]="true"
+                                                                                    scrollHeight="600px"
+                                                                                    responsiveLayout="scroll"
+                                                                                    [value]="jurnalVuchrDtl"
+                                                                                    [tableStyle]="{ 'width': '250rem', 'min-width': '100rem' }"
+                                                                                    styleClass="p-datatable-sm p-datatable-gridlines"
+                                                                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                                                                    [rows]="16"
+                                                                                    [showCurrentPageReport]="true"
+                                                                                    [rowsPerPageOptions]="[10, 25, 50]"
+                                                                                    [paginator]="true">
+
+                                                                                    <ng-template pTemplate="header">
+                                                                                        <tr>
+                                                                                            <th>No </th>
+                                                                                            <th>Debit Account Code </th>
+                                                                                            <th>Debit Account Name </th>
+                                                                                            <th>Credit Account Code</th>
+                                                                                            <th>Credit Account Name</th>
+                                                                                            <th> Reference No</th>
+                                                                                            <th> Description  </th>
+                                                                                            <th>  Amount </th>
+                                                                                            <th> Action </th>
+                                                                                        </tr>
+                                                                                    </ng-template>
+
+                                                                                    <ng-template pTemplate="body"
+                                                                                        let-user let-i="rowIndex">
+                                                                                        <tr>
+                                                                                            <td>{{i + 1}}</td>
+                                                                                            <td>
+                                                                                                <input type="text"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Item Name"
+                                                                                                    [(ngModel)]="user.debitAccCode">
+                                                                                            </td>
+                                                                                            <td><input type="text"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Quantity"
+                                                                                                    [(ngModel)]="user.debitAccName">
+                                                                                            </td>
+                                                                                            <td><input type="text"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Bonus Qty" 
+                                                                                                    [(ngModel)]="user.creditAccCode">
+                                                                                            </td>
+                                                                                            <td><input type="text"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Net Qty"
+                                                                                                    [(ngModel)]="user.creditAccName">
+                                                                                            </td>
+                                                                                            <td><input type="text"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Purchase Price"
+                                                                                                    [(ngModel)]="user.refNo" >
+                                                                                            </td>
+                                                                                            <td><input type="text"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Sub Total" 
+                                                                                                    [(ngModel)]="user.description">
+                                                                                            </td>
+                                                                                            <td><input type="number"
+                                                                                                    class="form-control form-control-sm"
+                                                                                                    placeholder="Disc%"
+                                                                                                    (input)="amountChange(user)"
+                                                                                                    [(ngModel)]="user.amount">
+                                                                                            </td>
+                                                                                            <td><button pButton pRipple
+                                                                                                    type="button"
+                                                                                                    icon="pi pi-trash"
+                                                                                                    (click)="RemoveCol(i)"
+                                                                                                    class="p-button-sm p-button-danger"></button>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </ng-template>
+                                                                                </p-table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <div class="border summary-table">
+                                                                                <h5 class="text-center p-1">Journal
+                                                                                    Voucher
+                                                                                    Summary</h5>
+                                                                                <p-table #dt2 [scrollable]="true"
+                                                                                    scrollHeight="600px"
+                                                                                    responsiveLayout="scroll"
+                                                                                    styleClass="p-datatable-sm p-datatable-gridlines">
+
+                                                                                    <ng-template pTemplate="header">
+                                                                                        <tr>
+                                                                                            <th>Account Balance</th>
+                                                                                            <th>{{accountBalance}}</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>Total Amount</th>
+                                                                                            <th>{{formData.amount}}</th>
+                                                                                        </tr>
+                                                                                    </ng-template>
+                                                                                </p-table>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
+                                        <div>
+                                            <button style="margin-right: 3px" pButton pRipple type="button"
+                                                    icon="pi pi-arrow-left" (click)="cancel()" label="Back"
+                                                    class="p-button-sm p-button-danger"> </button>
+                                                <button pButton pRipple type="button" icon="pi pi-save"
+                                                    (click)="addJurnlVuchr()" label="Save"
+                                                    class="p-button-sm p-button-success"> </button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visible" [style]="{ width: '75rem' }">
+    <div class="flex items-center gap-4 mb-4">
+        <label for="username" class="font-semibold w-25">Searching Criteria</label>
+        <input type="text" class="w-75" (input)="searchChildItem(childItemSearch)" class="form-control form-control-sm"
+            placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
+    </div>
+    <div class="pad-wrapper">
+        <div class="box">
+            <div class="content">
+                <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
+                    styleClass="p-datatable-sm p-datatable-gridlines"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="code">Bar Code <p-sortIcon field="code"></p-sortIcon></th>
+                            <th pSortableColumn="name">Child Name <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="category">Purchase Price <p-sortIcon field="category"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="quantity">Sale Price <p-sortIcon field="quantity"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-itm>
+                        <tr>
+                            <td>{{itm.barCode}}</td>
+                            <td>{{itm.itemName}}</td>
+                            <td>{{itm.cost}}</td>
+                            <td>{{itm.salePrice}}</td>
+                            <button style="margin-right: 3px" pButton pRipple label="Add"
+                                class="p-button-rounded p-button-info"
+                                (click)="addChildItemToPurchaseList(itm)"></button>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<p-toast position="top-right"></p-toast>

@@ -38,9 +38,9 @@ export class ApiService {
 		return this.app.get('deleteGroupById?id=' + id, id);
 	}
 	//Account
-	getAllAccountFilterbased(Name:string,accNo:number,groupId:number,categoryId:number) {
-		return this.app.get('getAllAccountFilterbased?Name='+Name+'&accNo='+accNo+'&groupId='+
-			groupId+'&categoryId='+categoryId);
+	getAllAccountFilterbased(Name: string, accNo: number, groupId: number, categoryId: number) {
+		return this.app.get('getAllAccountFilterbased?Name=' + Name + '&accNo=' + accNo + '&groupId=' +
+			groupId + '&categoryId=' + categoryId);
 	}
 
 
@@ -49,7 +49,7 @@ export class ApiService {
 	}
 	getAccountById(id: any) {
 		return this.app.get('getAccountById?id=' + id, id);
-	} 
+	}
 	createAccount(obj: any) {
 		return this.app.post('createAccount', obj);
 	}
@@ -58,8 +58,8 @@ export class ApiService {
 	}
 
 	//AccountCategory
-	getAllAccountCategoryFilterbased(Name:string,accType:string, manualCode:string, priority:string) {
-		return this.app.get('getAllAccountCategoryFilterbased?Name='+Name+'&accType='+accType+'&manualCode='+manualCode+'&priority='+priority);
+	getAllAccountCategoryFilterbased(Name: string, accType: string, manualCode: string, priority: string) {
+		return this.app.get('getAllAccountCategoryFilterbased?Name=' + Name + '&accType=' + accType + '&manualCode=' + manualCode + '&priority=' + priority);
 	}
 
 	getAllAccountCat() {
@@ -70,17 +70,17 @@ export class ApiService {
 	}
 	getAccountCatById(id: any) {
 		return this.app.get('getAccountCategoryById?id=' + id, id);
-	} 
+	}
 	deleteAccountCatById(id: any) {
 		return this.app.get('deleteAccountCategoryById?id=' + id, id);
-	} 
+	}
 	//AccountType
 	getAllAccountType() {
 		return this.app.get('getAllAccountType');
 	}
 	//AccountGroup
-	getAllAccountGroupFilterbased(Name:string,accType:number, manualCode:string, priority:string) {
-		return this.app.get('getAllAccountGroupFilterbased?Name='+Name+'&accType='+accType+'&manualCode='+manualCode+'&priority='+priority);
+	getAllAccountGroupFilterbased(Name: string, accType: number, manualCode: string, priority: string) {
+		return this.app.get('getAllAccountGroupFilterbased?Name=' + Name + '&accType=' + accType + '&manualCode=' + manualCode + '&priority=' + priority);
 	}
 
 	getAllAccountGroup() {
@@ -88,7 +88,7 @@ export class ApiService {
 	}
 
 	//Sales Man
-		
+
 	getAllSalesMan() {
 		return this.app.get('getAllSalesMan');
 	}
@@ -134,13 +134,13 @@ export class ApiService {
 		return this.app.post('createPurchaseReturn', obj);
 	}
 	//Party
-		
+
 	getAllParty() {
 		return this.app.get('getAllParty');
 	}
-	getAllPartyFilterBased(partyName:string,mobileNo:string,telephoneNo:string,nicNo:string,contactPerson:string) {
-		return this.app.get('getAllPartyFilterBased?partyName='+partyName+'&mobileNo='+mobileNo+'&telephoneNo='+
-			telephoneNo+'&nicNo='+nicNo+'&contactPerson='+contactPerson);
+	getAllPartyFilterBased(partyName: string, mobileNo: string, telephoneNo: string, nicNo: string, contactPerson: string) {
+		return this.app.get('getAllPartyFilterBased?partyName=' + partyName + '&mobileNo=' + mobileNo + '&telephoneNo=' +
+			telephoneNo + '&nicNo=' + nicNo + '&contactPerson=' + contactPerson);
 	}
 	getPartyById(id: any) {
 		return this.app.get('getRPartyById?id=' + id, id);
@@ -174,7 +174,7 @@ export class ApiService {
 	}
 	getAccountGroupById(id: any) {
 		return this.app.get('getAccGroupById?id=' + id, id);
-	} 
+	}
 	createAccountGroup(obj: any) {
 		return this.app.post('createAccGroup', obj);
 	}
@@ -183,7 +183,7 @@ export class ApiService {
 	}
 	deleteAccountGroupById(id: any) {
 		return this.app.get('deleteAccGroupById?id=' + id, id);
-	} 
+	}
 	//Shop
 
 	getAllShop() {
@@ -225,34 +225,34 @@ export class ApiService {
 	getIncomeReport(obj: any) {
 		return this.app.post('getIncomeReport', obj);
 	}
-	getBasicDataReport(dateFrom:string,dateTo:string,brandId:number,
-		categoryId:number,classId:number,name:string) {
-		return this.app.get('getBasicDataReport?datefrom='+dateFrom+'&dateTo='+dateTo+'&brandId='+brandId+
-			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
+	getBasicDataReport(dateFrom: string, dateTo: string, brandId: number,
+		categoryId: number, classId: number, name: string) {
+		return this.app.get('getBasicDataReport?datefrom=' + dateFrom + '&dateTo=' + dateTo + '&brandId=' + brandId +
+			'&categoryId=' + categoryId + '&classId=' + classId + '&name=' + name
 		);
 	}
-	getUserReport(dateFrom:string,dateTo:string,joiningDate:number,
-		userGroup:number,name:string) {
-		return this.app.get('getUserReport?datefrom='+dateFrom+'&dateTo='+dateTo+'&joiningDate='+joiningDate+
-			'&userGroup='+userGroup+'&name='+name
+	getUserReport(dateFrom: string, dateTo: string, joiningDate: number,
+		userGroup: number, name: string) {
+		return this.app.get('getUserReport?datefrom=' + dateFrom + '&dateTo=' + dateTo + '&joiningDate=' + joiningDate +
+			'&userGroup=' + userGroup + '&name=' + name
 		);
 	}
-	getPurchaseReport(dateFrom:string,dateTo:string,brandId:number,
-		categoryId:number,classId:number,name:string) {
-		return this.app.get('getPurchaseReport?dateFrom='+dateFrom+'&dateTo='+dateTo+'&brandId='+brandId+
-			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
+	getPurchaseReport(dateFrom: string, dateTo: string, brandId: number,
+		categoryId: number, classId: number, name: string) {
+		return this.app.get('getPurchaseReport?dateFrom=' + dateFrom + '&dateTo=' + dateTo + '&brandId=' + brandId +
+			'&categoryId=' + categoryId + '&classId=' + classId + '&name=' + name
 		);
 	}
-	getPurchaseOrderReport(dateFrom:string,dateTo:string,vendorId:number,
-		categoryId:number,classId:number,name:string) {
-		return this.app.get('getPurchaseOrderReport?datefrom='+dateFrom+'&dateTo='+dateTo+'&vendorId='+vendorId+
-			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
+	getPurchaseOrderReport(dateFrom: string, dateTo: string, vendorId: number,
+		categoryId: number, classId: number, name: string) {
+		return this.app.get('getPurchaseOrderReport?datefrom=' + dateFrom + '&dateTo=' + dateTo + '&vendorId=' + vendorId +
+			'&categoryId=' + categoryId + '&classId=' + classId + '&name=' + name
 		);
 	}
-	getPurchaseReturnReport(dateFrom:string,dateTo:string,vendorId:number,
-		categoryId:number,classId:number,name:string) {
-		return this.app.get('getPurchaseReturnReport?datefrom='+dateFrom+'&dateTo='+dateTo+'&vendorId='+vendorId+
-			'&categoryId='+categoryId+'&classId='+classId+'&name='+name
+	getPurchaseReturnReport(dateFrom: string, dateTo: string, vendorId: number,
+		categoryId: number, classId: number, name: string) {
+		return this.app.get('getPurchaseReturnReport?datefrom=' + dateFrom + '&dateTo=' + dateTo + '&vendorId=' + vendorId +
+			'&categoryId=' + categoryId + '&classId=' + classId + '&name=' + name
 		);
 	}
 	deleteRentbyId(id: any) {
@@ -261,7 +261,7 @@ export class ApiService {
 	deleteShopById(id: any) {
 		return this.app.get('deleteShopById?id=' + id, id);
 	}
-	createCustomerdetails(obj:any){
+	createCustomerdetails(obj: any) {
 		return this.app.post('createCustomerdetails', obj);
 	}
 	getAllCustomers() {
@@ -273,7 +273,7 @@ export class ApiService {
 	deleteCustomerbyId(id: any) {
 		return this.app.get('deleteCustomerdetailsById?id=' + id, id);
 	}
-	createInvoicedetails(obj:any){
+	createInvoicedetails(obj: any) {
 		return this.app.post('createInvoicedetails', obj);
 	}
 	getInvoicedetailsById(id: any) {
@@ -288,7 +288,7 @@ export class ApiService {
 	getReceivedPaymentsById(id: any) {
 		return this.app.get('getReceivedPaymentsById?id=' + id, id);
 	}
-	createReceivedPayments(obj:any){
+	createReceivedPayments(obj: any) {
 		return this.app.post('createReceivedPayments', obj);
 	}
 	deleteReceivedPaymentsById(id: any) {
@@ -308,20 +308,20 @@ export class ApiService {
 	getAllPaymentModes() {
 		return this.app.get('getAllPaymentModes');
 	}
-	getbyinvoicedetailsbycustomer(cust:String) {
-		return this.app.get('getbyinvoicedetailsbycustomer?cust='+cust);
+	getbyinvoicedetailsbycustomer(cust: String) {
+		return this.app.get('getbyinvoicedetailsbycustomer?cust=' + cust);
 	}
 
-	getInvoicedetailsByCustomerId(id:number) {
-		return this.app.get('getInvoicedetailsByCustomerId?id='+id);
+	getInvoicedetailsByCustomerId(id: number) {
+		return this.app.get('getInvoicedetailsByCustomerId?id=' + id);
 	}
-	getCustomerLedgerByCustomerId(id:number) {
-		return this.app.get('getCustomerLedgerByCustomerId?id='+id);
+	getCustomerLedgerByCustomerId(id: number) {
+		return this.app.get('getCustomerLedgerByCustomerId?id=' + id);
 	}
-	getAllPurhasedetails(dateFrom:string,dateTo:string,postedDate:string,postedBy:number,partyId:number,
-		invNo:number) {
-		return this.app.get('getAllPurchases?dateFrom='+dateFrom+'&dateTo='+dateTo+
-			'&postedDate='+postedDate+'&postedBy='+postedBy+'&partyId='+partyId+'&invNo='+invNo);
+	getAllPurhasedetails(dateFrom: string, dateTo: string, postedDate: string, postedBy: number, partyId: number,
+		invNo: number) {
+		return this.app.get('getAllPurchases?dateFrom=' + dateFrom + '&dateTo=' + dateTo +
+			'&postedDate=' + postedDate + '&postedBy=' + postedBy + '&partyId=' + partyId + '&invNo=' + invNo);
 	}
 	deletePurhaseById(id: any) {
 		return this.app.get('deletePurchaseById?id=' + id, id);
@@ -329,9 +329,39 @@ export class ApiService {
 	createPurchase(obj: any) {
 		return this.app.post('createPurchase', obj);
 	}
-	postPurchase(barCodes: any,currentStock:any,lastNetSalePrice:any,lastNetCost:any,saleDisc:any,netSalePrice:any) {
-		return this.app.get('postPurchase?barCodes='+barCodes+"&currentStock="+currentStock+
-			"&lastNetSalePrice="+lastNetSalePrice+"&lastNetCost="+lastNetCost+'&saleDisc='+saleDisc+'&netSaleePrice='+netSalePrice);
+	postPurchase(barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+		return this.app.get('postPurchase?barCodes=' + barCodes + "&currentStock=" + currentStock +
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + '&netSaleePrice=' + netSalePrice);
+	}
+	//Stock Adjustment
+	// getAllStockAdjustment(dateFrom:string,dateTo:string,postedDate:string,postedBy:number,partyId:number,
+	// 	invNo:number) {
+	// 	return this.app.get('getAllPurchases?dateFrom='+dateFrom+'&dateTo='+dateTo+
+	// 		'&postedDate='+postedDate+'&postedBy='+postedBy+'&partyId='+partyId+'&invNo='+invNo);
+	// }
+	getAllStockAdjustment() {
+		return this.app.get('getAllStockAdj');
+	}
+	deleteStockAdjustmentById(id: any) {
+		return this.app.get('deletePurchaseById?id=' + id, id);
+	}
+	createStockAdjustment(obj: any) {
+		return this.app.post('createStockAdj', obj);
+	}
+	// postPurchase(barCodes: any,currentStock:any,lastNetSalePrice:any,lastNetCost:any,saleDisc:any,netSalePrice:any) {
+	// 	return this.app.get('postPurchase?barCodes='+barCodes+"&currentStock="+currentStock+
+	// 		"&lastNetSalePrice="+lastNetSalePrice+"&lastNetCost="+lastNetCost+'&saleDisc='+saleDisc+'&netSaleePrice='+netSalePrice);
+	// }
+
+	//Journal Voucher
+	getAllJournalVoucher() {
+		return this.app.get('getAllJournalVoucher');
+	}
+	deleteJournalVoucherById(id: any) {
+		return this.app.get('deleteJournalVoucherById?id=' + id, id);
+	}
+	createJournalVoucher(obj: any) {
+		return this.app.post('createJournalVoucher', obj);
 	}
 	//Brands
 	getAllBrandsdetails() {
@@ -348,15 +378,15 @@ export class ApiService {
 	}
 	getBrandsById(id: any) {
 		return this.app.get('getBrandById?id=' + id, id);
-	} 
+	}
 
-	getAllBrandsdetailsFilterbased(brandName:string) {
-		return this.app.get('getAllBrandsdetailsFilterbased?brandName='+brandName);
+	getAllBrandsdetailsFilterbased(brandName: string) {
+		return this.app.get('getAllBrandsdetailsFilterbased?brandName=' + brandName);
 	}
 	//Category
 
-	getAllCategorydetailsFilterbased(Name:string, description:string) {
-		return this.app.get('getAllCategorydetailsFilterbased?Name='+Name+'&description='+description);
+	getAllCategorydetailsFilterbased(Name: string, description: string) {
+		return this.app.get('getAllCategorydetailsFilterbased?Name=' + Name + '&description=' + description);
 	}
 	getAllCategorydetails() {
 		return this.app.get('getAllCategory');
@@ -371,7 +401,7 @@ export class ApiService {
 	}
 	getCategoryById(id: any) {
 		return this.app.get('getCategoryById?id=' + id, id);
-	} 
+	}
 	getAllDepartment() {
 		return this.app.get('getDepartment');
 	}
@@ -381,8 +411,8 @@ export class ApiService {
 	}
 
 	//Class
-	getAllClassdetailsFilterbased(className:string) {
-		return this.app.get('getAllClassdetailsFilterbased?className='+className);
+	getAllClassdetailsFilterbased(className: string) {
+		return this.app.get('getAllClassdetailsFilterbased?className=' + className);
 	}
 
 	getAllClassdetails() {
@@ -393,26 +423,25 @@ export class ApiService {
 		return this.app.get('deleteClassById?id=' + id, id);
 	}
 	createClass(obj: any) {
-		debugger
 		return this.app.post('createClass', obj);
 	}
 	getClassById(id: any) {
 		return this.app.get('getClassById?id=' + id, id);
-	} 
-    //Item
+	}
+	//Item
 	getAllItemsdetails() {
 		return this.app.get('getAllItems');
 	}
 
-	getAllItemsdetailsFilterbased(itemName:string,aliasName:string,purchasePrice:number,salePrice:number) {
-		return this.app.get('getAllItemsdetailsFilterbased?itemName='+itemName+'&aliasName='+aliasName+'&purchasePrice='+
-			purchasePrice+'&salePrice='+salePrice);
+	getAllItemsdetailsFilterbased(itemName: string, aliasName: string, purchasePrice: number, salePrice: number) {
+		return this.app.get('getAllItemsdetailsFilterbased?itemName=' + itemName + '&aliasName=' + aliasName + '&purchasePrice=' +
+			purchasePrice + '&salePrice=' + salePrice);
 	}
 
-	getItemDetailbyBarCode(barCode:string){
+	getItemDetailbyBarCode(barCode: string) {
 		return this.app.get('getItemDetailbyBarCode?barCode=' + barCode);
 	}
-	getAllItemDetailbyBarCode(barCode:string){
+	getAllItemDetailbyBarCode(barCode: string) {
 		return this.app.get('getAllItemDetailbyBarCode?barCode=' + barCode);
 	}
 	deleteItemsById(id: any) {
@@ -427,10 +456,10 @@ export class ApiService {
 	}
 	getItemsById(id: any) {
 		return this.app.get('getItemById?id=' + id, id);
-	} 
+	}
 	//Manufactutrer
-	getAllManufacturedetailsFilterbased(name:string, email:string) {
-		return this.app.get('getAllManufacturedetailsFilterbased?name='+name+'&email='+email);
+	getAllManufacturedetailsFilterbased(name: string, email: string) {
+		return this.app.get('getAllManufacturedetailsFilterbased?name=' + name + '&email=' + email);
 	}
 
 	getAllIManufacturerdetails() {
@@ -445,12 +474,54 @@ export class ApiService {
 	}
 	getManufactureById(id: any) {
 		return this.app.get('getManufacturerById?id=' + id, id);
-	} 
+	}
 	//Sales
 	createCounterSale(obj: any) {
 		return this.app.post('createCounterSale', obj);
 	}
 	getAllCounterSales() {
 		return this.app.get('getAllCounterSales');
-	} 
+	}
+	createSaleReturn(obj: any) {
+		return this.app.post('createSaleReturn', obj);
+	}
+	getAllSaleReturn() {
+		return this.app.get('getAllSaleReturn');
+	}
+	createSaleTillOpen(obj: any) {
+		return this.app.post('createSaleTIllOpen', obj);
+	}
+	getAllTillOpen() {
+		return this.app.get('getAllTillOpen');
+	}
+	getCheckTillOpen() {
+		return this.app.get('getCheckTillOpen');
+	}
+	getTillOpenById(id: any) {
+		return this.app.get('getTillOpenById?id=' + id, id);
+	}
+	createCashIn(obj: any) {
+		return this.app.post('createCashIn', obj);
+	}
+	getAllCashIn() {
+		return this.app.get('getAllCashIn');
+	}
+	getCheckCashIn() {
+		return this.app.get('getCheckCashIn');
+	}
+	getCashInById(id: any) {
+		return this.app.get('getCashInById?id=' + id, id);
+	}
+	createSaleTillClose(obj: any) {
+		return this.app.post('createSaleTIllClose', obj);
+	}
+	getAllTillClose() {
+		return this.app.get('getAllTillClose');
+	}
+	createCashOut(obj: any) {
+		return this.app.post('createCashOut', obj);
+	}
+	getAllCashOut() {
+		return this.app.get('getAllCashOut');
+	}
 }

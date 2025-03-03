@@ -7,28 +7,15 @@
                 <div class="card-body">
                     <div class="row mt-2">
                         <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Cash In S.no.</label>
+                           <label class="mt-1 font-bold text-success">Cash In No.</label>
                         </div>
                         <div class="col-md-9">
                             <input type="text"
                                    class="form-control form-control-sm"
                                    placeholder="Enter Cash In S.no."
-                                   [disabled]="true"
-                                   [(ngModel)]="formData.sNo">
+                                   [(ngModel)]="formData.tillNo">
                         </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Till Name</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Till Name"
-                                   [disabled]="true"
-                                   [(ngModel)]="formData.tillName">
-                        </div>
-                    </div> 
+                    </div>  
                     <div class="row mt-2">
                         <div class="col-md-3">
                            <label class="mt-1 font-bold text-success">User</label>
@@ -36,47 +23,10 @@
                         <div class="col-md-9">
                             <input type="text"
                                    class="form-control form-control-sm"
-                                   placeholder="Enter User"
-                                   [disabled]="true"
-                                   [(ngModel)]="formData.user">
+                                   placeholder="Enter User" 
+                                   [(ngModel)]="formData.userId">
                         </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Shift</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Shift"
-                                   [disabled]="true"
-                                   [(ngModel)]="formData.shift">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Branch</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Branch"
-                                   [disabled]="true"
-                                   [(ngModel)]="formData.branch">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Company</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Company"
-                                   [disabled]="true"
-                                   [(ngModel)]="formData.company">
-                        </div>
-                    </div> 
+                    </div>   
                     <div class="row mt-2">
                         <div class="col-md-3">
                            <label class="mt-1 font-bold text-success">Amount</label>
@@ -86,7 +36,7 @@
                                    class="form-control form-control-sm"
                                    placeholder="Enter Amount"
                                    [disabled]="false"
-                                   [(ngModel)]="formData.amount">
+                                   [(ngModel)]="formData.cashInAmount">
                         </div>
                     </div> 
                     <div class="row mt-2">
@@ -409,12 +359,11 @@
         <div class="col-md-12">
             <div class="card shadow-3 ">
                 <div class="card-body">
+                    <button pButton pRipple type="button" icon="pi pi-save" (click)="createCashIn()"
+                    label="Save" class="mr-3 float-end p-button-sm p-button-success"> </button>
                     <button style="margin-right: 3px" pButton pRipple type="button"
                     icon="pi pi-arrow-left" (click)="cancel()" label="Back"
                     class="float-end p-button-sm p-button-danger"> </button>
-                    <button pButton pRipple type="button" icon="pi pi-save" (click)="add()"
-                    label="Save" class="mr-3 float-end p-button-sm p-button-success"> </button>
-            
                 </div>
             </div>
         </div>
