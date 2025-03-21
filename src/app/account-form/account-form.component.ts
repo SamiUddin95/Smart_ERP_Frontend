@@ -14,6 +14,7 @@ export class AccountFormComponent {
   userTypes:any=[];
   genders:any=[{label:'Male',value:'Male'},{label:'Female',value:'Female'}];
   urlId: any;
+  boolstatus: boolean = false; 
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id'); 
     this.getAccountType();
@@ -57,6 +58,18 @@ export class AccountFormComponent {
 		})
 
   }
+  
+  statusOptions = [
+    { label: 'None', value: '' },        // Optional: for no selection
+    { label: 'Active', value: 'Active' },
+    { label: 'Restricted', value: 'Restricted' }
+  ];
+
+  // Optional: Handle status change if needed
+  onStatusChange(value: string) {
+    this.formData.status = value;
+  }
+
   accType:any=[]
   getAccountType(){
     this.api.getAllAccountType().subscribe(res=>{

@@ -19,10 +19,12 @@ export class CategoryComponent {
 
   getCategoryList() {
 		this.api.getAllCategorydetailsFilterbased(this.filter.name?this.filter.name:'All',
-      this.filter.description?this.filter.description:'All').subscribe((res: any) => {
+      this.filter.description?this.filter.description:'All',
+      this.filter.sno?this.filter.sno:0).subscribe((res: any) => {
 			this.category = res.map((ele: any) => {
 			  return {
         id: ele.id,
+        sno: ele.sno,
         name: ele.name,
         isActive: ele.isActive,
         priority: ele.priority,

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 import { MessageService } from 'primeng/api';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-category-form',
@@ -10,11 +11,11 @@ import { MessageService } from 'primeng/api';
 })
 export class CategoryFormComponent {
 
-  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
+  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,private http: HttpClient,) { }
   
   formData: any = {  };
   urlId: any;
-
+  selectedFile: File | null = null;
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.getDepartment();
@@ -32,6 +33,12 @@ export class CategoryFormComponent {
     this.router.navigate(['category']);
   }
 
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+    }
+  }
   addCategory(){
     const requiredFields = [
       // { key: 'departmentId', message: 'Department is required.' },
@@ -46,6 +53,7 @@ export class CategoryFormComponent {
           }
       }
         this.urlId?this.formData.id=this.urlId:undefined;
+
         this.api.createCategory(this.formData).subscribe(res=>{
           this.router.navigate(['category']);
           this.messageService.add({ severity: 'success', summary: 'Success', detail: "Category Added Successfully" });	

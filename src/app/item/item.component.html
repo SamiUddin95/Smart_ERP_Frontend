@@ -10,9 +10,13 @@
     </div>
     <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
         <p-accordion>
-            <p-accordionTab header="Search">
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">SNO</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="SNO" [(ngModel)]="filter.sno" (input)="getItemList()">
+                        </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Alias Name</label>
                             <input type="text" class="form-control p-inputtext p-component txt"
@@ -69,7 +73,6 @@
                         </div>
                     </div>
                 </div>
-            </p-accordionTab>
         </p-accordion>
         <p-divider></p-divider>
         <div class="pad-wrapper">
@@ -88,6 +91,7 @@
                     </ng-template>     -->
                         <ng-template pTemplate="header">
                             <tr>
+                                <th pSortableColumn="code">SNO <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="code">Alias Name <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">Item Name <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="category">Purchase Price <p-sortIcon field="category"></p-sortIcon>
@@ -104,6 +108,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-itm>
                             <tr>
+                                <td>{{itm.sno}}</td>
                                 <td>{{itm.aliasName}}</td>
                                 <td>{{itm.itemName}}</td>
                                 <td>{{itm.purchasePrice}}</td>

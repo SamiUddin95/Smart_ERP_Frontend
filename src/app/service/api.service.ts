@@ -382,13 +382,13 @@ export class ApiService {
 		return this.app.get('getBrandById?id=' + id, id);
 	}
 
-	getAllBrandsdetailsFilterbased(brandName: string) {
-		return this.app.get('getAllBrandsdetailsFilterbased?brandName=' + brandName);
+	getAllBrandsdetailsFilterbased(brandName: string, sno:any, remarks: string) {
+		return this.app.get('getAllBrandsdetailsFilterbased?brandName=' + brandName + '&sno=' + sno + '&remarks=' + remarks);
 	}
 	//Category
 
-	getAllCategorydetailsFilterbased(Name: string, description: string) {
-		return this.app.get('getAllCategorydetailsFilterbased?Name=' + Name + '&description=' + description);
+	getAllCategorydetailsFilterbased(Name: string, description: string, sno:any) {
+		return this.app.get('getAllCategorydetailsFilterbased?Name=' + Name + '&description=' + description + '&sno=' + sno);
 	}
 	getAllCategorydetails() {
 		return this.app.get('getAllCategory');
@@ -413,8 +413,8 @@ export class ApiService {
 	}
 
 	//Class
-	getAllClassdetailsFilterbased(className: string) {
-		return this.app.get('getAllClassdetailsFilterbased?className=' + className);
+	getAllClassdetailsFilterbased(className: string, sno:any, remarks: string) {
+		return this.app.get('getAllClassdetailsFilterbased?className=' + className + '&sno=' + sno + '&remarks=' + remarks);
 	}
 
 	getAllClassdetails() {
@@ -460,8 +460,8 @@ export class ApiService {
 		return this.app.get('getItemById?id=' + id, id);
 	}
 	//Manufactutrer
-	getAllManufacturedetailsFilterbased(name: string, email: string) {
-		return this.app.get('getAllManufacturedetailsFilterbased?name=' + name + '&email=' + email);
+	getAllManufacturedetailsFilterbased(name: string, email: string, sno:any, address: string) {
+		return this.app.get('getAllManufacturedetailsFilterbased?name=' + name + '&email=' + email + '&sno=' + sno + '&address=' + address);
 	}
 
 	getAllIManufacturerdetails() {

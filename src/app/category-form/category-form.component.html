@@ -30,6 +30,13 @@
 
                                                     </div> -->
                                                     <div class="col-md-6 col-sm-12">
+                                                        <label for="username">Serial Number <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="SNo" id="Name"
+                                                            [(ngModel)]="formData.sno" disabled>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
                                                         <label for="lastname">Category Name <span class="text-danger">*
                                                             </span></label>
                                                         <input type="text" class="form-control col-md-12 "
@@ -61,7 +68,7 @@
 
                                                     <div class="col-md-4 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
-                                                            </span>Description</label>
+                                                            </span>Remarks</label>
                                                         <input type="text" class="form-control  col-md-12 "
                                                             [(ngModel)]="formData.description">
                                                     </div>

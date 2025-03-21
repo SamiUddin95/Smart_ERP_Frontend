@@ -20,14 +20,18 @@ export class ClassComponent {
 
   getClassList() {
     debugger
-		this.api.getAllClassdetailsFilterbased(this.filter.name?this.filter.name:'All').subscribe((res: any) => {
+		this.api.getAllClassdetailsFilterbased(this.filter.name?this.filter.name:'All',
+      this.filter.sno?this.filter.sno:0,
+      this.filter.remarks?this.filter.remarks:'All').subscribe((res: any) => {
 			this.class = res.map((ele: any) => {
         debugger
 			  return {
         id: ele.id,
+        sno: ele.sno,
         name: ele.name,
         departmentId: ele.departmentId,
-        categoryId: ele.categoryId
+        categoryId: ele.categoryId,
+        remarks: ele.remarks
 			  };
 			});
 		  });

@@ -18,12 +18,16 @@ export class BrandsComponent {
   brands: any = [];
   getBrandList() {
     debugger
-		this.api.getAllBrandsdetailsFilterbased(this.filter.brandName?this.filter.brandName:'All').subscribe((res: any) => {
+		this.api.getAllBrandsdetailsFilterbased(this.filter.brandName?this.filter.brandName:'All', 
+      this.filter.sno?this.filter.sno:0,
+      this.filter.remarks?this.filter.remarks:'All',).subscribe((res: any) => {
 			this.brands = res.map((ele: any) => {
         debugger
 			  return {
         id: ele.id,
-        name: ele.name
+        sno: ele.sno,
+        name: ele.name,
+        remarks: ele.remarks
 			  };
 			});
 		  });
