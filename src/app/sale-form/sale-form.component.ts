@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./sale-form.component.css']
 })
 export class SaleFormComponent {
+  @ViewChild('tableRef') tableRef!: ElementRef;
   constructor(private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
   formData: any = {};
   userTypes: any = [];
@@ -342,14 +343,7 @@ export class SaleFormComponent {
     })
 
   }
-  saleReturnDialog: boolean = false;
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent): void {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
-      event.preventDefault();
-      this.saleReturnDialog=true;
-    }
-  }
+ 
   saleRtnDtl: any = [];
   grossSaleReturn: number = 0;
   netSaleReturnTotal: number = 0;
@@ -469,22 +463,49 @@ export class SaleFormComponent {
     })
 
   }
+  saleReturnDialog: boolean = false;
+  @HostListener('document:keydown', ['$event'])
 
   itemSearchDialog: boolean = false;
   @HostListener('document:keydown', ['$event'])
-  handleKeyboardEventForSearch(event: KeyboardEvent): void {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
-      event.preventDefault();
-      this.itemSearchDialog=true;
-    }
-  }
   itemDtl:any=[];
   searchedItemName:string='';
-  itemSearchFromDialog(e:any){
-    debugger
-    this.api.getAllItemsdetailsFilterbased(e.target.value,'All',0,0).subscribe(res=>{
-      this.itemDtl=res;
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+      event.preventDefault();
+      this.itemSearchDialog = true;
+    }
+    if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
+      event.preventDefault();
+      this.saleReturnDialog=true;
+    }
+  }
+  itemNotFound: boolean = false;
+  itemSearchFromDialog(e: any) {
+    this.api.getAllItemsdetailsFilterbased(this.searchedItemName, 'All', 0, 0).subscribe(res => {
+      this.itemDtl = res;
+    });
+  }
+  onSearchDialogEnter(e: any) {
+    this.searchedItemName = e.target.value;
+    setTimeout(() => {
+      this.scrollToHighlightedRow();
+    }, 100);
+  }
+  scrollToHighlightedRow() {
+    const selectedRow = document.querySelector('.highlighted') as HTMLElement;
+    if (selectedRow && this.tableRef) {
+      selectedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    this.itemSearchDialog = false;
+  }
 
-    })
+  highlightedRowId: number | null = null;
+
+  selectItemFromSearch(item: any) {
+    this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
+    this.itemSearchDialog = false; // Close the search dialog
+    this.searchedItemName="";
   }
 }

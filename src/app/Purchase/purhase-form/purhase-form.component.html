@@ -17,6 +17,12 @@
                                         <div class="card-body">
                                             <div class="grid">
                                                 <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Serial No</label>
+                                                        <input type="text" [disabled]="true" class="form-control col-md-12"
+                                                            placeholder="Remarks" [(ngModel)]="formData.id">
+                                                    </div>
                                                     <div class="col-md-4 col-sm-12">
                                                         <label for="usertypr"><span class="text-danger">
                                                             </span>Party Name</label>
@@ -432,7 +438,7 @@
                         <div class="mt-2 pad-wrapper">
                             <div class="box">
                                 <div class="content">
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <p-table #dt responsiveLayout="scroll" [value]="itemDtl"
                                             styleClass="p-datatable-sm p-datatable-gridlines"
                                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -470,7 +476,7 @@
                                             </ng-template>
 
                                         </p-table>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                             </div>
