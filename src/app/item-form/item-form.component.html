@@ -20,6 +20,13 @@
                                                         <!-- <p (window:keypress)="onKey($event)"  autofocus>barcode: {{ barcode }}</p>  -->
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
+                                                        <label for="username">Serial Number <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="SNo" id="Name"
+                                                            [(ngModel)]="formData.sno" disabled>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
                                                         
                                                         <label for="lastname">
                                                              Alias Name<span class="text-danger">*</span>

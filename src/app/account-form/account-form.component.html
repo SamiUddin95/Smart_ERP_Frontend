@@ -153,6 +153,20 @@
                                                     <input type="text" class="form-control  col-md-12 "
                                                         placeholder="Enter Here" [(ngModel)]="formData.remarks">
                                                 </div>
+
+                                                <div class="col-md-4 pl-4 col-sm-12">
+                                                      <label for="statusDropdown">Status</label>
+                                                      <p-dropdown id="statusDropdown"
+                                                                  [options]="statusOptions"
+                                                                  [(ngModel)]="formData.status"
+                                                                  (onChange)="onStatusChange($event.value)"
+                                                                  placeholder="Enter Status"
+                                                                  optionLabel="label"
+                                                                  optionValue="value"
+                                                                  >
+                                                      </p-dropdown>
+                                                  </div>
+                                                 
                                             </div>
                                         </div>
                                     </div>

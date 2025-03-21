@@ -9,16 +9,20 @@
     </div>
     <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
         <p-accordion>
-            <p-accordionTab header="Search">
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">SNO</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Name" [(ngModel)]="filter.sno">
+                        </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Name</label>
                             <input type="text" class="form-control p-inputtext p-component txt"
                                 placeholder="Name" [(ngModel)]="filter.name">
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Description</label>
+                            <label class="mb-0 mx-2" for="Name">Remarks</label>
                             <input type="text" [(ngModel)]="filter.description"
                                 class="form-control p-inputtext p-component txt" placeholder="Description">
                         </div>
@@ -33,7 +37,6 @@
                         </div>
                     </div>
                 </div>
-            </p-accordionTab>
         </p-accordion>
         <div class="pad-wrapper">
             <div class="box">
@@ -43,18 +46,20 @@
                         <ng-template pTemplate="header">
                             <tr>
                                 <!-- <th pSortableColumn="code">Department <p-sortIcon field="code"></p-sortIcon></th> -->
+                                <th pSortableColumn="name">SNO <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Category Name <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Active <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Priority <p-sortIcon field="name"></p-sortIcon></th>
                                 <!-- <th pSortableColumn="name">Height <p-sortIcon field="name"></p-sortIcon></th> -->
                                 <!-- <th pSortableColumn="name">Width <p-sortIcon field="name"></p-sortIcon></th> -->
-                                <th pSortableColumn="name">Description <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Remarks <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Action <p-sortIcon field="name"></p-sortIcon></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-cat>
                             <tr>
                                 <!-- <td>{{cat.departmentId}}</td> -->
+                                <td>{{cat.sno}}</td>
                                 <td>{{cat.name}}</td>
                                 <td>{{cat.isActive}}</td>
                                 <td>{{cat.priority}}</td>

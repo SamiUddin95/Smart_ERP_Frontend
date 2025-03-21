@@ -18,15 +18,19 @@ export class ManufacturerComponent {
   getManufacturerList() {
     debugger
 		this.api.getAllManufacturedetailsFilterbased(this.filter.name?this.filter.name:'All',
-      this.filter.email?this.filter.email:'All').subscribe((res: any) => {
+      this.filter.email?this.filter.email:'All',
+      this.filter.sno || 0,
+      this.filter.address?this.filter.address:'All').subscribe((res: any) => {
 			this.manufacturer = res.map((ele: any) => {
         debugger
 			  return {
         id: ele.id,
+        sno: ele.sno,
         name: ele.name,
         telephoneno: ele.telephoneno,
         telephoneno2: ele.telephoneno2,
-        email: ele.email
+        email: ele.email,
+        address: ele.address
 			  };
 			});
 		  });

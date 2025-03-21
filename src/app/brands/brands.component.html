@@ -9,13 +9,22 @@
     </div>
     <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
         <p-accordion>
-            <p-accordionTab header="Search">
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">SNO</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Brand Name" [(ngModel)]="filter.sno">
+                        </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Brand Name</label>
                             <input type="text" class="form-control p-inputtext p-component txt"
                                 placeholder="Brand Name" [(ngModel)]="filter.brandName">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Remarks</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Brand Name" [(ngModel)]="filter.remarks">
                         </div>
                         <div class="col-md-4 offset-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
@@ -28,7 +37,6 @@
                         </div>
                     </div>
                 </div>
-            </p-accordionTab>
         </p-accordion>
         <div class="pad-wrapper">
             <div class="box">
@@ -37,15 +45,17 @@
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">ID <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="code">SNO <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Remarks <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Action <p-sortIcon field="name"></p-sortIcon></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-bnd>
                             <tr>
-                                <td>{{bnd.id}}</td>
+                                <td>{{bnd.sno}}</td>
                                 <td>{{bnd.name}}</td>
+                                <td>{{bnd.remarks}}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 1px; font-size: 1px; padding: 1px 1px;" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"

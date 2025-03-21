@@ -29,6 +29,7 @@ export class ItemComponent {
 			this.item = res.map((ele: any) => {
 			  return {
         id: ele.id,
+        sno: ele.sno,
         aliasName: ele.aliasName,
         itemName: ele.itemName,
         purchasePrice: ele.purchasePrice,

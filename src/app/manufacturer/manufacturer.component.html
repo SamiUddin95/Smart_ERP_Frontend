@@ -9,11 +9,15 @@
     </div>
     <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
         <p-accordion>
-            <p-accordionTab header="Search">
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Manufacture</label>
+                            <label class="mb-0 mx-2" for="Name">SNO</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="SNO" [(ngModel)]="filter.sno">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Manufacture Name</label>
                             <input type="text" class="form-control p-inputtext p-component txt"
                                 placeholder="Name" [(ngModel)]="filter.name">
                         </div>
@@ -22,6 +26,11 @@
                             <input type="text" [(ngModel)]="filter.email"
                                 class="form-control p-inputtext p-component txt" 
                                 placeholder="Email">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Address</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Name" [(ngModel)]="filter.address">
                         </div>
                         <div class="col-md-4 offset-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
@@ -34,7 +43,6 @@
                         </div>
                     </div>
                 </div>
-            </p-accordionTab>
         </p-accordion>
         <div class="pad-wrapper">
             <div class="box">
@@ -43,19 +51,23 @@
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
+                                <th pSortableColumn="code">SNO <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="code">Name <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">Telephone No <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Telephone No2 <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Email <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Address <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Action <p-sortIcon field="name"></p-sortIcon></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-manu>
                             <tr>
+                                <td>{{manu.sno}}</td>
                                 <td>{{manu.name}}</td>
                                 <td>{{manu.telephoneno}}</td>
                                 <td>{{manu.telephoneno2}}</td>
                                 <td>{{manu.email}}</td>
+                                <td>{{manu.address}}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 1px; font-size: 1px; padding: 1px 1px;" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"
