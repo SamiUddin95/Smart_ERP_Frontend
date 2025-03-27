@@ -10,12 +10,42 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./category-form.component.css']
 })
 export class CategoryFormComponent {
+  pictureUrl: string | undefined;
 
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,private http: HttpClient,) { }
   
   formData: any = {  };
   urlId: any;
   selectedFile: File | null = null;
+
+  onFileSelected(event: any) {
+    debugger
+    const file: File = event.target.files[0];
+    if (file) {
+      // Optional: Add validation for file type and size
+      const validTypes = ['image/jpeg', 'image/png'];
+      const maxSizeInBytes = 5 * 1024 * 1024; // 5MB limit
+
+      if (!validTypes.includes(file.type)) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Only JPEG and PNG images are allowed.',
+        });
+        this.selectedFile = null;
+      } else if (file.size > maxSizeInBytes) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'File size exceeds 5MB limit.',
+        });
+        this.selectedFile = null;
+      } else {
+        this.selectedFile = file;
+      }
+    }
+  }
+
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.getDepartment();
@@ -24,22 +54,36 @@ export class CategoryFormComponent {
       this.getCategoryById(this.urlId);
     }
 	}
+
   getCategoryById(id: any) {
-		this.api.getCategoryById(String(id)).subscribe(res => {
-			this.formData = res[0];
-		})
+		// this.api.getCategoryById(String(id)).subscribe(res => {
+    //   debugger
+		// 	this.formData = res[0];
+		// })
+    this.api.getCategoryById(id).subscribe(
+      (res: any) => {
+          this.formData = res;
+          if (res.picture) {
+              this.pictureUrl = `data:image/jpeg;base64,${res.picture}`; // Adjust MIME type if needed
+          }
+      },
+      (err) => {
+          console.error(err);
+          this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Failed to load category',
+          });
+      }
+  );
 	}
+  
   cancel(){
     this.router.navigate(['category']);
   }
 
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      this.selectedFile = input.files[0];
-    }
-  }
   addCategory(){
+    debugger
     const requiredFields = [
       // { key: 'departmentId', message: 'Department is required.' },
       { key: 'name', message: 'Name is required.' },
@@ -53,8 +97,18 @@ export class CategoryFormComponent {
           }
       }
         this.urlId?this.formData.id=this.urlId:undefined;
+        const formDataToSend = new FormData();
+        formDataToSend.append('id', this.formData.id || 0);
+        formDataToSend.append('name', this.formData.name);
+        // Append other fields as needed
+        formDataToSend.append('isActive', this.formData.isActive || 0);
+        formDataToSend.append('priority', this.formData.priority);
+        formDataToSend.append('description', this.formData.description || '');
 
-        this.api.createCategory(this.formData).subscribe(res=>{
+        if (this.selectedFile) {
+          formDataToSend.append('picture', this.selectedFile, this.selectedFile.name);
+        }
+        this.api.createCategory(formDataToSend).subscribe(res=>{
           this.router.navigate(['category']);
           this.messageService.add({ severity: 'success', summary: 'Success', detail: "Category Added Successfully" });	
           },err=>{

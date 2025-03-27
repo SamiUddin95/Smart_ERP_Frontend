@@ -14,6 +14,35 @@ export class ManufacturerFormComponent {
   
   formData: any = {  };
   urlId: any;
+  pictureUrl: string | undefined;
+  selectedFile: File | null = null;
+  onFileSelected(event: any) {
+    debugger
+    const file: File = event.target.files[0];
+    if (file) {
+      // Optional: Add validation for file type and size
+      const validTypes = ['image/jpeg', 'image/png'];
+      const maxSizeInBytes = 5 * 1024 * 1024; // 5MB limit
+
+      if (!validTypes.includes(file.type)) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Only JPEG and PNG images are allowed.',
+        });
+        this.selectedFile = null;
+      } else if (file.size > maxSizeInBytes) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'File size exceeds 5MB limit.',
+        });
+        this.selectedFile = null;
+      } else {
+        this.selectedFile = file;
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
@@ -22,9 +51,22 @@ export class ManufacturerFormComponent {
     }
 	}
   getManufactureById(id: any) {
-		this.api.getManufactureById(String(id)).subscribe(res => {
-			this.formData = res[0];
-		})
+		this.api.getManufactureById(String(id)).subscribe(
+      (res: any) => {
+          this.formData = res;
+          if (res.picture) {
+              this.pictureUrl = `data:image/jpeg;base64,${res.picture}`; // Adjust MIME type if needed
+          }
+      },
+      (err) => {
+          console.error(err);
+          this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Failed to load Manufacture',
+          });
+      }
+    );
 	}
   cancel(){
     this.router.navigate(['manufacturer']);
@@ -42,7 +84,21 @@ export class ManufacturerFormComponent {
           }
       }
         this.urlId?this.formData.id=this.urlId:undefined;
-        this.api.createManufacturer(this.formData).subscribe(res=>{
+
+        const formDataToSend = new FormData();
+        formDataToSend.append('id', this.formData.id || 0);
+        formDataToSend.append('name', this.formData.name) ;
+        // Append other fields as needed
+        formDataToSend.append('address', this.formData.address || '');
+        formDataToSend.append('telephoneno', this.formData.telephoneno || '');
+        formDataToSend.append('telephoneno2', this.formData.telephoneno2 || '');
+        formDataToSend.append('email', this.formData.email || '');
+
+        if (this.selectedFile) {
+          formDataToSend.append('picture', this.selectedFile, this.selectedFile.name);
+        }
+
+        this.api.createManufacturer(formDataToSend).subscribe(res=>{
           this.router.navigate(['manufacturer']);
           this.messageService.add({ severity: 'success', summary: 'Success', detail: "Manufacture Added Successfully" });	
           },err=>{
