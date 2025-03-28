@@ -397,9 +397,9 @@ export class ApiService {
 	deleteCategoryById(id: any) {
 		return this.app.get('deleteCategoryById?id=' + id, id);
 	}
-	createCategory(obj: any) {
+	createCategory(formData: FormData) {
 		debugger
-		return this.app.post('createCategory', obj);
+		return this.app.post('createCategory', formData);
 	}
 	getCategoryById(id: any) {
 		return this.app.get('getCategoryById?id=' + id, id);
@@ -471,8 +471,8 @@ export class ApiService {
 	deleteManufacturerById(id: any) {
 		return this.app.get('deleteManufacturerById?id=' + id, id);
 	}
-	createManufacturer(obj: any) {
-		return this.app.post('createManufacturer', obj);
+	createManufacturer(formData: FormData) {
+		return this.app.post('createManufacturer', formData);
 	}
 	getManufactureById(id: any) {
 		return this.app.get('getManufacturerById?id=' + id, id);
