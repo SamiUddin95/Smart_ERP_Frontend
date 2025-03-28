@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
@@ -11,6 +11,7 @@ import * as moment from 'moment';
 })
 export class PurcOrderFormComponent {
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
+    @ViewChild('tableRef') tableRef!: ElementRef;
   formData: any = {  };
   userTypes:any=[];
   genders:any=[{label:'Male',value:'Male'},{label:'Female',value:'Female'}];
@@ -120,22 +121,41 @@ export class PurcOrderFormComponent {
       this.usrGrpCat=res;
     })
   }
+  itemSearchDialog: boolean = false;
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+      event.preventDefault();
+      this.itemSearchDialog = true;
+    }
+  }
+  itemNotFound: boolean = false;
+  itemDtl: any = [];
+  searchedItemName: string = '';
+  itemSearchFromDialog(e: any) {
+    this.api.getAllItemsdetailsFilterbased(this.searchedItemName, 'All', 0, 0).subscribe(res => {
+      this.itemDtl = res;
+    });
+  }
+  onSearchDialogEnter(e: any) {
+    this.searchedItemName = e.target.value;
+    setTimeout(() => {
+      this.scrollToHighlightedRow();
+    }, 100);
+  }
+  scrollToHighlightedRow() {
+    const selectedRow = document.querySelector('.highlighted') as HTMLElement;
+    if (selectedRow && this.tableRef) {
+      selectedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    this.itemSearchDialog = false;
+  }
 
-    itemSearchDialog: boolean = false;
-    @HostListener('document:keydown', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent): void {
-      if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
-        event.preventDefault();
-        this.itemSearchDialog=true;
-      }
-    }
-    itemDtl:any=[];
-    searchedItemName:string='';
-    itemSearchFromDialog(e:any){
-      debugger
-      this.api.getAllItemsdetailsFilterbased(e.target.value,'All',0,0).subscribe(res=>{
-        this.itemDtl=res;
-  
-      })
-    }
+  highlightedRowId: number | null = null;
+
+  selectItemFromSearch(item: any) {
+    this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
+    this.itemSearchDialog = false; // Close the search dialog
+    this.searchedItemName="";
+  }
 }

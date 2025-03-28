@@ -29,9 +29,9 @@
                             <a routerLink="/account-grp-list" routerLinkActive="active">
                                 <i class="fa fa-helmet-un"></i><span>Accounts Group</span>
                             </a>
-                            <!-- <a routerLink="/account-cat-list" routerLinkActive="active">
+                            <a routerLink="/account-cat-list" routerLinkActive="active">
                             <i class="fa fa-helmet-un"></i><span>Accounts Category</span>
-                        </a> -->
+                        </a>
 
                         </ul>
                         <a class="nav-link collapsed" data-bs-target="#Party" data-bs-toggle="collapse" href="#">
@@ -125,9 +125,23 @@
                     <a routerLink="/jurn-vuchr-list" routerLinkActive="active">
                         <i class="fa fa-helmet-un"></i><span>General Voucher</span>
                     </a>
+                </ul>
+            </li>
+            <li *ngIf="userType == 2 || userType == 1" class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#IntTransfer" data-bs-toggle="collapse" href="#">
+                    <i class="pi pi-shopping-cart"></i><span>INTER LOCATION TRANSFER</span><i class="pi pi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="IntTransfer" class="nav-content collapse" data-bs-parent="#Finance">
                     <a routerLink="/inter-loc-trans-list" routerLinkActive="active">
                         <i class="fa fa-helmet-un"></i><span>Inter Location Transfer</span>
                     </a>
+                </ul>
+            </li>
+            <li *ngIf="userType == 2 || userType == 1" class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#StcAdj" data-bs-toggle="collapse" href="#">
+                    <i class="pi pi-shopping-cart"></i><span>STOCK ADJUSTMENT</span><i class="pi pi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="StcAdj" class="nav-content collapse" data-bs-parent="#Finance">
                     <a routerLink="/stck-adj-list" routerLinkActive="active">
                         <i class="fa fa-helmet-un"></i><span>Stock Adjustment</span>
                     </a>

@@ -77,7 +77,7 @@
                                                         <div class="pad-wrapper">
                                                             <div class="box">
                                                                 <div class="content">
-                                                                    <p-table #dt [scrollable]="true"
+                                                                    <p-table #tableRef #dt [scrollable]="true"
                                                                         scrollHeight="600px" responsiveLayout="scroll"
                                                                         [value]="purchOrderDtlData"
                                                                         styleClass="p-datatable-sm p-datatable-gridlines"
@@ -87,7 +87,7 @@
                                                                         [paginator]="true" [rows]="10">
 
                                                                         <ng-template pTemplate="header">
-                                                                            <tr> 
+                                                                            <tr > 
                                                                                 <th pSortableColumn="name">No
                                                                                     <p-sortIcon
                                                                                         field="name"></p-sortIcon></th>
@@ -124,7 +124,7 @@
                                                                             </tr>
                                                                         </ng-template>
                                                                         <ng-template pTemplate="body" let-user let-i="rowIndex">
-                                                                            <tr>
+                                                                            <tr [ngClass]="{'highlighted': user.barcode== searchedItemName}">
                                                                                 <td>{{i+1}}</td>
                                                                                 <td> <input type="text"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
@@ -204,7 +204,7 @@
 
     </section>
 </div>
-<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog">
+<p-dialog header="Search with Item Name"  [modal]="true" [(visible)]="itemSearchDialog">
     <div class="card shadow-3">
         <div class="card-body">
             <div class="grid">
@@ -212,10 +212,10 @@
                     <div class="col-md-12">
                         <input type="text"
                             class="p-3 form-control form-control-sm"
-                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
+                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)" (keydown.enter)="onSearchDialogEnter($event)"
                             [(ngModel)]="searchedItemName">
                     </div>
-                    <div class="mt-2 col-md-12">
+                    <!-- <div class="mt-2 col-md-12">
                         <div class="mt-2 pad-wrapper">
                             <div class="box">
                                 <div class="content">
@@ -262,7 +262,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

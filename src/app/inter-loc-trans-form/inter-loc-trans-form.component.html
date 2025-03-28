@@ -113,10 +113,10 @@
                                                                                     <ng-template pTemplate="body"
                                                                                         let-user let-i="rowIndex">
                                                                                         <tr #rowElement
-                                                                                            [id]="'row-' + i">
-                                                                                            <td>{{1}}</td>
+                                                                                            [id]="'row-' + i" [ngClass]="{'highlighted': user.barcode== searchedItemName}">
+                                                                                            <td>{{i+1}}</td>
                                                                                             <td
-                                                                                                [ngClass]="{'highlighted': user.barcode== searchedItemName}">
+                                                                                                >
                                                                                                 <input type="text"
                                                                                                     class="form-control form-control-sm w-100"
                                                                                                     placeholder="Enter Barcode"
