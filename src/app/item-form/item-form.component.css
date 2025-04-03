@@ -22,3 +22,54 @@
     width: 25px !important;
 }
 
+/* Ensure consistent spacing and alignment */
+.form-group {
+    margin-bottom: 1.5rem; /* Space between form groups */
+  }
+  
+  /* Style the image box */
+  .image-box {
+    border: 2px solid #ccc;
+    padding: 10px;
+    width: 220px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px; /* Space between image box and file input */
+  }
+  
+  .image-box img {
+    object-fit: contain;
+  }
+  
+  /* Ensure labels are aligned and consistent */
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  /* Adjust dropdown and input alignment */
+  .form-control,
+  .p-dropdown {
+    width: 100%;
+  }
+  
+  /* Fix alignment for Active field */
+  .d-flex {
+    gap: 10px; /* Space between label and dropdown */
+  }
+  
+  .d-flex label {
+    margin-bottom: 0; /* Remove extra margin from inline label */
+  }
+  
+  /* Center the submit button */
+  .col-12 .btn {
+    display: block;
+    margin: 0 auto;
+  }

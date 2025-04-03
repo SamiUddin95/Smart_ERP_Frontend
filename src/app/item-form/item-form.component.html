@@ -19,12 +19,36 @@
                                                         <!-- <input type="text" (window:keypress)="onKey($event)"  autofocus /> -->
                                                         <!-- <p (window:keypress)="onKey($event)"  autofocus>barcode: {{ barcode }}</p>  -->
                                                     </div>
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <label for="username">Serial Number <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control col-md-12"
-                                                            placeholder="SNo" id="Name"
-                                                            [(ngModel)]="formData.sno" disabled>
+                                                    <div class="col-md-6 col-sm-12 form-group">
+                                                        <label for="picture">Picture</label>
+                                                        <div class="image-box">
+                                                        <img
+                                                            *ngIf="pictureUrl"
+                                                            [src]="pictureUrl"
+                                                            alt="Item Picture"
+                                                            style="max-width: 400px; max-height: 200px;"
+                                                        >
+                                                        </div>
+                                                        <input
+                                                        type="file"
+                                                        class="form-control col-md-12"
+                                                        id="picture"
+                                                        (change)="onFileSelected($event)"
+                                                        accept="image/*"
+                                                        >
+                                                    </div>
+                                                    <div class="col-md-4-col-sm-6 form-group">
+                                                        <label for="sno">Serial Number <span class="text-danger">*</span></label>
+                                                        <input
+                                                        type="text"
+                                                        class="form-control col-md-12"
+                                                        id="sno"
+                                                        placeholder="SNo"
+                                                        [(ngModel)]="formData.sno"
+                                                        name="sno"
+                                                        disabled
+                                                        style="width: 100px;"
+                                                        >
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         
