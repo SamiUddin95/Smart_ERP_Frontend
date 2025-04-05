@@ -100,6 +100,7 @@ import { JurnVuchrListComponent } from './jurn-vuchr-list/jurn-vuchr-list.compon
 import { JurnVuchrFormComponent } from './jurn-vuchr-form/jurn-vuchr-form.component';
 import { InterLocTransListComponent } from './inter-loc-trans-list/inter-loc-trans-list.component';
 import { InterLocTransFormComponent } from './inter-loc-trans-form/inter-loc-trans-form.component';
+import { FocusNavigationDirective } from './focus-navigation.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -166,6 +167,7 @@ import { InterLocTransFormComponent } from './inter-loc-trans-form/inter-loc-tra
       JurnVuchrFormComponent,
       InterLocTransListComponent,
       InterLocTransFormComponent,
+      FocusNavigationDirective,
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,
