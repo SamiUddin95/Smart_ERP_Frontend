@@ -24,6 +24,37 @@ export class ItemFormComponent {
     // return `${this.formData.itemName} ${this.selectedWeight} ${this.selectedUOM}`;
     return `${this.formData.itemName}`;
   }
+
+  pictureUrl: string | undefined;
+  selectedFile: File | null = null;
+  onFileSelected(event: any) {
+    debugger
+    const file: File = event.target.files[0];
+    if (file) {
+      // Optional: Add validation for file type and size
+      const validTypes = ['image/jpeg', 'image/png'];
+      const maxSizeInBytes = 5 * 1024 * 1024; // 5MB limit
+
+      if (!validTypes.includes(file.type)) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Only JPEG and PNG images are allowed.',
+        });
+        this.selectedFile = null;
+      } else if (file.size > maxSizeInBytes) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'File size exceeds 5MB limit.',
+        });
+        this.selectedFile = null;
+      } else {
+        this.selectedFile = file;
+      }
+    }
+  }
+
   ngOnInit(): void {
     this.urlId = Number(this.route.snapshot.paramMap.get('id'));
     this.calculateParentValues();
@@ -60,6 +91,9 @@ export class ItemFormComponent {
       this.formData.Id=this.urlId;
 			this.formData = res.item[0];
       this.altrnateBarCodeData=res.altItem;
+      if (res.item[0].Picture) {
+        this.pictureUrl = `data:image/jpeg;base64,${res.item[0].Picture}`; // Adjust MIME type if needed
+    }
       debugger
       if (res.parentItem && res.parentItem.length > 0) {
         this.childParentData = res.parentItem[0];
@@ -92,24 +126,45 @@ export class ItemFormComponent {
     if (this.urlId) {
         this.formData.id = this.urlId;
     }
-    const payload = {
-      Id:this.urlId,
-      aliasName: this.formData.aliasName,
-      itemName:this.formData.itemName,
-      purchasePrice:this.formData.purchasePrice,
-      salePrice:this.formData.salePrice,
-      categoryId:this.formData.categoryId,
-      classId:this.formData.classId,
-      manufacturerId:this.formData.manufacturerId,
-      remarks:this.formData.remarks,
-      recentPurchase:this.formData.recentPurchase,
-      brandId:this.formData.brandId,
-      discflat:this.formData.discflat,
-      lockdisc:this.formData.lockdisc,
-      alternateItem: this.altrnateBarCodeData,
+  //   const payload = {
+  //     Id:this.urlId,
+  //     aliasName: this.formData.aliasName,
+  //     itemName:this.formData.itemName,
+  //     purchasePrice:this.formData.purchasePrice,
+  //     salePrice:this.formData.salePrice,
+  //     categoryId:this.formData.categoryId,
+  //     classId:this.formData.classId,
+  //     manufacturerId:this.formData.manufacturerId,
+  //     remarks:this.formData.remarks,
+  //     recentPurchase:this.formData.recentPurchase,
+  //     brandId:this.formData.brandId,
+  //     discflat:this.formData.discflat,
+  //     lockdisc:this.formData.lockdisc,
+  //     alternateItem: this.altrnateBarCodeData,
 
-  };
-    this.api.createItems(payload).subscribe(
+  // };
+  debugger
+  const formDataToSend = new FormData();
+        formDataToSend.append('Id', this.urlId || 0);
+        formDataToSend.append('aliasName', this.formData.aliasName || '');
+        formDataToSend.append('itemName', this.formData.itemName || '');
+        formDataToSend.append('purchasePrice', this.formData.purchasePrice || 0);
+        formDataToSend.append('salePrice', this.formData.salePrice || 0);
+        formDataToSend.append('netSalePrice', this.formData.netSalePrice || 0);
+        formDataToSend.append('categoryId', this.formData.categoryId || 0);
+        formDataToSend.append('classId', this.formData.classId || 0);
+        formDataToSend.append('manufacturerId', this.formData.manufacturerId || 0);
+        formDataToSend.append('remarks', this.formData.remarks || '');
+        formDataToSend.append('recentPurchase', this.formData.recentPurchase || 0);
+        formDataToSend.append('brandId', this.formData.brandId || 0);
+        formDataToSend.append('discflat', this.formData.discflat || 0);
+        formDataToSend.append('lockdisc', this.formData.lockdisc || 0);
+        formDataToSend.append('alternateItem', JSON.stringify(this.altrnateBarCodeData));
+
+        if (this.selectedFile) {
+          formDataToSend.append('picture', this.selectedFile, this.selectedFile.name);
+        }
+    this.api.createItems(formDataToSend).subscribe(
       (res: any) => {
           if (res?.msg === "An item with this name already exists.") {
               this.messageService.add({ severity: 'warn', summary: 'Warning', detail: res.msg });
