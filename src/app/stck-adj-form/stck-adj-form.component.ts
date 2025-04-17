@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 import { MessageService } from 'primeng/api';
@@ -11,6 +11,7 @@ import jsPDF from 'jspdf';
   styleUrls: ['./stck-adj-form.component.css']
 })
 export class StckAdjFormComponent {
+  @ViewChild('tableRef') tableRef!: ElementRef;
   constructor(private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
   formData: any = {};
   visible: boolean = false;
@@ -529,10 +530,30 @@ export class StckAdjFormComponent {
   itemDtl:any=[];
   searchedItemName:string='';
   itemSearchFromDialog(e:any){
-    debugger
     this.api.getAllItemsdetailsFilterbased(e.target.value,'All',0,0).subscribe(res=>{
       this.itemDtl=res;
 
     })
+  }
+  onSearchDialogEnter(e: any) {
+    this.searchedItemName = e.target.value;
+    setTimeout(() => {
+      this.scrollToHighlightedRow();
+    }, 100);
+  }
+  scrollToHighlightedRow() {
+    const selectedRow = document.querySelector('.highlighted') as HTMLElement;
+    if (selectedRow && this.tableRef) {
+      selectedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    this.itemSearchDialog = false;
+  }
+
+  highlightedRowId: number | null = null;
+
+  selectItemFromSearch(item: any) {
+    this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
+    this.itemSearchDialog = false; // Close the search dialog
+    this.searchedItemName="";
   }
 }

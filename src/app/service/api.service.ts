@@ -103,7 +103,9 @@ export class ApiService {
 	}
 
 	//Purchase Order
-
+	getPurchaseMaxSerialNo(){
+		return this.app.get('getPurchaseMaxSerialNo');
+	}
 	getAllPurchaseOrder() {
 		return this.app.get('getAllPurchaseOrder');
 	}

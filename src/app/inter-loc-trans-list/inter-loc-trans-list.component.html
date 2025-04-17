@@ -1,0 +1,136 @@
+<div class="card container-fluid mt-2">
+    <div class="d-flex justify-content-between p-2">
+        <div>
+            <h3>INTER LOCATION TRANSFER</h3>
+        </div>
+        <div>
+            <button pButton pRipple type="button" icon="pi pi-plus" label="Add Inter Location Transfer"
+                class="p-button-sm p-button-success float-right" (click)="addItem()"></button>
+        </div>
+    </div>
+    <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
+        <p-accordion>
+            <p-accordionTab header="Search">
+                <div class="grid">
+                    <div class="row mt-1 px-2 col-12">
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">S.No</label>
+                            <input type="text" [(ngModel)]="filter.invoiceNo"
+                                class="form-control p-inputtext p-component txt" placeholder="Search By Invoice No">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">User</label>
+                            <p-dropdown [options]="party" [(ngModel)]="filter.partyId" placeholder="Select a Party Name"
+                                optionLabel="partyName" optionValue="id"></p-dropdown>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">From Date</label>
+                            <p-calendar [(ngModel)]="filter.dateFrom" [style]="{width:100}"
+                                placeholder="Select From Date" dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">To Date</label>
+                            <p-calendar [(ngModel)]="filter.dateTo" [style]="{width:100}" placeholder="Select To Date"
+                                dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+<!--                         
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Posted Date</label>
+                            <p-calendar placeholder="Select Posted Date" [(ngModel)]="filter.postedDate"
+                                [style]="{width:100}" dateFormat="yy-mm-dd"></p-calendar>
+                        </div> -->
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Source Location</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                [(ngModel)]="filter.postedBy" placeholder="Search By Posted By">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Delivery Location</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                [(ngModel)]="filter.postedBy" placeholder="Search By Posted By">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Deliver By</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                [(ngModel)]="filter.postedBy" placeholder="Search By Posted By">
+                        </div>
+                        <div class="col-md-4 col-sm-12 offset-8 text-right mt-1 pr-1">
+                            <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4" style="width:130px"
+                                (click)="clearFilter()"></button>
+                            <button pButton pRipple type="button" icon="pi pi-search" label="Search"
+                                class="p-button-sm p-button-info float-right mx-1 mt-4" style="width:130px"
+                                (click)="getData()"></button>
+
+                        </div>
+                    </div>
+                </div>
+            </p-accordionTab>
+        </p-accordion>
+        <p-divider></p-divider>
+        <div class="pad-wrapper">
+            <div class="box">
+                <div class="content">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="item"
+                        styleClass="p-datatable-sm p-datatable-gridlines"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+                        [rows]="10">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="code">S.No <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">Date<p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Source Location<p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Delivery Location<p-sortIcon field="quantity"></p-sortIcon> </th>
+                                <th pSortableColumn="category">User<p-sortIcon field="category"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Deliver By<p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Net Amount <p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="price">Delivery Date<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Total Qty<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Return Qty<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Date of Creation<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-itm let-i="rowIndex">
+                            <tr>
+                                <td>{{i + 1}}</td>
+                                <td>{{itm.date}}</td>
+                                <td>{{itm.userId}}</td>
+                                <td>{{itm.status}}</td>
+                                <td>{{itm.remarks}}</td>
+                                <!-- <td>{{itm.updatedAt}}</td> -->
+                                <td>{{""}}</td>
+                                <td>{{itm.createdBy}}</td>
+                                <td>{{itm.date}}</td>
+                                <td>{{ itm.createdAt | date:'dd-MMM-yyyy' }} </td>
+                                <td>{{itm.createdAt}}</td>
+                                <td>{{itm.createdAt}}</td>
+                                <td style="position: relative;" class="d-flex">
+                                    <button style="margin-right: 3px" pButton pRipple icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-info"
+                                        (click)="editItem(itm.id)"></button>
+                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                        (click)="deleteItems(itm)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>
+<p-confirmDialog #cd [style]="{width: '30vw'}" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="header">
+        <h3>Alert</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-danger" label="No"
+            (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-success"
+            (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

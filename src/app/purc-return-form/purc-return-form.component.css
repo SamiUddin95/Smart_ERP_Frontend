@@ -1,0 +1,16 @@
+.p-datatable th {
+    white-space: nowrap; /* Prevent text from wrapping */
+  }
+  
+  .p-datatable td {
+    white-space: nowrap; /* Prevent text from wrapping */
+  }
+  
+  .p-datatable th, .p-datatable td {
+    padding: 8px; /* Adjust padding as needed */
+  }
+  
+  .highlighted {
+    background-color: #1000ff !important;
+  }
+  

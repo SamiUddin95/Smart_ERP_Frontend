@@ -17,6 +17,12 @@
                                         <div class="card-body">
                                             <div class="grid">
                                                 <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Serial No</label>
+                                                        <input type="text" [disabled]="true" class="form-control col-md-12"
+                                                            placeholder="Remarks" [(ngModel)]="formData.id">
+                                                    </div>
                                                     <div class="col-md-4 col-sm-12">
                                                         <label for="usertypr"><span class="text-danger">
                                                             </span>Party Name</label>
@@ -134,123 +140,121 @@
 
                                                                                     <ng-template pTemplate="body"
                                                                                         let-user let-i="rowIndex">
-                                                                                        <tr #rowElement [id]="'row-' + i">
-                                                                                            <td
-                                                                                                [ngClass]="{'highlighted': user.barcode== searchedItemName}">
+                                                                                        <tr #rowElement [id]="'row-' + i" [ngClass]="{'highlighted': user.barcode== searchedItemName}">
+                                                                                            <td>
                                                                                                 <input type="text"
                                                                                                     class="form-control form-control-sm w-100"
                                                                                                     placeholder="Enter Barcode Here"
                                                                                                     (keydown.enter)="onKey($event, user)"
-                                                                                                    autofocus
-                                                                                                    [(ngModel)]="user.barcode">
+                                                                                                    [(ngModel)]="user.barcode" appFocusNavigation>
                                                                                             </td>
                                                                                             <td>
                                                                                                 <input type="text"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Item Name"
-                                                                                                    [(ngModel)]="user.ItemName">
+                                                                                                    [(ngModel)]="user.ItemName" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Quantity"
                                                                                                     [(ngModel)]="user.quantity"
-                                                                                                    (input)="qtyChange(user)">
+                                                                                                    (input)="qtyChange(user)" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Bonus Qty"
                                                                                                     (input)="bonusQtyChange(user)"
-                                                                                                    [(ngModel)]="user.bonusQuantity">
+                                                                                                    [(ngModel)]="user.bonusQuantity" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Net Qty"
                                                                                                     [disabled]="true"
                                                                                                     (input)="bonusQtyChange(user)"
-                                                                                                    [(ngModel)]="user.netQuantity">
+                                                                                                    [(ngModel)]="user.netQuantity" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Purchase Price"
                                                                                                     [(ngModel)]="user.purchasePrice"
-                                                                                                    (input)="purchasePriceChange(user)">
+                                                                                                    (input)="purchasePriceChange(user)" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Sub Total"
                                                                                                     (input)="discountChange(user)"
-                                                                                                    [(ngModel)]="user.subTotal">
+                                                                                                    [(ngModel)]="user.subTotal" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Disc%"
                                                                                                     (input)="discPerChange(user)"
-                                                                                                    [(ngModel)]="user.discountByPercent">
+                                                                                                    [(ngModel)]="user.discountByPercent" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Disc Value"
                                                                                                     (input)="discvallueChange(user)"
-                                                                                                    [(ngModel)]="user.discountByValue">
+                                                                                                    [(ngModel)]="user.discountByValue" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     [disabled]="true"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Total Inc Disc"
-                                                                                                    [(ngModel)]="user.totalIncDisc">
+                                                                                                    [(ngModel)]="user.totalIncDisc" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Gst %"
                                                                                                     (input)="gstPerChange(user)"
-                                                                                                    [(ngModel)]="user.gstByPercent">
+                                                                                                    [(ngModel)]="user.gstByPercent" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Gst Value"
                                                                                                     (input)="gstValueChange(user)"
-                                                                                                    [(ngModel)]="user.gstByValue">
+                                                                                                    [(ngModel)]="user.gstByValue" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     [disabled]="true"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Gst Value"
-                                                                                                    [(ngModel)]="user.totalIncGst">
+                                                                                                    [(ngModel)]="user.totalIncGst" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Net Rate"
                                                                                                     [disabled]="true"
-                                                                                                    [(ngModel)]="user.netRate">
+                                                                                                    [(ngModel)]="user.netRate" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Sale Price"
                                                                                                     (input)="salePriceChange(user)"
-                                                                                                    [(ngModel)]="user.salePrice">
+                                                                                                    [(ngModel)]="user.salePrice" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Sale disc"
                                                                                                     (input)="saleDiscountByValueChange(user)"
-                                                                                                    [(ngModel)]="user.saleDiscountByValue">
+                                                                                                    [(ngModel)]="user.saleDiscountByValue" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Net Sale Price"
                                                                                                     (input)="netSalePriceChange(user)"
-                                                                                                    [(ngModel)]="user.netSalePrice">
+                                                                                                    [(ngModel)]="user.netSalePrice" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Total sale Price"
-                                                                                                    [(ngModel)]="user.totalSalePrice">
+                                                                                                    [(ngModel)]="user.totalSalePrice" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Margin %"
                                                                                                     (input)="marginPerentChange(user)"
-                                                                                                    [(ngModel)]="user.marginPercent">
+                                                                                                    [(ngModel)]="user.marginPercent" appFocusNavigation>
                                                                                             </td>
                                                                                             <td><button pButton pRipple
                                                                                                     type="button"
@@ -432,7 +436,7 @@
                         <div class="mt-2 pad-wrapper">
                             <div class="box">
                                 <div class="content">
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <p-table #dt responsiveLayout="scroll" [value]="itemDtl"
                                             styleClass="p-datatable-sm p-datatable-gridlines"
                                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -470,7 +474,7 @@
                                             </ng-template>
 
                                         </p-table>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                             </div>
