@@ -86,7 +86,6 @@
                     <a routerLink="/sale-return-list" routerLinkActive="active">
                         <i class="fa fa-helmet-un"></i><span>Sales Return</span>
                     </a>
-<<<<<<< HEAD
                     <ul id="Item" class="nav-content collapse" data-bs-parent="#Finance">
                         <a routerLink="/brands" routerLinkActive="active">
                             <i class="fa fa-helmet-un"></i><span>Brand</span>
@@ -107,7 +106,7 @@
                             <i class="fa fa-helmet-un"></i><span>Manufacturer</span>
                         </a>
                     </ul>
-                </li>
+              
             </ul>
             
         </li> 
@@ -188,29 +187,45 @@
             <a class="nav-link collapsed" data-bs-target="#Reports" data-bs-toggle="collapse" href="#">
                 <i class="pi pi-money-bill"></i><span>REPORTS</span><i class="pi pi-chevron-down ms-auto"></i>
             </a>
-            <ul id="Reports" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                
+            <ul id="Reports" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+
                 <!-- Nested Dropdown (Sales) -->
                 <li *ngIf="userType == 2 || userType == 1" class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#Acccount" data-bs-toggle="collapse" href="#">
-                        <i class="pi pi-shopping-cart"></i><span>Basic Data</span><i class="pi pi-chevron-down ms-auto"></i>
-=======
-                    <a routerLink="/till-open-list" routerLinkActive="active">
-                        <i class="fa fa-helmet-un"></i><span>Till Open</span>
->>>>>>> 4ff2b69a535e880c25e970cc2541123f13084bee
+                        <i class="pi pi-shopping-cart"></i>
+                        <span>Basic Data</span>
+                        <i class="pi pi-chevron-down ms-auto"></i>
                     </a>
-                    <a routerLink="/cash-in-list" routerLinkActive="active">
-                        <i class="fa fa-helmet-un"></i><span>Cash In</span>
-                    </a>
-                    <a routerLink="/cash-out-list" routerLinkActive="active">
-                        <i class="fa fa-helmet-un"></i><span>Cash Out</span>
-                    </a>
-
-                    <a routerLink="/till-close-list" routerLinkActive="active">
-                        <i class="fa fa-helmet-un"></i><span>Till Close</span>
-                    </a>
-                </ul>
-            </li>
+                    <ul id="Acccount" class="nav-content collapse" data-bs-parent="#Reports">
+                        <li>
+                            <a routerLink="/till-open-list" routerLinkActive="active" class="nav-link">
+                                <i class="fa fa-helmet-un"></i>
+                                <span>Till Open</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/cash-in-list" routerLinkActive="active" class="nav-link">
+                                <i class="fa fa-helmet-un"></i>
+                                <span>Cash In</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/cash-out-list" routerLinkActive="active" class="nav-link">
+                                <i class="fa fa-helmet-un"></i>
+                                <span>Cash Out</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/till-close-list" routerLinkActive="active" class="nav-link">
+                                <i class="fa fa-helmet-un"></i>
+                                <span>Till Close</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            
+            </ul>
+            
             <li *ngIf="userType == 2 || userType == 1" class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#Purchases" data-bs-toggle="collapse" href="#">
                     <i class="pi pi-shopping-cart"></i><span>PURCHASES</span><i class="pi pi-chevron-down ms-auto"></i>
