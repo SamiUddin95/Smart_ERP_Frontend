@@ -98,6 +98,8 @@ import { StckAdjListComponent } from './stck-adj-list/stck-adj-list.component';
 import { StckAdjFormComponent } from './stck-adj-form/stck-adj-form.component';
 import { JurnVuchrListComponent } from './jurn-vuchr-list/jurn-vuchr-list.component';
 import { JurnVuchrFormComponent } from './jurn-vuchr-form/jurn-vuchr-form.component';
+import { LocationComponent } from './location/location.component';
+import { LocationFormComponent } from './location-form/location-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -162,6 +164,8 @@ import { JurnVuchrFormComponent } from './jurn-vuchr-form/jurn-vuchr-form.compon
       StckAdjFormComponent,
       JurnVuchrListComponent,
       JurnVuchrFormComponent,
+      LocationComponent,
+      LocationFormComponent,
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,

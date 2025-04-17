@@ -116,11 +116,24 @@ export class ApiService {
 	getPurchaseOrderById(id: any) {
 		return this.app.get('getPurchaseOrderById?id=' + id, id);
 	}
+	fetchPurchaseOrdersByDate(startDate: Date, endDate: Date) {
+		const isoStart = startDate.toISOString();
+		const isoEnd = endDate.toISOString();
+		return this.app.get(`GetPurchaseOrdersByDateRange?startDate=${isoStart}&endDate=${isoEnd}`);
+	  }
 	getPurchaseById(id: any) {
 		return this.app.get('getPurchaseById?id=' + id, id);
 	}
 	getGoDown() {
 		return this.app.get('getGoDown');
+	}
+	  getTableData(tableName: any) {
+		debugger
+		return this.app.get('SupplierWise?tableName=' + tableName,tableName);
+	  }
+
+	  getAllLocation() {
+		return this.app.get('getLocation');
 	}
 	//Purchase Return
 
@@ -475,6 +488,25 @@ export class ApiService {
 	getManufactureById(id: any) {
 		return this.app.get('getManufacturerById?id=' + id, id);
 	}
+
+	//Location
+
+	deleteLocationbyId(id: any) {
+		return this.app.get('deleteLocationById?id=' + id, id);
+	}
+
+	createLocation(obj: any) {
+		debugger
+		return this.app.post('createLocation', obj);
+	}
+	getLocationById(id: any) {
+		return this.app.get('getLocationById?id=' + id, id);
+	}
+
+	getAllLocationdetailsFilterbased(locationName: string, sno:any) {
+		return this.app.get('getAllLocationdetailsFilterbased?locationName=' + locationName + '&sno=' + sno);
+	}
+
 	//Sales
 	createCounterSale(obj: any) {
 		return this.app.post('createCounterSale', obj);

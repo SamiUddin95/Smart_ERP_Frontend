@@ -15,21 +15,67 @@ export class PurcOrderFormComponent {
   userTypes:any=[];
   genders:any=[{label:'Male',value:'Male'},{label:'Female',value:'Female'}];
   urlId: any;
+  locationId : any;
+  originalPurchOrderDtlData: any[] = [];
   purchOrderDtlData: any[] = [];
+  tableNames: { label: string; value: string }[] = [];
+ selectedTable: string = '';
+ zeroQty: string = '';
+  tableData: { label: string; value: number }[] = [];
+  //formData: any = { tableItemId: null };
+  selectedItem: any;
+
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id'); 
     this.getParty();
     this.getUserGroup();
     this.getGoDown();
     this.getManufact();
+    this.getlocation();
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
+    
 	}
+
+  onTableChange() {
+    if (!this.selectedTable) return;
+  debugger
+    this.api.getTableData(this.selectedTable).subscribe((res: any[]) => {
+      console.log("Received table data:", res); // DEBUG
+      this.tableData = res.map(item => ({
+        label: item.name || item.partyName,  // lowercase keys
+        value: item.id
+      }));
+    }, err => {
+      console.error("Error fetching table data", err); // DEBUG
+    });
+  }
+  fetchDataByDate() {
+    if (!this.formData.startDate || !this.formData.endDate) {
+      alert("Please select both Start Date and End Date.");
+      return;
+    }
+  
+    this.api.fetchPurchaseOrdersByDate(this.formData.startDate, this.formData.endDate)
+      .subscribe(res => {
+        const result = JSON.parse(res);
+        this.originalPurchOrderDtlData = result.purchaseOrderDetails;
+        this.purchOrderDtlData = [...result.purchaseOrderDetails];
+  
+        if (result.purchaseOrders.length > 0) {
+          const firstOrder = result.purchaseOrders[0];
+          this.formData = { ...this.formData, ...firstOrder };
+        }
+      });
+  }
   getUserById(id: any) {
 		this.api.getPurchaseOrderById(id).subscribe(res => {
       debugger;
       var res=JSON.parse(res); 
+
+      this.originalPurchOrderDtlData = res.purchaseOrderDetails;
+
       this.purchOrderDtlData=res.purchaseOrderDetails;
       this.formData.partyId=res.purchaseOrders[0].partyId;
       this.formData.dateOfInvoice=res.purchaseOrders[0].dateOfInvoice;
@@ -38,6 +84,7 @@ export class PurcOrderFormComponent {
       this.formData.remarks=res.purchaseOrders[0].remarks; 
       this.formData.projectionDays=res.purchaseOrders[0].projectionDays; 
       this.formData.paCategory=res.purchaseOrders[0].paCategory; 
+      this.formData.location=res.purchaseOrders[0].location; 
 		})
 	}
   cancel(){
@@ -61,6 +108,7 @@ export class PurcOrderFormComponent {
       this.manufact=res;
     })
   }
+
   addUser(){ 
 	this.urlId?this.formData.id=this.urlId:undefined;
 	this.api.createSalesMan(this.formData).subscribe(res=>{
@@ -93,7 +141,8 @@ export class PurcOrderFormComponent {
       startDate:moment(this.formData.startDate).format('YYYY-MM-DD').toString(),
       projectionDays:this.formData.projectionDays, 
       paCategoryId:this.formData.paCategory,
-      purcOrderDtlModel:this.purchOrderDtlData
+      purcOrderDtlModel:this.purchOrderDtlData,
+      location:this.formData.location,
     }
     this.api.createPurchaseOrder(formData).subscribe((res: any)=>{
     
@@ -136,6 +185,12 @@ export class PurcOrderFormComponent {
       this.api.getAllItemsdetailsFilterbased(e.target.value,'All',0,0).subscribe(res=>{
         this.itemDtl=res;
   
+      })
+    }
+    location:any=[];
+    getlocation(){
+      this.api.getAllLocation().subscribe(res=>{
+        this.location=res;
       })
     }
 }

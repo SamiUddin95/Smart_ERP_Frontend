@@ -15,20 +15,17 @@
                                         <div class="card-body">
                                             <div class="grid">
                                                 <div class="row mt-1 px-2 col-12"> 
-                                                    <div class="col-md-4 col-sm-12">
+                                                   <!-- <div class="col-md-4 col-sm-12">
                                                         <label for="usertypr"><span class="text-danger">
                                                             </span>Party</label>
                                                         <div class="d-flex">
-                                                            <label
-                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
-                                                                for="username"><span class="text-danger">
+                                                            <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span
+                                                                    class="text-danger">
                                                                 </span>{{formData.partyId}}</label>
-                                                            <p-dropdown class="w-100" [options]="party"
-                                                                [(ngModel)]="formData.partyId"
-                                                                placeholder="Select a Type" optionLabel="partyName"
-                                                                optionValue="id"></p-dropdown>
+                                                            <p-dropdown class="w-100" [options]="party" [(ngModel)]="formData.partyId" placeholder="Select a Type"
+                                                                optionLabel="partyName" optionValue="id"></p-dropdown>
                                                         </div>
-                                                    </div>
+                                                    </div>-->
                                                     <div class="col-md-4 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Date of Invoice</label>
@@ -65,6 +62,72 @@
                                                         <input type="text" class="form-control col-md-12"
                                                             placeholder="Projection Days" [(ngModel)]="formData.projectionDays">
                                                     </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="tableSelect">Zero Qty</label>
+                                                        <div class="d-flex">
+                                                          <label class="mr-1 border w-25 d-flex align-items-center justify-content-center">
+                                                            {{ zeroQty || '—' }}
+                                                          </label>
+                                                          <p-dropdown
+                                                            [options]="[
+                                                              { label: 'Yes', value: 'yes' },
+                                                              { label: 'No', value: 'no' }
+                                                            ]"
+                                                            [(ngModel)]="zeroQty"
+                                                            placeholder="Select"
+                                                            class="w-100"
+                                                          ></p-dropdown>
+                                                        </div>
+                                                      </div>  
+                                                      <div class="col-md-6 col-sm-12">
+                                                        <label for="username">Location</label>
+                                                        <div class="d-flex">
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                for="username"><span class="text-danger">
+                                                                </span>{{formData.location}}</label>
+                                                            <p-dropdown class="w-100" [options]="location"
+                                                                [(ngModel)]="formData.location" placeholder="Location"
+                                                                optionLabel="name" optionValue="id"></p-dropdown>
+                                                        </div>
+
+                                                    </div>      
+                                                      <div class="col-md-4 col-sm-12">
+                                                        <label for="tableSelect">Select Table</label>
+                                                        <div class="d-flex">
+                                                          <label class="mr-1 border w-25 d-flex align-items-center justify-content-center">
+                                                            {{ selectedTable || '—' }}
+                                                          </label>
+                                                          <p-dropdown
+                                                          [options]="[
+                                                            { label: 'Party Wise', value: 'Party' },
+                                                            { label: 'Manufacture Wise', value: 'Manufacture' },
+                                                            { label: 'Category Wise', value: 'Category' },
+                                                            { label: 'Class Wise', value: 'Class' },
+                                                            { label: 'Brand Wise', value: 'Brand' },
+                                                          ]"
+                                                          [(ngModel)]="selectedTable"
+                                                          (onChange)="onTableChange()"
+                                                          placeholder="Select Table">
+                                                        </p-dropdown>
+                                                        </div>
+                                                      </div>
+                                                      
+                                                      <!-- Table Data Dropdown -->
+                                                      <div class="col-md-4 col-sm-12 mt-3" *ngIf="tableData.length">
+                                                        <label for="tableDataSelect">Party</label>
+                                                        <div class="d-flex">
+                                                          <label class="mr-1 border w-25 d-flex align-items-center justify-content-center">
+                                                            {{ formData.tableItemId || '—' }}
+                                                          </label>
+                                                          <p-dropdown
+                                                            class="w-100"
+                                                            [options]="tableData"
+                                                            [(ngModel)]="formData.partyId"
+                                                            placeholder="Select Item">
+                                                          </p-dropdown>
+                                                        </div>
+                                                      </div>
                                                     <div class="col-md-12 mt-4 text-right col-sm-12">
                                                         <button pButton pRipple type="button" icon="pi pi-save"
                                                             (click)="AddData()" label="Add"
@@ -73,6 +136,12 @@
                                                             (click)="RemoveData()" label="Remove"
                                                             class="ml-2 p-button-sm p-button-danger"> </button>
                                                     </div>
+                                                    <div class="col-md-4 col-sm-12" style="margin-top: 28px;">
+                                                        <button pButton type="button" label="Get PO Details" icon="pi pi-search"
+                                                                class="p-button-success" (click)="fetchDataByDate()">
+                                                        </button>
+                                                      </div>
+                                                      
                                                     <div class="col-md-12 mt-4">
                                                         <div class="pad-wrapper">
                                                             <div class="box">

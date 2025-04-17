@@ -77,7 +77,8 @@ import { StckAdjListComponent } from './stck-adj-list/stck-adj-list.component';
 import { StckAdjFormComponent } from './stck-adj-form/stck-adj-form.component';
 import { JurnVuchrFormComponent } from './jurn-vuchr-form/jurn-vuchr-form.component';
 import { JurnVuchrListComponent } from './jurn-vuchr-list/jurn-vuchr-list.component';
-
+import { LocationComponent} from  './location/location.component';
+import { LocationFormComponent } from './location-form/location-form.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, },
@@ -186,18 +187,10 @@ const routes: Routes = [
   { path:'usr-group-list',component:UsrGroupListComponent},
   { path:'usr-group-form',component:UsrGroupFormComponent},
   { path:'usr-group-form/:id',component:UsrGroupFormComponent},
-
+  { path: 'location', component: LocationComponent ,},
+  { path: 'location-form', component: LocationFormComponent,},
+  { path: 'location-form/:id', component: LocationFormComponent,},
   
-
-  
-
-  
-
-
-
-
-  
-
 ];
 
 @NgModule({
