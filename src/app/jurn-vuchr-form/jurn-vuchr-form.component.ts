@@ -424,7 +424,7 @@ export class JurnVuchrFormComponent {
     this.currentStock = this.jurnalVuchrDtl.map(x => x.netQuantity).join(',');
     this.saleDisc = this.jurnalVuchrDtl.map(x => x.saleDiscountByValue).join(',');
     this.netSalePrice = this.jurnalVuchrDtl.map(x => x.netSalePrice).join(',');
-    this.api.postPurchase(this.barCodes, this.currentStock, this.salePrice,
+    this.api.postPurchase('',0,this.barCodes, this.currentStock, this.salePrice,
       this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
         if (res.status == "OK")
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });

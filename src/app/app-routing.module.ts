@@ -77,8 +77,15 @@ import { StckAdjListComponent } from './stck-adj-list/stck-adj-list.component';
 import { StckAdjFormComponent } from './stck-adj-form/stck-adj-form.component';
 import { JurnVuchrFormComponent } from './jurn-vuchr-form/jurn-vuchr-form.component';
 import { JurnVuchrListComponent } from './jurn-vuchr-list/jurn-vuchr-list.component';
+<<<<<<< HEAD
 import { LocationComponent } from './location/location.component';
 import { LocationFormComponent } from './location-form/location-form.component';
+=======
+import { BarCodeshlefPrintComponent } from './bar-codeshlef-print/bar-codeshlef-print.component';
+import { LocationComponent } from './location/location.component';
+import { LocationFormComponent } from './location-form/location-form.component';
+
+>>>>>>> e4fb55e71c0e945229790e3f7bebf6cfe74d5202
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, },
@@ -177,6 +184,9 @@ const routes: Routes = [
   { path: 'till-close-form/:id', component: SaleTillCloseComponent ,},
   { path: 'till-open-list', component: SaleTillOpenListComponent ,},
   { path: 'till-close-list', component: SaleTillCloseListComponent ,},
+  { path: 'location', component: LocationComponent,},
+  { path: 'location-form', component: LocationFormComponent,},
+  { path: 'location-form/:id', component: LocationFormComponent,},
   { path:'rpt-basic-data',component:RptBasicDataComponent},
   { path:'rpt-purchase',component:RptPurchaseComponent},  
   { path:'rpt-purch-order',component:RptPurchaseOrderComponent}, 
@@ -187,9 +197,24 @@ const routes: Routes = [
   { path:'usr-group-list',component:UsrGroupListComponent},
   { path:'usr-group-form',component:UsrGroupFormComponent},
   { path:'usr-group-form/:id',component:UsrGroupFormComponent},
+<<<<<<< HEAD
   { path: 'location', component: LocationComponent,},
   { path: 'location-form', component: LocationFormComponent,},
   { path: 'location-form/:id', component: LocationFormComponent,},
+=======
+  { path:'bar-code-print',component:BarCodeshlefPrintComponent},
+
+  
+
+  
+
+  
+
+
+
+
+  
+>>>>>>> e4fb55e71c0e945229790e3f7bebf6cfe74d5202
 
 ];
 

@@ -135,6 +135,12 @@
                                                         <button pButton pRipple type="button" icon="pi pi-trash"
                                                             (click)="RemoveData()" label="Remove"
                                                             class="ml-2 p-button-sm p-button-danger"> </button>
+                                                            <button pButton pRipple type="button" icon="pi pi-save"
+                                                            (click)="postPurchase()" label="Post"
+                                                            class="ml-2 p-button-sm p-button-warning"> </button>
+                                                        <button pButton pRipple type="button" icon="pi pi-trash"
+                                                            (click)="unPostPurchase()" label="Un Post"
+                                                            class="ml-2 p-button-sm p-button-info"> </button>
                                                     </div>
                                                     <div class="col-md-4 col-sm-12" style="margin-top: 28px;">
                                                         <button pButton type="button" label="Get PO Details" icon="pi pi-search"
@@ -235,7 +241,7 @@
                                                                                         placeholder="GST Per 2"
                                                                                         [disabled]="false"
                                                                                         [(ngModel)]="user.requiredQty"></td>
-                                                                                <td> <input type="text"
+                                                                                <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
                                                                                         placeholder="Remakrs"
                                                                                         [disabled]="false"

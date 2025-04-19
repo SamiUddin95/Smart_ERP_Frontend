@@ -77,6 +77,7 @@
                                 <th pSortableColumn="name">Date of Invoice <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Start Date <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">End Date <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Posted Date <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
@@ -86,8 +87,10 @@
                                 <td>{{user.partyId}}</td>
                                 <td>{{user.invTotal}}</td>
                                 <td>{{user.dateOfInvoice}}</td>
-                                <td>{{user.startDate}}</td>
-                                <td>{{user.endDate}}</td>
+                                <td>{{user.startDate | date:'dd-MMM-yyyy' }}</td>
+                                <td>{{user.endDate | date:'dd-MMM-yyyy' }}</td>
+                                <td>{{user.postedDate | date:'dd-MMM-yyyy' }}</td>
+                                <td>{{user.status }}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"

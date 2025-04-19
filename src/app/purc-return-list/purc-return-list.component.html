@@ -71,33 +71,27 @@
                     </ng-template>    
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">Order No <p-sortIcon field="code"></p-sortIcon></th>
-                                <th pSortableColumn="name">Party Name <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="code">Serial No <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Party Name <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">User <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Invoice Total <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Users <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="price">Item Type<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Disc Perc<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Misc Changes<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Flat Disc<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Original Date<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">PartyInvDate<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Post/UnPost<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Posted Date<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Remarks<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-data>
                             <tr>
                                 <td>{{data.id}}</td>
+                                <td>{{data.date | date:'yyyy-MM-dd'}}</td>
                                 <td>{{data.partyId}}</td>
-                                <td>{{data.date | date:'yyyy-MM-dd'}}</td>
-                                <td>{{data.grandTotal }}</td>
                                 <td>{{data.userId}}</td>
-                                <td>{{data.itemType}}</td>
-                                <td>{{data.disc}}</td>
-                                <td>{{data.miscChanges}}</td>
-                                <td>{{data.flatDisc}}</td>
-                                <td>{{data.date | date:'yyyy-MM-dd'}}</td>
-                                <td>{{data.date | date:'yyyy-MM-dd'}}</td>
+                                <td>{{data.grandTotal }}</td>
+                                <td class="text-center">{{data.postUnpostStatus}}</td>
+                                <td>{{data.postedDate | date:'yyyy-MM-dd'}}</td>
+                                <td>{{data.remarks}}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple
                                         icon="pi pi-pencil" class="p-button-rounded p-button-info"

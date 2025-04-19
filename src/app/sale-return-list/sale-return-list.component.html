@@ -15,6 +15,12 @@
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Sale Return Serial No</label>
+                            <input type="text"
+                            class="form-control p-inputtext p-component txt"
+                                placeholder="Search By Invoice No">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
                             <label class="mb-0" for="DateFrom">Date From</label>
                             <p-calendar [(ngModel)]="filter.dateFrom" [style]="{width:100}"
                                 dateFormat="yy-mm-dd"></p-calendar>
@@ -31,11 +37,11 @@
                                 placeholder="Search By User Name">
                         </div> 
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Invoice No</label>
+                            <label class="mb-0 mx-2" for="Name">Amount</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Invoice No">
-                             </div>
+                                placeholder="Search By Amount">
+                        </div>
                          <div class="col-md-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
                                 class="p-button-sm p-button-secondary float-right mx-1  mt-4"

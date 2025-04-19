@@ -103,6 +103,8 @@ import { LocationFormComponent } from './location-form/location-form.component';
 import { InterLocTransListComponent } from './inter-loc-trans-list/inter-loc-trans-list.component';
 import { InterLocTransFormComponent } from './inter-loc-trans-form/inter-loc-trans-form.component';
 import { FocusNavigationDirective } from './focus-navigation.directive';
+import { BarCodeshlefPrintComponent } from './bar-codeshlef-print/bar-codeshlef-print.component';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 
 @NgModule({
   declarations: [
@@ -173,11 +175,12 @@ import { FocusNavigationDirective } from './focus-navigation.directive';
       InterLocTransListComponent,
       InterLocTransFormComponent,
       FocusNavigationDirective,
+      BarCodeshlefPrintComponent,
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,
     BrowserModule,AnimateModule,BrowserAnimationsModule,ToastModule,ConfirmDialogModule,CalendarModule,
-    ButtonModule,DividerModule,DialogModule,
+    ButtonModule,DividerModule,DialogModule,NgxBarcode6Module,
     AppRoutingModule,TabViewModule,CheckboxModule 
   ],
   providers: [ConfirmationService,MessageService,DatePipe],

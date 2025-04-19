@@ -106,11 +106,28 @@ export class ApiService {
 	getPurchaseMaxSerialNo(){
 		return this.app.get('getPurchaseMaxSerialNo');
 	}
+	getSaleMaxSerialNo(){
+		return this.app.get('getSaleMaxSerialNo');
+	}
+	getPurchaseReturnMaxSerialNo(){
+		return this.app.get('getPurchaseReturnMaxSerialNo');
+	}
 	getAllPurchaseOrder() {
 		return this.app.get('getAllPurchaseOrder');
 	}
 	createPurchaseOrder(obj: any) {
 		return this.app.post('createPurchaseOrder', obj);
+	}
+	postPurchasePrder(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+		return this.app.get('postPurchaseOrder?barCodes=' + barCodes + "&currentStock=" + currentStock +
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
+		+"&postedBy="+postedBy);
+	}
+	unPostPurchaseOrder(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+		debugger
+		return this.app.get('unPostPurchaseOrder?barCodes=' + barCodes + "&currentStock=" + currentStock +
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
+		+"&postedBy="+postedBy);
 	}
 	getPurchaseOrderCategory() {
 		return this.app.get('getPurchaseOrderCategory');
@@ -342,9 +359,28 @@ export class ApiService {
 	createPurchase(obj: any) {
 		return this.app.post('createPurchase', obj);
 	}
-	postPurchase(barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+	postPurchase(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
 		return this.app.get('postPurchase?barCodes=' + barCodes + "&currentStock=" + currentStock +
-			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + '&netSaleePrice=' + netSalePrice);
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
+		+"&postedBy="+postedBy);
+	}
+	unPostPurchase(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+		debugger
+		return this.app.get('unPostPurchase?barCodes=' + barCodes + "&currentStock=" + currentStock +
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
+		+"&postedBy="+postedBy);
+	}
+
+	postPurchaseReturn(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+		return this.app.get('postPurchaseReturn?barCodes=' + barCodes + "&currentStock=" + currentStock +
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
+		+"&postedBy="+postedBy);
+	}
+	unPostPurchaseReturn(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+		debugger
+		return this.app.get('unPostPurchaseReturn?barCodes=' + barCodes + "&currentStock=" + currentStock +
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
+		+"&postedBy="+postedBy);
 	}
 	//Stock Adjustment
 	// getAllStockAdjustment(dateFrom:string,dateTo:string,postedDate:string,postedBy:number,partyId:number,

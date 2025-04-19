@@ -35,6 +35,7 @@ export class PurcReturnFormComponent {
     this.urlId = this.route.snapshot.paramMap.get('id'); 
     this.getAllItem();
     this.getParty(); 
+    this.getMaxSerialNo();
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
@@ -49,10 +50,17 @@ export class PurcReturnFormComponent {
       })
     }
   }
+  getMaxSerialNo(){
+    this.api.getPurchaseReturnMaxSerialNo().subscribe(res=>{
+      this.formData.id=res;
+    })
+  }
   getUserById(id: any) {
 		this.api.getPurchaseReturnById(String(id)).subscribe(res => { 
       var res=JSON.parse(res); 
       this.purcRetDtl=res.purchaseOrderDetails;
+      this.formData.id=res.purchaseOrders[0].id;
+      this.formData.remarks=res.purchaseOrders[0].remarks;
       this.formData.partyId=res.purchaseOrders[0].partyId;
       this.bonusQty=res.purchaseOrders[0].bonusQty;
       this.grandTotal=res.purchaseOrders[0].grandTotal;
@@ -142,6 +150,7 @@ export class PurcReturnFormComponent {
       id:this.urlId?this.formData.id=this.urlId:undefined,
       qtyPack:this.purcRetDtl.length,
       partyId:this.formData.partyId,
+      remarks:this.formData.remarks,
       disc:this.disc,
       totalQty:this.totalQty,
       totalDisc:this.totalDisc, 
@@ -197,6 +206,44 @@ export class PurcReturnFormComponent {
     this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
     this.itemSearchDialog = false; // Close the search dialog
     this.searchedItemName="";
+  }
+  barCodes: string = '';
+  currentStock: string = '';
+  salePrice: string = '';
+  purchasePrice: string = '';
+  saleDisc: string = '';
+  netSalePrice: string = '';
+  postPurchase() {
+    debugger
+    this.barCodes = this.purcRetDtl.map((x: { barcode: any; }) => x.barcode).join(',');
+    this.purchasePrice = this.purcRetDtl.map((x: { purchasePrice: any; }) => x.purchasePrice).join(',');
+    this.salePrice = this.purcRetDtl.map((x: { netSalePrice: any; }) => x.netSalePrice).join(',');
+    this.currentStock = this.purcRetDtl.map((x: { netQuantity: any; }) => x.netQuantity).join(',');
+    this.saleDisc = this.purcRetDtl.map((x: { saleDiscountByValue: any; }) => x.saleDiscountByValue).join(',');
+    this.netSalePrice = this.purcRetDtl.map((x: { netSalePrice: any; }) => x.netSalePrice).join(',');
+    const name = localStorage.getItem("Name")?.toString() ?? '';
+    this.api.postPurchaseReturn(name, this.urlId, this.barCodes, this.currentStock, this.salePrice,
+      this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
+        if (res.status == "OK")
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
+      });
+    
+  }
+  unPostPurchase() {
+    debugger
+    this.barCodes = this.purcRetDtl.map((x: { barcode: any; }) => x.barcode).join(',');
+    this.purchasePrice = this.purcRetDtl.map((x: { purchasePrice: any; }) => x.purchasePrice).join(',');
+    this.salePrice = this.purcRetDtl.map((x: { netSalePrice: any; }) => x.netSalePrice).join(',');
+    this.currentStock = this.purcRetDtl.map((x: { netQuantity: any; }) => x.netQuantity).join(',');
+    this.saleDisc = this.purcRetDtl.map((x: { saleDiscountByValue: any; }) => x.saleDiscountByValue).join(',');
+    this.netSalePrice = this.purcRetDtl.map((x: { netSalePrice: any; }) => x.netSalePrice).join(',');
+    const name = localStorage.getItem("Name")?.toString() ?? '';
+    this.api.unPostPurchaseReturn(name, this.urlId, this.barCodes, this.currentStock, this.salePrice,
+      this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
+        if (res.status == "OK")
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
+      });
+    
   }
   
 }
