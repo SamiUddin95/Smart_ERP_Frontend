@@ -98,9 +98,12 @@ import { StckAdjListComponent } from './stck-adj-list/stck-adj-list.component';
 import { StckAdjFormComponent } from './stck-adj-form/stck-adj-form.component';
 import { JurnVuchrListComponent } from './jurn-vuchr-list/jurn-vuchr-list.component';
 import { JurnVuchrFormComponent } from './jurn-vuchr-form/jurn-vuchr-form.component';
+import { LocationComponent } from './location/location.component';
+import { LocationFormComponent } from './location-form/location-form.component';
 import { InterLocTransListComponent } from './inter-loc-trans-list/inter-loc-trans-list.component';
 import { InterLocTransFormComponent } from './inter-loc-trans-form/inter-loc-trans-form.component';
 import { FocusNavigationDirective } from './focus-navigation.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -165,6 +168,8 @@ import { FocusNavigationDirective } from './focus-navigation.directive';
       StckAdjFormComponent,
       JurnVuchrListComponent,
       JurnVuchrFormComponent,
+      LocationComponent,
+      LocationFormComponent,
       InterLocTransListComponent,
       InterLocTransFormComponent,
       FocusNavigationDirective,

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
@@ -11,26 +11,71 @@ import * as moment from 'moment';
 })
 export class PurcOrderFormComponent {
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
-    @ViewChild('tableRef') tableRef!: ElementRef;
   formData: any = {  };
   userTypes:any=[];
   genders:any=[{label:'Male',value:'Male'},{label:'Female',value:'Female'}];
   urlId: any;
+  locationId : any;
+  originalPurchOrderDtlData: any[] = [];
   purchOrderDtlData: any[] = [];
+  tableNames: { label: string; value: string }[] = [];
+ selectedTable: string = '';
+ zeroQty: string = '';
+  tableData: { label: string; value: number }[] = [];
+  //formData: any = { tableItemId: null };
+  selectedItem: any;
+
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id'); 
     this.getParty();
     this.getUserGroup();
     this.getGoDown();
     this.getManufact();
+    this.getlocation();
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
+    
 	}
+
+  onTableChange() {
+    if (!this.selectedTable) return;
+  debugger
+    this.api.getTableData(this.selectedTable).subscribe((res: any[]) => {
+      console.log("Received table data:", res); // DEBUG
+      this.tableData = res.map(item => ({
+        label: item.name || item.partyName,  // lowercase keys
+        value: item.id
+      }));
+    }, err => {
+      console.error("Error fetching table data", err); // DEBUG
+    });
+  }
+  fetchDataByDate() {
+    if (!this.formData.startDate || !this.formData.endDate) {
+      alert("Please select both Start Date and End Date.");
+      return;
+    }
+  
+    this.api.fetchPurchaseOrdersByDate(this.formData.startDate, this.formData.endDate)
+      .subscribe(res => {
+        const result = JSON.parse(res);
+        this.originalPurchOrderDtlData = result.purchaseOrderDetails;
+        this.purchOrderDtlData = [...result.purchaseOrderDetails];
+  
+        if (result.purchaseOrders.length > 0) {
+          const firstOrder = result.purchaseOrders[0];
+          this.formData = { ...this.formData, ...firstOrder };
+        }
+      });
+  }
   getUserById(id: any) {
 		this.api.getPurchaseOrderById(id).subscribe(res => {
       debugger;
       var res=JSON.parse(res); 
+
+      this.originalPurchOrderDtlData = res.purchaseOrderDetails;
+
       this.purchOrderDtlData=res.purchaseOrderDetails;
       this.formData.partyId=res.purchaseOrders[0].partyId;
       this.formData.dateOfInvoice=res.purchaseOrders[0].dateOfInvoice;
@@ -39,6 +84,7 @@ export class PurcOrderFormComponent {
       this.formData.remarks=res.purchaseOrders[0].remarks; 
       this.formData.projectionDays=res.purchaseOrders[0].projectionDays; 
       this.formData.paCategory=res.purchaseOrders[0].paCategory; 
+      this.formData.location=res.purchaseOrders[0].location; 
 		})
 	}
   cancel(){
@@ -62,6 +108,7 @@ export class PurcOrderFormComponent {
       this.manufact=res;
     })
   }
+
   addUser(){ 
 	this.urlId?this.formData.id=this.urlId:undefined;
 	this.api.createSalesMan(this.formData).subscribe(res=>{
@@ -94,7 +141,8 @@ export class PurcOrderFormComponent {
       startDate:moment(this.formData.startDate).format('YYYY-MM-DD').toString(),
       projectionDays:this.formData.projectionDays, 
       paCategoryId:this.formData.paCategory,
-      purcOrderDtlModel:this.purchOrderDtlData
+      purcOrderDtlModel:this.purchOrderDtlData,
+      location:this.formData.location,
     }
     this.api.createPurchaseOrder(formData).subscribe((res: any)=>{
     
@@ -121,41 +169,28 @@ export class PurcOrderFormComponent {
       this.usrGrpCat=res;
     })
   }
-  itemSearchDialog: boolean = false;
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent): void {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
-      event.preventDefault();
-      this.itemSearchDialog = true;
-    }
-  }
-  itemNotFound: boolean = false;
-  itemDtl: any = [];
-  searchedItemName: string = '';
-  itemSearchFromDialog(e: any) {
-    this.api.getAllItemsdetailsFilterbased(this.searchedItemName, 'All', 0, 0).subscribe(res => {
-      this.itemDtl = res;
-    });
-  }
-  onSearchDialogEnter(e: any) {
-    this.searchedItemName = e.target.value;
-    setTimeout(() => {
-      this.scrollToHighlightedRow();
-    }, 100);
-  }
-  scrollToHighlightedRow() {
-    const selectedRow = document.querySelector('.highlighted') as HTMLElement;
-    if (selectedRow && this.tableRef) {
-      selectedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    this.itemSearchDialog = false;
-  }
 
-  highlightedRowId: number | null = null;
-
-  selectItemFromSearch(item: any) {
-    this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
-    this.itemSearchDialog = false; // Close the search dialog
-    this.searchedItemName="";
-  }
+    itemSearchDialog: boolean = false;
+    @HostListener('document:keydown', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent): void {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+        event.preventDefault();
+        this.itemSearchDialog=true;
+      }
+    }
+    itemDtl:any=[];
+    searchedItemName:string='';
+    itemSearchFromDialog(e:any){
+      debugger
+      this.api.getAllItemsdetailsFilterbased(e.target.value,'All',0,0).subscribe(res=>{
+        this.itemDtl=res;
+  
+      })
+    }
+    location:any=[];
+    getlocation(){
+      this.api.getAllLocation().subscribe(res=>{
+        this.location=res;
+      })
+    }
 }

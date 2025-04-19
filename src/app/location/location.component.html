@@ -1,0 +1,89 @@
+<div class="container-fluid" style="width:100%">
+    <div class="d-flex justify-content-between p-2">
+        <h3>Location</h3>
+    
+        <div class="button-container">
+            <button pButton pRipple type="button" icon="pi pi-plus" label="Add Brand"
+                class="p-button-sm p-button-success float-left" (click)="addLocation()"></button>
+        </div>
+    </div>
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <p-accordion>
+                <div class="grid">
+                    <div class="row mt-1 px-2 col-12">
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">SNO</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Sno" [(ngModel)]="filter.sno">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Name</label>
+                            <input type="text" class="form-control p-inputtext p-component txt"
+                                placeholder="Name" [(ngModel)]="filter.locationName">
+                        </div>
+                        <div class="col-md-4 offset-4 col-sm-12 text-right mt-1">
+                            <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4" style="width:130px"
+                                (click)="clearFilter()"></button>
+                            <button pButton pRipple type="button" icon="pi pi-search" label="Search"
+                                class="p-button-sm p-button-info float-right mx-1 mt-4" style="width:130px"
+                                (click)="getLocationList()"></button>
+
+                        </div>
+                    </div>
+                </div>
+        </p-accordion>
+        <div class="pad-wrapper">
+            <div class="box">
+                <div class="content">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="location"  styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="code">SNO <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Address <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Phone No <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Email <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Royality Percent <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Action <p-sortIcon field="name"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-bnd>
+                            <tr>
+                                <td>{{bnd.serialnumber}}</td>
+                                <td>{{bnd.name}}</td>
+                                <td>{{bnd.address}}</td>
+                                <td>{{bnd.phonenumber}}</td>
+                                <td>{{bnd.email}}</td>
+                                <td>{{bnd.royalityPercent}}</td>
+                                <td style="position: relative;" class="d-flex">
+                                    <button style="margin-right: 1px; font-size: 1px; padding: 1px 1px;" pButton pRipple
+                                        icon="pi pi-pencil" class="p-button-rounded p-button-info"
+                                        (click)="editLocation(bnd.id)"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                        class="p-button-rounded p-button-danger" (click)="deleteBrands(bnd)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-toast position="top-right"></p-toast>
+<p-confirmDialog #cd [style]="{width: '30vw'}" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="header">
+        <h3>Alert</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-danger" label="No"
+            (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-success"
+            (click)="cd.accept()"></button>
+    </ng-template>
+    
+</p-confirmDialog>
+
