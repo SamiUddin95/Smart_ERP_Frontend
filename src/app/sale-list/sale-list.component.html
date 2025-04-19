@@ -15,6 +15,12 @@
                 <div class="grid">
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">User Name</label>
+                            <input type="text"
+                            class="form-control p-inputtext p-component txt"
+                                placeholder="Search By User Name">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
                             <label class="mb-0" for="DateFrom">Date From</label>
                             <p-calendar [(ngModel)]="filter.dateFrom" [style]="{width:100}"
                                 dateFormat="yy-mm-dd"></p-calendar>
@@ -25,10 +31,16 @@
                                 dateFormat="yy-mm-dd"></p-calendar>
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">User Name</label>
+                            <label class="mb-0 mx-2" for="Name">Sale Invoice No</label>
                             <input type="text"
                             class="form-control p-inputtext p-component txt"
-                                placeholder="Search By User Name">
+                                placeholder="Search By Invoice No">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="mb-0 mx-2" for="Name">Amount</label>
+                            <input type="text"
+                            class="form-control p-inputtext p-component txt"
+                                placeholder="Search By Amount">
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Cash/Credit</label>
@@ -36,13 +48,7 @@
                             class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Cash/Credit">
                         </div>
-                        <div class="col-md-4 col-sm-12">
-                            <label class="mb-0 mx-2" for="Name">Invoice No</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
-                                placeholder="Search By Invoice No">
-                             </div>
-                         <div class="col-md-4 col-sm-12 text-right mt-1">
+                         <div class="col-md-4 col-sm-12 offset-8 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
                                 class="p-button-sm p-button-secondary float-right mx-1  mt-4"
                                 style="width:130px" (click)="clearFilter()"></button>
@@ -72,9 +78,9 @@
                     </ng-template>    
                     <ng-template pTemplate="header">
                             <tr>
+                                <th pSortableColumn="name">Sale Invoice No.<p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="code">Date <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">User Name <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Sale Invoice No.<p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="price">Sale Invoice Type<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Invoice Amount<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Cash Received<p-sortIcon field="price"></p-sortIcon></th>
@@ -83,9 +89,9 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-user>
                             <tr>
+                                <td>{{user.id}}</td>
                                 <td>{{user.createdAt| date:'dd-MMM-yyyy:hh:mm'}}</td>
                                 <td>{{user.discount}}</td>
-                                <td>{{user.id}}</td>
                                 <td>{{user.invoiceType}}</td>
                                 <td>{{user.grandTotal}}</td>
                                 <td>{{user.cashReceived}}</td>

@@ -435,7 +435,7 @@ export class StckAdjFormComponent {
     this.currentStock = this.stckAdjDtl.map(x => x.netQuantity).join(',');
     this.saleDisc = this.stckAdjDtl.map(x => x.saleDiscountByValue).join(',');
     this.netSalePrice = this.stckAdjDtl.map(x => x.netSalePrice).join(',');
-    this.api.postPurchase(this.barCodes, this.currentStock, this.salePrice,
+    this.api.postPurchase('',0,this.barCodes, this.currentStock, this.salePrice,
       this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
         if (res.status == "OK")
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });

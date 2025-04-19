@@ -5,10 +5,14 @@
         <div class="text-right">
             <button pButton pRipple type="button" icon="pi pi-save"
                 (click)="AddData()" label="Add"
-                class="p-button-sm p-button-success"> </button>
-            <button pButton pRipple type="button" icon="pi pi-trash"
+                class="p-button-sm p-button-success mr-2"> </button>
+            <!-- <button pButton pRipple type="button" icon="pi pi-trash"
                 (click)="RemoveData()" label="Remove"
-                class="ml-2 p-button-sm p-button-danger"> </button>
+                class="ml-2 p-button-sm p-button-danger"> </button> -->
+            <button pButton pRipple  label="Post" [disabled]="urlId == 0"
+                (click)="postPurchase()" class="mr-2 p-button-sm p-button-warning" pTooltip="PDF" tooltipPosition="bottom"></button>
+            <button pButton pRipple label="UnPost" [disabled]="urlId == 0"
+                (click)="unPostPurchase()" class="mr-2 p-button-sm p-button-primary" pTooltip="PDF" tooltipPosition="bottom"></button>
         </div>
     </div>
     <section>
@@ -27,7 +31,7 @@
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Serial No</label>
                                                         <input type="text" class="form-control col-md-12"
-                                                            placeholder="Serial No" [(ngModel)]="formData.id">
+                                                            [disabled]="true" placeholder="Serial No" [(ngModel)]="formData.id">
                                                     </div> 
                                                     <div class="col-md-4 col-sm-12">
                                                     <label for="usertypr"><span class="text-danger">
@@ -43,11 +47,17 @@
                                                             optionValue="id"></p-dropdown>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 col-sm-12 pl-2">
+                                                <!-- <div class="col-md-4 col-sm-12 pl-2">
                                                     <label for="lastname"><span class="text-danger">
                                                         </span>Pur Sno</label>
                                                     <input type="text" class="form-control col-md-12"
                                                         placeholder="Pur Sno" [(ngModel)]="formData.purSno">
+                                                </div>   -->
+                                                <div class="col-md-4 col-sm-12 pl-2">
+                                                    <label for="lastname"><span class="text-danger">
+                                                        </span>Remarks</label>
+                                                    <input type="text" class="form-control col-md-12"
+                                                        placeholder="Remarks" [(ngModel)]="formData.remarks">
                                                 </div>  
                                                     <div class="col-md-12 mt-4">
                                                         <div class="pad-wrapper">

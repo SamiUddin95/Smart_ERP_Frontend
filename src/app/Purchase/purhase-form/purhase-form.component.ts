@@ -18,7 +18,7 @@ export class PurhaseFormComponent {
   visible: boolean = false;
   childItemSearch: any;
   childItems: any = [];
-  urlId: any;
+  urlId: any=0;
   party: any = [];
   totalQty: number = 0;
   totalDisc: number = 0;
@@ -33,7 +33,7 @@ export class PurhaseFormComponent {
   purcDtl: any[] = [];
   recentItem: any = {};
   ngOnInit(): void {
-    this.urlId = this.route.snapshot.paramMap.get('id');
+    this.urlId = Number(this.route.snapshot.paramMap.get('id'));
     this.getCategory();
     this.getItems();
     this.getParty();
@@ -50,6 +50,7 @@ export class PurhaseFormComponent {
   getPurchaseById(id: number) {
     this.api.getPurchaseById(id).subscribe(res => {
       var res = JSON.parse(res);
+      this.formData.id = res.purchase[0].id;
       this.formData.partyId = res.purchase[0].vendorId;
       this.formData.remarks = res.purchase[0].remarks;
       this.formData.invoiceNo = res.purchase[0].invoiceNo;
@@ -435,17 +436,36 @@ export class PurhaseFormComponent {
   saleDisc: string = '';
   netSalePrice: string = '';
   postPurchase() {
+    debugger
     this.barCodes = this.purcDtl.map(x => x.barcode).join(',');
     this.purchasePrice = this.purcDtl.map(x => x.purchasePrice).join(',');
     this.salePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
     this.currentStock = this.purcDtl.map(x => x.netQuantity).join(',');
     this.saleDisc = this.purcDtl.map(x => x.saleDiscountByValue).join(',');
     this.netSalePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
-    this.api.postPurchase(this.barCodes, this.currentStock, this.salePrice,
+    const name = localStorage.getItem("Name")?.toString() ?? '';
+    this.api.postPurchase(name, this.urlId, this.barCodes, this.currentStock, this.salePrice,
       this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
         if (res.status == "OK")
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
-      })
+      });
+    
+  }
+  unPostPurchase() {
+    debugger
+    this.barCodes = this.purcDtl.map(x => x.barcode).join(',');
+    this.purchasePrice = this.purcDtl.map(x => x.purchasePrice).join(',');
+    this.salePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
+    this.currentStock = this.purcDtl.map(x => x.netQuantity).join(',');
+    this.saleDisc = this.purcDtl.map(x => x.saleDiscountByValue).join(',');
+    this.netSalePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
+    const name = localStorage.getItem("Name")?.toString() ?? '';
+    this.api.unPostPurchase(name, this.urlId, this.barCodes, this.currentStock, this.salePrice,
+      this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
+        if (res.status == "OK")
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
+      });
+    
   }
   exportPdf() {
     const doc = new jsPDF('l', 'mm', 'a4');

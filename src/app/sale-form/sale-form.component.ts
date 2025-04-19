@@ -50,6 +50,7 @@ export class SaleFormComponent {
 
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
+    this.getMaxSerialNo();
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
@@ -181,6 +182,11 @@ export class SaleFormComponent {
 
       })
     }
+  }
+  getMaxSerialNo(){
+    this.api.getSaleMaxSerialNo().subscribe(res=>{
+      this.formData.id=res;
+    })
   }
   getUserById(id: any) {
     this.api.getSalesManById(String(id)).subscribe(res => {

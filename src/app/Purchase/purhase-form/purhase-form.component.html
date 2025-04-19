@@ -1,8 +1,6 @@
 <div class="container-fluid mt-2" style="width:100%">
     <div class="flex justify-content-between p-2 ">
         <h3>PURCHASE</h3>
-        <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Post" [disabled]="this.urlId==0"
-            (click)="postPurchase()" class="mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
     </div>
     <section>
         <div class="card">
@@ -21,7 +19,7 @@
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Serial No</label>
                                                         <input type="text" [disabled]="true" class="form-control col-md-12"
-                                                            placeholder="Remarks" [(ngModel)]="formData.id">
+                                                            placeholder="Serial No" [(ngModel)]="formData.id">
                                                     </div>
                                                     <div class="col-md-4 col-sm-12">
                                                         <label for="usertypr"><span class="text-danger">
@@ -45,17 +43,21 @@
                                                     </div>
                                                     <div class="col-md-4 col-sm-12 pl-2">
                                                         <label for="lastname"><span class="text-danger">
-                                                            </span>PartyInv</label>
+                                                            </span>Invoice No</label>
                                                         <input type="text" class="form-control col-md-12"
-                                                            placeholder="Inv" [(ngModel)]="formData.invoiceNo">
+                                                            placeholder="Invoice No" [(ngModel)]="formData.invoiceNo">
                                                     </div>
-                                                    <div class="col-md-3 mt-4 offset-9 text-right col-sm-3">
-                                                        <button pButton pRipple type="button" icon="pi pi-save"
+                                                    <div class="col-md-3 offset-9 text-right col-sm-3">
+                                                        <button pButton pRipple type="button"
                                                             (click)="AddData()" label="Add"
-                                                            class="p-button-sm p-button-success"> </button>
-                                                        <button pButton pRipple type="button" icon="pi pi-trash"
+                                                            class="mr-2 p-button-sm p-button-success"> </button>
+                                                        <!-- <button pButton pRipple type="button" icon="pi pi-trash"
                                                             (click)="RemoveData()" label="Remove"
-                                                            class="ml-2 p-button-sm p-button-danger"> </button>
+                                                            class="ml-2 p-button-sm p-button-danger"> </button> -->
+                                                        <button pButton pRipple  label="Post" [disabled]="urlId == 0"
+                                                        (click)="postPurchase()" class="mr-2 p-button-sm p-button-warning" pTooltip="PDF" tooltipPosition="bottom"></button>
+                                                        <button pButton pRipple label="UnPost" [disabled]="urlId == 0"
+                                                        (click)="unPostPurchase()" class="mr-2 p-button-sm p-button-primary" pTooltip="PDF" tooltipPosition="bottom"></button>
                                                     </div>
                                                     <div class="col-md-12 mt-4">
                                                         <div class="pad-wrapper">
