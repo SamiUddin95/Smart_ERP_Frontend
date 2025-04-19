@@ -15,13 +15,14 @@
                                         <div class="card-body">
                                             <div class="grid">
                                                 <div class="row px-2 col-12">
-                                                    <div class="row"> 
+                                                    <div class="row">
                                                         <div class="col-md-4 col-sm-12 pl-2">
                                                             <label for="lastname"><span class="text-danger">
                                                                 </span>Serial No</label>
                                                             <input type="text" class="form-control col-md-12"
-                                                                [disabled]="true" placeholder="Serial No" [(ngModel)]="formData.id">
-                                                        </div> 
+                                                                [disabled]="true" placeholder="Serial No"
+                                                                [(ngModel)]="formData.id">
+                                                        </div>
                                                         <div class="col-md-8 text-right xt-right mt-4">
                                                             <button pButton pRipple type="button" icon="pi pi-save"
                                                                 (click)="AddData()" label="Add"
@@ -29,9 +30,10 @@
                                                             <!-- <button pButton pRipple type="button" icon="pi pi-trash"
                                                                 (click)="RemoveData()" label="Remove"
                                                                 class="ml-2 p-button-sm p-button-danger"> </button> -->
-                                                                <button pButton pRipple type="button" icon="pi pi-info"
-                                                                (click)="openModal()" [disabled]="saleDtl.length==0" label="Post"
-                                                                class="ml-2 p-button-sm p-button-info"> </button>
+                                                            <button pButton pRipple type="button" icon="pi pi-info"
+                                                                (click)="openModal()" [disabled]="saleDtl.length==0"
+                                                                label="Post" class="ml-2 p-button-sm p-button-info">
+                                                            </button>
                                                         </div>
                                                         <div class="mt-3 pad-wrapper">
                                                             <div class="box">
@@ -90,11 +92,14 @@
 
                                                                                 <ng-template pTemplate="body"
                                                                                     let-saleDtl let-i="rowIndex">
-                                                                                    <tr  #rowElement [id]="'row-' + i">
+                                                                                    <tr #rowElement [id]="'row-' + i">
                                                                                         <td>{{ i + 1 }}</td>
-                                                                                        <td [ngClass]="{'highlighted': saleDtl.barcode== searchedItemName}"><input type="text"
+                                                                                        <td
+                                                                                            [ngClass]="{'highlighted': saleDtl.barcode== searchedItemName}">
+                                                                                            <input type="text"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
-                                                                                                placeholder="Bar Code" autofocus
+                                                                                                placeholder="Bar Code"
+                                                                                                autofocus
                                                                                                 (keydown.enter)="onKey($event, saleDtl)"
                                                                                                 [disabled]="false"
                                                                                                 [(ngModel)]="saleDtl.barCode">
@@ -107,7 +112,8 @@
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Quantity"
-                                                                                                [disabled]="false" (input)="qtyChange(saleDtl)"
+                                                                                                [disabled]="false"
+                                                                                                (input)="qtyChange(saleDtl)"
                                                                                                 [(ngModel)]="saleDtl.qty">
                                                                                         </td>
                                                                                         <td><input type="number"
@@ -199,7 +205,7 @@
                                                                                                     [disabled]="false"
                                                                                                     [(ngModel)]="earnedPoints">
                                                                                             </th>
-                                                                                            
+
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th>Cash Back</th>
@@ -225,7 +231,7 @@
                                             <button style="margin-right: 3px" pButton pRipple type="button"
                                                 icon="pi pi-arrow-left" (click)="cancel()" label="Back"
                                                 class="p-button-sm p-button-danger"> </button>
-                                            
+
                                         </div>
                                     </div>
                                 </p-accordionTab>
@@ -237,25 +243,24 @@
         </div>
     </section>
 </div>
-<p-dialog header="Cashier Window" [modal]="true" [(visible)]="displayModal" [style]="{ width: '75rem', height: '50rem' }">
+<p-dialog header="Cashier Window" [modal]="true" [(visible)]="displayModal"
+    [style]="{ width: '75rem', height: '50rem' }">
     <div class="row">
         <div class="col-md-4 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Invoice Type</label>
-                <p-dropdown class="w-100" [options]="invoiceTypes"
-                [(ngModel)]="invoiceType" (onChange)="invoiceTypeChange($event)"
-                placeholder="Select Invoice Type" optionLabel="label"
+            <p-dropdown class="w-100" [options]="invoiceTypes" [(ngModel)]="invoiceType"
+                (onChange)="invoiceTypeChange($event)" placeholder="Select Invoice Type" optionLabel="label"
                 optionValue="value"></p-dropdown>
         </div>
     </div>
-    
+
     <div class="row" *ngIf="displayCashWin">
         <p-divider></p-divider>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Net Total</label>
-            <input type="text" class="form-control col-md-12"
-                placeholder="Inv" [(ngModel)]="grandTotal">
+            <input type="text" class="form-control col-md-12" placeholder="Inv" [(ngModel)]="grandTotal">
         </div>
         <!-- <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -266,41 +271,42 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Cash Recevied</label>
-            <input type="number" class="form-control col-md-12" (input)="cashReceivedChange()"
-                placeholder="Remarks" [(ngModel)]="cashReceived">
+            <input type="number" (focus)="setFocusedField({ data: this, field: 'cashReceived' })"
+                class="form-control col-md-12" (input)="cashReceivedChange()" placeholder="Remarks"
+                [(ngModel)]="cashReceived" />
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Cash Charged</label>
-            <input type="number" class="form-control col-md-12" (input)="cashChargedChange()"
-                placeholder="Remarks" [(ngModel)]="cashCharged">
+            <input type="number" (focus)="setFocusedField({ data: this, field: 'cashCharged' })"
+                class="form-control col-md-12" (input)="cashChargedChange()" placeholder="Remarks"
+                [(ngModel)]="cashCharged">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Cash Back</label>
-            <input type="number" class="form-control col-md-12" (input)="cashBackChange()"
-                placeholder="Inv" [(ngModel)]="cashBack">
+            <input type="number" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Inv"
+                [(ngModel)]="cashBack" (focus)="setFocusedField({ data: this, field: 'cashBack' })">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Amount in Words</label>
-            <input type="text" class="form-control col-md-12" (input)="cashBackChange()"
-                placeholder="Inv" [(ngModel)]="amountInWords">
+            <input type="text" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Inv"
+                [(ngModel)]="amountInWords">
         </div>
         <p-divider></p-divider>
         <div class="mt-3 col-md-6 offset-6 text-right">
-            <button pButton pRipple type="button" icon="pi pi-save" (click)="displayCashWin=false"
-                label="Cancel" class="mr-2 p-button-sm p-button-warning"> </button>
-            <button pButton pRipple type="button" icon="pi pi-save" (click)="addSale()"
-                label="Save" class="p-button-sm p-button-success"> </button>
+            <button pButton pRipple type="button" icon="pi pi-save" (click)="displayCashWin=false" label="Cancel"
+                class="mr-2 p-button-sm p-button-warning"> </button>
+            <button pButton pRipple type="button" icon="pi pi-save" (click)="addSale()" label="Save"
+                class="p-button-sm p-button-success"> </button>
         </div>
     </div>
     <div class="row" *ngIf="displayCredWin">
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Remaining Amount</label>
-            <input type="number" class="form-control col-md-12"
-                placeholder="Net Total" [(ngModel)]="remainingAmount">
+            <input type="number" class="form-control col-md-12" placeholder="Net Total" [(ngModel)]="remainingAmount">
         </div>
         <!-- <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -311,8 +317,7 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Machine Name</label>
-            <input type="text" class="form-control col-md-12"
-                placeholder="Machine Name">
+            <input type="text" class="form-control col-md-12" placeholder="Machine Name">
         </div>
         <!-- <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -323,14 +328,13 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Card Name</label>
-            <input type="text" class="form-control col-md-12" (input)="cashBackChange()"
-                placeholder="Card Name" [(ngModel)]="cardName">
+            <input type="text" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Card Name"
+                [(ngModel)]="cardName">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Card Number</label>
-            <input type="text" class="form-control col-md-12"
-                placeholder="Card Number" [(ngModel)]="cardNumber">
+            <input type="text" class="form-control col-md-12" placeholder="Card Number" [(ngModel)]="cardNumber">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -341,86 +345,123 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Extra Charges</label>
-            <input type="number" class="form-control col-md-12" (input)="extraChargeChange()"
-                placeholder="Card Number" [(ngModel)]="extraCharges">
+            <input type="number" class="form-control col-md-12" (input)="extraChargeChange()" placeholder="Card Number"
+                [(ngModel)]="extraCharges">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Final Amount</label>
-            <input type="number" class="form-control col-md-12" (input)="extraChargeChange()"
-                placeholder="Final Amount" [(ngModel)]="finalAmount">
+            <input type="number" class="form-control col-md-12" (input)="extraChargeChange()" placeholder="Final Amount"
+                [(ngModel)]="finalAmount">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Amount in Words</label>
-            <input type="text" class="form-control col-md-12" (input)="cashBackChange()"
-                placeholder="Amount in Words" [(ngModel)]="amountInWords">
+            <input type="text" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Amount in Words"
+                [(ngModel)]="amountInWords">
         </div>
         <p-divider></p-divider>
         <div class="mt-3 col-md-6 offset-6 text-right">
-            <button pButton pRipple type="button" icon="pi pi-save" (click)="displayCredWin=false"
-                label="Cancel" class="mr-2 p-button-sm p-button-warning"> </button>
-            <button pButton pRipple type="button" icon="pi pi-save" (click)="addSale()"
-                label="Save" class="p-button-sm p-button-success"> </button>
+            <button pButton pRipple type="button" icon="pi pi-save" (click)="displayCredWin=false" label="Cancel"
+                class="mr-2 p-button-sm p-button-warning"> </button>
+            <button pButton pRipple type="button" icon="pi pi-save" (click)="addSale()" label="Save"
+                class="p-button-sm p-button-success"> </button>
         </div>
     </div>
     <div class="container">
-        <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="paymentDetails" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
-        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">   
-        <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="code">Account <p-sortIcon field="code"></p-sortIcon></th>
-                    <th pSortableColumn="name">Amount <p-sortIcon field="name"></p-sortIcon></th>
-                    <th pSortableColumn="name">X.Perc <p-sortIcon field="name"></p-sortIcon></th>
-                    <th pSortableColumn="name">X.Value <p-sortIcon field="name"></p-sortIcon></th>
-                    <th pSortableColumn="name">Total<p-sortIcon field="name"></p-sortIcon></th>
-                    <th pSortableColumn="name">Remarks <p-sortIcon field="name"></p-sortIcon></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-data>
-                <tr>
-                    <td>{{data.account}}</td>
-                    <td>{{data.amount}}</td>
-                    <td>{{data.extraChargesPer}}</td>
-                    <td>{{data.extraCharges}}</td>
-                    <td>{{data.total}}</td>
-                    <td>{{data.remarks}}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
-</p-dialog> 
+        <div class="row mt-2 px-0">
+            <!-- Table Column -->
+            <div class="col-md-9">
+                <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="paymentDetails"
+                    styleClass="p-datatable-sm p-datatable-gridlines"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="code">Account <p-sortIcon field="code"></p-sortIcon></th>
+                            <th pSortableColumn="name">Amount <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="name">X.Perc <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="name">X.Value <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="name">Total <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="name">Remarks <p-sortIcon field="name"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-data>
+                        <tr>
+                            <td>{{ data.account }}</td>
+                            <td>{{ data.amount }}</td>
+                            <td>{{ data.extraChargesPer }}</td>
+                            <td>{{ data.extraCharges }}</td>
+                            <td>{{ data.total }}</td>
+                            <td>{{ data.remarks }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
 
-<p-dialog header="Sale Return" [modal]="true" [(visible)]="saleReturnDialog" [style]="{ width: '80rem', height: '50rem' }">
-    <div class="card shadow-3"> 
+            <!-- Numeric Keypad Column -->
+            <div class="col-md-3">
+                <div class="keypad-container p-2">
+                    <h5 class="text-center mb-3">Quick Cash</h5>
+                    <div class="amount-keypad d-grid mb-4"
+                        style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                        <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(10)">10</button>
+                        <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(50)">50</button>
+                        <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(100)">100</button>
+                        <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(500)">500</button>
+                        <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(1000)">1000</button>
+                        <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(10000)">10000</button>
+                        <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(50000)">50000</button>
+                    </div>
+
+
+                    <h5 class="text-center mb-3">Numeric Keypad</h5>
+                    <div class="keypad-grid d-grid" style="grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <button class="keypad-btn btn btn-outline-secondary btn-lg" (click)="addNumber(1)">1</button>
+                        <button class="keypad-btn btn btn-outline-secondary btn-lg" (click)="addNumber(2)">2</button>
+                        <button class="keypad-btn btn btn-outline-secondary btn-lg" (click)="addNumber(3)">3</button>
+                        <button class="keypad-btn btn btn-outline-secondary btn-lg" (click)="addNumber(4)">4</button>
+                        <button class="keypad-btn btn btn-outline-secondary btn-lg" (click)="addNumber(5)">5</button>
+                        <button class="keypad-btn btn btn-outline-secondary btn-lg" (click)="addNumber(6)">6</button>
+                        <button class="keypad-btn btn btn-outline-secondary btn-lg" (click)="addNumber(7)">7</button>
+                        <button class="keypad-btn btn btn-outline-secondary btn-lg" (click)="addNumber(8)">8</button>
+                        <button class="keypad-btn btn btn-outline-secondary btn-lg" (click)="addNumber(9)">9</button>
+                        <button class="keypad-btn btn btn-outline-secondary btn-lg" (click)="addNumber(0)">0</button>
+                        <button class="keypad-btn btn btn-danger btn-lg" (click)="clearField()">C</button>
+                        <button class="keypad-btn btn btn-warning btn-lg" (click)="backspace()">←</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Sale Return" [modal]="true" [(visible)]="saleReturnDialog"
+    [style]="{ width: '80rem', height: '50rem' }">
+    <div class="card shadow-3">
         <div class="card-body">
             <div class="grid">
-                <div class="row px-2 col-12"> 
+                <div class="row px-2 col-12">
                     <div class="col-md-12">
                         <div class="col-md-3 mt-4 offset-9 text-right col-sm-3">
-                            <button pButton pRipple type="button" icon="pi pi-save"
-                                (click)="addSaleReturnData()" label="Add"
-                                class="p-button-sm p-button-success"> </button>
-                            <button pButton pRipple type="button" icon="pi pi-trash"
-                                (click)="RemoveSaleReturnData()" label="Remove"
-                                class="ml-2 p-button-sm p-button-danger"> </button>
+                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addSaleReturnData()"
+                                label="Add" class="p-button-sm p-button-success"> </button>
+                            <button pButton pRipple type="button" icon="pi pi-trash" (click)="RemoveSaleReturnData()"
+                                label="Remove" class="ml-2 p-button-sm p-button-danger"> </button>
                         </div>
                         <div class="mt-2 pad-wrapper">
                             <div class="box">
                                 <div class="content">
                                     <div class="row">
                                         <div class="col-md-9">
-                                            <p-table #dt [scrollable]="true"
-                                                     scrollHeight="600px"
-                                                     responsiveLayout="scroll"
-                                                     [value]="saleRtnDtl"
-                                                     styleClass="p-datatable-sm p-datatable-gridlines"
-                                                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                                                     [rows]="10"
-                                                     [showCurrentPageReport]="true"
-                                                     [rowsPerPageOptions]="[10, 25, 50]"
-                                                     [paginator]="true">
-                                
+                                            <p-table #dt [scrollable]="true" scrollHeight="600px"
+                                                responsiveLayout="scroll" [value]="saleRtnDtl"
+                                                styleClass="p-datatable-sm p-datatable-gridlines"
+                                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                                [rows]="10" [showCurrentPageReport]="true"
+                                                [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
+
                                                 <ng-template pTemplate="header">
                                                     <tr>
                                                         <th pSortableColumn="code">No.
@@ -444,111 +485,106 @@
                                                         <th pSortableColumn="price">Net Sale Price
                                                             <p-sortIcon field="price"></p-sortIcon>
                                                         </th>
-                                                        <th>Action  </th>
+                                                        <th>Action </th>
                                                     </tr>
                                                 </ng-template>
-                                
+
                                                 <ng-template pTemplate="body" let-saleRtnDtl let-i="rowIndex">
                                                     <tr>
                                                         <td>{{ i + 1 }}</td>
                                                         <td><input type="text"
-                                                                   class="form-control form-control-sm col-md-12 pwd"
-                                                                   placeholder="Bar Code"
-                                                                   [disabled]="false" (keydown.enter)="onSaleRtnKey($event, saleRtnDtl)"
-                                                                   [(ngModel)]="saleRtnDtl.barCode">
+                                                                class="form-control form-control-sm col-md-12 pwd"
+                                                                placeholder="Bar Code" [disabled]="false"
+                                                                (keydown.enter)="onSaleRtnKey($event, saleRtnDtl)"
+                                                                [(ngModel)]="saleRtnDtl.barCode">
                                                         </td>
                                                         <td><input type="text"
-                                                            class="form-control form-control-sm col-md-12 pwd"
-                                                            placeholder="Bar Code" 
-                                                            [disabled]="false"
-                                                            [(ngModel)]="saleRtnDtl.ItemName">
+                                                                class="form-control form-control-sm col-md-12 pwd"
+                                                                placeholder="Bar Code" [disabled]="false"
+                                                                [(ngModel)]="saleRtnDtl.ItemName">
                                                         </td>
                                                         <td><input type="number"
-                                                                   class="form-control form-control-sm col-md-12 pwd"
-                                                                   placeholder="Quantity"
-                                                                   [disabled]="false" (input)="rtnQtyChange(saleRtnDtl)"
-                                                                   [(ngModel)]="saleRtnDtl.qty">
+                                                                class="form-control form-control-sm col-md-12 pwd"
+                                                                placeholder="Quantity" [disabled]="false"
+                                                                (input)="rtnQtyChange(saleRtnDtl)"
+                                                                [(ngModel)]="saleRtnDtl.qty">
                                                         </td>
                                                         <td><input type="number"
-                                                                   class="form-control form-control-sm col-md-12 pwd"
-                                                                   placeholder="Sale Price"
-                                                                   [disabled]="false" (input)="rtnSalePriceChange(saleRtnDtl)"
-                                                                   [(ngModel)]="saleRtnDtl.salePrice">
+                                                                class="form-control form-control-sm col-md-12 pwd"
+                                                                placeholder="Sale Price" [disabled]="false"
+                                                                (input)="rtnSalePriceChange(saleRtnDtl)"
+                                                                [(ngModel)]="saleRtnDtl.salePrice">
                                                         </td>
                                                         <td><input type="number"
-                                                                   class="form-control form-control-sm col-md-12 pwd"
-                                                                   placeholder="Discount"
-                                                                   [disabled]="false" (input)="rtnDiscChange(saleRtnDtl)"
-                                                                   [(ngModel)]="saleRtnDtl.discount">
+                                                                class="form-control form-control-sm col-md-12 pwd"
+                                                                placeholder="Discount" [disabled]="false"
+                                                                (input)="rtnDiscChange(saleRtnDtl)"
+                                                                [(ngModel)]="saleRtnDtl.discount">
                                                         </td>
                                                         <td><input type="number"
-                                                                   class="form-control form-control-sm col-md-12 pwd"
-                                                                   placeholder="Total"
-                                                                   [disabled]="true"
-                                                                   [(ngModel)]="saleRtnDtl.netSalePrice">
+                                                                class="form-control form-control-sm col-md-12 pwd"
+                                                                placeholder="Total" [disabled]="true"
+                                                                [(ngModel)]="saleRtnDtl.netSalePrice">
                                                         </td>
-                                                        <td><button pButton pRipple
-                                                                    type="button"
-                                                                    icon="pi pi-trash"
-                                                                    (click)="RemoveSaleRtnCol(i)"
-                                                                    class="p-button-sm p-button-danger">
+                                                        <td><button pButton pRipple type="button" icon="pi pi-trash"
+                                                                (click)="RemoveSaleRtnCol(i)"
+                                                                class="p-button-sm p-button-danger">
                                                             </button></td>
                                                     </tr>
                                                 </ng-template>
-                                
+
                                             </p-table>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="summary-table">
                                                 <h5 class="text-center">Sales Summary</h5>
-                                                <p-table #dt2 [scrollable]="true"
-                                                     scrollHeight="600px"
-                                                     responsiveLayout="scroll"
-                                                     styleClass="p-datatable-sm p-datatable-gridlines">
-                                
-                                                <ng-template pTemplate="header">
-                                                    <tr>
-                                                        <th>Gross Sale Return</th>
-                                                        <th>{{grossSaleReturn}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Disc%</th>
-                                                        <th>{{saleRtnDiscPerc}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Disc in Value</th>
-                                                        <th>{{saleReturnDiscValue}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Net Sale Return Total</th>
-                                                        <th>{{netSaleReturnTotal}}</th>
-                                                    </tr> 
-                                                    <tr>
-                                                        <th>Disc in Value</th>
-                                                        <th>{{saleReturnDiscValue}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Deduction</th>
-                                                        <th><input type="number"
-                                                            class="form-control form-control-sm col-md-12 pwd"
-                                                            placeholder="Deduction"
-                                                            [disabled]="false" (input)="saleReturnDeductionChange()"
-                                                            [(ngModel)]="saleReturnDeduction">
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Grand Total</th>
-                                                        <th>{{grandSaleRtnTotal}}</th>
-                                                    </tr>
-                                                    
-                                                </ng-template> 
-                                            </p-table>
+                                                <p-table #dt2 [scrollable]="true" scrollHeight="600px"
+                                                    responsiveLayout="scroll"
+                                                    styleClass="p-datatable-sm p-datatable-gridlines">
+
+                                                    <ng-template pTemplate="header">
+                                                        <tr>
+                                                            <th>Gross Sale Return</th>
+                                                            <th>{{grossSaleReturn}}</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Disc%</th>
+                                                            <th>{{saleRtnDiscPerc}}</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Disc in Value</th>
+                                                            <th>{{saleReturnDiscValue}}</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Net Sale Return Total</th>
+                                                            <th>{{netSaleReturnTotal}}</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Disc in Value</th>
+                                                            <th>{{saleReturnDiscValue}}</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Deduction</th>
+                                                            <th><input type="number"
+                                                                    class="form-control form-control-sm col-md-12 pwd"
+                                                                    placeholder="Deduction" [disabled]="false"
+                                                                    (input)="saleReturnDeductionChange()"
+                                                                    [(ngModel)]="saleReturnDeduction">
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Grand Total</th>
+                                                            <th>{{grandSaleRtnTotal}}</th>
+                                                        </tr>
+
+                                                    </ng-template>
+                                                </p-table>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -558,67 +594,29 @@
     </div>
     <div class="d-flex justify-content-end w-100" style="margin-top:10px">
         <div>
-            <button style="margin-right: 3px" pButton pRipple type="button"
-                icon="pi pi-arrow-left" (click)="cancel()" label="Back"
-                class="p-button-sm p-button-danger"> </button>
-            <button pButton pRipple type="button" icon="pi pi-save" (click)="addSaleReturn()"
-                label="Save" class="p-button-sm p-button-success"> </button>
+            <button style="margin-right: 3px" pButton pRipple type="button" icon="pi pi-arrow-left" (click)="cancel()"
+                label="Back" class="p-button-sm p-button-danger"> </button>
+            <button pButton pRipple type="button" icon="pi pi-save" (click)="addSaleReturn()" label="Save"
+                class="p-button-sm p-button-success"> </button>
         </div>
     </div>
-</p-dialog> 
+</p-dialog>
 <p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog">
     <div class="card shadow-3">
         <div class="card-body">
             <div class="grid">
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
-                        <input type="text"
-                            class="p-3 form-control form-control-sm"
-                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
-                            [(ngModel)]="searchedItemName" (keydown.enter)="onSearchDialogEnter($event)">
+                        <input type="text" class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
+                            (input)="itemSearchFromDialog($event)" [(ngModel)]="searchedItemName"
+                            (keydown.enter)="onSearchDialogEnter($event)">
                     </div>
                     <div class="mt-2 col-md-12">
                         <div class="mt-2 pad-wrapper">
                             <div class="box">
                                 <div class="content">
                                     <div class="row">
-                                        <!-- <p-table #dt responsiveLayout="scroll" [value]="itemDtl"
-                                            styleClass="p-datatable-sm p-datatable-gridlines"
-                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                                            [rows]="10" [showCurrentPageReport]="true"
-                                            [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
 
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th pSortableColumn="code">No.
-                                                        <p-sortIcon field="code"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="name">BarCode
-                                                        <p-sortIcon field="name"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="price">Item Name
-                                                        <p-sortIcon field="price"></p-sortIcon>
-                                                    </th> 
-                                                    <th pSortableColumn="price">Purchase Price
-                                                        <p-sortIcon field="price"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="price">Sale Price
-                                                        <p-sortIcon field="price"></p-sortIcon>
-                                                    </th>
-                                                </tr>
-                                            </ng-template>
-
-                                            <ng-template pTemplate="body" let-itm let-i="rowIndex">
-                                                <tr>
-                                                    <td>{{ i + 1 }}</td>
-                                                    <td>{{itm.aliasName}}</td>
-                                                    <td>{{itm.itemName}}</td>
-                                                    <td>{{itm.purchasePrice}}</td>
-                                                    <td>{{itm.salePrice}}</td>
-                                                </tr>
-                                            </ng-template>
-
-                                        </p-table> -->
                                     </div>
                                 </div>
                             </div>

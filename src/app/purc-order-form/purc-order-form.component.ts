@@ -169,6 +169,44 @@ export class PurcOrderFormComponent {
       this.usrGrpCat=res;
     })
   }
+  barCodes: string = '';
+  currentStock: string = '';
+  salePrice: string = '';
+  purchasePrice: string = '';
+  saleDisc: string = '';
+  netSalePrice: string = '';
+  postPurchase() {
+    debugger
+    this.barCodes = this.purchOrderDtlData.map(x => x.barcode).join(',');
+    this.purchasePrice = this.purchOrderDtlData.map(x => x.purchasePrice).join(',');
+    this.salePrice = this.purchOrderDtlData.map(x => x.netSalePrice).join(',');
+    this.currentStock = this.purchOrderDtlData.map(x => x.netQuantity).join(',');
+    this.saleDisc = this.purchOrderDtlData.map(x => x.saleDiscountByValue).join(',');
+    this.netSalePrice = this.purchOrderDtlData.map(x => x.netSalePrice).join(',');
+    const name = localStorage.getItem("Name")?.toString() ?? '';
+    this.api.postPurchasePrder(name, this.urlId, this.barCodes, this.currentStock, this.salePrice,
+      this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
+        if (res.status == "OK")
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
+      });
+    
+  }
+  unPostPurchase() {
+    debugger
+    this.barCodes = this.purchOrderDtlData.map(x => x.barcode).join(',');
+    this.purchasePrice = this.purchOrderDtlData.map(x => x.purchasePrice).join(',');
+    this.salePrice = this.purchOrderDtlData.map(x => x.netSalePrice).join(',');
+    this.currentStock = this.purchOrderDtlData.map(x => x.netQuantity).join(',');
+    this.saleDisc = this.purchOrderDtlData.map(x => x.saleDiscountByValue).join(',');
+    this.netSalePrice = this.purchOrderDtlData.map(x => x.netSalePrice).join(',');
+    const name = localStorage.getItem("Name")?.toString() ?? '';
+    this.api.unPostPurchaseOrder(name, this.urlId, this.barCodes, this.currentStock, this.salePrice,
+      this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
+        if (res.status == "OK")
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
+      });
+    
+  }
 
     itemSearchDialog: boolean = false;
     @HostListener('document:keydown', ['$event'])

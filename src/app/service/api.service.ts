@@ -118,6 +118,17 @@ export class ApiService {
 	createPurchaseOrder(obj: any) {
 		return this.app.post('createPurchaseOrder', obj);
 	}
+	postPurchasePrder(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+		return this.app.get('postPurchaseOrder?barCodes=' + barCodes + "&currentStock=" + currentStock +
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
+		+"&postedBy="+postedBy);
+	}
+	unPostPurchaseOrder(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+		debugger
+		return this.app.get('unPostPurchaseOrder?barCodes=' + barCodes + "&currentStock=" + currentStock +
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
+		+"&postedBy="+postedBy);
+	}
 	getPurchaseOrderCategory() {
 		return this.app.get('getPurchaseOrderCategory');
 	}

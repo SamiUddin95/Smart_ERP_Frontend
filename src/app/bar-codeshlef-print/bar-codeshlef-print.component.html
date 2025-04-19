@@ -1,0 +1,55 @@
+<!-- <input [(ngModel)]="barcodeValue" (ngModelChange)="onBarcodeInputChange()" placeholder="Enter Barcode Value" />
+<svg #barcode></svg>
+<button (click)="printBarcode()" [disabled]="!barcodeValue.trim()">Print Barcode</button> -->
+
+<div class="flex justify-content-between pt-2">
+    <h3>Bar Code Printing</h3>
+    <div class="text-right">
+        <button pButton pRipple type="button" icon="pi pi-save" (click)="AddData()" label="Add"
+            class="p-button-sm p-button-success"> </button>
+        <button pButton pRipple type="button" icon="pi pi-trash" (click)="RemoveData()" label="Remove"
+            class="ml-2 p-button-sm p-button-danger"> </button>
+        <button pButton pRipple type="button" icon="pi pi-print" (click)="printAllBarcodes()" label="Print All"
+            class="ml-2 p-button-sm p-button-info"> </button>
+    </div>
+</div>
+<div class="col-md-12 mt-2">
+    <div class="pad-wrapper">
+        <div class="box">
+            <div class="content">
+                <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="itemData"
+                    styleClass="p-datatable-sm p-datatable-gridlines"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="name">No <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="name">Bar Code<p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="price">Item Name<p-sortIcon field="price"></p-sortIcon></th>
+                            <th pSortableColumn="price">Quantity<p-sortIcon field="price"></p-sortIcon></th>
+                            <th pSortableColumn="price">Sale Price<p-sortIcon field="price"></p-sortIcon></th>
+                            <th pSortableColumn="price">Discount<p-sortIcon field="price"></p-sortIcon></th>
+                            <th pSortableColumn="price">Net Sale Price<p-sortIcon field="price"></p-sortIcon></th>
+                            <th pSortableColumn="price">Stop Price Printing<p-sortIcon field="price"></p-sortIcon></th>
+                            <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-user let-i="rowIndex">
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td><input type="text" class="form-control form-control-sm col-md-12 pwd" placeholder="Bar Code" (keypress)="onKey($event,user)" autofocus [disabled]="false" [(ngModel)]="user.barCode"></td>
+                            <td><input type="text" class="form-control form-control-sm" placeholder="Item Name"  [(ngModel)]="user.itemName"></td>
+                            <td><input type="number" class="form-control form-control-sm col-md-12 pwd" placeholder="Item Name" [disabled]="false" [(ngModel)]="user.qty"></td>
+                            <td><input type="number" class="form-control form-control-sm col-md-12 pwd" placeholder="Sale Price" [disabled]="false" [(ngModel)]="user.salePrice"></td>
+                            <td><input type="number" class="form-control form-control-sm col-md-12 pwd" placeholder="Discount" [disabled]="false" [(ngModel)]="user.disc"></td>
+                            <td><input type="number" class="form-control form-control-sm col-md-12 pwd" placeholder="Net Sale Price" [disabled]="false" [(ngModel)]="user.netSalePrice"></td>
+                            <td class="text-center"><p-checkbox [binary]="true" [(ngModel)]="user.pricePrint" [inputId]="'cb' + i"></p-checkbox>                            </td>
+                            <td><button pButton pRipple type="button" icon="pi pi-trash" (click)="RemoveCol(i)" class="p-button-sm p-button-danger"> </button></td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

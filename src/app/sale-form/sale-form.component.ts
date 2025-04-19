@@ -514,4 +514,59 @@ export class SaleFormComponent {
     this.itemSearchDialog = false; // Close the search dialog
     this.searchedItemName="";
   }
+  focusedField: any = null; // To track the focused field
+
+  // Set the currently focused input field (either amount or any other)
+  setFocusedField(field: { data: any; field: string }) {
+    this.focusedField = field;
+  }
+
+
+  clearField(): void {
+    if (this.focusedField) {
+      this.focusedField.data[this.focusedField.field] = 0;
+    }
+  }
+  
+  backspace(): void {
+    if (this.focusedField) {
+      let currentValue = this.focusedField.data[this.focusedField.field]?.toString() || '';
+      currentValue = currentValue.slice(0, -1) || '0';
+      this.focusedField.data[this.focusedField.field] = parseFloat(currentValue);
+    }
+  }
+  
+  addNumber(num: number): void {
+    if (
+      this.focusedField &&
+      this.focusedField.data &&
+      typeof this.focusedField.field === 'string'
+    ) {
+      let currentValue = this.focusedField.data[this.focusedField.field];
+      currentValue = currentValue != null ? currentValue.toString() : '';
+      const newValue = currentValue === '0' ? num.toString() : currentValue + num.toString();
+      this.focusedField.data[this.focusedField.field] = parseFloat(newValue);
+    }
+    
+    this.cashReceivedChange();
+    this.cashChargedChange();
+    this.cashBackChange();
+  }
+  
+  
+  addAmount(amount: number): void {
+    if (
+      this.focusedField &&
+      this.focusedField.data &&
+      typeof this.focusedField.field === 'string'
+    ) {
+      this.focusedField.data[this.focusedField.field] = amount;
+    }
+    this.cashReceivedChange();
+    this.cashChargedChange();
+    this.cashBackChange();
+  }
+  
+  
+  
 }
