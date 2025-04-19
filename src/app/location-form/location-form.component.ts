@@ -22,7 +22,8 @@ constructor(private route: ActivatedRoute,private router: Router,private api: Ap
   }
   getLocationById(id: any) {
     this.api.getLocationById(String(id)).subscribe(res => {
-      this.formData = res[0];
+      this.formData = res;
+      this.TillData = res.tillData || [];
     })
   }
   cancel(){
@@ -41,12 +42,30 @@ constructor(private route: ActivatedRoute,private router: Router,private api: Ap
           }
       }
     this.urlId?this.formData.id=this.urlId:undefined;
-    this.api.createLocation(this.formData).subscribe(res=>{
-      this.router.navigate(['location']);
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: "Location Added Successfully" });	
-      },err=>{
-    
-      })
+
+    this.formData.tillLocation = this.TillData;
+
+      this.api.createLocation(this.formData).subscribe(res=>{
+        this.router.navigate(['location']);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Location Added Successfully" });	
+        },err=>{
+      
+        })
   
     }
+
+
+    //Till
+    deleteRow(index: number) {
+      this.TillData.splice(index, 1);
+    }
+    TillData: any[] = [
+      { tillNumber: 0, name: '' }
+  ];
+    addRow() {
+      this.TillData.push({
+        tillNumber: 0,
+        name: '',
+      });
+  }
 }

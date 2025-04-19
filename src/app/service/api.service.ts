@@ -118,10 +118,8 @@ export class ApiService {
 	getPurchaseOrderById(id: any) {
 		return this.app.get('getPurchaseOrderById?id=' + id, id);
 	}
-	fetchPurchaseOrdersByDate(startDate: Date, endDate: Date) {
-		const isoStart = startDate.toISOString();
-		const isoEnd = endDate.toISOString();
-		return this.app.get(`GetPurchaseOrdersByDateRange?startDate=${isoStart}&endDate=${isoEnd}`);
+	fetchPurchaseOrdersByDate(startDate: any, endDate: any, zeroQty:any) {
+		return this.app.get(`GetPurchaseOrdersByDateRange?startDate=${startDate}&endDate=${endDate}&zeroQty=${zeroQty}`);
 	  }
 	getPurchaseById(id: any) {
 		return this.app.get('getPurchaseById?id=' + id, id);
@@ -490,7 +488,12 @@ export class ApiService {
 	getManufactureById(id: any) {
 		return this.app.get('getManufacturerById?id=' + id, id);
 	}
-
+	checkDuplicateItem(payload: any) {
+		return this.app.post('checkDuplicate', payload);
+	}
+	CheckAlternateDuplicate(payload: any) {
+		return this.app.post('CheckAlternateDuplicate', payload);
+	}
 	//Location
 
 	deleteLocationbyId(id: any) {

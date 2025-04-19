@@ -1,90 +1,100 @@
 <div class="container-fluid mt-2" style="width:100%">
-    <div class="flex justify-content-between p-2 ">
+    <div class="flex justify-content-between p-2">
         <h3>Create Location</h3>
     </div>
     <section>
         <div class="card">
-            <div class="p-grid ">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card shadow-3">
-                            <p-accordion>
-                                <p-accordionTab header="Location" [selected]="true">
-                                    <div class="card shadow-3">
-                                        <div class="card-header">Location Information</div>
-                                        <div class="card-body">
-                                            <div class="grid">
-                                                <div class="row mt-1 px-2 col-12">  
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <label for="username">Serial Number <span
-                                                                class="text-danger"></span></label>
-                                                        <input type="text" class="form-control col-md-12"
-                                                            placeholder="SNo" id="Name"
-                                                            [(ngModel)]="formData.serialnumber" disabled>
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname">Name <span class="text-danger">*
-                                                        </span></label>
-                                                            <input type="text" 
-                                                            class="form-control  col-md-12 "
-                                                            placeholder="Enter Here"
-                                                            [(ngModel)]="formData.name">
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname">Address <span class="text-danger">
-                                                        </span></label>
-                                                            <input type="text" 
-                                                            class="form-control  col-md-12 "
-                                                            placeholder="Enter Here"
-                                                            [(ngModel)]="formData.address">
-                                                    </div>    
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname">Phone No <span class="text-danger">
-                                                        </span></label>
-                                                            <input type="text" 
-                                                            class="form-control  col-md-12 "
-                                                            placeholder="Enter Here"
-                                                            [(ngModel)]="formData.phonenumber">
-                                                    </div>  
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname">Email <span class="text-danger">
-                                                        </span></label>
-                                                            <input type="text" 
-                                                            class="form-control  col-md-12 "
-                                                            placeholder="Enter Here"
-                                                            [(ngModel)]="formData.email">
-                                                    </div>     
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname">Royality Percent <span class="text-danger">
-                                                        </span></label>
-                                                            <input type="number" 
-                                                            class="form-control  col-md-12 "
-                                                            placeholder="Enter Here"
-                                                            [(ngModel)]="formData.royalityPercent">
-                                                    </div>                                    
-                                                </div> 
-                                            </div>
+            <div class="p-grid">
+                <div class="col-12">
+                    <div class="card shadow-3">
+                        <p-accordion>
+                            <!-- Location Information Accordion -->
+                            <p-accordionTab header="Location Information" [selected]="true">
+                                <div class="card shadow-2 p-3">
+                                    <h5 class="mb-3">Location Information</h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Serial Number</label>
+                                            <input type="text" class="form-control" placeholder="SNo" [(ngModel)]="formData.serialnumber" disabled>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label class="form-label">Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Here" [(ngModel)]="formData.name">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label class="form-label">Address</label>
+                                            <input type="text" class="form-control" placeholder="Enter Here" [(ngModel)]="formData.address">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label class="form-label">Phone No</label>
+                                            <input type="text" class="form-control" placeholder="Enter Here" [(ngModel)]="formData.phonenumber">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label class="form-label">Email</label>
+                                            <input type="text" class="form-control" placeholder="Enter Here" [(ngModel)]="formData.email">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label class="form-label">Royalty Percent</label>
+                                            <input type="number" class="form-control" placeholder="Enter Here" [(ngModel)]="formData.royalityPercent">
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
-                                        <div>
-                                            <button style="margin-right: 3px" pButton pRipple type="button"
-                                                icon="pi pi-arrow-left" (click)="cancel()" label="Back"
-                                                class="p-button-sm p-button-danger"> </button>
-                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addLocation()"
-                                                label="Save" class="p-button-sm p-button-success"> </button>
-                                        </div>
+                                   
+                                </div>
+
+                                 <!-- Alternate Barcode Accordion -->
+                                 <div class="card shadow-2 p-3">
+                                    <h5 class="mb-3">TILL</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Till Number</th>
+                                                    <th>Name</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of TillData; let i = index">
+                                                    <td>
+                                                        <input type="number" class="form-control" [(ngModel)]="item.tillNumber" disabled placeholder="Number">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" [(ngModel)]="item.name" placeholder="Name">
+                                                    </td>
+                                                    <td>
+                                                        <button 
+                                                            pButton 
+                                                            icon="pi pi-trash" 
+                                                            class="p-button-sm p-button-danger" 
+                                                            (click)="deleteRow(i)">
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <button pButton icon="pi pi-plus" label="Add Row" (click)="addRow()" class="p-button-sm p-button-secondary mt-2"></button>
                                     </div>
-                                </p-accordionTab>
-                            </p-accordion>
-                        </div>
+                                </div>
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button class="btn btn-danger me-2" type="button" (click)="cancel()">
+                                        <i class="pi pi-arrow-left me-1"></i>Back
+                                    </button>
+                                    <button class="btn btn-success" type="button" (click)="addLocation()">
+                                        <i class="pi pi-save me-1"></i>Save
+                                    </button>
+                                </div>
+                            </p-accordionTab>
+
+                           
+                        </p-accordion>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </section>
 </div>
-
-<p-toast position="top-right"></p-toast>

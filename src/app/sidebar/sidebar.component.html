@@ -14,8 +14,6 @@
                     <i class="pi pi-money-bill"></i><span>BASIC DATA</span><i class="pi pi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="BasicData" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-                    <!-- Nested Dropdown (Sales) -->
                     <li *ngIf="userType == 2 || userType == 1" class="nav-item">
                         <a class="nav-link collapsed" data-bs-target="#Acccount" data-bs-toggle="collapse" href="#">
                             <i class="pi pi-shopping-cart"></i><span>Account</span><i
@@ -30,8 +28,8 @@
                                 <i class="fa fa-helmet-un"></i><span>Accounts Group</span>
                             </a>
                             <a routerLink="/account-cat-list" routerLinkActive="active">
-                            <i class="fa fa-helmet-un"></i><span>Accounts Category</span>
-                        </a>
+                                <i class="fa fa-helmet-un"></i><span>Accounts Category</span>
+                            </a>
 
                         </ul>
                         <a class="nav-link collapsed" data-bs-target="#Party" data-bs-toggle="collapse" href="#">
@@ -86,146 +84,44 @@
                     <a routerLink="/sale-return-list" routerLinkActive="active">
                         <i class="fa fa-helmet-un"></i><span>Sales Return</span>
                     </a>
-                    <ul id="Item" class="nav-content collapse" data-bs-parent="#Finance">
-                        <a routerLink="/brands" routerLinkActive="active">
-                            <i class="fa fa-helmet-un"></i><span>Brand</span>
-                        </a>
-                        <a routerLink="/location" routerLinkActive="active">
-                            <i class="fa fa-helmet-un"></i><span>Location</span>
-                        </a>
-                        <a routerLink="/category" routerLinkActive="active">
-                            <i class="fa fa-helmet-un"></i><span>Category</span>
-                        </a>
-                        <a routerLink="/class" routerLinkActive="active">
-                            <i class="fa fa-helmet-un"></i><span>Class</span>
-                        </a>
-                        <a routerLink="/item" routerLinkActive="active">
-                            <i class="fa fa-helmet-un"></i><span>Item</span>
-                        </a>
-                        <a routerLink="/manufacturer" routerLinkActive="active">
-                            <i class="fa fa-helmet-un"></i><span>Manufacturer</span>
-                        </a>
-                    </ul>
-              
-            </ul>
-            
-        </li> 
-        <li *ngIf="userType == 2 || userType == 1" class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#Sales" data-bs-toggle="collapse" href="#">
-                <i class="pi pi-money-bill"></i><span>SALES</span><i class="pi pi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="Sales" class="nav-content collapse" data-bs-parent="#Finance">
-                <a routerLink="/counter-sales" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Sales</span>
-                </a>
-                <a routerLink="/sale-return-list" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Sales Return</span>
-                </a>  
-                <a routerLink="/till-open-list" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Till Open</span>
-                </a>
-                <a routerLink="/cash-in-list" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Cash In</span>
-                </a>
-                <a routerLink="/cash-out-list" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Cash Out</span>
-                </a>
-                
-                <a routerLink="/till-close-list" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Till Close</span>
-                </a>
-            </ul>
-        </li>
-        <li *ngIf="userType == 2 || userType == 1" class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#Purchases" data-bs-toggle="collapse" href="#">
-                <i class="pi pi-shopping-cart"></i><span>PURCHASES</span><i class="pi pi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="Purchases" class="nav-content collapse" data-bs-parent="#Finance">
-                <a routerLink="/purchase-list" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Purchase</span>
-                </a>
-                <a routerLink="/purch-order-list" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Purchase Order</span>
-                </a>
-                <a routerLink="/purch-return-list" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Purchase Return</span>
-                </a>
-            </ul>
-        </li>
-        <li *ngIf="userType == 2 || userType == 1" class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#Stocks" data-bs-toggle="collapse" href="#">
-                <i class="pi pi-shopping-cart"></i><span>STOCKS</span><i class="pi pi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="Stocks" class="nav-content collapse" data-bs-parent="#Finance">
-                <a routerLink="/stck-adj-list" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Stock Adjustment</span>
-                </a>
-                <a routerLink="/jurn-vuchr-list" routerLinkActive="active">
-                    <i class="fa fa-helmet-un"></i><span>Journal Voucher</span>
-                </a>
-            </ul>
-        </li>
-        <li *ngIf="userType==1" class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#Helmet" data-bs-toggle="collapse" href="#">
-                <i class="pi pi-user"></i><span>USERS</span><i class="pi pi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="Helmet" class="nav-content collapse " data-bs-parent="#sidebar-nav"> 
-                <li>
-                    <a routerLink="/user-list" routerLinkActive="active">
-                        <i class="fa fa-helmet-un"></i><span>View Users</span>
-                        </a>
-                </li> 
-                <li>
-                    <a class="nav-link" routerLink="/usr-group-list" routerLinkActive="active">
-                        <i class="fa fa-helmet-un"></i><span>View Groups</span>
-                      </a>
-                </li>
-                
-            </ul>
-        </li>
-        <li *ngIf="userType == 2 || userType == 1" class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#Reports" data-bs-toggle="collapse" href="#">
-                <i class="pi pi-money-bill"></i><span>REPORTS</span><i class="pi pi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="Reports" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-
-                <!-- Nested Dropdown (Sales) -->
-                <li *ngIf="userType == 2 || userType == 1" class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#Acccount" data-bs-toggle="collapse" href="#">
-                        <i class="pi pi-shopping-cart"></i>
-                        <span>Basic Data</span>
-                        <i class="pi pi-chevron-down ms-auto"></i>
+                    <a routerLink="/till-open-list" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>Till Open</span>
                     </a>
-                    <ul id="Acccount" class="nav-content collapse" data-bs-parent="#Reports">
-                        <li>
-                            <a routerLink="/till-open-list" routerLinkActive="active" class="nav-link">
-                                <i class="fa fa-helmet-un"></i>
-                                <span>Till Open</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a routerLink="/cash-in-list" routerLinkActive="active" class="nav-link">
-                                <i class="fa fa-helmet-un"></i>
-                                <span>Cash In</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a routerLink="/cash-out-list" routerLinkActive="active" class="nav-link">
-                                <i class="fa fa-helmet-un"></i>
-                                <span>Cash Out</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a routerLink="/till-close-list" routerLinkActive="active" class="nav-link">
-                                <i class="fa fa-helmet-un"></i>
-                                <span>Till Close</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            
-            </ul>
-            
+                    <a routerLink="/cash-in-list" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>Cash In</span>
+                    </a>
+                    <a routerLink="/cash-out-list" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>Cash Out</span>
+                    </a>
+
+                    <a routerLink="/till-close-list" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>Till Close</span>
+                    </a>
+                </ul>
+            </li>
+            <li *ngIf="userType == 2 || userType == 1" class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#barCode" data-bs-toggle="collapse" href="#">
+                    <i class="pi pi-shopping-cart"></i><span>BAR CODE</span><i class="pi pi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="barCode" class="nav-content collapse" data-bs-parent="#Finance">
+                    <a routerLink="/bar-code-print" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>Bar Code Shelf Printing</span>
+                    </a>
+                </ul>
+            </li>
+            <li *ngIf="userType == 2 || userType == 1" class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Stocks" data-bs-toggle="collapse" href="#">
+                    <i class="pi pi-shopping-cart"></i><span>STOCKS</span><i class="pi pi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="Stocks" class="nav-content collapse" data-bs-parent="#Finance">
+                    <a routerLink="/stck-adj-list" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>Stock Adjustment</span>
+                    </a>
+                    <a routerLink="/jurn-vuchr-list" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>Journal Voucher</span>
+                    </a>
+                </ul>
+            </li>
             <li *ngIf="userType == 2 || userType == 1" class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#Purchases" data-bs-toggle="collapse" href="#">
                     <i class="pi pi-shopping-cart"></i><span>PURCHASES</span><i class="pi pi-chevron-down ms-auto"></i>
@@ -254,7 +150,8 @@
             </li>
             <li *ngIf="userType == 2 || userType == 1" class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#IntTransfer" data-bs-toggle="collapse" href="#">
-                    <i class="pi pi-shopping-cart"></i><span>INTER LOCATION TRANSFER</span><i class="pi pi-chevron-down ms-auto"></i>
+                    <i class="pi pi-shopping-cart"></i><span>INTER LOCATION TRANSFER</span><i
+                        class="pi pi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="IntTransfer" class="nav-content collapse" data-bs-parent="#Finance">
                     <a routerLink="/inter-loc-trans-list" routerLinkActive="active">
@@ -264,7 +161,8 @@
             </li>
             <li *ngIf="userType == 2 || userType == 1" class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#StcAdj" data-bs-toggle="collapse" href="#">
-                    <i class="pi pi-shopping-cart"></i><span>STOCK ADJUSTMENT</span><i class="pi pi-chevron-down ms-auto"></i>
+                    <i class="pi pi-shopping-cart"></i><span>STOCK ADJUSTMENT</span><i
+                        class="pi pi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="StcAdj" class="nav-content collapse" data-bs-parent="#Finance">
                     <a routerLink="/stck-adj-list" routerLinkActive="active">
@@ -288,7 +186,11 @@
                             <i class="fa fa-helmet-un"></i><span>Groups</span>
                         </a>
                     </li>
-
+                    <li>
+                        <a routerLink="/location" routerLinkActive="active">
+                            <i class="fa fa-helmet-un"></i><span>Location</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li *ngIf="userType==1" class="nav-item">

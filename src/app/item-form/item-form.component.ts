@@ -2,6 +2,8 @@ import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 import { MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-item-form',
@@ -10,7 +12,7 @@ import { MessageService } from 'primeng/api';
 })
 export class ItemFormComponent {
 
-  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
+  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService, private confirmationService: ConfirmationService) { }
   status:any=[{label:"Active",value:1},{label:"Not Active",value:0}];
   formData: any = {  };
   alternateItems: any = [];
@@ -83,6 +85,15 @@ export class ItemFormComponent {
     }
 	}
   onKey(event: any) {
+    debugger
+    if (event.key === 'Enter') {
+      if (event.target && (event.target as HTMLInputElement).name === 'aliasName') {
+        this.checkDuplicate('aliasName');
+      }
+      if (event.target && (event.target as HTMLInputElement).name === 'itemName') {
+        this.checkDuplicate('itemName');
+      }
+    }
     this.formData.aliasName=event.target.value;
   }
   getItemsById(id: any) {
@@ -166,10 +177,15 @@ export class ItemFormComponent {
         }
     this.api.createItems(formDataToSend).subscribe(
       (res: any) => {
-          if (res?.msg === "An item with this name already exists.") {
+          if (res?.msg === "An Item with this name already exists.") {
               this.messageService.add({ severity: 'warn', summary: 'Warning', detail: res.msg });
-          } else {
-              this.router.navigate(['item']);
+              
+          } 
+          else if (res?.msg === "An Alias name with this name already exists.") {
+            this.messageService.add({ severity: 'warn', summary: 'Warning', detail: res.msg });
+            
+        }else {
+              //this.router.navigate(['item']);
               this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Item Added Successfully' });
           }
       },
@@ -374,4 +390,62 @@ export class ItemFormComponent {
       // Update alias name (item name + remarks)
       item.alternateItemName = `${this.formData.itemName} ${item.remarks || ''}`.trim();
     }
+
+//check Alternate Barcode duplicate
+    checkAlternateDuplicate(field: 'aliasName') {
+      debugger
+      //const valueToCheck = this.item[field];
+  
+      //if (!valueToCheck) {
+         // return; // No value, don't check
+      //}
+  
+      const payload = { 
+          fieldName: field, 
+          //value: valueToCheck 
+      };
+  
+      this.api.CheckAlternateDuplicate(payload).subscribe(
+        (res: any) => {
+            if (res?.isDuplicate) {
+                this.messageService.add({ severity: 'warn', summary: 'Duplicate', detail: `${field === 'aliasName' ? 'Alias Name' : 'Item Name'} already exists.` });
+            }
+        },
+        err => {
+            console.error('Error checking duplicate', err);
+        }
+      );
+  }
+  checkDuplicate(field: 'aliasName' | 'itemName') {
+    debugger
+    const valueToCheck = this.formData[field];
+    if (!valueToCheck) return;
+  
+    const payload = { fieldName: field, value: valueToCheck };
+    
+    this.api.checkDuplicateItem(payload).subscribe((res: any) => {
+      if (res && res.isDuplicate)
+         {
+        // Show popup
+        this.confirmationService.confirm({
+          message: 'This item already exists. Do you want to load the duplicate item?',
+          header: 'Duplicate Found',
+          icon: 'pi pi-exclamation-triangle',
+          acceptLabel: 'Yes',
+          rejectLabel: 'No',
+          accept: () => {
+            // Call your getItemsById function
+            this.getItemsById(res.id);
+          },
+          reject: () => {
+            // Just close popup, do nothing
+            this.messageService.add({severity:'info', summary:'Cancelled', detail:'Duplicate item not loaded.'});
+          }
+        });
+      }
+    }, error => {
+      console.error('Error checking duplicate', error);
+    });
+  }
+  
 }

@@ -1,7 +1,9 @@
+<p-confirmDialog></p-confirmDialog>
 <div class="container-fluid mt-2" style="width:100%">
     <div class="flex justify-content-between p-2 ">
         <h3> CREATE ITEM</h3>
     </div>
+
     <section>
         <div class="card">
             <div class="p-grid ">
@@ -51,19 +53,15 @@
                                                         >
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
-                                                        
-                                                        <label for="lastname">
-                                                             Alias Name<span class="text-danger">*</span>
-                                                        </label>
-                                                        <input type="text" (keypress)="onKey($event)"  autofocus class="form-control col-md-12"
-                                                               placeholder="Alias Name" [(ngModel)]="formData.aliasName">
+                                                        <label for="aliasName">Barcode <span class="text-danger">*</span></label>
+                                                        <input type="text" name="aliasName" (blur)="checkDuplicate('aliasName')" (keypress)="onKey($event)" autofocus 
+                                                               class="form-control col-md-12" placeholder="Alias Name" [(ngModel)]="formData.aliasName">
                                                     </div>
+                                                    
                                                     <div class="col-md-6 col-sm-12">
-                                                        <label for="lastname">
-                                                             Item Name <span class="text-danger">*</span>
-                                                            </label>
-                                                        <input type="text" class="form-control col-md-12 "
-                                                            placeholder="Item Name" [(ngModel)]="formData.itemName">
+                                                        <label for="itemName">Item Name <span class="text-danger">*</span></label>
+                                                        <input type="text" name="itemName" (blur)="checkDuplicate('itemName')" 
+                                                               class="form-control col-md-12" placeholder="Item Name" (keypress)="onKey($event)" [(ngModel)]="formData.itemName">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="lastname">Net Cost

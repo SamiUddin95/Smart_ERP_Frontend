@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
 import * as moment from 'moment'; 
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-purc-order-form',
@@ -57,7 +58,10 @@ export class PurcOrderFormComponent {
       return;
     }
   
-    this.api.fetchPurchaseOrdersByDate(this.formData.startDate, this.formData.endDate)
+    const formattedStart = formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en-US');
+    const formattedEnd = formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en-US');
+  
+    this.api.fetchPurchaseOrdersByDate(formattedStart, formattedEnd, this.zeroQty)
       .subscribe(res => {
         const result = JSON.parse(res);
         this.originalPurchOrderDtlData = result.purchaseOrderDetails;
