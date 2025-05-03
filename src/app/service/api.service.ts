@@ -397,6 +397,9 @@ export class ApiService {
 	getAllStockAdjustment() {
 		return this.app.get('getAllStockAdj');
 	}
+	getStckAdjById(id: any) {
+		return this.app.get('getStckAdjById?id=' + id, id);
+	}
 	deleteStockAdjustmentById(id: any) {
 		return this.app.get('deletePurchaseById?id=' + id, id);
 	}

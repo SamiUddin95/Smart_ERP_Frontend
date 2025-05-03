@@ -31,14 +31,14 @@ export class StckAdjFormComponent {
   totalSalePrice: number = 0;
   stckAdjDtl: any[] = [];
   recentItem: any = {};
-  stockInHand:number=0;
-  stockInShelf:number=0;
-  stockInHandAmount:number=0;
-  stockInShelfAmount:number=0;
-  differQty:number=0;
-  differQtyAmount:number=0;
-  totalAmountIncrease:number=0;
-  totalAmountDecrease:number=0;
+  stockInHand: number = 0;
+  stockInShelf: number = 0;
+  stockInHandAmount: number = 0;
+  stockInShelfAmount: number = 0;
+  differQty: number = 0;
+  differQtyAmount: number = 0;
+  totalAmountIncrease: number = 0;
+  totalAmountDecrease: number = 0;
   selectedTable: string = '';
   tableData: { label: string; value: number }[] = [];
   ngOnInit(): void {
@@ -50,13 +50,13 @@ export class StckAdjFormComponent {
       this.getPurchaseById(this.urlId);
   }
   getPurchaseById(id: number) {
-    this.api.getPurchaseById(id).subscribe(res => {
+    this.api.getStckAdjById(id).subscribe(res => {
       var res = JSON.parse(res);
-      this.formData.partyId = res.purchase[0].vendorId;
-      this.formData.remarks = res.purchase[0].remarks;
-      this.formData.invoiceNo = res.purchase[0].invoiceNo;
-      this.stckAdjDtl = res.purchaseDetails;
-      console.log(this.stckAdjDtl);
+      debugger
+      this.formData.partyId = res.stockAdjustment[0].partyId;
+      this.formData.remarks = res.stockAdjustment[0].remarks;
+      this.formData.serialNo = res.stockAdjustment[0].serialNo;
+      this.stckAdjDtl = res.stockAdjDetails;
       this.resetTotals();
       this.calculateTotals();
     })
@@ -76,20 +76,18 @@ export class StckAdjFormComponent {
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
     if (user.barcode.length >= 2) {
-      debugger
       this.api.getPurchaseDetailbyBarCode(user.barcode).subscribe(res => {
-        debugger
         if (res != null) {
-          debugger
           this.recentItem = res;
           const item = res[0]?.item;
           const purchaseDetail = res[0]?.purchaseDetail;
           user.ItemName = item?.itemName || item?.alternateItemName || item?.childName || '';
-          user.purchasePrice = item?.purchasePrice ? item?.purchasePrice : 0; 
+          user.purchasePrice = item?.purchasePrice ? item?.purchasePrice : 0;
           user.stockInHand = purchaseDetail?.netQuantity;
           user.stockInShelf = purchaseDetail?.netQuantity;
           user.salePrice = purchaseDetail?.salePrice;
-
+          this.resetTotals();
+          this.calculateTotals()
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: "No data found" });
@@ -117,170 +115,14 @@ export class StckAdjFormComponent {
   cancel() {
     this.router.navigate(['stck-adj-list']);
   }
-  stockInHandChange(user: any) {
-    // user.subTotal = parseFloat((user.purchasePrice * user.quantity).toFixed(2));
-    // user.discountByValue = parseFloat(((user.discountByValue * 100) / user.subTotal).toFixed(2));
-    // user.discountByPercent = parseFloat(((user.subTotal * user.discountByValue) / 100).toFixed(2));
-    // user.totalIncDisc = parseFloat((user.subTotal - user.discountByValue).toFixed(2));
-    // user.total = parseFloat((user.quantity * user.purchasePrice).toFixed(2));
-    // user.netTotal = user.total;
-    // this.stckAdjDtl.forEach(x => {
-    //   if (typeof x.netQuantity === 'number' && !isNaN(x.netQuantity)) {
-    //     this.netQuantity += x.netQuantity;
-    //   }
-    // });
-    // user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
-    // user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    // user.salePrice = Number(user.netRate.toFixed(2));
-    // user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    // user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    // user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-
-  }
-
-
-  discvallueChange(user: any) {
-    user.discountByPercent = parseFloat(((user.discountByValue * 100) / user.subTotal).toFixed(2));
-    user.totalIncDisc = parseFloat((user.subTotal - user.discountByValue).toFixed(2));
-    this.stckAdjDtl.forEach(x => {
-      if (typeof x.netQuantity === 'number' && !isNaN(x.netQuantity)) {
-        this.netQuantity += x.netQuantity;
-      }
-    });
-    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
-    user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    user.salePrice = Number(user.netRate.toFixed(2));
-    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-  }
-
-  qtyChange(user: any) {
-    user.netQuantity = parseFloat((user.quantity + user.bonusQuantity).toFixed(2));
-    user.subTotal = parseFloat((user.purchasePrice * user.quantity).toFixed(2));
-    user.discountByValue = isNaN(parseFloat(((user.discountByPercent * 100) / user.subTotal).toFixed(2))) ? 0 : parseFloat(((user.discountByPercent * 100) / user.subTotal).toFixed(2));
-    user.discountByPercent = isNaN(parseFloat(((user.subTotal * user.discountByValue) / 100).toFixed(2))) ? 0 : parseFloat(((user.subTotal * user.discountByValue) / 100).toFixed(2));
-    user.totalIncDisc = parseFloat((user.subTotal - user.discountByValue).toFixed(2));
-    this.stckAdjDtl.forEach(x => {
-      if (typeof x.netQuantity === 'number' && !isNaN(x.netQuantity)) {
-        this.netQuantity += x.netQuantity;
-      }
-    });
-    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
-    user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    user.salePrice = Number(user.netRate.toFixed(2));
-    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-  }
-
-  bonusQtyChange(user: any) {
-    user.netQuantity = parseFloat((user.quantity + user.bonusQuantity).toFixed(2));
-    user.subTotal = parseFloat((user.purchasePrice * user.quantity).toFixed(2));
-    user.discountByValue = isNaN(parseFloat(((user.discountByPercent * 100) / user.subTotal).toFixed(2))) ? 0 : parseFloat(((user.discountByPercent * 100) / user.subTotal).toFixed(2));
-    user.discountByPercent = isNaN(parseFloat(((user.subTotal * user.discountByValue) / 100).toFixed(2))) ? 0 : parseFloat(((user.subTotal * user.discountByValue) / 100).toFixed(2));
-    user.totalIncDisc = parseFloat((user.subTotal - user.discountByValue).toFixed(2));
-    this.stckAdjDtl.forEach(x => {
-      if (typeof x.netQuantity === 'number' && !isNaN(x.netQuantity)) {
-        this.netQuantity += x.netQuantity;
-      }
-    });
-    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
-    user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    user.salePrice = Number(user.netRate.toFixed(2));
-    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-  }
-
-  stockInShelfChange(user: any) {
-    // user.netQuantity = parseFloat((user.quantity + user.bonusQuantity).toFixed(2));
-    // user.subTotal = parseFloat((user.purchasePrice * user.quantity).toFixed(2));
-    // user.discountByValue = parseFloat(((user.discountByPercent / 100) * user.purchasePrice).toFixed(2));
-    // user.discountByPercent = parseFloat(((user.subTotal * user.discountByValue) / 100).toFixed(2));
-    // user.totalIncDisc = parseFloat((user.subTotal - user.discountByValue).toFixed(2));
-    // this.stckAdjDtl.forEach(x => {
-    //   if (typeof x.netQuantity === 'number' && !isNaN(x.netQuantity)) {
-    //     this.netQuantity += x.netQuantity;
-    //   }
-    // });
-    // user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
-    // user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    // user.salePrice = Number(user.netRate.toFixed(2));
-    // user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    // user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    // user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-
-  }
-
-  gstPerChange(user: any) {
-    user.gstByValue = parseFloat(((user.gstByPercent * user.totalIncDisc) / 100).toFixed(2));
-    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
-    user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    user.salePrice = Number(user.netRate.toFixed(2));
-    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-  }
-
-  gstValueChange(user: any) {
-    user.gstByPercent = parseFloat(((user.gstByValue * 100) / user.totalIncDisc).toFixed(2));
-    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
-    this.stckAdjDtl.forEach(x => {
-      if (typeof x.netQuantity === 'number' && !isNaN(x.netQuantity)) {
-        this.netQuantity += x.netQuantity;
-      }
-    });
-    user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    user.salePrice = Number(user.netRate.toFixed(2));
-    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-  }
-
-  saleDiscountByValueChange(user: any) {
-    user.discountByValue = parseFloat(((user.discountByPercent / 100) * user.purchasePrice).toFixed(2));
-    user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-
-  }
-
-  netSalePriceChange(user: any) {
-    user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    //user.salePrice = Number(user.netRate.toFixed(2));
-    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-  }
 
   resetTotals() {
     this.stockInHand = 0;
     this.stockInShelf = 0;
-    this.totalGST = 0;
-    this.netCostTotal = 0;
-    this.netSaleTotal = 0;
-    this.totalSalePrice = 0;
-    this.netProfitInValue = 0;
+    this.stockInHandAmount = 0;
+    this.stockInShelfAmount = 0;
+    this.differQty = 0;
+    this.differQtyAmount = 0;
   }
 
   calculateTotals() {
@@ -288,21 +130,22 @@ export class StckAdjFormComponent {
       if (typeof x.stockInHand === 'number' && !isNaN(x.stockInHand)) {
         this.stockInHand += x.stockInHand;
       }
-      if (typeof x.stockInShelf === 'number' && !isNaN(x.stockInShelf)) {
-        this.stockInShelf += x.stockInShelf;
+      if (typeof x.stockOnShelf === 'number' && !isNaN(x.stockOnShelf)) {
+        this.stockInShelf += x.stockOnShelf;
       }
-      if (typeof x.totalIncGst === 'number' && !isNaN(x.totalIncGst)) {
-        this.totalGST += x.totalIncGst;
+      if (typeof x.stockInHand === 'number' && !isNaN(x.stockInHand)) {
+        this.stockInHandAmount += x.stockInHand * x.purchasePrice;
       }
-      if (typeof x.totalIncGst === 'number' && !isNaN(x.totalIncGst)) {
-        this.netCostTotal += x.totalIncGst;
-        if (typeof x.totalSalePrice === 'number' && !isNaN(x.totalSalePrice)) {
-          this.totalSalePrice += x.totalSalePrice;
+      if (typeof x.stockOnShelf === 'number' && !isNaN(x.stockOnShelf)) {
+        this.stockInShelfAmount += x.stockOnShelf * x.purchasePrice;
+      }
+      if (typeof x.adjustmentQty === 'number' && !isNaN(x.adjustmentQty)) {
+        this.differQty += x.adjustmentQty;
+        if (typeof x.adjustmentQty === 'number' && !isNaN(x.adjustmentQty)) {
+          this.differQtyAmount += x.adjustmentQty * x.purchasePrice;
         }
       }
     });
-    this.netProfitInValue = this.netSaleTotal - this.netCostTotal;
-    this.netProfitInValue = Number(Math.abs(this.netProfitInValue).toFixed(2));
   }
   addChildItemToPurchaseList(item: any) {
     this.stckAdjDtl.push({
@@ -318,37 +161,13 @@ export class StckAdjFormComponent {
       this.party = res;
     })
   }
-  salePriceChange(user: any) {
-    //user.discountByValue = parseFloat(((user.discountByPercent / 100) * user.purchasePrice).toFixed(2));
-    // user.netSalePrice = parseFloat(((user.salePrice * user.quantity)).toFixed(2));
-    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-  }
-  marginPerentChange(user: any) {
-    //user.netQuantity = parseFloat((user.quantity + user.bonusQuantity).toFixed(2));
-    //user.subTotal = parseFloat((user.purchasePrice * user.quantity).toFixed(2));
-    //user.discountByValue = parseFloat(((user.discountByPercent / 100) * user.purchasePrice).toFixed(2));
-    //user.discountByPercent = parseFloat(((user.subTotal * user.discountByValue) / 100).toFixed(2));
-    //user.totalIncDisc = parseFloat((user.subTotal - user.discountByValue).toFixed(2));
-    //user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
-    //user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    user.salePrice = parseFloat((((user.netRate * user.marginPercent) / 100) + user.netRate).toFixed(2));
-    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    //user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netSalePrice) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-  }
   PurchaseDetailModel: any[] = [];
   AddData() {
     this.stckAdjDtl.push({
-      no: 0, barCode: '', ItemName: '', quantity: 0,
-      bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
-      discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
-      saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0
+      no: 0, barCode: '', ItemName: '', quantity: 0,adjustmentQty:0,
+      bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0,
+       netRate: 0, salePrice: 0,
+      saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, total: 0
     });
   }
   RemoveData() {
@@ -378,7 +197,6 @@ export class StckAdjFormComponent {
     //     return;
     //   }
     // }
-    debugger
     let formData: any = {
       id: this.urlId ? this.urlId : undefined,
       Remarks: this.formData.remarks,
@@ -387,14 +205,16 @@ export class StckAdjFormComponent {
       location: this.formData.location,
       salePrice: this.formData.salePrice,
       stockInHand: this.stockInHand,
-      stockInShelf: this.stockInShelf,
+      stockOnShelf: this.stockInShelf,
       stockInHandAmount: this.stockInHandAmount,
-      stockInShelfAmount: this.stockInShelfAmount,
+      stockOnShelfAmount: this.stockInShelfAmount,
+      otalAdjustmentQty: this.differQtyAmount,
+      AdjustmentAmount: this.differQtyAmount,
       stckAdjDtl: this.stckAdjDtl
     };
 
     this.api.createStockAdjustment(formData).subscribe(res => {
-      if (res.id>0) {
+      if (res.id > 0) {
         this.router.navigate(['stck-adj-list']);
         this.messageService.add({ severity: 'success', summary: 'Success', detail: "Stock Adjustment Saved Successfully" });
       }
@@ -421,7 +241,7 @@ export class StckAdjFormComponent {
     this.currentStock = this.stckAdjDtl.map(x => x.netQuantity).join(',');
     this.saleDisc = this.stckAdjDtl.map(x => x.saleDiscountByValue).join(',');
     this.netSalePrice = this.stckAdjDtl.map(x => x.netSalePrice).join(',');
-    this.api.postPurchase('',0,this.barCodes, this.currentStock, this.salePrice,
+    this.api.postPurchase('', 0, this.barCodes, this.currentStock, this.salePrice,
       this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
         if (res.status == "OK")
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
@@ -510,14 +330,14 @@ export class StckAdjFormComponent {
   handleKeyboardEvent(event: KeyboardEvent): void {
     if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
       event.preventDefault();
-      this.itemSearchDialog=true;
+      this.itemSearchDialog = true;
     }
   }
-  itemDtl:any=[];
-  searchedItemName:string='';
-  itemSearchFromDialog(e:any){
-    this.api.getAllItemsdetailsFilterbased(e.target.value,'All',0,0).subscribe(res=>{
-      this.itemDtl=res;
+  itemDtl: any = [];
+  searchedItemName: string = '';
+  itemSearchFromDialog(e: any) {
+    this.api.getAllItemsdetailsFilterbased(e.target.value, 'All', 0, 0).subscribe(res => {
+      this.itemDtl = res;
 
     })
   }
@@ -540,12 +360,12 @@ export class StckAdjFormComponent {
   selectItemFromSearch(item: any) {
     this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
     this.itemSearchDialog = false; // Close the search dialog
-    this.searchedItemName="";
+    this.searchedItemName = "";
   }
 
   calculateAdjustment(user: any) {
     const stockInHand = Number(user.stockInHand) || 0;
-    const stockInShelf = Number(user.stockInShelf) || 0;
+    const stockInShelf = Number(user.stockOnShelf) || 0;
     user.adjustmentQty = stockInHand - stockInShelf;
     this.calculateTotal(user);
   }
@@ -553,11 +373,12 @@ export class StckAdjFormComponent {
     const adjustmentQty = Number(user.adjustmentQty) || 0;
     const purchasePrice = Number(user.purchasePrice) || 0;
     user.total = adjustmentQty * purchasePrice;
+    this.resetTotals();
+    this.calculateTotals();
   }
 
   onTableChange() {
     if (!this.selectedTable) return;
-  debugger
     this.api.getTableData(this.selectedTable).subscribe((res: any[]) => {
       console.log("Received table data:", res); // DEBUG
       this.tableData = res.map(item => ({
