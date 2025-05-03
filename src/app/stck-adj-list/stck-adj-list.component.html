@@ -75,14 +75,12 @@
                                 <th pSortableColumn="code">No <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">Date<p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="category">User<p-sortIcon field="category"></p-sortIcon></th>
-                                <th pSortableColumn="quantity">Posted/Un Posted Status<p-sortIcon field="quantity"></p-sortIcon></th>
-                                <th pSortableColumn="quantity">Remakrs<p-sortIcon field="quantity"></p-sortIcon> </th>
-                                <th pSortableColumn="quantity">Brand Name<p-sortIcon field="quantity"></p-sortIcon></th>
-                                <th pSortableColumn="quantity">Modified By <p-sortIcon field="quantity"></p-sortIcon></th>
-                                <th pSortableColumn="price">Posted By<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Created By<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Date of Post<p-sortIcon field="price"></p-sortIcon></th>
-                                <th pSortableColumn="price">Date of Creation<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Stock In Hand<p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Stock In Shelf<p-sortIcon field="quantity"></p-sortIcon> </th>
+                                <th pSortableColumn="quantity">Stock In Hand Amount<p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="quantity">Stock In Shelf Amount <p-sortIcon field="quantity"></p-sortIcon></th>
+                                <th pSortableColumn="price">Total Adj Qty<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="price">Total Adj Qty Amount<p-sortIcon field="price"></p-sortIcon></th>
                                 <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
@@ -90,16 +88,13 @@
                             <tr>
                                 <td>{{i + 1}}</td>
                                 <td>{{itm.date}}</td>
-                                <td>{{itm.userId}}</td>
-                                <td>{{itm.status}}</td>
-                                <td>{{itm.remarks}}</td>
-                                <!-- <td>{{itm.updatedAt}}</td> -->
-                                <td>{{""}}</td>
-                                <td>{{itm.createdBy}}</td>
-                                <td>{{itm.date}}</td>
-                                <td>{{ itm.createdAt | date:'dd-MMM-yyyy' }} </td>
-                                <td>{{itm.createdAt}}</td>
-                                <td>{{itm.createdAt}}</td>
+                                <td>{{itm.userID}}</td>
+                                <td>{{itm.stockInHand}}</td>
+                                <td>{{itm.stockOnShelf}}</td>
+                                <td>{{itm.stockInHandAmount}}</td>
+                                <td>{{itm.stockOnShelfAmount}}</td>
+                                <td>{{itm.totalAdjustmentQty}}</td>
+                                <td>{{itm.adjustmentAmount}}</td>
                                 <td style="position: relative;" class="d-flex">
                                     <button style="margin-right: 3px" pButton pRipple icon="pi pi-pencil"
                                         class="p-button-rounded p-button-info"

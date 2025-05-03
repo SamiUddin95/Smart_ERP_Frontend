@@ -213,7 +213,7 @@ export class StckAdjFormComponent {
       stockOnShelf: this.stockInShelf,
       stockInHandAmount: this.stockInHandAmount,
       stockOnShelfAmount: this.stockInShelfAmount,
-      otalAdjustmentQty: this.differQtyAmount,
+      totalAdjustmentQty: this.differQtyAmount,
       AdjustmentAmount: this.differQtyAmount,
       stckAdjDtl: this.stckAdjDtl
     };
