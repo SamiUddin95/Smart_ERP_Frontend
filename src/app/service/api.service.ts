@@ -124,6 +124,9 @@ export class ApiService {
 	createPurchaseOrder(obj: any) {
 		return this.app.post('createPurchaseOrder', obj);
 	}
+	createMinimumQty(obj: any) {
+		return this.app.post('createMinimumQty', obj);
+	}
 	postPurchasePrder(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
 		return this.app.get('postPurchaseOrder?barCodes=' + barCodes + "&currentStock=" + currentStock +
 			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
@@ -143,6 +146,10 @@ export class ApiService {
 	}
 	fetchPurchaseOrdersByDate(startDate: any, endDate: any, zeroQty:any) {
 		return this.app.get(`GetPurchaseOrdersByDateRange?startDate=${startDate}&endDate=${endDate}&zeroQty=${zeroQty}`);
+	  }
+	  fetchGetItemsBySupplier(PartyId: any, PartyName: any) {
+		debugger
+		return this.app.get(`GetItemsBySupplier?PartyId=${PartyId}&PartyName=${PartyName}`);
 	  }
 	getPurchaseById(id: any) {
 		return this.app.get('getPurchaseById?id=' + id, id);

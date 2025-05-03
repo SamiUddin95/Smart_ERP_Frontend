@@ -16,6 +16,13 @@ formData: any = {  };
   tableData: { label: string; value: number }[] = [];
   originalPurchOrderDtlData: any[] = [];
   purchOrderDtlData: any[] = [];
+  urlId: any;
+
+  ngOnInit(): void {
+    this.urlId = this.route.snapshot.paramMap.get('id'); 
+    
+	}
+
 
   onTableChange() {
     debugger
@@ -34,24 +41,18 @@ formData: any = {  };
 
 
   fetchDataByDate() {
-    if (!this.formData.startDate || !this.formData.endDate) {
-      alert("Please select both Start Date and End Date.");
+    if (!this.formData.partyId || !this.selectedTable) {
+      alert("Please select Supplier.");
       return;
     }
-  
-    const formattedStart = formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en-US');
-    const formattedEnd = formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en-US');
-  
-    this.api.fetchPurchaseOrdersByDate(formattedStart, formattedEnd, null)
+    const partyId = this.formData.partyId;
+    const partyName = this.selectedTable;
+  debugger
+    this.api.fetchGetItemsBySupplier(partyId, partyName)
       .subscribe(res => {
         const result = JSON.parse(res);
-        this.originalPurchOrderDtlData = result.purchaseOrderDetails;
-        this.purchOrderDtlData = [...result.purchaseOrderDetails];
-  
-        if (result.purchaseOrders.length > 0) {
-          const firstOrder = result.purchaseOrders[0];
-          this.formData = { ...this.formData, ...firstOrder };
-        }
+        this.originalPurchOrderDtlData = result.getItem;
+        this.purchOrderDtlData = [...result.getItem];
       });
   }
 
@@ -70,28 +71,25 @@ formData: any = {  };
     this.router.navigate(['purch-order-list']);
   }
 
-  addPurchaseOrder(){
-      let formData:any={
-        //id:this.urlId?this.formData.id=this.urlId:undefined,
-        orderNo:this.formData.orderNo,
-        partyId:this.formData.partyId,
-        partyType: this.selectedTable,
-        dateOfInvoice:moment(this.formData.dateOfInvoice).format('YYYY-MM-DD').toString(),
-        remarks:this.formData.remarks, 
-        endDate:moment(this.formData.endDate).format('YYYY-MM-DD').toString(),
-        startDate:moment(this.formData.startDate).format('YYYY-MM-DD').toString(),
-        projectionDays:this.formData.projectionDays, 
-        paCategoryId:this.formData.paCategory,
-        purcOrderDtlModel:this.purchOrderDtlData,
-        location:this.formData.location,
+  addMinimumOrder(){
+    debugger
+    const formData = this.purchOrderDtlData.map(item => ({
+      barcode: item.barcode,
+      itemName: item.itemName,
+      currentStock: item.currentStock,
+      netRate: item.netCost,
+      minimumQty1: item.minQty,
+      updatedBy: this.urlId 
+    }));
+  
+    this.api.createMinimumQty(formData).subscribe(
+      (res: any) => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Minimum Qty Saved Successfully" });
+      },
+      (err: any) => {
+        // handle error if needed
       }
-      this.api.createPurchaseOrder(formData).subscribe((res: any)=>{
-      
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Purchase Order Saved Successfully" });	
-        this.router.navigate(['purch-order-list']);
-        },(err: any)=>{
-      
-        })
+    );
     }
 
     itemDtl:any=[];
@@ -116,7 +114,7 @@ formData: any = {  };
       this.purchOrderDtlData.push({no:0,barCode:'',itemName:'',bonusQty:'',
       salePrice:0,desc:0,flatDesconeachQty:0,gST:0,gSTPer2:0,remakrs:''});
     }
-    
+
     RemoveCol(index:number){ 
       this.purchOrderDtlData.splice(index,1);
     }
