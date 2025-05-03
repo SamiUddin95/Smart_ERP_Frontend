@@ -115,6 +115,12 @@ export class ApiService {
 	getAllPurchaseOrder() {
 		return this.app.get('getAllPurchaseOrder');
 	}
+	getAllPurchaseOrderDashboard() {
+		return this.app.get('getAllPurchaseOrderDashboard');
+	}
+	changeDeliveryStatus(ids:string) {
+		return this.app.get('changeDeliveryStatus?ids='+ids);
+	}
 	createPurchaseOrder(obj: any) {
 		return this.app.post('createPurchaseOrder', obj);
 	}
@@ -489,6 +495,9 @@ export class ApiService {
 
 	getItemDetailbyBarCode(barCode: string) {
 		return this.app.get('getItemDetailbyBarCode?barCode=' + barCode);
+	}
+	getItemDetailbyBarCodeAndName(barCode: string,name:string,searchType:string) {
+		return this.app.get('getItemDetailbyBarCodeAndName?barCode=' + barCode+'&name='+name+'&searchType='+searchType);
 	}
 	getAllItemDetailbyBarCode(barCode: string) {
 		return this.app.get('getAllItemDetailbyBarCode?barCode=' + barCode);

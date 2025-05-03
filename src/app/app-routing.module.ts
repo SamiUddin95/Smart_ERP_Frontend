@@ -80,6 +80,8 @@ import { JurnVuchrListComponent } from './jurn-vuchr-list/jurn-vuchr-list.compon
 import { LocationComponent } from './location/location.component';
 import { LocationFormComponent } from './location-form/location-form.component';
 import { BarCodeshlefPrintComponent } from './bar-codeshlef-print/bar-codeshlef-print.component';
+import { PriceCheckFormComponent } from './price-check-form/price-check-form.component';
+import { PurcOrderDashboardComponent } from './purc-order-dashboard/purc-order-dashboard.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, },
@@ -194,7 +196,9 @@ const routes: Routes = [
   { path: 'location', component: LocationComponent,},
   { path: 'location-form', component: LocationFormComponent,},
   { path: 'location-form/:id', component: LocationFormComponent,},
-  { path:'bar-code-print',component:BarCodeshlefPrintComponent}
+  { path:'bar-code-print',component:BarCodeshlefPrintComponent},
+  { path:'price-check-form',component:PriceCheckFormComponent},
+  { path:'purc-order-dash',component:PurcOrderDashboardComponent}
 
 ];
 

@@ -105,6 +105,8 @@ import { InterLocTransFormComponent } from './inter-loc-trans-form/inter-loc-tra
 import { FocusNavigationDirective } from './focus-navigation.directive';
 import { BarCodeshlefPrintComponent } from './bar-codeshlef-print/bar-codeshlef-print.component';
 import { NgxBarcode6Module } from 'ngx-barcode6';
+import { PriceCheckFormComponent } from './price-check-form/price-check-form.component';
+import { PurcOrderDashboardComponent } from './purc-order-dashboard/purc-order-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -176,6 +178,8 @@ import { NgxBarcode6Module } from 'ngx-barcode6';
       InterLocTransFormComponent,
       FocusNavigationDirective,
       BarCodeshlefPrintComponent,
+      PriceCheckFormComponent,
+      PurcOrderDashboardComponent,
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,
