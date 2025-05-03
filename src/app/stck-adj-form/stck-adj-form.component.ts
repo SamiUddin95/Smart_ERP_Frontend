@@ -53,9 +53,12 @@ export class StckAdjFormComponent {
     this.api.getStckAdjById(id).subscribe(res => {
       var res = JSON.parse(res);
       debugger
+      this.selectedTable = res.stockAdjustment[0].partyName;
       this.formData.partyId = res.stockAdjustment[0].partyId;
       this.formData.remarks = res.stockAdjustment[0].remarks;
       this.formData.serialNo = res.stockAdjustment[0].serialNo;
+      this.formData.userId = res.stockAdjustment[0].userId;
+      this.formData.location = res.stockAdjustment[0].locationId;
       this.stckAdjDtl = res.stockAdjDetails;
       this.resetTotals();
       this.calculateTotals();
@@ -84,7 +87,7 @@ export class StckAdjFormComponent {
           user.ItemName = item?.itemName || item?.alternateItemName || item?.childName || '';
           user.purchasePrice = item?.purchasePrice ? item?.purchasePrice : 0;
           user.stockInHand = purchaseDetail?.netQuantity;
-          user.stockInShelf = purchaseDetail?.netQuantity;
+          user.stockOnShelf = purchaseDetail?.netQuantity;
           user.salePrice = purchaseDetail?.salePrice;
           this.resetTotals();
           this.calculateTotals()
@@ -201,8 +204,10 @@ export class StckAdjFormComponent {
       id: this.urlId ? this.urlId : undefined,
       Remarks: this.formData.remarks,
       purchasePrice: this.formData.purchasePrice,
-      userId: null,
+      userId: this.formData.userId,
       location: this.formData.location,
+      partyId:this.formData.partyId,
+      partyName: this.selectedTable,
       salePrice: this.formData.salePrice,
       stockInHand: this.stockInHand,
       stockOnShelf: this.stockInShelf,

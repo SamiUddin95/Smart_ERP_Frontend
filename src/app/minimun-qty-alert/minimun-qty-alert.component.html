@@ -1,0 +1,224 @@
+<div class="container-fluid mt-2" style="width:100%">
+    <div class="flex justify-content-between p-2 ">
+        <h3>Minimum Quantity </h3>
+    </div>
+    <section>
+        <div class="card">
+            <div class="p-grid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-3">
+                            <p-accordion>
+                                <p-accordionTab header="MINIMUM QTY ALERT" [selected]="true">
+                                    <div class="card shadow-3">
+                                        <div class="card-body">
+                                            <div class="grid">   
+                                                      <div class="col-md-4 col-sm-12">
+                                                        <label for="tableSelect">Select Supplier</label>
+                                                        <div class="d-flex">
+                                                          <label class="mr-1 border w-25 d-flex align-items-center justify-content-center">
+                                                            {{ selectedTable || '—' }}
+                                                          </label>
+                                                          <p-dropdown
+                                                          [options]="[
+                                                            { label: 'Party Wise', value: 'Party' },
+                                                            { label: 'Manufacture Wise', value: 'Manufacture' },
+                                                            { label: 'Category Wise', value: 'Category' },
+                                                            { label: 'Class Wise', value: 'Class' },
+                                                            { label: 'Brand Wise', value: 'Brand' },
+                                                          ]"
+                                                          [(ngModel)]="selectedTable"
+                                                          (onChange)="onTableChange()"
+                                                          placeholder="Select Table">
+                                                        </p-dropdown>
+                                                        </div>
+                                                      </div>
+                                                      
+                                                      <!-- Table Data Dropdown -->
+                                                      <div class="col-md-4 col-sm-12 mt-3" *ngIf="tableData.length">
+                                                        <label for="tableDataSelect">Party</label>
+                                                        <div class="d-flex">
+                                                          <label class="mr-1 border w-25 d-flex align-items-center justify-content-center">
+                                                            {{ formData.tableItemId || '—' }}
+                                                          </label>
+                                                          <p-dropdown
+                                                            class="w-100"
+                                                            [options]="tableData"
+                                                            [(ngModel)]="formData.partyId"
+                                                            placeholder="Select Item">
+                                                          </p-dropdown>
+                                                        </div>
+                                                      </div>
+                                                    
+                                                     
+                                                      
+                                                    <div class="col-md-12 mt-4">
+                                                        <div class="col-md-12 mt-4 text-right col-sm-12">
+                                                            <button pButton pRipple type="button" icon="pi pi-save"
+                                                                (click)="AddData()" label="Add"
+                                                                class="p-button-sm p-button-success"> </button>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-12" style="margin-top: 28px;">
+                                                            <button pButton type="button" label="Get PO Details" icon="pi pi-search"
+                                                                    class="p-button-success" (click)="fetchDataByDate()">
+                                                            </button>
+                                                          </div>
+                                                        <div class="pad-wrapper">
+                                                            <div class="box">
+                                                                <div class="content">
+                                                                    <p-table #dt [scrollable]="true"
+                                                                        scrollHeight="600px" responsiveLayout="scroll"
+                                                                        [value]="purchOrderDtlData"
+                                                                        styleClass="p-datatable-sm p-datatable-gridlines"
+                                                                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                                                        [rows]="10" [showCurrentPageReport]="true"
+                                                                        [rowsPerPageOptions]="[10, 25, 50]"
+                                                                        [paginator]="true" [rows]="10">
+
+                                                                        <ng-template pTemplate="header">
+                                                                            <tr> 
+                                                                                <th pSortableColumn="name">No
+                                                                                    <p-sortIcon
+                                                                                        field="name"></p-sortIcon></th>
+                                                                                <th pSortableColumn="name">Bar Code
+                                                                                    <p-sortIcon
+                                                                                        field="name"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Item Name<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Current Stock<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Net Rate<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Minimum Qty<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th>
+                                                                                <th pSortableColumn="price">
+                                                                                    Action<p-sortIcon
+                                                                                        field="price"></p-sortIcon></th> 
+                                                                            </tr>
+                                                                        </ng-template>
+                                                                        <ng-template pTemplate="body" let-user let-i="rowIndex">
+                                                                            <tr>
+                                                                                <td>{{i+1}}</td>
+                                                                                <td> <input type="text"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="No" (keypress)="onKey($event,user)" autofocus
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.barCode"></td>
+                                                                                        <td><input type="text"
+                                                                                            class="form-control form-control-sm"
+                                                                                            placeholder="Item Name"
+                                                                                            [(ngModel)]="user.itemName">
+                                                                            </td>
+                                                                                <td> <input type="number"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Item Name"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.soldQty"></td>
+                                                                                <td> <input type="number"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Bonus Qty"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.rtnQty"></td>
+                                                                                <td> <input type="number"
+                                                                                        class="form-control form-control-sm col-md-12 pwd"
+                                                                                        placeholder="Sale Price"
+                                                                                        [disabled]="false"
+                                                                                        [(ngModel)]="user.netSaleQty"></td>
+                                                                                <td>  <button pButton pRipple type="button" icon="pi pi-trash" (click)="RemoveCol(i)"
+                                                                                    class="p-button-sm p-button-danger"> </button></td>
+                                                                            </tr>
+                                                                        </ng-template> 
+                                                                    </p-table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="d-flex justify-content-end w-100" style="margin-top:10px">
+                                        <div>
+                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addPurchaseOrder()"
+                                                label="Save" class="p-button-sm p-button-success"> </button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</div>
+<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog">
+    <div class="card shadow-3">
+        <div class="card-body">
+            <div class="grid">
+                <div class="row px-2 col-12">
+                    <div class="col-md-12">
+                        <input type="text"
+                            class="p-3 form-control form-control-sm"
+                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
+                            [(ngModel)]="searchedItemName">
+                    </div>
+                    <div class="mt-2 col-md-12">
+                        <div class="mt-2 pad-wrapper">
+                            <div class="box">
+                                <div class="content">
+                                    <div class="row">
+                                        <p-table #dt responsiveLayout="scroll" [value]="itemDtl"
+                                            styleClass="p-datatable-sm p-datatable-gridlines"
+                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                            [rows]="10" [showCurrentPageReport]="true"
+                                            [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
+
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th pSortableColumn="code">No.
+                                                        <p-sortIcon field="code"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="name">BarCode
+                                                        <p-sortIcon field="name"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="price">Item Name
+                                                        <p-sortIcon field="price"></p-sortIcon>
+                                                    </th> 
+                                                    <th pSortableColumn="price">Purchase Price
+                                                        <p-sortIcon field="price"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="price">Sale Price
+                                                        <p-sortIcon field="price"></p-sortIcon>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="body" let-itm let-i="rowIndex">
+                                                <tr>
+                                                    <td>{{ i + 1 }}</td>
+                                                    <td>{{itm.aliasName}}</td>
+                                                    <td>{{itm.itemName}}</td>
+                                                    <td>{{itm.purchasePrice}}</td>
+                                                    <td>{{itm.salePrice}}</td>
+                                                </tr>
+                                            </ng-template>
+
+                                        </p-table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<p-toast position="top-right"></p-toast>

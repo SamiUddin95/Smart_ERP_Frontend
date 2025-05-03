@@ -197,6 +197,19 @@
                 </ul>
             </li>
             <li *ngIf="userType == 2 || userType == 1" class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#MinQty" data-bs-toggle="collapse" href="#">
+                    <i class="pi pi-shopping-cart"></i><span>Minimum Qty</span><i
+                        class="pi pi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="MinQty" class="nav-content collapse" data-bs-parent="#Finance">
+                    <a routerLink="/min-qty-alert" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>Minimum Qty</span>
+                    </a>
+
+                </ul>
+            </li>
+
+            <li *ngIf="userType == 2 || userType == 1" class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#Reports" data-bs-toggle="collapse" href="#">
                     <i class="pi pi-money-bill"></i><span>REPORTS</span><i class="pi pi-chevron-down ms-auto"></i>
                 </a>
