@@ -40,6 +40,7 @@ export class PurcOrderFormComponent {
 	}
 
   onTableChange() {
+    debugger
     if (!this.selectedTable) return;
   debugger
     this.api.getTableData(this.selectedTable).subscribe((res: any[]) => {
