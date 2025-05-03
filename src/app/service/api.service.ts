@@ -492,9 +492,14 @@ export class ApiService {
 		return this.app.get('getAllItemsdetailsFilterbased?itemName=' + itemName + '&aliasName=' + aliasName + '&purchasePrice=' +
 			purchasePrice + '&salePrice=' + salePrice);
 	}
-
+	getItemDetailbyBarCodeAndName(barCode: string,name:string,searchType:string) {
+		return this.app.get('getItemDetailbyBarCodeAndName?barCode=' + barCode+'&name='+name+'&searchType='+searchType);
+	}
 	getItemDetailbyBarCode(barCode: string) {
 		return this.app.get('getItemDetailbyBarCode?barCode=' + barCode);
+	}
+	getPurchaseDetailbyBarCode(barCode: string) {
+		return this.app.get('getPurchaseDetailbyBarCode?barCode=' + barCode);
 	}
 	getAllItemDetailbyBarCode(barCode: string) {
 		return this.app.get('getAllItemDetailbyBarCode?barCode=' + barCode);
