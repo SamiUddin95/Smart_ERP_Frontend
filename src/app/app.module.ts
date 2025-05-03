@@ -107,6 +107,7 @@ import { BarCodeshlefPrintComponent } from './bar-codeshlef-print/bar-codeshlef-
 import { NgxBarcode6Module } from 'ngx-barcode6';
 import { PriceCheckFormComponent } from './price-check-form/price-check-form.component';
 import { PurcOrderDashboardComponent } from './purc-order-dashboard/purc-order-dashboard.component';
+import { MinimunQtyAlertComponent } from './minimun-qty-alert/minimun-qty-alert.component';
 
 @NgModule({
   declarations: [
@@ -180,6 +181,7 @@ import { PurcOrderDashboardComponent } from './purc-order-dashboard/purc-order-d
       BarCodeshlefPrintComponent,
       PriceCheckFormComponent,
       PurcOrderDashboardComponent,
+      MinimunQtyAlertComponent,
   ],
   imports: [
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,

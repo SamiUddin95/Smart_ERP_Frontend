@@ -82,6 +82,7 @@ import { LocationFormComponent } from './location-form/location-form.component';
 import { BarCodeshlefPrintComponent } from './bar-codeshlef-print/bar-codeshlef-print.component';
 import { PriceCheckFormComponent } from './price-check-form/price-check-form.component';
 import { PurcOrderDashboardComponent } from './purc-order-dashboard/purc-order-dashboard.component';
+import { MinimunQtyAlertComponent } from './minimun-qty-alert/minimun-qty-alert.component';
 
 
 const routes: Routes = [
@@ -201,7 +202,8 @@ const routes: Routes = [
   { path:'bar-code-print',component:BarCodeshlefPrintComponent},
   { path:'bar-code-print',component:BarCodeshlefPrintComponent},
   { path:'price-check-form',component:PriceCheckFormComponent},
-  { path:'purc-order-dash',component:PurcOrderDashboardComponent}
+  { path:'purc-order-dash',component:PurcOrderDashboardComponent},
+  { path:'min-qty-alert',component:MinimunQtyAlertComponent}
 
 ];
 
