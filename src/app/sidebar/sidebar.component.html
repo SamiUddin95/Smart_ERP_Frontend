@@ -107,18 +107,8 @@
                     <a routerLink="/bar-code-print" routerLinkActive="active">
                         <i class="fa fa-helmet-un"></i><span>Bar Code Shelf Printing</span>
                     </a>
-                </ul>
-            </li>
-            <li *ngIf="userType == 2 || userType == 1" class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Stocks" data-bs-toggle="collapse" href="#">
-                    <i class="pi pi-shopping-cart"></i><span>STOCKS</span><i class="pi pi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="Stocks" class="nav-content collapse" data-bs-parent="#Finance">
-                    <a routerLink="/stck-adj-list" routerLinkActive="active">
-                        <i class="fa fa-helmet-un"></i><span>Stock Adjustment</span>
-                    </a>
-                    <a routerLink="/jurn-vuchr-list" routerLinkActive="active">
-                        <i class="fa fa-helmet-un"></i><span>Journal Voucher</span>
+                    <a routerLink="/price-check-form" routerLinkActive="active">
+                        <i class="fa fa-helmet-un"></i><span>Price Checker Window</span>
                     </a>
                 </ul>
             </li>
@@ -200,7 +190,7 @@
                 </a>
                 <ul id="POrderDsh" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a routerLink="/user-list" routerLinkActive="active">
+                        <a routerLink="/purc-order-dash" routerLinkActive="active">
                             <i class="fa fa-helmet-un"></i><span>Order Dashboard</span>
                         </a>
                     </li>
@@ -211,8 +201,6 @@
                     <i class="pi pi-money-bill"></i><span>REPORTS</span><i class="pi pi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="Reports" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-                    <!-- Nested Dropdown (Sales) -->
                     <li *ngIf="userType == 2 || userType == 1" class="nav-item">
                         <a class="nav-link collapsed" data-bs-target="#Acccount" data-bs-toggle="collapse" href="#">
                             <i class="pi pi-shopping-cart"></i><span>Basic Data</span><i
