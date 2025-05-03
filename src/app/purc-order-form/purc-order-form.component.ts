@@ -125,9 +125,8 @@ export class PurcOrderFormComponent {
 
   }
   onKey(event: any, user: any) {
-    debugger
     user.barcode = event.target.value;
-    if (user.barcode.length > 4) {
+    if (user.barcode.length > 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         user.itemName = res[0].itemName;
         user.purchasePrice = res[0].purchasePrice;
@@ -183,7 +182,7 @@ export class PurcOrderFormComponent {
   netSalePrice: string = '';
   postPurchase() {
     debugger
-    this.barCodes = this.purchOrderDtlData.map(x => x.barcode).join(',');
+    this.barCodes = this.purchOrderDtlData.map(x => x.barCode).join(',');
     this.purchasePrice = this.purchOrderDtlData.map(x => x.purchasePrice).join(',');
     this.salePrice = this.purchOrderDtlData.map(x => x.netSalePrice).join(',');
     this.currentStock = this.purchOrderDtlData.map(x => x.netQuantity).join(',');
