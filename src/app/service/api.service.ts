@@ -490,6 +490,10 @@ export class ApiService {
 	getItemDetailbyBarCode(barCode: string) {
 		return this.app.get('getItemDetailbyBarCode?barCode=' + barCode);
 	}
+	getPurchaseDetailbyBarCode(barCode: string) {
+		return this.app.get('getPurchaseDetailbyBarCode?barCode=' + barCode);
+	}
+
 	getAllItemDetailbyBarCode(barCode: string) {
 		return this.app.get('getAllItemDetailbyBarCode?barCode=' + barCode);
 	}
@@ -535,6 +539,9 @@ export class ApiService {
 	deleteLocationbyId(id: any) {
 		return this.app.get('deleteLocationById?id=' + id, id);
 	}
+	deleteTill(tillName: any) {
+		return this.app.get('deleteTillById?tillName=' + tillName, tillName);
+	  }
 
 	createLocation(obj: any) {
 		debugger

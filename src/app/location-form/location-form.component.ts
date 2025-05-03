@@ -57,8 +57,26 @@ constructor(private route: ActivatedRoute,private router: Router,private api: Ap
 
     //Till
     deleteRow(index: number) {
-      this.TillData.splice(index, 1);
+      debugger
+      const till = this.TillData.splice(index, 1);
+      const tillname = till[0].name;
+      if (!till ) {
+        return;
+      }
+      if (confirm('Are you sure you want to delete this till?')) {
+        this.api.deleteTill(tillname).subscribe({
+          next: () => {
+            this.TillData.splice(index, 1); // Remove from UI
+          },
+          error: (err) => {
+            console.error('Error deleting till:', err);
+            alert('Failed to delete till.');
+          }
+        });
+      }
     }
+
+
     TillData: any[] = [
       { tillNumber: 0, name: '' }
   ];

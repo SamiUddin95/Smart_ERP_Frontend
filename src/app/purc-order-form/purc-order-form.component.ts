@@ -139,6 +139,7 @@ export class PurcOrderFormComponent {
       id:this.urlId?this.formData.id=this.urlId:undefined,
       orderNo:this.formData.orderNo,
       partyId:this.formData.partyId,
+      partyType: this.selectedTable,
       dateOfInvoice:moment(this.formData.dateOfInvoice).format('YYYY-MM-DD').toString(),
       remarks:this.formData.remarks, 
       endDate:moment(this.formData.endDate).format('YYYY-MM-DD').toString(),

@@ -39,6 +39,8 @@ export class StckAdjFormComponent {
   differQtyAmount:number=0;
   totalAmountIncrease:number=0;
   totalAmountDecrease:number=0;
+  selectedTable: string = '';
+  tableData: { label: string; value: number }[] = [];
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.getCategory();
@@ -74,11 +76,20 @@ export class StckAdjFormComponent {
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
     if (user.barcode.length >= 2) {
-      this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
+      debugger
+      this.api.getPurchaseDetailbyBarCode(user.barcode).subscribe(res => {
+        debugger
         if (res != null) {
+          debugger
           this.recentItem = res;
-          user.ItemName = user.ItemName = res[0]?.itemName || res[0]?.alternateItemName || res[0]?.childName;
-          user.purchasePrice = res[0]?.purchasePrice ? res[0]?.purchasePrice : 0;
+          const item = res[0]?.item;
+          const purchaseDetail = res[0]?.purchaseDetail;
+          user.ItemName = item?.itemName || item?.alternateItemName || item?.childName || '';
+          user.purchasePrice = item?.purchasePrice ? item?.purchasePrice : 0; 
+          user.stockInHand = purchaseDetail?.netQuantity;
+          user.stockInShelf = purchaseDetail?.netQuantity;
+          user.salePrice = purchaseDetail?.salePrice;
+
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: "No data found" });
@@ -129,23 +140,6 @@ export class StckAdjFormComponent {
 
   }
 
-  discPerChange(user: any) {
-    user.discountByValue = parseFloat(((user.subTotal * user.discountByPercent) / 100).toFixed(2));
-    user.totalIncDisc = parseFloat((user.subTotal - user.discountByValue).toFixed(2));
-    this.stckAdjDtl.forEach(x => {
-      if (typeof x.netQuantity === 'number' && !isNaN(x.netQuantity)) {
-        this.netQuantity += x.netQuantity;
-      }
-    });
-
-    user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
-    user.salePrice = Number(user.netRate.toFixed(2));
-    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
-    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
-    user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
-    this.resetTotals();
-    this.calculateTotals();
-  }
 
   discvallueChange(user: any) {
     user.discountByPercent = parseFloat(((user.discountByValue * 100) / user.subTotal).toFixed(2));
@@ -388,22 +382,14 @@ export class StckAdjFormComponent {
     let formData: any = {
       id: this.urlId ? this.urlId : undefined,
       Remarks: this.formData.remarks,
-      serialNo: this.formData.serialNo,
       purchasePrice: this.formData.purchasePrice,
       userId: null,
-      date: this.formData.date,
       location: this.formData.location,
-      status: this.formData.status[0]==1?true:false,
-      netRate: this.formData.netRate,
       salePrice: this.formData.salePrice,
       stockInHand: this.stockInHand,
       stockInShelf: this.stockInShelf,
       stockInHandAmount: this.stockInHandAmount,
       stockInShelfAmount: this.stockInShelfAmount,
-      differQty: this.differQty,
-      differQtyAmount: this.differQtyAmount,
-      totalAmountIncrease: this.totalAmountIncrease,
-      totalAmountDecrease: this.totalAmountDecrease,
       stckAdjDtl: this.stckAdjDtl
     };
 
@@ -555,5 +541,31 @@ export class StckAdjFormComponent {
     this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
     this.itemSearchDialog = false; // Close the search dialog
     this.searchedItemName="";
+  }
+
+  calculateAdjustment(user: any) {
+    const stockInHand = Number(user.stockInHand) || 0;
+    const stockInShelf = Number(user.stockInShelf) || 0;
+    user.adjustmentQty = stockInHand - stockInShelf;
+    this.calculateTotal(user);
+  }
+  calculateTotal(user: any) {
+    const adjustmentQty = Number(user.adjustmentQty) || 0;
+    const purchasePrice = Number(user.purchasePrice) || 0;
+    user.total = adjustmentQty * purchasePrice;
+  }
+
+  onTableChange() {
+    if (!this.selectedTable) return;
+  debugger
+    this.api.getTableData(this.selectedTable).subscribe((res: any[]) => {
+      console.log("Received table data:", res); // DEBUG
+      this.tableData = res.map(item => ({
+        label: item.name || item.partyName,  // lowercase keys
+        value: item.id
+      }));
+    }, err => {
+      console.error("Error fetching table data", err); // DEBUG
+    });
   }
 }
