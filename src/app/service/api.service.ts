@@ -370,6 +370,12 @@ export class ApiService {
 			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
 		+"&postedBy="+postedBy);
 	}
+	postPurchaseNew(postedBy: string, purchaseId: number, items: any[]) {
+		debugger
+		const url = `postPurchaseNew?purchaseId=${purchaseId}&postedBy=${postedBy}`;
+		return this.app.post(url, items);
+	}
+	  
 	unPostPurchase(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
 		debugger
 		return this.app.get('unPostPurchase?barCodes=' + barCodes + "&currentStock=" + currentStock +

@@ -436,16 +436,8 @@ export class PurhaseFormComponent {
   saleDisc: string = '';
   netSalePrice: string = '';
   postPurchase() {
-    debugger
-    this.barCodes = this.purcDtl.map(x => x.barcode).join(',');
-    this.purchasePrice = this.purcDtl.map(x => x.purchasePrice).join(',');
-    this.salePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
-    this.currentStock = this.purcDtl.map(x => x.netQuantity).join(',');
-    this.saleDisc = this.purcDtl.map(x => x.saleDiscountByValue).join(',');
-    this.netSalePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
     const name = localStorage.getItem("Name")?.toString() ?? '';
-    this.api.postPurchase(name, this.urlId, this.barCodes, this.currentStock, this.salePrice,
-      this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
+    this.api.postPurchaseNew(name, this.urlId, this.purcDtl).subscribe(res => {
         if (res.status == "OK")
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
       });
