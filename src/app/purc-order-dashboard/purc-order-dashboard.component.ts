@@ -39,7 +39,8 @@ export class PurcOrderDashboardComponent {
 		})
 		ids = ids.slice(0, -1);
 		this.api.changeDeliveryStatus(ids).subscribe(res=>{
-			
+			this.selectedRows=[];
+			this.getUserList();
 		})
 	}
 	exportPdf() {
