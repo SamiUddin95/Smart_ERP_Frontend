@@ -237,4 +237,69 @@ export class PurcOrderFormComponent {
         this.location=res;
       })
     }
+
+    moveFocus(event: KeyboardEvent, rowIndex: number, field: string) {
+      const key = event.key;
+      const fields = ['barCode', 'itemName', 'soldQty', 'rtnQty', 'netSaleQty', 'rate', 'currentStock', 'requiredQty', 'total'];
+      const colIndex = fields.indexOf(field);
+  
+      let nextRowIndex = rowIndex;
+      let nextColIndex = colIndex;
+  
+      if (key === 'ArrowRight') {
+          nextColIndex = Math.min(colIndex + 1, fields.length - 1);
+      } else if (key === 'ArrowLeft') {
+          nextColIndex = Math.max(colIndex - 1, 0);
+      } else if (key === 'ArrowDown') {
+          nextRowIndex++;
+      } else if (key === 'ArrowUp') {
+          nextRowIndex = Math.max(rowIndex - 1, 0);
+      } else {
+          return;
+      }
+  
+      const nextField = fields[nextColIndex];
+      const nextId = `${nextField}-${nextRowIndex}`;
+      const nextInput = document.getElementById(nextId);
+  
+      if (nextInput) {
+          event.preventDefault(); // prevent arrow scroll
+          (nextInput as HTMLElement).focus();
+      }
+  }
+  fieldOrder: string[] = [
+    'dateOfInvoice',
+    'startDate',
+    'endDate',
+    'remarks',
+    'paCategory',
+    'projectionDays',
+    'zeroQty',
+    'location',
+    'selectedTable',
+    'partyId'
+  ];
+  
+  moveDateFocus(event: KeyboardEvent, currentId: string) {
+    debugger
+    const index = this.fieldOrder.indexOf(currentId);
+    let nextIndex = index;
+  
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      nextIndex = Math.min(index + 1, this.fieldOrder.length - 1);
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = Math.max(index - 1, 0);
+    } else {
+      return;
+    }
+  
+    const nextId = this.fieldOrder[nextIndex];
+    const nextElement = document.getElementById(nextId);
+  
+    if (nextElement) {
+      event.preventDefault();
+      nextElement.focus();
+    }
+  }
+
 }

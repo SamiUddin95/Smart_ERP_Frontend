@@ -30,37 +30,43 @@
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Date of Invoice</label>
                                                         <p-calendar [(ngModel)]="formData.dateOfInvoice" [style]="{width:100}"
-                                                            dateFormat="yy-mm-dd"></p-calendar>
+                                                            dateFormat="yy-mm-dd" [inputId]="'dateOfInvoice'"
+                                                            (keydown)="moveDateFocus($event, 'dateOfInvoice')"></p-calendar>
                                                     </div>  
                                                     <div class="col-md-4 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Start Date</label>
                                                         <p-calendar [(ngModel)]="formData.startDate" [style]="{width:100}"
-                                                            dateFormat="yy-mm-dd"></p-calendar>
+                                                            dateFormat="yy-mm-dd" [inputId]="'startDate'"
+                                                            (keydown)="moveDateFocus($event, 'startDate')"></p-calendar>
                                                     </div>
                                                     <div class="col-md-4 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>End Date</label>
                                                         <p-calendar [(ngModel)]="formData.endDate" [style]="{width:100}"
-                                                            dateFormat="yy-mm-dd"></p-calendar>
+                                                            dateFormat="yy-mm-dd" [inputId]="'endDate'"
+                                                            (keydown)="moveDateFocus($event, 'endDate')"></p-calendar>
                                                     </div> 
                                                     <div class="col-md-4 col-sm-12 pl-2">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Remarks</label>
                                                         <input type="text" class="form-control col-md-12"
-                                                            placeholder="Name" [(ngModel)]="formData.remarks">
+                                                            placeholder="Name" [(ngModel)]="formData.remarks" [inputId]="'remarks'" id="remarks"
+                                                            (keydown)="moveDateFocus($event, 'remarks')">
                                                     </div>
                                                     <div class="col-md-4 col-sm-12 pl-2">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>PO Category</label>
                                                         <input type="text" class="form-control col-md-12"
-                                                            placeholder="Pur Sno" [(ngModel)]="formData.paCategory">
+                                                            placeholder="Pur Sno" [(ngModel)]="formData.paCategory" [inputId]="'paCategory'" id="paCategory"
+                                                            (keydown)="moveDateFocus($event, 'paCategory')">
                                                     </div>   
                                                     <div class="col-md-4 col-sm-12 pl-2">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Projection Days</label>
                                                         <input type="text" class="form-control col-md-12"
-                                                            placeholder="Projection Days" [(ngModel)]="formData.projectionDays">
+                                                            placeholder="Projection Days" [(ngModel)]="formData.projectionDays" [inputId]="'projectionDays'" id="projectionDays"
+                                                            (keydown)="moveDateFocus($event, 'projectionDays')">
                                                     </div>
                                                     <div class="col-md-4 col-sm-12">
                                                         <label for="tableSelect">Zero Qty</label>
@@ -74,6 +80,8 @@
                                                               { label: 'No', value: 'no' }
                                                             ]"
                                                             [(ngModel)]="zeroQty"
+                                                            [inputId]="'zeroQty'"
+                                                            (keydown)="moveDateFocus($event, 'zeroQty')"
                                                             placeholder="Select"
                                                             class="w-100"
                                                           ></p-dropdown>
@@ -88,7 +96,8 @@
                                                                 </span>{{formData.location}}</label>
                                                             <p-dropdown class="w-100" [options]="location"
                                                                 [(ngModel)]="formData.location" placeholder="Location"
-                                                                optionLabel="name" optionValue="id"></p-dropdown>
+                                                                optionLabel="name" optionValue="id" [inputId]="'location'"
+                                                                (keydown)="moveDateFocus($event, 'location')"></p-dropdown>
                                                         </div>
 
                                                     </div>      
@@ -108,7 +117,8 @@
                                                           ]"
                                                           [(ngModel)]="selectedTable"
                                                           (onChange)="onTableChange()"
-                                                          placeholder="Select Table">
+                                                          placeholder="Select Table" [inputId]="'selectedTable'"
+                                                          (keydown)="moveDateFocus($event, 'selectedTable')">
                                                         </p-dropdown>
                                                         </div>
                                                       </div>
@@ -124,7 +134,8 @@
                                                             class="w-100"
                                                             [options]="tableData"
                                                             [(ngModel)]="formData.partyId"
-                                                            placeholder="Select Item">
+                                                            placeholder="Select Item" [inputId]="'partyId'"
+                                                            (keydown)="moveDateFocus($event, 'partyId')">
                                                           </p-dropdown>
                                                         </div>
                                                       </div>
@@ -204,47 +215,66 @@
                                                                                 <td> <input type="text"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
                                                                                         placeholder="No" (keypress)="onKey($event,user)" autofocus
-                                                                                        [disabled]="false"
+                                                                                        [disabled]="true"
+                                                                                        [id]="'barCode-' + i"
+                                                                                        (keydown)="moveFocus($event, i, 'barCode')"
                                                                                         [(ngModel)]="user.barCode"></td>
-                                                                                        <td><input type="text"
-                                                                                            class="form-control form-control-sm"
-                                                                                            placeholder="Item Name"
-                                                                                            [(ngModel)]="user.itemName">
-                                                                            </td>
+                                                                                <td><input type="text"
+                                                                                    class="form-control form-control-sm"
+                                                                                    placeholder="Item Name"
+                                                                                    [disabled]="true"
+                                                                                    [id]="'itemName-' + i"
+                                                                                    (keydown)="moveFocus($event, i, 'itemName')"
+                                                                                    [(ngModel)]="user.itemName">
+                                                                                </td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
-                                                                                        placeholder="Item Name"
-                                                                                        [disabled]="false"
+                                                                                        placeholder="Sold Qty"
+                                                                                        [disabled]="true"
+                                                                                        [id]="'soldQty-' + i"
+                                                                                        (keydown)="moveFocus($event, i, 'soldQty')"
                                                                                         [(ngModel)]="user.soldQty"></td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
-                                                                                        placeholder="Bonus Qty"
-                                                                                        [disabled]="false"
+                                                                                        placeholder="Rtn Qty"
+                                                                                        [disabled]="true"
+                                                                                        [id]="'rtnQty-' + i"
+                                                                                        (keydown)="moveFocus($event, i, 'rtnQty')"
                                                                                         [(ngModel)]="user.rtnQty"></td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
-                                                                                        placeholder="Sale Price"
-                                                                                        [disabled]="false"
+                                                                                        placeholder="Net Sale Qty"
+                                                                                        [disabled]="true"
+                                                                                        [id]="'netSaleQty-' + i"
+                                                                                        (keydown)="moveFocus($event, i, 'netSaleQty')"
                                                                                         [(ngModel)]="user.netSaleQty"></td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
-                                                                                        placeholder="Desc"
-                                                                                        [disabled]="false"
+                                                                                        placeholder="Rate"
+                                                                                        [disabled]="true"
+                                                                                        [id]="'rate-' + i"
+                                                                                        (keydown)="moveFocus($event, i, 'rate')"
                                                                                         [(ngModel)]="user.rate"></td> 
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
-                                                                                        placeholder="GST"
-                                                                                        [disabled]="false"
+                                                                                        placeholder="Current Stock"
+                                                                                        [disabled]="true"
+                                                                                        [id]="'currentStock-' + i"
+                                                                                        (keydown)="moveFocus($event, i, 'currentStock')"
                                                                                         [(ngModel)]="user.currentStock"></td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
-                                                                                        placeholder="GST Per 2"
+                                                                                        placeholder="Required Qty"
                                                                                         [disabled]="false"
+                                                                                        [id]="'requiredQty-' + i"
+                                                                                        (keydown)="moveFocus($event, i, 'requiredQty')"
                                                                                         [(ngModel)]="user.requiredQty"></td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
-                                                                                        placeholder="Remakrs"
-                                                                                        [disabled]="false"
+                                                                                        placeholder="Total"
+                                                                                        [disabled]="true"
+                                                                                        [id]="'total-' + i"
+                                                                                        (keydown)="moveFocus($event, i, 'total')"
                                                                                         [(ngModel)]="user.total"></td> 
                                                                                 <td>  <button pButton pRipple type="button" icon="pi pi-trash" (click)="RemoveCol(i)"
                                                                                     class="p-button-sm p-button-danger"> </button></td>

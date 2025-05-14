@@ -187,7 +187,22 @@ export class ItemFormComponent {
         }else {
               //this.router.navigate(['item']);
               this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Item Added Successfully' });
-          }
+              const savedBrand = this.formData.brandId;
+              const savedManufacturer = this.formData.manufacturerId;
+              const savedClass = this.formData.classId;
+              const savedCategory = this.formData.categoryId;
+
+              // ✅ Clear all form data
+              this.formData = {
+                  brandId: savedBrand,
+                  manufacturerId: savedManufacturer,
+                  classId: savedClass,
+                  categoryId: savedCategory
+              };
+
+              // Clear image preview if needed
+          
+            }
       },
       err => {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add item.' });
@@ -313,7 +328,7 @@ export class ItemFormComponent {
 
       // add parent child item
       addParentChild() {   
-        
+        debugger
         if (this.urlId) {
             this.childParentData.id = this.urlId;
         }
@@ -342,9 +357,10 @@ export class ItemFormComponent {
               if (res?.msg === "An item with this name already exists.") {
                   this.messageService.add({ severity: 'warn', summary: 'Warning', detail: res.msg });
               } else {
-                  this.router.navigate(['item']);
+                  this.router.navigate(['item-form']);
                   this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Item Added Successfully' });
-              }
+
+                }
           },
           err => {
               this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add item.' });

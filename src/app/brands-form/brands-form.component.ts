@@ -38,7 +38,8 @@ export class BrandsFormComponent {
 
   addBrand(){
     const requiredFields = [
-      { key: 'name', message: 'Name is required.' }
+      { key: 'name', message: 'Name is required.' },
+      { key: 'manufacturerId', message: 'Manufacturer is required.' }
   ];
 
       for (const field of requiredFields) {
