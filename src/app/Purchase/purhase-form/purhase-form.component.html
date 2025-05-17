@@ -54,9 +54,9 @@
                                                         <!-- <button pButton pRipple type="button" icon="pi pi-trash"
                                                             (click)="RemoveData()" label="Remove"
                                                             class="ml-2 p-button-sm p-button-danger"> </button> -->
-                                                        <button pButton pRipple  label="Post" [disabled]="urlId == 0"
+                                                        <button pButton pRipple  label="Post" [disabled]="purcDtl.length==0"
                                                         (click)="postPurchase()" class="mr-2 p-button-sm p-button-warning" pTooltip="PDF" tooltipPosition="bottom"></button>
-                                                        <button pButton pRipple label="UnPost" [disabled]="urlId == 0"
+                                                        <button pButton pRipple label="UnPost" [disabled]="purcDtl.length==0"
                                                         (click)="unPostPurchase()" class="mr-2 p-button-sm p-button-primary" pTooltip="PDF" tooltipPosition="bottom"></button>
                                                     </div>
                                                     <div class="col-md-12 mt-4">

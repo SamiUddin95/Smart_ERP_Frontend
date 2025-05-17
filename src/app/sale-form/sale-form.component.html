@@ -106,7 +106,7 @@
                                                                                         </td>
                                                                                         <td> <input type="text"
                                                                                                 class="form-control form-control-sm"
-                                                                                                placeholder="Item Name"
+                                                                                                placeholder="Item Name" [disabled]="true"
                                                                                                 [(ngModel)]="saleDtl.itemName">
                                                                                         </td>
                                                                                         <td><input type="number"
@@ -119,20 +119,20 @@
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Sale Price"
-                                                                                                [disabled]="false"
+                                                                                                [disabled]="false" [disabled]="true"
                                                                                                 (input)="salePriceChange(saleDtl)"
                                                                                                 [(ngModel)]="saleDtl.salePrice">
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Discount"
-                                                                                                [disabled]="false"
+                                                                                                [disabled]="false" [disabled]="true"
                                                                                                 (input)="discChange(saleDtl)"
                                                                                                 [(ngModel)]="saleDtl.discount">
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
-                                                                                                placeholder="Total"
+                                                                                                placeholder="Total" [disabled]="true"
                                                                                                 (input)="netSalePriceChange()"
                                                                                                 [(ngModel)]="saleDtl.netSalePrice">
                                                                                         </td>
@@ -260,7 +260,7 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Net Total</label>
-            <input type="text" class="form-control col-md-12" placeholder="Inv" [(ngModel)]="grandTotal">
+            <input type="text" [disabled]="true" class="form-control col-md-12" placeholder="Inv" [(ngModel)]="grandTotal">
         </div>
         <!-- <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -278,20 +278,20 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Cash Charged</label>
-            <input type="number" (focus)="setFocusedField({ data: this, field: 'cashCharged' })"
+            <input type="number" [disabled]="true" (focus)="setFocusedField({ data: this, field: 'cashCharged' })"
                 class="form-control col-md-12" (input)="cashChargedChange()" placeholder="Remarks"
                 [(ngModel)]="cashCharged">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Cash Back</label>
-            <input type="number" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Inv"
+            <input type="number" [disabled]="true" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Inv"
                 [(ngModel)]="cashBack" (focus)="setFocusedField({ data: this, field: 'cashBack' })">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Amount in Words</label>
-            <input type="text" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Inv"
+            <input type="text" [disabled]="true" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Amount In Words"
                 [(ngModel)]="amountInWords">
         </div>
         <p-divider></p-divider>
@@ -306,7 +306,7 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Remaining Amount</label>
-            <input type="number" class="form-control col-md-12" placeholder="Net Total" [(ngModel)]="remainingAmount">
+            <input type="number" [disabled]="true" class="form-control col-md-12" placeholder="Net Total" [(ngModel)]="remainingAmount">
         </div>
         <!-- <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -317,7 +317,7 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Machine Name</label>
-            <input type="text" class="form-control col-md-12" placeholder="Machine Name">
+            <input type="text" [disabled]="true" class="form-control col-md-12" placeholder="Machine Name">
         </div>
         <!-- <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -325,17 +325,17 @@
             <input type="text" class="form-control col-md-12" (input)="cashChargedChange()"
                 placeholder="Amount" [(ngModel)]="cashCharged">
         </div> -->
-        <div class="col-md-6 col-sm-12 pl-2">
+        <!-- <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Card Name</label>
             <input type="text" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Card Name"
                 [(ngModel)]="cardName">
-        </div>
-        <div class="col-md-6 col-sm-12 pl-2">
+        </div> -->
+        <!-- <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Card Number</label>
             <input type="text" class="form-control col-md-12" placeholder="Card Number" [(ngModel)]="cardNumber">
-        </div>
+        </div> -->
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Extra Charges(%)</label>
@@ -351,13 +351,13 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Final Amount</label>
-            <input type="number" class="form-control col-md-12" (input)="extraChargeChange()" placeholder="Final Amount"
+            <input type="number" class="form-control col-md-12" [disabled]="true" (input)="extraChargeChange()" placeholder="Final Amount"
                 [(ngModel)]="finalAmount">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Amount in Words</label>
-            <input type="text" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Amount in Words"
+            <input type="text" class="form-control col-md-12" [disabled]="true" (input)="cashBackChange()" placeholder="Amount in Words"
                 [(ngModel)]="amountInWords">
         </div>
         <p-divider></p-divider>
