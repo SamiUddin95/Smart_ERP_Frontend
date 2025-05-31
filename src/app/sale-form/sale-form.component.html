@@ -102,39 +102,39 @@
                                                                                                 autofocus
                                                                                                 (keydown.enter)="onKey($event, saleDtl)"
                                                                                                 [disabled]="false"
-                                                                                                [(ngModel)]="saleDtl.barCode">
+                                                                                                [(ngModel)]="saleDtl.barCode" appFocusNavigation>
                                                                                         </td>
                                                                                         <td> <input type="text"
                                                                                                 class="form-control form-control-sm"
                                                                                                 placeholder="Item Name" [disabled]="true"
-                                                                                                [(ngModel)]="saleDtl.itemName">
+                                                                                                [(ngModel)]="saleDtl.itemName" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Quantity"
                                                                                                 [disabled]="false"
                                                                                                 (input)="qtyChange(saleDtl)"
-                                                                                                [(ngModel)]="saleDtl.qty">
+                                                                                                [(ngModel)]="saleDtl.qty" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Sale Price"
                                                                                                 [disabled]="false" [disabled]="true"
                                                                                                 (input)="salePriceChange(saleDtl)"
-                                                                                                [(ngModel)]="saleDtl.salePrice">
+                                                                                                [(ngModel)]="saleDtl.salePrice" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Discount"
                                                                                                 [disabled]="false" [disabled]="true"
                                                                                                 (input)="discChange(saleDtl)"
-                                                                                                [(ngModel)]="saleDtl.discount">
+                                                                                                [(ngModel)]="saleDtl.discount" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Total" [disabled]="true"
                                                                                                 (input)="netSalePriceChange()"
-                                                                                                [(ngModel)]="saleDtl.netSalePrice">
+                                                                                                [(ngModel)]="saleDtl.netSalePrice" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><button pButton pRipple
                                                                                                 type="button"

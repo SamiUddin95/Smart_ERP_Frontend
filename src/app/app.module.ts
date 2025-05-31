@@ -78,7 +78,6 @@ import { SaleCashOutComponent } from './sale-cash-out/sale-cash-out.component';
 import { SaleTillOpenComponent } from './sale-till-open/sale-till-open.component';
 import { SaleTillCloseComponent } from './sale-till-close/sale-till-close.component';
 import { RptBasicDataComponent } from './rpt-basic-data/rpt-basic-data.component';
-import { PurchaseFormComponent } from './purchase-form/purchase-form.component';
 import { SaleTillOpenListComponent } from './sale-till-open-list/sale-till-open-list.component';
 import { RptPurchaseComponent } from './rpt-purchase/rpt-purchase.component';
 import { RptPurchaseOrderComponent } from './rpt-purchase-order/rpt-purchase-order.component';
@@ -154,7 +153,6 @@ import { MinimunQtyAlertComponent } from './minimun-qty-alert/minimun-qty-alert.
      SaleCashInComponent, SaleCashOutComponent, SaleTillOpenComponent, SaleTillCloseComponent,
      PurchaseComponent,PurhaseFormComponent,
       RptBasicDataComponent,
-      PurchaseFormComponent,
       SaleTillOpenListComponent,
       RptPurchaseComponent,
       RptPurchaseOrderComponent,

@@ -39,10 +39,12 @@ export class PurcReturnFormComponent {
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
+    if(!this.urlId)
+      this.AddData();
 	}
   onKey(event: any, user: any) { 
     user.barcode = event.target.value;
-    if (user.barcode.length > 4) {
+    if (user.barcode.length > 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         user.itemName = res[0].itemName;
         user.purchasePrice = res[0].purchasePrice;
