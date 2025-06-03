@@ -438,8 +438,10 @@ export class PurhaseFormComponent {
   postPurchase() {
     const name = localStorage.getItem("Name")?.toString() ?? '';
     this.api.postPurchaseNew(name, this.urlId, this.purcDtl).subscribe(res => {
-        if (res.status == "OK")
+        if (res.status == "OK"){
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
+          this.purcDtl=[];
+        }
       });
     
   }

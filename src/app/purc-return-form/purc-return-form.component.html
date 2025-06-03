@@ -116,44 +116,44 @@
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Bar Code" (keypress)="onKey($event,purcRetDtl)"
                                                                                                    [disabled]="false"
-                                                                                                   [(ngModel)]="purcRetDtl.barcode">
+                                                                                                   [(ngModel)]="purcRetDtl.barcode" appFocusNavigation>
                                                                                         </td>
                                                                                         <td>
                                                                                             <input type="text"
                                                                                                 class="form-control form-control-sm"
                                                                                                 placeholder="Item Name"
-                                                                                                [(ngModel)]="purcRetDtl.itemName">
+                                                                                                [(ngModel)]="purcRetDtl.itemName" appFocusNavigation>
                                                                                             
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Quantity"
                                                                                                    [disabled]="false" (input)="qtyChange()"
-                                                                                                   [(ngModel)]="purcRetDtl.qty">
+                                                                                                   [(ngModel)]="purcRetDtl.qty" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Sale Price"
                                                                                                    [disabled]="false" (input)="fullRateChange(purcRetDtl)"
-                                                                                                   [(ngModel)]="purcRetDtl.fullRate">
+                                                                                                   [(ngModel)]="purcRetDtl.fullRate" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Discount"
                                                                                                    [disabled]="false" (input)="discChange(purcRetDtl)"
-                                                                                                   [(ngModel)]="purcRetDtl.disc">
+                                                                                                   [(ngModel)]="purcRetDtl.disc" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                             class="form-control form-control-sm col-md-12 pwd"
                                                                                             placeholder="Discount"
                                                                                             [disabled]="false" (input)="flAtdiscChange(purcRetDtl)"
-                                                                                            [(ngModel)]="purcRetDtl.flatDisc">
+                                                                                            [(ngModel)]="purcRetDtl.flatDisc" appFocusNavigation>
                                                                                  </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Total"
                                                                                                    [disabled]="true"
-                                                                                                   [(ngModel)]="purcRetDtl.total">
+                                                                                                   [(ngModel)]="purcRetDtl.total" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><button pButton pRipple
                                                                                                     type="button"

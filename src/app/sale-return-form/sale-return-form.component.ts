@@ -35,6 +35,8 @@ export class SaleReturnFormComponent {
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
+    if(!this.urlId)
+      this.AddData();
   }
   recentItem: any = {};
   onKey(event: any, user: any) { 
@@ -45,6 +47,7 @@ export class SaleReturnFormComponent {
           this.recentItem = res;
           user.ItemName = user.ItemName = res[0]?.itemName || res[0]?.alternateItemName || res[0]?.childName;
           user.purchasePrice = res[0]?.purchasePrice?res[0]?.purchasePrice:0;
+          user.salePrice=res[0].salePrice?res[0].salePrice:0;
           //user.netRate = res[0]?.salePrice;
           //user.quantity = res[0]?.qty
         }

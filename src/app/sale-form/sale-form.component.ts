@@ -54,6 +54,8 @@ export class SaleFormComponent {
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
+    if(!this.urlId)
+      this.AddData();
   }
   convertToWords() {
     this.amountInWords = this.numberToWords(this.cashCharged);
@@ -230,6 +232,7 @@ export class SaleFormComponent {
     this.grandTotal = 0;
     this.discPerc = 0;
     this.netSaleTotal = 0;
+    this.remainingAmount=0
   }
   calculateTotal() {
     this.saleDtl.forEach(x => {
@@ -240,6 +243,7 @@ export class SaleFormComponent {
     });
     this.discPerc = (this.netSaleTotal && this.discValue) ? parseFloat(((this.discValue / this.netSaleTotal) * 100).toFixed(2)) : 0;
     this.grandTotal = this.netSaleTotal - (this.return + this.flatDisc);
+    this.remainingAmount=this.netSaleTotal - (this.return + this.flatDisc);
   }
   earnedPointsChange() {
     this.netAmount = this.earnedPoints - this.return;

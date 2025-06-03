@@ -20,9 +20,6 @@
                                                             <button pButton pRipple type="button" icon="pi pi-save"
                                                                 (click)="AddData()" label="Add"
                                                                 class="p-button-sm p-button-success"> </button>
-                                                            <!-- <button pButton pRipple type="button" icon="pi pi-trash"
-                                                                (click)="RemoveData()" label="Remove"
-                                                                class="ml-2 p-button-sm p-button-danger"> </button> -->
                                                         </div>
                                                         <div class="mt-2 pad-wrapper">
                                                             <div class="box">
@@ -74,37 +71,37 @@
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Bar Code"
                                                                                                    [disabled]="false" (keydown.enter)="onKey($event, saleDtl)"
-                                                                                                   [(ngModel)]="saleDtl.barCode">
+                                                                                                   [(ngModel)]="saleDtl.barCode" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="text"
                                                                                             class="form-control form-control-sm col-md-12 pwd"
                                                                                             placeholder="Bar Code" 
                                                                                             [disabled]="false"
-                                                                                            [(ngModel)]="saleDtl.ItemName">
+                                                                                            [(ngModel)]="saleDtl.ItemName" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Quantity"
                                                                                                    [disabled]="false" (input)="qtyChange(saleDtl)"
-                                                                                                   [(ngModel)]="saleDtl.qty">
+                                                                                                   [(ngModel)]="saleDtl.qty" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Sale Price"
                                                                                                    [disabled]="false" (input)="salePriceChange(saleDtl)"
-                                                                                                   [(ngModel)]="saleDtl.salePrice">
+                                                                                                   [(ngModel)]="saleDtl.salePrice" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Discount"
                                                                                                    [disabled]="false" (input)="discChange(saleDtl)"
-                                                                                                   [(ngModel)]="saleDtl.discount">
+                                                                                                   [(ngModel)]="saleDtl.discount" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Total"
                                                                                                    [disabled]="true"
-                                                                                                   [(ngModel)]="saleDtl.netSalePrice">
+                                                                                                   [(ngModel)]="saleDtl.netSalePrice" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><button pButton pRipple
                                                                                                     type="button"
