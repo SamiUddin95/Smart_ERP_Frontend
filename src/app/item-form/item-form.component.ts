@@ -66,6 +66,7 @@ export class ItemFormComponent {
     this.getClass();
     this.getManufacturer();
     this.getactivity();
+    this.getParty();
     if (this.urlId) {
       this.getItemsById(this.urlId);
     }
@@ -94,7 +95,7 @@ export class ItemFormComponent {
         this.checkDuplicate('itemName');
       }
     }
-    this.formData.aliasName=event.target.value;
+    //this.formData.aliasName=event.target.value;
   }
   getItemsById(id: any) {
 		this.api.getItemsById(String(id)).subscribe(res => {
@@ -120,7 +121,7 @@ export class ItemFormComponent {
 
   addItem() {   
     const requiredFields = [
-      { key: 'aliasName', message: 'Alias Name is required.' },
+      //{ key: 'aliasName', message: 'Alias Name is required.' },
       { key: 'itemName', message: 'Item Name is required.' },
       { key: 'categoryId', message: 'Category is required.' },
       { key: 'classId', message: 'Class is required.' },
@@ -165,11 +166,13 @@ export class ItemFormComponent {
         formDataToSend.append('categoryId', this.formData.categoryId || 0);
         formDataToSend.append('classId', this.formData.classId || 0);
         formDataToSend.append('manufacturerId', this.formData.manufacturerId || 0);
+        formDataToSend.append('partyId', this.formData.partyId || 0);
         formDataToSend.append('remarks', this.formData.remarks || '');
         formDataToSend.append('recentPurchase', this.formData.recentPurchase || 0);
         formDataToSend.append('brandId', this.formData.brandId || 0);
         formDataToSend.append('discflat', this.formData.discflat || 0);
         formDataToSend.append('lockdisc', this.formData.lockdisc || 0);
+        formDataToSend.append('currentStock', this.formData.currentStock || 0);
         formDataToSend.append('alternateItem', JSON.stringify(this.altrnateBarCodeData));
 
         if (this.selectedFile) {
@@ -191,13 +194,14 @@ export class ItemFormComponent {
               const savedManufacturer = this.formData.manufacturerId;
               const savedClass = this.formData.classId;
               const savedCategory = this.formData.categoryId;
-
+              const savedParty = this.formData.partyId;
               // ✅ Clear all form data
               this.formData = {
                   brandId: savedBrand,
                   manufacturerId: savedManufacturer,
                   classId: savedClass,
-                  categoryId: savedCategory
+                  categoryId: savedCategory,
+                  partyId:savedParty
               };
 
               // Clear image preview if needed
@@ -240,7 +244,12 @@ export class ItemFormComponent {
             this.act=res;
           })
         }
-
+        party:any=[];
+        getParty(){
+          this.api.getAllParty().subscribe(res=>{
+            this.party=res;
+          })
+        }
         altrnateBarCodeData: any[] = [
           { alternateItemName: '', qty: 0, salePrice: 0, saleDisc: 0, remarks: '', barcode: '',netSalePrice: '' }
       ];

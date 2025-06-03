@@ -150,6 +150,20 @@
 
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
+                                                        <label for="username">Party <span class="text-danger">*
+                                                        </span></label>
+                                                        <div class="d-flex">
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center"
+                                                                for="username"><span class="text-danger">
+                                                                </span>{{formData.partyId}}</label>
+                                                            <p-dropdown class="w-100" [options]="party"
+                                                                [(ngModel)]="formData.partyId" placeholder="Party"
+                                                                optionLabel="partyName" optionValue="id"></p-dropdown>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Remarks</label>
                                                         <input type="text" class="form-control col-md-12 "
@@ -168,6 +182,12 @@
                                                             </div>
 
                                                         </div>
+                                                        <div class="col-md-6 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Current Stock</label> 
+                                                        <input type="number" class="form-control  col-md-12 " placeholder="Current Stock"
+                                                             [(ngModel)]="formData.currentStock">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
