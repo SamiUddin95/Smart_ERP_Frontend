@@ -18,7 +18,7 @@ export class PurhaseFormComponent {
   visible: boolean = false;
   childItemSearch: any;
   childItems: any = [];
-  urlId: any=0;
+  urlId: any = 0;
   party: any = [];
   totalQty: number = 0;
   totalDisc: number = 0;
@@ -39,12 +39,12 @@ export class PurhaseFormComponent {
     this.getParty();
     if (this.urlId)
       this.getPurchaseById(this.urlId);
-    if(!this.urlId)
+    if (!this.urlId)
       this.getMaxSerialNo();
   }
-  getMaxSerialNo(){
-    this.api.getPurchaseMaxSerialNo().subscribe(res=>{
-      this.formData.id=res;
+  getMaxSerialNo() {
+    this.api.getPurchaseMaxSerialNo().subscribe(res => {
+      this.formData.id = res;
     })
   }
   getPurchaseById(id: number) {
@@ -74,14 +74,40 @@ export class PurhaseFormComponent {
   }
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
+    if (user.barcode.length >= 2 && this.purcDtl.length > 1) {
+      const matchedIndexes = this.purcDtl
+        .map((item, index) => item.barcode === user.barcode ? index : -1)
+        .filter(index => index !== -1);
+
+      if (matchedIndexes.length > 1) {
+        // Duplicate exists
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Item already exists, please choose a different one!'
+        });
+
+        // Remove second-last duplicate
+        const secondLastIndex = matchedIndexes[matchedIndexes.length - 2];
+        this.purcDtl.splice(secondLastIndex, 1);
+        return;
+      }
+    }
+
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         if (res != null) {
           this.recentItem = res;
           user.ItemName = user.ItemName = res[0]?.itemName || res[0]?.alternateItemName || res[0]?.childName;
           user.purchasePrice = res[0]?.purchasePrice ? res[0]?.purchasePrice : 0;
-          //user.netRate = res[0]?.salePrice;
-          //user.quantity = res[0]?.qty
+          setTimeout(() => {
+            const currentInput = event.target as HTMLElement;
+            const row = currentInput.closest('tr');
+            if (row) {
+              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLElement;
+              quantityInput?.focus();
+            }
+          }, 100);
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: "No data found" });
@@ -109,6 +135,7 @@ export class PurhaseFormComponent {
   cancel() {
     this.router.navigate(['purchase-list']);
   }
+
   purchasePriceChange(user: any) {
     user.subTotal = parseFloat((user.purchasePrice * user.quantity).toFixed(2));
     user.discountByValue = parseFloat(((user.discountByValue * 100) / user.subTotal).toFixed(2));
@@ -306,8 +333,8 @@ export class PurhaseFormComponent {
       }
       if (typeof x.totalIncGst === 'number' && !isNaN(x.totalIncGst)) {
         this.netCostTotal += x.totalIncGst;
-        if (typeof x.totalSalePrice === 'number' && !isNaN(x.totalSalePrice)) {
-          this.totalSalePrice += x.totalSalePrice;
+        if (typeof x.totalSalePrice === 'number' && !isNaN(x.grandTotal)) {
+          this.totalSalePrice += x.grandTotal;
         }
       }
     });
@@ -328,9 +355,15 @@ export class PurhaseFormComponent {
       this.party = res;
     })
   }
+  postAddBtnDsbld: boolean = false;
   salePriceChange(user: any) {
     //user.discountByValue = parseFloat(((user.discountByPercent / 100) * user.purchasePrice).toFixed(2));
     // user.netSalePrice = parseFloat(((user.salePrice * user.quantity)).toFixed(2));
+    if (user.salePrice < user.purchasePrice) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Sale Price should not be less then Purchase Price" });
+      this.postAddBtnDsbld = true;
+    } else
+      this.postAddBtnDsbld = false;
     user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
     user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
     user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
@@ -352,13 +385,18 @@ export class PurhaseFormComponent {
     this.resetTotals();
     this.calculateTotals();
   }
+  royaltyChange(user:any){
+    user.grandTotal=user.totalSalePrice+((user.royalty/100)*user.totalSalePrice);
+    this.resetTotals();
+    this.calculateTotals();
+  }
   PurchaseDetailModel: any[] = [];
   AddData() {
     this.purcDtl.push({
       no: 0, barCode: '', ItemName: '', quantity: 0,
       bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
       discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
-      saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0
+      saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0,royalty:0,grandTotal:0
     });
   }
   RemoveData() {
@@ -438,12 +476,12 @@ export class PurhaseFormComponent {
   postPurchase() {
     const name = localStorage.getItem("Name")?.toString() ?? '';
     this.api.postPurchaseNew(name, this.urlId, this.purcDtl).subscribe(res => {
-        if (res.status == "OK"){
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
-          this.purcDtl=[];
-        }
-      });
-    
+      if (res.status == "OK") {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
+        this.purcDtl = [];
+      }
+    });
+
   }
   unPostPurchase() {
     debugger
@@ -459,7 +497,7 @@ export class PurhaseFormComponent {
         if (res.status == "OK")
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
       });
-    
+
   }
   exportPdf() {
     const doc = new jsPDF('l', 'mm', 'a4');
@@ -574,7 +612,7 @@ export class PurhaseFormComponent {
   selectItemFromSearch(item: any) {
     this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
     this.itemSearchDialog = false; // Close the search dialog
-    this.searchedItemName="";
+    this.searchedItemName = "";
   }
 
 }

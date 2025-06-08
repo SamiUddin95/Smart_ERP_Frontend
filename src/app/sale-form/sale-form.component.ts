@@ -54,7 +54,7 @@ export class SaleFormComponent {
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
-    if(!this.urlId)
+    if (!this.urlId)
       this.AddData();
   }
   convertToWords() {
@@ -160,6 +160,25 @@ export class SaleFormComponent {
   saleDiscGlobal: number = 0;
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
+        if (user.barcode.length >= 2 && this.saleDtl.length > 1) {
+      const matchedIndexes = this.saleDtl
+        .map((item, index) => item.barcode === user.barcode ? index : -1)
+        .filter(index => index !== -1);
+
+      if (matchedIndexes.length > 1) {
+        // Duplicate exists
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Item already exists, please choose a different one!'
+        });
+
+        // Remove second-last duplicate
+        const secondLastIndex = matchedIndexes[matchedIndexes.length - 2];
+        this.saleDtl.splice(secondLastIndex, 1);
+        return;
+      }
+    }
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         if (res != null) {
@@ -170,10 +189,18 @@ export class SaleFormComponent {
           user.qty = 1;
           this.salePriceGlobal = res[0]?.salePrice;
           this.saleDiscGlobal = res[0]?.discflat;
-          this.saleDtl.push({
-            no: 0, barCode: '', itemName: '', qty: 1,
-            salePrice: 0, discount: 0, netSalePrice: 0
-          });
+          setTimeout(() => {
+            const currentInput = event.target as HTMLElement;
+            const row = currentInput.closest('tr');
+            if (row) {
+              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLElement;
+              quantityInput?.focus();
+            }
+          }, 100);
+          // this.saleDtl.push({
+          //   no: 0, barCode: '', itemName: '', qty: 1,
+          //   salePrice: 0, discount: 0, netSalePrice: 0
+          // });
           this.qtyChange(user);
         }
         else {
@@ -185,9 +212,9 @@ export class SaleFormComponent {
       })
     }
   }
-  getMaxSerialNo(){
-    this.api.getSaleMaxSerialNo().subscribe(res=>{
-      this.formData.id=res;
+  getMaxSerialNo() {
+    this.api.getSaleMaxSerialNo().subscribe(res => {
+      this.formData.id = res;
     })
   }
   getUserById(id: any) {
@@ -207,6 +234,7 @@ export class SaleFormComponent {
     // }
   }
   salePriceChange(saleDtl: any) {
+    debugger
     saleDtl.netSalePrice = saleDtl.salePrice - saleDtl.discount;
     this.resetTotal();
     this.calculateTotal();
@@ -232,18 +260,18 @@ export class SaleFormComponent {
     this.grandTotal = 0;
     this.discPerc = 0;
     this.netSaleTotal = 0;
-    this.remainingAmount=0
+    this.remainingAmount = 0
   }
   calculateTotal() {
     this.saleDtl.forEach(x => {
-      
+
       this.grossSale += x.salePrice;
       this.discValue += x.discount;
       this.netSaleTotal += x.netSalePrice;
     });
     this.discPerc = (this.netSaleTotal && this.discValue) ? parseFloat(((this.discValue / this.netSaleTotal) * 100).toFixed(2)) : 0;
     this.grandTotal = this.netSaleTotal - (this.return + this.flatDisc);
-    this.remainingAmount=this.netSaleTotal - (this.return + this.flatDisc);
+    this.remainingAmount = this.netSaleTotal - (this.return + this.flatDisc);
   }
   earnedPointsChange() {
     this.netAmount = this.earnedPoints - this.return;
@@ -274,6 +302,8 @@ export class SaleFormComponent {
     if (lastItem.itemName === '')
       this.saleDtl.pop();
     this.paymentDetails = [];
+    this.invoiceType = "Cash";
+    this.invoiceTypeChange({ value: "Cash" });
   }
   addSale() {
     debugger
@@ -353,25 +383,27 @@ export class SaleFormComponent {
     })
 
   }
- 
+
   saleRtnDtl: any = [];
   grossSaleReturn: number = 0;
   netSaleReturnTotal: number = 0;
   saleReturnDiscValue: number = 0;
   saleReturnDeduction: number = 0;
-  grandSaleRtnTotal:number=0;
-  saleRtnDiscPerc:number=0;
+  grandSaleRtnTotal: number = 0;
+  saleRtnDiscPerc: number = 0;
   addSaleReturnData() {
-    this.saleRtnDtl.push({no:0,barCode:'',itemId:0,qty:0,discount:0,netSalePrice:0,
-      salePrice:0,disc:0,total:0,netTotal:0});
-   }
+    this.saleRtnDtl.push({
+      no: 0, barCode: '', itemId: 0, qty: 0, discount: 0, netSalePrice: 0,
+      salePrice: 0, disc: 0, total: 0, netTotal: 0
+    });
+  }
   RemoveSaleReturnData() {
-    this.saleRtnDtl=[];
+    this.saleRtnDtl = [];
     this.rtnResetTotal();
     this.rtnCalculateTotal();
-   }
-   RemoveSaleRtnCol(index:number){
-    this.saleRtnDtl.splice(index,1);
+  }
+  RemoveSaleRtnCol(index: number) {
+    this.saleRtnDtl.splice(index, 1);
     this.rtnResetTotal();
     this.rtnCalculateTotal();
   }
@@ -379,17 +411,17 @@ export class SaleFormComponent {
   recentRtnItem: any = {};
   rtnsalePriceGlobal: number = 0;
   rtnsaleDiscGlobal: number = 0;
-  onSaleRtnKey(event: any, user: any) { 
+  onSaleRtnKey(event: any, user: any) {
     user.barcode = event.target.value;
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
-        if (res!=null) {
+        if (res != null) {
           this.recentItem = res;
           user.ItemName = user.ItemName = res[0]?.itemName || res[0]?.alternateItemName || res[0]?.childName;
-          user.purchasePrice = res[0]?.purchasePrice?res[0]?.purchasePrice:0;
-          user.salePrice = res[0]?.salePrice||0;
-          user.discount = res[0]?.discount||0;
-          user.netSalePrice=res[0]?.netSalePrice||0;
+          user.purchasePrice = res[0]?.purchasePrice ? res[0]?.purchasePrice : 0;
+          user.salePrice = res[0]?.salePrice || 0;
+          user.discount = res[0]?.discount || 0;
+          user.netSalePrice = res[0]?.netSalePrice || 0;
           this.rtnsalePriceGlobal = res[0]?.salePrice;
           this.rtnsaleDiscGlobal = res[0]?.discflat;
         }
@@ -400,9 +432,9 @@ export class SaleFormComponent {
 
 
       })
-    }  
+    }
   }
-  rtnQtyChange(saleRtnDtl:any){
+  rtnQtyChange(saleRtnDtl: any) {
     // saleRtnDtl.total=saleRtnDtl.qty*saleRtnDtl.salePrice;
     // saleRtnDtl.netTotal=saleRtnDtl.qty*saleRtnDtl.salePrice;
     saleRtnDtl.salePrice = this.rtnsalePriceGlobal * saleRtnDtl.qty;
@@ -412,64 +444,64 @@ export class SaleFormComponent {
     this.rtnResetTotal();
     this.rtnCalculateTotal();
   }
-  rtnSalePriceChange(saleRtnDtl:any){    
-    saleRtnDtl.netSalePrice=saleRtnDtl.salePrice-saleRtnDtl.discount;
+  rtnSalePriceChange(saleRtnDtl: any) {
+    saleRtnDtl.netSalePrice = saleRtnDtl.salePrice - saleRtnDtl.discount;
     this.rtnResetTotal();
     this.rtnCalculateTotal();
   }
-  rtnDiscChange(saleRtnDtl:any){ 
-    saleRtnDtl.netSalePrice=saleRtnDtl.salePrice-saleRtnDtl.discount;
+  rtnDiscChange(saleRtnDtl: any) {
+    saleRtnDtl.netSalePrice = saleRtnDtl.salePrice - saleRtnDtl.discount;
     this.rtnResetTotal();
     this.rtnCalculateTotal();
-  } 
-  rtnResetTotal(){     
+  }
+  rtnResetTotal() {
     this.grossSaleReturn = 0;
     this.saleReturnDiscValue = 0;
-    this.grandTotal = 0; 
-    this.saleRtnDiscPerc=0;
-    this.saleReturnDeduction=0
-    this.netSaleReturnTotal=0;
-    this.grandSaleRtnTotal=0;
+    this.grandTotal = 0;
+    this.saleRtnDiscPerc = 0;
+    this.saleReturnDeduction = 0
+    this.netSaleReturnTotal = 0;
+    this.grandSaleRtnTotal = 0;
   }
   rtnCalculateTotal() {
     this.grossSaleReturn = 0;
     this.saleReturnDiscValue = 0;
-    this.grandSaleRtnTotal = 0;  
-    this.saleRtnDtl.forEach((x:any) => {
+    this.grandSaleRtnTotal = 0;
+    this.saleRtnDtl.forEach((x: any) => {
       console.log(x); // Check the structure of each item
       this.grossSaleReturn += x.salePrice;
-      this.saleReturnDiscValue += x.discount; 
+      this.saleReturnDiscValue += x.discount;
       this.netSaleReturnTotal += x.netSalePrice;
     });
-    this.saleRtnDiscPerc = parseFloat(((this.saleReturnDiscValue / this.netSaleReturnTotal)*100 ).toFixed(2));
-    
+    this.saleRtnDiscPerc = parseFloat(((this.saleReturnDiscValue / this.netSaleReturnTotal) * 100).toFixed(2));
+
     this.grandSaleRtnTotal = this.netSaleReturnTotal - this.saleReturnDeduction;
   }
-  addSaleReturn(){  
-    this.urlId?this.formData.id=this.urlId:undefined;
-    let formData:any={
-      id:this.urlId?this.formData.id=this.urlId:undefined,
-      grossSale:this.grossSale,
-      disc:this.disc,
-      discByPercent:this.discPerc,
-      discByValue:this.discValue,
-      netSaleReturnTotal:this.netSaleReturnTotal,
-      grossSaleReturn:this.grossSaleReturn,
-      deduction:this.saleReturnDeduction,
-      grandTotal:this.grandTotal,
-      userId:Number(localStorage.getItem("loginId")),
-      saleReturnDetails:this.saleRtnDtl
+  addSaleReturn() {
+    this.urlId ? this.formData.id = this.urlId : undefined;
+    let formData: any = {
+      id: this.urlId ? this.formData.id = this.urlId : undefined,
+      grossSale: this.grossSale,
+      disc: this.disc,
+      discByPercent: this.discPerc,
+      discByValue: this.discValue,
+      netSaleReturnTotal: this.netSaleReturnTotal,
+      grossSaleReturn: this.grossSaleReturn,
+      deduction: this.saleReturnDeduction,
+      grandTotal: this.grandTotal,
+      userId: Number(localStorage.getItem("loginId")),
+      saleReturnDetails: this.saleRtnDtl
 
     }
-  this.api.createSaleReturn(formData).subscribe((res: any)=>{
-    if(res.id>0){
-      this.cashBack=this.grandSaleRtnTotal;
-      this.saleReturnDialog=false;
-    }
-    debugger
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Return Detail Saved Successfully" });	
-    },(err: any)=>{
-  
+    this.api.createSaleReturn(formData).subscribe((res: any) => {
+      if (res.id > 0) {
+        this.cashBack = this.grandSaleRtnTotal;
+        this.saleReturnDialog = false;
+      }
+      debugger
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Return Detail Saved Successfully" });
+    }, (err: any) => {
+
     })
 
   }
@@ -478,8 +510,8 @@ export class SaleFormComponent {
 
   itemSearchDialog: boolean = false;
   @HostListener('document:keydown', ['$event'])
-  itemDtl:any=[];
-  searchedItemName:string='';
+  itemDtl: any = [];
+  searchedItemName: string = '';
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
     if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
@@ -488,7 +520,7 @@ export class SaleFormComponent {
     }
     if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
       event.preventDefault();
-      this.saleReturnDialog=true;
+      this.saleReturnDialog = true;
     }
   }
   itemNotFound: boolean = false;
@@ -516,7 +548,7 @@ export class SaleFormComponent {
   selectItemFromSearch(item: any) {
     this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
     this.itemSearchDialog = false; // Close the search dialog
-    this.searchedItemName="";
+    this.searchedItemName = "";
   }
   focusedField: any = null; // To track the focused field
 
@@ -531,7 +563,7 @@ export class SaleFormComponent {
       this.focusedField.data[this.focusedField.field] = 0;
     }
   }
-  
+
   backspace(): void {
     if (this.focusedField) {
       let currentValue = this.focusedField.data[this.focusedField.field]?.toString() || '';
@@ -539,7 +571,7 @@ export class SaleFormComponent {
       this.focusedField.data[this.focusedField.field] = parseFloat(currentValue);
     }
   }
-  
+
   addNumber(num: number): void {
     if (
       this.focusedField &&
@@ -551,13 +583,13 @@ export class SaleFormComponent {
       const newValue = currentValue === '0' ? num.toString() : currentValue + num.toString();
       this.focusedField.data[this.focusedField.field] = parseFloat(newValue);
     }
-    
+
     this.cashReceivedChange();
     this.cashChargedChange();
     this.cashBackChange();
   }
-  
-  
+
+
   addAmount(amount: number): void {
     if (
       this.focusedField &&
@@ -570,7 +602,7 @@ export class SaleFormComponent {
     this.cashChargedChange();
     this.cashBackChange();
   }
-  
-  
-  
+
+
+
 }
