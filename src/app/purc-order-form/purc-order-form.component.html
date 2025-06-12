@@ -14,80 +14,44 @@
                                         <div class="card-header">Add Order</div>
                                         <div class="card-body">
                                             <div class="grid">
-                                                <div class="row mt-1 px-2 col-12"> 
-                                                   <!-- <div class="col-md-4 col-sm-12">
-                                                        <label for="usertypr"><span class="text-danger">
-                                                            </span>Party</label>
+                                                <div class="row mt-1 px-2 col-12">
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="tableSelect">Select Supplier</label>
                                                         <div class="d-flex">
-                                                            <label class="mr-1 border w-25 d-flex align-items-center justify-content-center" for="username"><span
-                                                                    class="text-danger">
-                                                                </span>{{formData.partyId}}</label>
-                                                            <p-dropdown class="w-100" [options]="party" [(ngModel)]="formData.partyId" placeholder="Select a Type"
-                                                                optionLabel="partyName" optionValue="id"></p-dropdown>
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center">
+                                                                {{ selectedTable || '—' }}
+                                                            </label>
+                                                            <p-dropdown class="w-100" [options]="[
+                                                            { label: 'Party Wise', value: 'Party' },
+                                                            { label: 'Manufacture Wise', value: 'Manufacture' },
+                                                            { label: 'Category Wise', value: 'Category' },
+                                                            { label: 'Class Wise', value: 'Class' },
+                                                            { label: 'Brand Wise', value: 'Brand' },
+                                                          ]" [(ngModel)]="selectedTable" (onChange)="onTableChange()"
+                                                                placeholder="Select Table" [inputId]="'selectedTable'"
+                                                                (keydown)="moveDateFocus($event, 'selectedTable')">
+                                                            </p-dropdown>
                                                         </div>
-                                                    </div>-->
-                                                    <div class="col-md-4 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Date of Invoice</label>
-                                                        <p-calendar [(ngModel)]="formData.dateOfInvoice" [style]="{width:100}"
-                                                            dateFormat="yy-mm-dd" [inputId]="'dateOfInvoice'"
-                                                            (keydown)="moveDateFocus($event, 'dateOfInvoice')"></p-calendar>
-                                                    </div>  
-                                                    <div class="col-md-4 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Start Date</label>
-                                                        <p-calendar [(ngModel)]="formData.startDate" [style]="{width:100}"
-                                                            dateFormat="yy-mm-dd" [inputId]="'startDate'"
-                                                            (keydown)="moveDateFocus($event, 'startDate')"></p-calendar>
                                                     </div>
-                                                    <div class="col-md-4 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>End Date</label>
-                                                        <p-calendar [(ngModel)]="formData.endDate" [style]="{width:100}"
-                                                            dateFormat="yy-mm-dd" [inputId]="'endDate'"
-                                                            (keydown)="moveDateFocus($event, 'endDate')"></p-calendar>
-                                                    </div> 
-                                                    <div class="col-md-4 col-sm-12 pl-2">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Remarks</label>
-                                                        <input type="text" class="form-control col-md-12"
-                                                            placeholder="Name" [(ngModel)]="formData.remarks" [inputId]="'remarks'" id="remarks"
-                                                            (keydown)="moveDateFocus($event, 'remarks')">
-                                                    </div>
-                                                    <div class="col-md-4 col-sm-12 pl-2">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>PO Category</label>
-                                                        <input type="text" class="form-control col-md-12"
-                                                            placeholder="Pur Sno" [(ngModel)]="formData.paCategory" [inputId]="'paCategory'" id="paCategory"
-                                                            (keydown)="moveDateFocus($event, 'paCategory')">
-                                                    </div>   
-                                                    <div class="col-md-4 col-sm-12 pl-2">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Projection Days</label>
-                                                        <input type="text" class="form-control col-md-12"
-                                                            placeholder="Projection Days" [(ngModel)]="formData.projectionDays" [inputId]="'projectionDays'" id="projectionDays"
-                                                            (keydown)="moveDateFocus($event, 'projectionDays')">
-                                                    </div>
-                                                    <div class="col-md-4 col-sm-12">
-                                                        <label for="tableSelect">Zero Qty</label>
+
+                                                    <!-- Table Data Dropdown -->
+                                                    <div class="col-md-4 col-sm-12" *ngIf="tableData.length">
+                                                        <label for="tableDataSelect">Party</label>
                                                         <div class="d-flex">
-                                                          <label class="mr-1 border w-25 d-flex align-items-center justify-content-center">
-                                                            {{ zeroQty || '—' }}
-                                                          </label>
-                                                          <p-dropdown
-                                                            [options]="[
-                                                              { label: 'Yes', value: 'yes' },
-                                                              { label: 'No', value: 'no' }
-                                                            ]"
-                                                            [(ngModel)]="zeroQty"
-                                                            [inputId]="'zeroQty'"
-                                                            (keydown)="moveDateFocus($event, 'zeroQty')"
-                                                            placeholder="Select"
-                                                            class="w-100"
-                                                          ></p-dropdown>
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center">
+                                                                {{ formData.tableItemId || '—' }}
+                                                            </label>
+                                                            <p-dropdown class="w-100" [options]="tableData"
+                                                                [(ngModel)]="formData.partyId" placeholder="Select Item"
+                                                                [inputId]="'partyId'"
+                                                                (keydown)="moveDateFocus($event, 'partyId')">
+                                                            </p-dropdown>
                                                         </div>
-                                                      </div>  
-                                                      <div class="col-md-6 col-sm-12">
+                                                    </div>
+                                                    
+                                                    <div class="col-md-4 col-sm-12">
                                                         <label for="username">Location</label>
                                                         <div class="d-flex">
                                                             <label
@@ -96,49 +60,77 @@
                                                                 </span>{{formData.location}}</label>
                                                             <p-dropdown class="w-100" [options]="location"
                                                                 [(ngModel)]="formData.location" placeholder="Location"
-                                                                optionLabel="name" optionValue="id" [inputId]="'location'"
+                                                                optionLabel="name" optionValue="id"
+                                                                [inputId]="'location'"
                                                                 (keydown)="moveDateFocus($event, 'location')"></p-dropdown>
                                                         </div>
 
-                                                    </div>      
-                                                      <div class="col-md-4 col-sm-12">
-                                                        <label for="tableSelect">Select Supplier</label>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Date of Invoice</label>
+                                                        <p-calendar [(ngModel)]="formData.dateOfInvoice"
+                                                            [style]="{width:100}" dateFormat="yy-mm-dd"
+                                                            [inputId]="'dateOfInvoice'"
+                                                            (keydown)="moveDateFocus($event, 'dateOfInvoice')"></p-calendar>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Start Date</label>
+                                                        <p-calendar [(ngModel)]="formData.startDate"
+                                                            [style]="{width:100}" dateFormat="yy-mm-dd"
+                                                            [inputId]="'startDate'"
+                                                            (keydown)="moveDateFocus($event, 'startDate')"></p-calendar>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>End Date</label>
+                                                        <p-calendar [(ngModel)]="formData.endDate" [style]="{width:100}"
+                                                            dateFormat="yy-mm-dd" [inputId]="'endDate'"
+                                                            (keydown)="moveDateFocus($event, 'endDate')"></p-calendar>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <label for="tableSelect">Zero Qty</label>
                                                         <div class="d-flex">
-                                                          <label class="mr-1 border w-25 d-flex align-items-center justify-content-center">
-                                                            {{ selectedTable || '—' }}
-                                                          </label>
-                                                          <p-dropdown
-                                                          [options]="[
-                                                            { label: 'Party Wise', value: 'Party' },
-                                                            { label: 'Manufacture Wise', value: 'Manufacture' },
-                                                            { label: 'Category Wise', value: 'Category' },
-                                                            { label: 'Class Wise', value: 'Class' },
-                                                            { label: 'Brand Wise', value: 'Brand' },
-                                                          ]"
-                                                          [(ngModel)]="selectedTable"
-                                                          (onChange)="onTableChange()"
-                                                          placeholder="Select Table" [inputId]="'selectedTable'"
-                                                          (keydown)="moveDateFocus($event, 'selectedTable')">
-                                                        </p-dropdown>
+                                                            <label
+                                                                class="mr-1 border w-25 d-flex align-items-center justify-content-center">
+                                                                {{ zeroQty || '—' }}
+                                                            </label>
+                                                            <p-dropdown [options]="[
+                                                              { label: 'Yes', value: 'yes' },
+                                                              { label: 'No', value: 'no' }
+                                                            ]" [(ngModel)]="zeroQty" [inputId]="'zeroQty'"
+                                                                (keydown)="moveDateFocus($event, 'zeroQty')"
+                                                                placeholder="Select" class="w-100"></p-dropdown>
                                                         </div>
-                                                      </div>
-                                                      
-                                                      <!-- Table Data Dropdown -->
-                                                      <div class="col-md-4 col-sm-12 mt-3" *ngIf="tableData.length">
-                                                        <label for="tableDataSelect">Party</label>
-                                                        <div class="d-flex">
-                                                          <label class="mr-1 border w-25 d-flex align-items-center justify-content-center">
-                                                            {{ formData.tableItemId || '—' }}
-                                                          </label>
-                                                          <p-dropdown
-                                                            class="w-100"
-                                                            [options]="tableData"
-                                                            [(ngModel)]="formData.partyId"
-                                                            placeholder="Select Item" [inputId]="'partyId'"
-                                                            (keydown)="moveDateFocus($event, 'partyId')">
-                                                          </p-dropdown>
-                                                        </div>
-                                                      </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Projection Days</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Projection Days"
+                                                            [(ngModel)]="formData.projectionDays"
+                                                            [inputId]="'projectionDays'" id="projectionDays"
+                                                            (keydown)="moveDateFocus($event, 'projectionDays')">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>Remarks</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Name" [(ngModel)]="formData.remarks"
+                                                            [inputId]="'remarks'" id="remarks"
+                                                            (keydown)="moveDateFocus($event, 'remarks')">
+                                                    </div>
+                                                    <!-- <div class="col-md-4 col-sm-12 pl-2">
+                                                        <label for="lastname"><span class="text-danger">
+                                                            </span>PO Category</label>
+                                                        <input type="text" class="form-control col-md-12"
+                                                            placeholder="Pur Sno" [(ngModel)]="formData.paCategory"
+                                                            [inputId]="'paCategory'" id="paCategory"
+                                                            (keydown)="moveDateFocus($event, 'paCategory')">
+                                                    </div> -->
                                                     <div class="col-md-12 mt-4 text-right col-sm-12">
                                                         <button pButton pRipple type="button" icon="pi pi-save"
                                                             (click)="AddData()" label="Add"
@@ -146,7 +138,7 @@
                                                         <button pButton pRipple type="button" icon="pi pi-trash"
                                                             (click)="RemoveData()" label="Remove"
                                                             class="ml-2 p-button-sm p-button-danger"> </button>
-                                                            <button pButton pRipple type="button" icon="pi pi-save"
+                                                        <button pButton pRipple type="button" icon="pi pi-save"
                                                             (click)="postPurchase()" label="Post"
                                                             class="ml-2 p-button-sm p-button-warning"> </button>
                                                         <button pButton pRipple type="button" icon="pi pi-trash"
@@ -154,11 +146,12 @@
                                                             class="ml-2 p-button-sm p-button-info"> </button>
                                                     </div>
                                                     <div class="col-md-4 col-sm-12" style="margin-top: 28px;">
-                                                        <button pButton type="button" label="Get PO Details" icon="pi pi-search"
-                                                                class="p-button-success" (click)="fetchDataByDate()">
+                                                        <button pButton type="button" label="Get PO Details"
+                                                            icon="pi pi-search" class="p-button-success"
+                                                            (click)="fetchDataByDate()">
                                                         </button>
-                                                      </div>
-                                                      
+                                                    </div>
+
                                                     <div class="col-md-12 mt-4">
                                                         <div class="pad-wrapper">
                                                             <div class="box">
@@ -173,13 +166,15 @@
                                                                         [paginator]="true" [rows]="10">
 
                                                                         <ng-template pTemplate="header">
-                                                                            <tr> 
+                                                                            <tr>
                                                                                 <th pSortableColumn="name">No
                                                                                     <p-sortIcon
-                                                                                        field="name"></p-sortIcon></th>
+                                                                                        field="name"></p-sortIcon>
+                                                                                </th>
                                                                                 <th pSortableColumn="name">Bar Code
                                                                                     <p-sortIcon
-                                                                                        field="name"></p-sortIcon></th>
+                                                                                        field="name"></p-sortIcon>
+                                                                                </th>
                                                                                 <th pSortableColumn="price">
                                                                                     Item Name<p-sortIcon
                                                                                         field="price"></p-sortIcon></th>
@@ -206,26 +201,28 @@
                                                                                         field="price"></p-sortIcon></th>
                                                                                 <th pSortableColumn="price">
                                                                                     Action<p-sortIcon
-                                                                                        field="price"></p-sortIcon></th> 
+                                                                                        field="price"></p-sortIcon></th>
                                                                             </tr>
                                                                         </ng-template>
-                                                                        <ng-template pTemplate="body" let-user let-i="rowIndex">
+                                                                        <ng-template pTemplate="body" let-user
+                                                                            let-i="rowIndex">
                                                                             <tr>
                                                                                 <td>{{i+1}}</td>
                                                                                 <td> <input type="text"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
-                                                                                        placeholder="No" (keypress)="onKey($event,user)" autofocus
-                                                                                        [disabled]="true"
+                                                                                        placeholder="No"
+                                                                                        (keypress)="onKey($event,user)"
+                                                                                        autofocus [disabled]="true"
                                                                                         [id]="'barCode-' + i"
                                                                                         (keydown)="moveFocus($event, i, 'barCode')"
                                                                                         [(ngModel)]="user.barCode"></td>
                                                                                 <td><input type="text"
-                                                                                    class="form-control form-control-sm"
-                                                                                    placeholder="Item Name"
-                                                                                    [disabled]="true"
-                                                                                    [id]="'itemName-' + i"
-                                                                                    (keydown)="moveFocus($event, i, 'itemName')"
-                                                                                    [(ngModel)]="user.itemName">
+                                                                                        class="form-control form-control-sm"
+                                                                                        placeholder="Item Name"
+                                                                                        [disabled]="true"
+                                                                                        [id]="'itemName-' + i"
+                                                                                        (keydown)="moveFocus($event, i, 'itemName')"
+                                                                                        [(ngModel)]="user.itemName">
                                                                                 </td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
@@ -247,39 +244,45 @@
                                                                                         [disabled]="true"
                                                                                         [id]="'netSaleQty-' + i"
                                                                                         (keydown)="moveFocus($event, i, 'netSaleQty')"
-                                                                                        [(ngModel)]="user.netSaleQty"></td>
+                                                                                        [(ngModel)]="user.netSaleQty">
+                                                                                </td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
                                                                                         placeholder="Rate"
                                                                                         [disabled]="true"
                                                                                         [id]="'rate-' + i"
                                                                                         (keydown)="moveFocus($event, i, 'rate')"
-                                                                                        [(ngModel)]="user.rate"></td> 
+                                                                                        [(ngModel)]="user.rate"></td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
                                                                                         placeholder="Current Stock"
                                                                                         [disabled]="true"
                                                                                         [id]="'currentStock-' + i"
                                                                                         (keydown)="moveFocus($event, i, 'currentStock')"
-                                                                                        [(ngModel)]="user.currentStock"></td>
+                                                                                        [(ngModel)]="user.currentStock">
+                                                                                </td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
                                                                                         placeholder="Required Qty"
                                                                                         [disabled]="false"
                                                                                         [id]="'requiredQty-' + i"
                                                                                         (keydown)="moveFocus($event, i, 'requiredQty')"
-                                                                                        [(ngModel)]="user.requiredQty"></td>
+                                                                                        [(ngModel)]="user.requiredQty">
+                                                                                </td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
                                                                                         placeholder="Total"
                                                                                         [disabled]="true"
                                                                                         [id]="'total-' + i"
                                                                                         (keydown)="moveFocus($event, i, 'total')"
-                                                                                        [(ngModel)]="user.total"></td> 
-                                                                                <td>  <button pButton pRipple type="button" icon="pi pi-trash" (click)="RemoveCol(i)"
-                                                                                    class="p-button-sm p-button-danger"> </button></td>
+                                                                                        [(ngModel)]="user.total"></td>
+                                                                                <td> <button pButton pRipple
+                                                                                        type="button" icon="pi pi-trash"
+                                                                                        (click)="RemoveCol(i)"
+                                                                                        class="p-button-sm p-button-danger">
+                                                                                    </button></td>
                                                                             </tr>
-                                                                        </ng-template> 
+                                                                        </ng-template>
                                                                     </p-table>
                                                                 </div>
                                                             </div>
@@ -294,8 +297,9 @@
                                             <button style="margin-right: 3px" pButton pRipple type="button"
                                                 icon="pi pi-arrow-left" (click)="cancel()" label="Back"
                                                 class="p-button-sm p-button-danger"> </button>
-                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addPurchaseOrder()"
-                                                label="Save" class="p-button-sm p-button-success"> </button>
+                                            <button pButton pRipple type="button" icon="pi pi-save"
+                                                (click)="addPurchaseOrder()" label="Save"
+                                                class="p-button-sm p-button-success"> </button>
                                         </div>
                                     </div>
                                 </p-accordionTab>
@@ -315,10 +319,8 @@
             <div class="grid">
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
-                        <input type="text"
-                            class="p-3 form-control form-control-sm"
-                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
-                            [(ngModel)]="searchedItemName">
+                        <input type="text" class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
+                            (input)="itemSearchFromDialog($event)" [(ngModel)]="searchedItemName">
                     </div>
                     <div class="mt-2 col-md-12">
                         <div class="mt-2 pad-wrapper">
@@ -341,7 +343,7 @@
                                                     </th>
                                                     <th pSortableColumn="price">Item Name
                                                         <p-sortIcon field="price"></p-sortIcon>
-                                                    </th> 
+                                                    </th>
                                                     <th pSortableColumn="price">Purchase Price
                                                         <p-sortIcon field="price"></p-sortIcon>
                                                     </th>
