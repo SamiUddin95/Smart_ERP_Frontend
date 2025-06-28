@@ -59,6 +59,23 @@ export class PurcOrderFormComponent {
       return;
     }
   
+    // Calculate projection days
+  const start = new Date(this.formData.startDate);
+  const end = new Date(this.formData.endDate);
+
+  // Get the difference in milliseconds and convert to days
+  const timeDiff = end.getTime() - start.getTime();
+  const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // +1 to include the start date
+
+  if (diffDays <= 0) {
+    alert("End Date must be after Start Date.");
+    return;
+  }
+
+  // Set projectionDays in formData
+  this.formData.projectionDays = diffDays;
+
+  // Format dates
     const formattedStart = formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en-US');
     const formattedEnd = formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en-US');
   
@@ -267,16 +284,16 @@ export class PurcOrderFormComponent {
       }
   }
   fieldOrder: string[] = [
+    'selectedTable',
+    'partyId',
+    'location',
     'dateOfInvoice',
     'startDate',
     'endDate',
-    'remarks',
-    'paCategory',
-    'projectionDays',
     'zeroQty',
-    'location',
-    'selectedTable',
-    'partyId'
+    'projectionDays',
+    'remarks',
+    'paCategory'
   ];
   
   moveDateFocus(event: KeyboardEvent, currentId: string) {

@@ -91,9 +91,6 @@ export class ItemFormComponent {
       if (event.target && (event.target as HTMLInputElement).name === 'aliasName') {
         this.checkDuplicate('aliasName');
       }
-      if (event.target && (event.target as HTMLInputElement).name === 'itemName') {
-        this.checkDuplicate('itemName');
-      }
     }
     //this.formData.aliasName=event.target.value;
   }
@@ -441,36 +438,132 @@ export class ItemFormComponent {
         }
       );
   }
-  checkDuplicate(field: 'aliasName' | 'itemName') {
-    debugger
-    const valueToCheck = this.formData[field];
-    if (!valueToCheck) return;
+  checkDuplicate(field: 'aliasName') {
+  debugger;
+  const valueToCheck = this.formData[field];
+  if (!valueToCheck) return;
+
+  const payload = { fieldName: field, value: valueToCheck };
+
+  this.api.checkDuplicateItem(payload).subscribe((res: any) => {
+    if (res && res.isDuplicate) {
+      // Show confirmation popup
+      this.confirmationService.confirm({
+        message: 'This item already exists. Do you want to load the duplicate item?',
+        header: 'Duplicate Found',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Yes',
+        rejectLabel: 'No',
+        accept: () => {
+          this.getItemsById(res.id);
+        },
+        
+        closeOnEscape: true
+      });
+
+      // Wait a moment for the dialog to render, then enable arrow key navigation
+      setTimeout(() => {
+        const yesBtn = document.querySelector('button.p-confirm-dialog-accept') as HTMLButtonElement;
+        const noBtn = document.querySelector('button.p-confirm-dialog-reject') as HTMLButtonElement;
+        const dialog = document.querySelector('.p-confirm-dialog') as HTMLElement;
+
+        if (yesBtn) yesBtn.focus();
+
+        if (dialog) {
+          dialog.addEventListener('keydown', (event: KeyboardEvent) => {
+            if (event.key === 'ArrowRight') {
+              noBtn?.focus();
+              event.preventDefault();
+            } else if (event.key === 'ArrowLeft') {
+              yesBtn?.focus();
+              event.preventDefault();
+            } else if (event.key === 'Enter') {
+              (document.activeElement as HTMLButtonElement)?.click();
+              event.preventDefault();
+            }
+          });
+        }
+      }, 100);
+    }
+  }, error => {
+    console.error('Error checking duplicate', error);
+  });
+}
+
+
+
+   moveFocus(event: KeyboardEvent, rowIndex: number, field: string) {
+      const key = event.key;
+      const fields = ['aliasName','itemName','purchasePrice','salePrice','discflat','netSalePrice','marginValue','brandId','manufacturerId','classId','categoryId','partyId','remarks','lockdisc','currentStock'];
+      const colIndex = fields.indexOf(field);
   
-    const payload = { fieldName: field, value: valueToCheck };
-    
-    this.api.checkDuplicateItem(payload).subscribe((res: any) => {
-      if (res && res.isDuplicate)
-         {
-        // Show popup
-        this.confirmationService.confirm({
-          message: 'This item already exists. Do you want to load the duplicate item?',
-          header: 'Duplicate Found',
-          icon: 'pi pi-exclamation-triangle',
-          acceptLabel: 'Yes',
-          rejectLabel: 'No',
-          accept: () => {
-            // Call your getItemsById function
-            this.getItemsById(res.id);
-          },
-          reject: () => {
-            // Just close popup, do nothing
-            this.messageService.add({severity:'info', summary:'Cancelled', detail:'Duplicate item not loaded.'});
-          }
-        });
+      let nextRowIndex = rowIndex;
+      let nextColIndex = colIndex;
+  
+      if (key === 'ArrowRight') {
+          nextColIndex = Math.min(colIndex + 1, fields.length - 1);
+      } else if (key === 'ArrowLeft') {
+          nextColIndex = Math.max(colIndex - 1, 0);
+      } else if (key === 'ArrowDown') {
+          nextRowIndex++;
+      } else if (key === 'ArrowUp') {
+          nextRowIndex = Math.max(rowIndex - 1, 0);
+      } else {
+          return;
       }
-    }, error => {
-      console.error('Error checking duplicate', error);
-    });
-  }
   
+      const nextField = fields[nextColIndex];
+      const nextId = `${nextField}-${nextRowIndex}`;
+      const nextInput = document.getElementById(nextId);
+  
+      if (nextInput) {
+          event.preventDefault(); // prevent arrow scroll
+          (nextInput as HTMLElement).focus();
+      }
+  }
+  fieldOrder: string[] = [
+    'aliasName',
+    'itemName',
+    'purchasePrice',
+    'salePrice',
+    'discflat',
+    'netSalePrice',  
+    'marginValue', 
+    'brandId',
+    'manufacturerId',
+    'classId',
+    'categoryId',
+    'partyId',
+    'remarks',
+    'lockdisc',
+    'currentStock'
+  ];
+  
+  moveDateFocus(event: KeyboardEvent, currentId: string) {
+    debugger
+    const index = this.fieldOrder.indexOf(currentId);
+    let nextIndex = index;
+  
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      nextIndex = Math.min(index + 1, this.fieldOrder.length - 1);
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = Math.max(index - 1, 0);
+    } else {
+      return;
+    }
+  
+    const nextId = this.fieldOrder[nextIndex];
+    const nextElement = document.getElementById(nextId);
+  
+    if (nextElement) {
+      event.preventDefault();
+      nextElement.focus();
+    }
+  }
+
+  NewItem(){
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['item-form']);
+      });
+    }
 }
