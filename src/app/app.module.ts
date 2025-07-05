@@ -107,6 +107,7 @@ import { NgxBarcode6Module } from 'ngx-barcode6';
 import { PriceCheckFormComponent } from './price-check-form/price-check-form.component';
 import { PurcOrderDashboardComponent } from './purc-order-dashboard/purc-order-dashboard.component';
 import { MinimunQtyAlertComponent } from './minimun-qty-alert/minimun-qty-alert.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -185,7 +186,7 @@ import { MinimunQtyAlertComponent } from './minimun-qty-alert/minimun-qty-alert.
     HttpClientModule,TableModule,DividerModule,FormsModule,ReactiveFormsModule,DropdownModule,AccordionModule,
     BrowserModule,AnimateModule,BrowserAnimationsModule,ToastModule,ConfirmDialogModule,CalendarModule,
     ButtonModule,DividerModule,DialogModule,NgxBarcode6Module,
-    AppRoutingModule,TabViewModule,CheckboxModule 
+    AppRoutingModule,TabViewModule,CheckboxModule,RadioButtonModule 
   ],
   providers: [ConfirmationService,MessageService,DatePipe],
   bootstrap: [AppComponent],

@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/service/api.service';
 import { MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-item-form',
@@ -12,7 +13,7 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class ItemFormComponent {
 
-  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
   status:any=[{label:"Active",value:1},{label:"Not Active",value:0}];
   formData: any = {  };
   alternateItems: any = [];
@@ -59,6 +60,7 @@ export class ItemFormComponent {
 
   ngOnInit(): void {
     this.urlId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadSuppliers();
     this.calculateParentValues();
     debugger
     this.getBrand();
@@ -492,35 +494,44 @@ export class ItemFormComponent {
 
 
 
-   moveFocus(event: KeyboardEvent, rowIndex: number, field: string) {
-      const key = event.key;
-      const fields = ['aliasName','itemName','purchasePrice','salePrice','discflat','netSalePrice','marginValue','brandId','manufacturerId','classId','categoryId','partyId','remarks','lockdisc','currentStock'];
-      const colIndex = fields.indexOf(field);
-  
-      let nextRowIndex = rowIndex;
-      let nextColIndex = colIndex;
-  
-      if (key === 'ArrowRight') {
-          nextColIndex = Math.min(colIndex + 1, fields.length - 1);
-      } else if (key === 'ArrowLeft') {
-          nextColIndex = Math.max(colIndex - 1, 0);
-      } else if (key === 'ArrowDown') {
-          nextRowIndex++;
-      } else if (key === 'ArrowUp') {
-          nextRowIndex = Math.max(rowIndex - 1, 0);
-      } else {
-          return;
-      }
-  
-      const nextField = fields[nextColIndex];
-      const nextId = `${nextField}-${nextRowIndex}`;
-      const nextInput = document.getElementById(nextId);
-  
-      if (nextInput) {
-          event.preventDefault(); // prevent arrow scroll
-          (nextInput as HTMLElement).focus();
-      }
+   moveFocus(event: Event, rowIndex: number, field: string) {
+  const keyboardEvent = event as KeyboardEvent;
+
+  const key = keyboardEvent.key;
+  const fields = [
+    'aliasName','itemName','purchasePrice','salePrice','discflat',
+    'netSalePrice','marginValue','brandId','manufacturerId','classId',
+    'categoryId','partyId','remarks','lockdisc','currentStock'
+  ];
+
+  const colIndex = fields.indexOf(field);
+
+  let nextRowIndex = rowIndex;
+  let nextColIndex = colIndex;
+
+  if (key === 'Enter' || key === 'ArrowRight') {
+      nextColIndex = Math.min(colIndex + 1, fields.length - 1);
+  } else if (key === 'ArrowLeft') {
+      nextColIndex = Math.max(colIndex - 1, 0);
+  } else if (key === 'ArrowDown') {
+      nextRowIndex++;
+  } else if (key === 'ArrowUp') {
+      nextRowIndex = Math.max(rowIndex - 1, 0);
+  } else {
+      return;
   }
+
+  const nextField = fields[nextColIndex];
+  const nextId = `${nextField}-${nextRowIndex}`;
+  const nextInput = document.getElementById(nextId);
+
+  if (nextInput) {
+      keyboardEvent.preventDefault();
+      (nextInput as HTMLElement).focus();
+  }
+}
+
+
   fieldOrder: string[] = [
     'aliasName',
     'itemName',
@@ -566,4 +577,133 @@ export class ItemFormComponent {
         this.router.navigate(['item-form']);
       });
     }
+
+    moveAlternateItem(event: Event, rowIndex: number, field: string) {
+  const keyboardEvent = event as KeyboardEvent;
+
+  const key = keyboardEvent.key;
+  const fields = [
+    'barcode', 'Quantity', 'salePrice1', 'saleDisc', 
+    'netSalePrice1', 'remarks1', 'alternateItemName'
+  ];
+
+  let colIndex = fields.indexOf(field);
+  let nextRowIndex = rowIndex;
+  let nextColIndex = colIndex;
+
+  if (key === 'ArrowRight' || key === 'Enter') {
+    nextColIndex = Math.min(colIndex + 1, fields.length - 1);
+  } else if (key === 'ArrowLeft') {
+    nextColIndex = Math.max(colIndex - 1, 0);
+  } else if (key === 'ArrowDown') {
+    nextRowIndex++;
+  } else if (key === 'ArrowUp') {
+    nextRowIndex = Math.max(rowIndex - 1, 0);
+  } else {
+    return;
+  }
+
+  const nextField = fields[nextColIndex];
+  const nextId = `${nextField}-${nextRowIndex}`;
+  const nextInput = document.getElementById(nextId);
+
+  if (nextInput) {
+    keyboardEvent.preventDefault();
+    (nextInput as HTMLElement).focus();
+  }
+}
+
+
+ showDialog = false;
+
+  filter = {
+    itemName: '',
+    aliasName: '',
+    purchasePrice: 0,
+    salePrice: 0
+  };
+
+  item: any[] = [];
+
+  // Listen for F8 key globally
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'F8') {
+      event.preventDefault();
+      this.openSearchDialog();
+    }
+  }
+
+  openSearchDialog() {
+    this.showDialog = true;
+    this.filter.itemName = '';
+    this.item = [];
+  }
+
+  filterProducts() {
+    this.getItemList();
+  }
+  searchMode: 'start' | 'advanced' = 'start';
+
+  onSearchModeChange(mode: 'start' | 'advanced') {
+    this.searchMode = mode;
+  }
+  getItemList() {
+  const itemName = this.filter.itemName ? this.filter.itemName : 'All';
+
+  this.api.getAllItemsSearching(
+    itemName,
+    this.searchMode // 'start' or 'advanced' from checkbox
+  ).subscribe((res: any) => {
+    this.item = res.map((ele: any) => {
+      return {
+        id: ele.id,
+        sno: ele.sno,
+        aliasName: ele.aliasName,
+        itemName: ele.itemName,
+        purchasePrice: ele.purchasePrice,
+        salePrice: ele.salePrice,
+        categoryId: ele.categoryId,
+        classId: ele.classId,
+        manufacturerId: ele.manufacturerId,
+        remarks: ele.remarks,
+        recentPurchase: ele.recentPurchase,
+        brandId: ele.brandId,
+        discFlat: ele.discFlat,
+        lockDisc: ele.lockDisc
+      };
+    });
+  });
+}
+
+//suppplier
+selectedSupplier: any;
+supplierOptions: any[] = [];
+supplierPriorityList: any[] = [];
+
+loadSuppliers() {
+  this.api.getAllParty().subscribe((res: any) => {
+    this.supplierOptions = res.map((party: any) => ({
+      id: party.id,
+      partyName: party.partyName // keep original field
+    }));
+  });
+}
+
+
+removeSupplier() {
+  if (this.selectedSupplier) {
+    this.supplierPriorityList = this.supplierPriorityList.filter(
+      s => s.partyName !== this.selectedSupplier.partyName
+    );
+  }
+}
+
+addSupplier() {
+  if (this.selectedSupplier && 
+      !this.supplierPriorityList.find(s => s.partyName === this.selectedSupplier.partyName)) {
+    const priority = 6 - this.supplierPriorityList.length;
+    this.supplierPriorityList.push({ ...this.selectedSupplier, priority });
+  }
+}
 }
