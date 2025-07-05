@@ -73,3 +73,50 @@
     display: block;
     margin: 0 auto;
   }
+
+  .radio-inline-group {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* spacing between radio items */
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+}
+
+.radio-item label {
+  margin-left: 0.5rem;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+.inline-field {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.inline-field label {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.small-input {
+  width: 150px; /* adjust as needed */
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+::ng-deep .mvboli-dialog .p-dialog-header,
+::ng-deep .mvboli-dialog .p-dialog-content {
+    font-family: 'MV Boli', cursive !important;
+}
+
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+.p-button-sm {
+  height: 2rem;
+}

@@ -508,6 +508,10 @@ export class ApiService {
 		return this.app.get('getAllItemsdetailsFilterbased?itemName=' + itemName + '&aliasName=' + aliasName + '&purchasePrice=' +
 			purchasePrice + '&salePrice=' + salePrice);
 	}
+
+	getAllItemsSearching(itemName: string, searchMode: string) {
+		return this.app.get('getAllItemsSearching?itemName=' + itemName + '&searchMode=' + searchMode);
+	}
 	getItemDetailbyBarCodeAndName(barCode: string,name:string,searchType:string) {
 		return this.app.get('getItemDetailbyBarCodeAndName?barCode=' + barCode+'&name='+name+'&searchType='+searchType);
 	}
