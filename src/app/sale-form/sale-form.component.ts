@@ -118,6 +118,22 @@ export class SaleFormComponent {
     }
     this.convertToWords();
   }
+  
+  opnCrdtWinLessAmnt(){
+    if (this.cashReceived < this.grandTotal) {
+      this.addSale();
+      this.invoiceType = "Credit";
+      this.invoiceTypeChange({ value: "Credit" });
+    }
+  }
+@HostListener('document:keydown', ['$event'])
+opnCashCreditMdlbyShrtKey(event: KeyboardEvent): void {
+  if (event.key === 'F1') {
+    event.preventDefault();
+    console.log('F1 detected');
+  }
+}
+
   cashChargedChange() {
     this.cashBack = this.cashReceived - this.cashCharged;
     this.invoiceBalance = this.grandTotal - this.cashCharged;
@@ -160,25 +176,25 @@ export class SaleFormComponent {
   saleDiscGlobal: number = 0;
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
-        if (user.barcode.length >= 2 && this.saleDtl.length > 1) {
-      const matchedIndexes = this.saleDtl
-        .map((item, index) => item.barcode === user.barcode ? index : -1)
-        .filter(index => index !== -1);
+    // if (user.barcode.length >= 2 && this.saleDtl.length > 1) {
+    //   const matchedIndexes = this.saleDtl
+    //     .map((item, index) => item.barcode === user.barcode ? index : -1)
+    //     .filter(index => index !== -1);
 
-      if (matchedIndexes.length > 1) {
-        // Duplicate exists
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Item already exists, please choose a different one!'
-        });
+    //   if (matchedIndexes.length > 1) {
+    //     // Duplicate exists
+    //     this.messageService.add({
+    //       severity: 'error',
+    //       summary: 'Error',
+    //       detail: 'Item already exists, please choose a different one!'
+    //     });
 
-        // Remove second-last duplicate
-        const secondLastIndex = matchedIndexes[matchedIndexes.length - 2];
-        this.saleDtl.splice(secondLastIndex, 1);
-        return;
-      }
-    }
+    //     // Remove second-last duplicate
+    //     const secondLastIndex = matchedIndexes[matchedIndexes.length - 2];
+    //     this.saleDtl.splice(secondLastIndex, 1);
+    //     return;
+    //   }
+    // }
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         if (res != null) {
@@ -197,10 +213,10 @@ export class SaleFormComponent {
               quantityInput?.focus();
             }
           }, 100);
-          // this.saleDtl.push({
-          //   no: 0, barCode: '', itemName: '', qty: 1,
-          //   salePrice: 0, discount: 0, netSalePrice: 0
-          // });
+          this.saleDtl.push({
+            no: 0, barCode: '', itemName: '', qty: 1,
+            salePrice: 0, discount: 0, netSalePrice: 0
+          });
           this.qtyChange(user);
         }
         else {
@@ -296,7 +312,32 @@ export class SaleFormComponent {
     this.router.navigate(['counter-sales']);
   }
   paymentDetails = [{ account: '', amount: 0, extraChargesPer: 0, extraCharges: 0, total: 0, remarks: '' }];
-  openModal() {
+  openCashCreditModal() {
+    const barcodeMap = new Map<string, number[]>();
+
+  this.saleDtl.forEach((e, index) => {
+    if (e.barCode) {
+      if (!barcodeMap.has(e.barCode)) {
+        barcodeMap.set(e.barCode, []);
+      }
+      barcodeMap.get(e.barCode)!.push(index);
+    }
+  });
+  const duplicateRows: number[] = [];
+  barcodeMap.forEach((indexes) => {
+    if (indexes.length > 1) {
+      duplicateRows.push(...indexes.slice(1));
+    }
+  });
+  if (duplicateRows.length > 0) {
+    const rowNumbers = duplicateRows.map(i => i + 1);
+    console.log('Duplicates exist at row numbers:', rowNumbers);
+    this.messageService.add({severity: 'error',summary: 'Error',
+      detail: 'Duplicate Items at rows: ' + rowNumbers.join(', ')});
+    return;
+  }
+
+
     this.displayModal = true;
     const lastItem = this.saleDtl[this.saleDtl.length - 1];
     if (lastItem.itemName === '')
@@ -311,7 +352,6 @@ export class SaleFormComponent {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please Add Item first!" });
       return;
     }
-
     if ((this.cashReceived < this.grandTotal) && (this.cardNumber == "")) {
       this.displayCashWin = false;
       this.displayCredWin = true;
@@ -320,7 +360,6 @@ export class SaleFormComponent {
         account: "Cash", amount: this.cashReceived, extraChargesPer: this.extraChargesPer,
         extraCharges: this.extraCharges, total: this.cashReceived, remarks: ''
       });
-
       // if(this.invoiceType=="Cash")
       this.paymentDetails.push({
         account: 'Credit', amount: this.remainingAmount, extraChargesPer: 0,

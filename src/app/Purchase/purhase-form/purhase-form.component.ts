@@ -74,26 +74,25 @@ export class PurhaseFormComponent {
   }
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
-    if (user.barcode.length >= 2 && this.purcDtl.length > 1) {
-      const matchedIndexes = this.purcDtl
-        .map((item, index) => item.barcode === user.barcode ? index : -1)
-        .filter(index => index !== -1);
+    // if (user.barcode.length >= 2 && this.purcDtl.length > 1) {
+    //   const matchedIndexes = this.purcDtl
+    //     .map((item, index) => item.barcode === user.barcode ? index : -1)
+    //     .filter(index => index !== -1);
 
-      if (matchedIndexes.length > 1) {
-        // Duplicate exists
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Item already exists, please choose a different one!'
-        });
+    //   if (matchedIndexes.length > 1) {
+    //     // Duplicate exists
+    //     this.messageService.add({
+    //       severity: 'error',
+    //       summary: 'Error',
+    //       detail: 'Item already exists, please choose a different one!'
+    //     });
 
-        // Remove second-last duplicate
-        const secondLastIndex = matchedIndexes[matchedIndexes.length - 2];
-        this.purcDtl.splice(secondLastIndex, 1);
-        return;
-      }
-    }
-
+    //     // Remove second-last duplicate
+    //     const secondLastIndex = matchedIndexes[matchedIndexes.length - 2];
+    //     this.purcDtl.splice(secondLastIndex, 1);
+    //     return;
+    //   }
+    // }
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         if (res != null) {
@@ -425,6 +424,10 @@ export class PurhaseFormComponent {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
         return;
       }
+    }
+    if(this.purcDtl.length==0){
+       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please add Items first!" });
+        return;
     }
     let formData: any = {
       id: this.urlId ? this.urlId : undefined,
