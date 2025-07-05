@@ -118,21 +118,30 @@ export class SaleFormComponent {
     }
     this.convertToWords();
   }
-  
-  opnCrdtWinLessAmnt(){
+
+  opnCrdtWinLessAmnt() {
     if (this.cashReceived < this.grandTotal) {
-      this.addSale();
       this.invoiceType = "Credit";
       this.invoiceTypeChange({ value: "Credit" });
     }
   }
-@HostListener('document:keydown', ['$event'])
-opnCashCreditMdlbyShrtKey(event: KeyboardEvent): void {
-  if (event.key === 'F1') {
-    event.preventDefault();
-    console.log('F1 detected');
+  @HostListener('window:keydown', ['$event'])
+  opnCashCreditMdlbyShrtKey(event: KeyboardEvent): void {
+    if (event.key === 'F1') {
+      event.preventDefault();
+      console.log('F1 detected');
+      this.openCashCreditModal();
+      this.invoiceType = "Cash";
+      this.invoiceTypeChange({ value: "Cash" });
+    }
+    if (event.key === 'F2') {
+      event.preventDefault();
+      console.log('F2 detected');
+      this.openCashCreditModal();
+      this.invoiceType = "Credit";
+      this.invoiceTypeChange({ value: "Credit" });
+    }
   }
-}
 
   cashChargedChange() {
     this.cashBack = this.cashReceived - this.cashCharged;
@@ -314,30 +323,33 @@ opnCashCreditMdlbyShrtKey(event: KeyboardEvent): void {
   paymentDetails = [{ account: '', amount: 0, extraChargesPer: 0, extraCharges: 0, total: 0, remarks: '' }];
   openCashCreditModal() {
     const barcodeMap = new Map<string, number[]>();
-
-  this.saleDtl.forEach((e, index) => {
-    if (e.barCode) {
-      if (!barcodeMap.has(e.barCode)) {
-        barcodeMap.set(e.barCode, []);
+    this.saleDtl.forEach((e, index) => {
+      if (e.barCode) {
+        if (!barcodeMap.has(e.barCode)) {
+          barcodeMap.set(e.barCode, []);
+        }
+        barcodeMap.get(e.barCode)!.push(index);
       }
-      barcodeMap.get(e.barCode)!.push(index);
-    }
-  });
-  const duplicateRows: number[] = [];
-  barcodeMap.forEach((indexes) => {
-    if (indexes.length > 1) {
-      duplicateRows.push(...indexes.slice(1));
-    }
-  });
-  if (duplicateRows.length > 0) {
-    const rowNumbers = duplicateRows.map(i => i + 1);
-    console.log('Duplicates exist at row numbers:', rowNumbers);
-    this.messageService.add({severity: 'error',summary: 'Error',
-      detail: 'Duplicate Items at rows: ' + rowNumbers.join(', ')});
-    return;
-  }
+    });
 
+    const duplicateInfo: { row: number, itemName: string }[] = [];
 
+    barcodeMap.forEach((indexes) => {
+      if (indexes.length > 1) {
+        indexes.slice(1).forEach(i => {
+          duplicateInfo.push({ row: i + 1, itemName: this.saleDtl[i].itemName });
+        });
+      }
+    });
+    if (duplicateInfo.length > 0) {
+      const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Duplicate Items at: ' + message
+      });
+      return;
+    }
     this.displayModal = true;
     const lastItem = this.saleDtl[this.saleDtl.length - 1];
     if (lastItem.itemName === '')
@@ -641,7 +653,4 @@ opnCashCreditMdlbyShrtKey(event: KeyboardEvent): void {
     this.cashChargedChange();
     this.cashBackChange();
   }
-
-
-
 }
