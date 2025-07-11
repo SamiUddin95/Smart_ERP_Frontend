@@ -101,12 +101,12 @@
                                                                                                 placeholder="Bar Code"
                                                                                                 autofocus
                                                                                                 (keydown.enter)="onKey($event, saleDtl)"
-                                                                                                [disabled]="false"
+                                                                                                [disabled]="saleDtl.disableBarcode"
                                                                                                 [(ngModel)]="saleDtl.barCode" appFocusNavigation>
                                                                                         </td>
                                                                                         <td> <input type="text"
                                                                                                 class="form-control form-control-sm"
-                                                                                                placeholder="Item Name" [disabled]="true"
+                                                                                                placeholder="Item Name" [disabled]="saleDtl.disableBarcode"
                                                                                                 [(ngModel)]="saleDtl.itemName" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
@@ -494,13 +494,13 @@
                                                         <td>{{ i + 1 }}</td>
                                                         <td><input type="text"
                                                                 class="form-control form-control-sm col-md-12 pwd"
-                                                                placeholder="Bar Code" [disabled]="false"
+                                                                placeholder="Bar Code" [disabled]="saleRtnDtl.disableBarcode"
                                                                 (keydown.enter)="onSaleRtnKey($event, saleRtnDtl)"
                                                                 [(ngModel)]="saleRtnDtl.barCode">
                                                         </td>
                                                         <td><input type="text"
                                                                 class="form-control form-control-sm col-md-12 pwd"
-                                                                placeholder="Bar Code" [disabled]="false"
+                                                                placeholder="Bar Code" [disabled]="saleRtnDtl.disableBarcode"
                                                                 [(ngModel)]="saleRtnDtl.ItemName">
                                                         </td>
                                                         <td><input type="number"

@@ -46,6 +46,7 @@ export class PurcReturnFormComponent {
     user.barcode = event.target.value;
     if (user.barcode.length > 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
+        user.disableBarcode = true;
         user.itemName = res[0].itemName;
         user.purchasePrice = res[0].purchasePrice;
         user.salePrice = res[0].salePrice
@@ -120,7 +121,7 @@ export class PurcReturnFormComponent {
     this.netAmount=this.earnedPoints-this.return;
   }
   AddData(){
-    this.purcRetDtl.push({no:0,barCode:'',itemId:0,qty:'',
+    this.purcRetDtl.push({no:0,barCode:'',itemId:0,qty:'',disableBarcode: false,
     salePrice:0,disc:0,total:0,netTotal:0});
   }
   RemoveData(){

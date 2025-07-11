@@ -115,13 +115,13 @@
                                                                                         <td><input type="text"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
                                                                                                    placeholder="Bar Code" (keypress)="onKey($event,purcRetDtl)"
-                                                                                                   [disabled]="false"
+                                                                                                   [disabled]="false" [disabled]="purcRetDtl.disableBarcode"
                                                                                                    [(ngModel)]="purcRetDtl.barcode" appFocusNavigation>
                                                                                         </td>
                                                                                         <td>
                                                                                             <input type="text"
                                                                                                 class="form-control form-control-sm"
-                                                                                                placeholder="Item Name"
+                                                                                                placeholder="Item Name" [disabled]="purcRetDtl.disableBarcode"
                                                                                                 [(ngModel)]="purcRetDtl.itemName" appFocusNavigation>
                                                                                             
                                                                                         </td>

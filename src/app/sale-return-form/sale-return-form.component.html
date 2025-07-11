@@ -69,14 +69,14 @@
                                                                                         <td>{{ i + 1 }}</td>
                                                                                         <td><input type="text"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
-                                                                                                   placeholder="Bar Code"
+                                                                                                   placeholder="Bar Code" [disabled]="saleDtl.disableBarcode"
                                                                                                    [disabled]="false" (keydown.enter)="onKey($event, saleDtl)"
                                                                                                    [(ngModel)]="saleDtl.barCode" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="text"
                                                                                             class="form-control form-control-sm col-md-12 pwd"
                                                                                             placeholder="Bar Code" 
-                                                                                            [disabled]="false"
+                                                                                            [disabled]="false" [disabled]="saleDtl.disableBarcode"
                                                                                             [(ngModel)]="saleDtl.ItemName" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
@@ -87,20 +87,19 @@
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
-                                                                                                   placeholder="Sale Price"
-                                                                                                   [disabled]="false" (input)="salePriceChange(saleDtl)"
+                                                                                                   placeholder="Sale Price" [disabled]="true"
+                                                                                                   (input)="salePriceChange(saleDtl)"
                                                                                                    [(ngModel)]="saleDtl.salePrice" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
-                                                                                                   placeholder="Discount"
-                                                                                                   [disabled]="false" (input)="discChange(saleDtl)"
+                                                                                                   placeholder="Discount" [disabled]="true"
+                                                                                                   (input)="discChange(saleDtl)"
                                                                                                    [(ngModel)]="saleDtl.discount" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
-                                                                                                   placeholder="Total"
-                                                                                                   [disabled]="true"
+                                                                                                   placeholder="Total" [disabled]="true"
                                                                                                    [(ngModel)]="saleDtl.netSalePrice" appFocusNavigation>
                                                                                         </td>
                                                                                         <td><button pButton pRipple

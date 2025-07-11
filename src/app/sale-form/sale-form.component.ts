@@ -207,6 +207,7 @@ export class SaleFormComponent {
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         if (res != null) {
+          user.disableBarcode = true;
           this.recentItem = res;
           user.itemName = user.ItemName = res[0]?.itemName || res[0]?.alternateItemName || res[0]?.childName;
           user.discount = res[0]?.discflat ? res[0]?.discflat : 0;
@@ -224,7 +225,7 @@ export class SaleFormComponent {
             }
           }, 100);
           this.saleDtl.push({
-            no: 0, barCode: '', itemName: '', qty: 1,
+            no: 0, barCode: '', itemName: '', qty: 1,disableBarcode: false,
             salePrice: 0, discount: 0, netSalePrice: 0,purchasePrice:0
           });
           this.qtyChange(user);

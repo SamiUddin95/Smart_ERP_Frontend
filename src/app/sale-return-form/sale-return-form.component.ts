@@ -44,6 +44,7 @@ export class SaleReturnFormComponent {
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         if (res!=null) {
+          user.disableBarcode = true;
           this.recentItem = res;
           user.ItemName = user.ItemName = res[0]?.itemName || res[0]?.alternateItemName || res[0]?.childName;
           user.purchasePrice = res[0]?.purchasePrice?res[0]?.purchasePrice:0;
@@ -66,6 +67,7 @@ export class SaleReturnFormComponent {
     })
   }
   qtyChange(saleDtl:any){
+    debugger
     saleDtl.total=saleDtl.qty*saleDtl.salePrice;
     saleDtl.netTotal=saleDtl.qty*saleDtl.salePrice;
     saleDtl.netSalePrice=saleDtl.salePrice-saleDtl.discount;
@@ -86,7 +88,7 @@ export class SaleReturnFormComponent {
     this.grandTotal=this.netSaleReturnTotal-this.deduction;
   }
   AddData(){
-    this.saleDtl.push({no:0,barCode:'',itemId:0,qty:0,discount:0,netSalePrice:0,
+    this.saleDtl.push({no:0,barCode:'',itemId:0,qty:1,discount:0,netSalePrice:0,disableBarcode: false,
     salePrice:0,disc:0,total:0,netTotal:0});
   }
   RemoveData(){
