@@ -278,14 +278,14 @@
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Net Sale Price"
+                                                                                                    placeholder="Net Sale Price" [disabled]="true"
                                                                                                     (input)="netSalePriceChange(user)"
                                                                                                     [(ngModel)]="user.netSalePrice"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Total sale Price"
+                                                                                                    placeholder="Total sale Price" [disabled]="true"
                                                                                                     [(ngModel)]="user.totalSalePrice"
                                                                                                     appFocusNavigation>
                                                                                             </td>
@@ -298,14 +298,14 @@
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Royalty"
+                                                                                                    placeholder="Royalty" [disabled]="true"
                                                                                                     [(ngModel)]="user.royalty"
                                                                                                     (input)="royaltyChange(user)"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Grand Total"
+                                                                                                    placeholder="Grand Total" [disabled]="true"
                                                                                                     [(ngModel)]="user.grandTotal"
                                                                                                     appFocusNavigation>
                                                                                             </td>
