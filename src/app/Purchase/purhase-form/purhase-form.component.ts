@@ -74,29 +74,11 @@ export class PurhaseFormComponent {
   }
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
-    // if (user.barcode.length >= 2 && this.purcDtl.length > 1) {
-    //   const matchedIndexes = this.purcDtl
-    //     .map((item, index) => item.barcode === user.barcode ? index : -1)
-    //     .filter(index => index !== -1);
-
-    //   if (matchedIndexes.length > 1) {
-    //     // Duplicate exists
-    //     this.messageService.add({
-    //       severity: 'error',
-    //       summary: 'Error',
-    //       detail: 'Item already exists, please choose a different one!'
-    //     });
-
-    //     // Remove second-last duplicate
-    //     const secondLastIndex = matchedIndexes[matchedIndexes.length - 2];
-    //     this.purcDtl.splice(secondLastIndex, 1);
-    //     return;
-    //   }
-    // }
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         if (res != null) {
           this.recentItem = res;
+          user.disableBarcode = true;
           user.ItemName = user.ItemName = res[0]?.itemName || res[0]?.alternateItemName || res[0]?.childName;
           user.purchasePrice = res[0]?.purchasePrice ? res[0]?.purchasePrice : 0;
           setTimeout(() => {
@@ -342,7 +324,7 @@ export class PurhaseFormComponent {
   }
   addChildItemToPurchaseList(item: any) {
     this.purcDtl.push({
-      no: 0, barcode: item.barCode, ItemName: item.itemName, quantity: 0,
+      no: 0, barcode: item.barCode, ItemName: item.itemName, quantity: 0,disableBarcode: false,
       bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
       discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
       saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0
@@ -384,18 +366,18 @@ export class PurhaseFormComponent {
     this.resetTotals();
     this.calculateTotals();
   }
-  royaltyChange(user:any){
-    user.grandTotal=user.totalSalePrice+((user.royalty/100)*user.totalSalePrice);
+  royaltyChange(user: any) {
+    user.grandTotal = user.totalSalePrice + ((user.royalty / 100) * user.totalSalePrice);
     this.resetTotals();
     this.calculateTotals();
   }
   PurchaseDetailModel: any[] = [];
   AddData() {
     this.purcDtl.push({
-      no: 0, barCode: '', ItemName: '', quantity: 0,
+      no: 0, barCode: '', ItemName: '', quantity: 0,disableBarcode: false,
       bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
       discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
-      saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0,royalty:0,grandTotal:0
+      saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0, royalty: 0, grandTotal: 0
     });
   }
   RemoveData() {
@@ -425,9 +407,9 @@ export class PurhaseFormComponent {
         return;
       }
     }
-    if(this.purcDtl.length==0){
-       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please add Items first!" });
-        return;
+    if (this.purcDtl.length == 0) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please add Items first!" });
+      return;
     }
     let formData: any = {
       id: this.urlId ? this.urlId : undefined,

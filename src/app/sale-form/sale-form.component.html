@@ -627,4 +627,45 @@
         </div>
     </div>
 </p-dialog>
+
+<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visibleProdSrchMdl" [style]="{ width: '75rem' }">
+    <div class="flex items-center gap-4 mb-4">
+        <label for="username" class="font-semibold w-25">Searching Criteria</label>
+        <input type="text" class="w-75" (input)="searchChildItem(childItemSearch)" class="form-control form-control-sm"
+            placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
+    </div>
+    <div class="pad-wrapper">
+        <div class="box">
+            <div class="content">
+                <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
+                    styleClass="p-datatable-sm p-datatable-gridlines"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="code">Bar Code <p-sortIcon field="code"></p-sortIcon></th>
+                            <th pSortableColumn="name">Child Name <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="category">Purchase Price <p-sortIcon field="category"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="quantity">Sale Price <p-sortIcon field="quantity"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-itm>
+                        <tr>
+                            <td>{{itm.barCode}}</td>
+                            <td>{{itm.itemName}}</td>
+                            <td>{{itm.cost}}</td>
+                            <td>{{itm.salePrice}}</td>
+                            <button style="margin-right: 3px" pButton pRipple label="Add"
+                                class="p-button-rounded p-button-info"
+                                (click)="addChildItemToPurchaseList(itm)"></button>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</p-dialog>
 <p-toast position="top-right"></p-toast>

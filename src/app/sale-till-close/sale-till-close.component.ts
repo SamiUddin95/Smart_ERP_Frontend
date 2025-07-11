@@ -20,11 +20,16 @@ export class SaleTillCloseComponent {
   }
   createSaleTIll(){
     this.formData.userId=this.currentUser.userId;
-    this.formData.id=this.urlId;
+    this.formData.id=Number(this.urlId);
     this.api.createSaleTillClose(this.formData).subscribe(res=>{
       if(res.id>0){
         this.router.navigate(['till-close-list']);
       } 
+      // else
+      // if(res.msg=="Till already Open")
+      // {
+      //   this.messageService.add({ severity: 'error', summary: 'Error', detail: "There should be one till open for a day!" });
+      // }
     })
   } 
   dummyTillClose(){
@@ -117,6 +122,6 @@ export class SaleTillCloseComponent {
   }
   add(){}
   cancel(){
-    this.router.navigate(['till-open-list']);
+    this.router.navigate(['till-close-list']);
   }
 }

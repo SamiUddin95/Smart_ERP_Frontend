@@ -211,6 +211,7 @@ export class SaleFormComponent {
           user.itemName = user.ItemName = res[0]?.itemName || res[0]?.alternateItemName || res[0]?.childName;
           user.discount = res[0]?.discflat ? res[0]?.discflat : 0;
           user.salePrice = res[0]?.salePrice ? res[0]?.salePrice : 0;
+          user.purchasePrice = res[0]?.purchasePrice ? res[0]?.purchasePrice : 0;
           user.qty = 1;
           this.salePriceGlobal = res[0]?.salePrice;
           this.saleDiscGlobal = res[0]?.discflat;
@@ -224,7 +225,7 @@ export class SaleFormComponent {
           }, 100);
           this.saleDtl.push({
             no: 0, barCode: '', itemName: '', qty: 1,
-            salePrice: 0, discount: 0, netSalePrice: 0
+            salePrice: 0, discount: 0, netSalePrice: 0,purchasePrice:0
           });
           this.qtyChange(user);
         }
@@ -323,17 +324,31 @@ export class SaleFormComponent {
   paymentDetails = [{ account: '', amount: 0, extraChargesPer: 0, extraCharges: 0, total: 0, remarks: '' }];
   openCashCreditModal() {
     const barcodeMap = new Map<string, number[]>();
+    const duplicateInfo: { row: number, itemName: string }[] = [];
+    const lowPriceInfo: { row: number, itemName: string, salePrice: number, purchasePrice: number }[] = [];
+
+    // Scan the saleDtl
     this.saleDtl.forEach((e, index) => {
+      // 1. Check barcode duplicates
       if (e.barCode) {
         if (!barcodeMap.has(e.barCode)) {
           barcodeMap.set(e.barCode, []);
         }
         barcodeMap.get(e.barCode)!.push(index);
       }
+
+      // 2. Check salePrice < purchasePrice
+      if (e.salePrice < e.purchasePrice) {
+        lowPriceInfo.push({
+          row: index + 1,
+          itemName: e.itemName,
+          salePrice: e.salePrice,
+          purchasePrice: e.purchasePrice
+        });
+      }
     });
 
-    const duplicateInfo: { row: number, itemName: string }[] = [];
-
+    // Collect duplicate barcode info
     barcodeMap.forEach((indexes) => {
       if (indexes.length > 1) {
         indexes.slice(1).forEach(i => {
@@ -341,6 +356,8 @@ export class SaleFormComponent {
         });
       }
     });
+
+    // Show duplicate barcode error
     if (duplicateInfo.length > 0) {
       const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
       this.messageService.add({
@@ -350,6 +367,20 @@ export class SaleFormComponent {
       });
       return;
     }
+
+    // Show sale price < purchase price error
+    if (lowPriceInfo.length > 0) {
+      const message = lowPriceInfo.map(d =>
+        `Row ${d.row} (${d.itemName}) - Sale: ${d.salePrice}, Purchase: ${d.purchasePrice}`
+      ).join(', ');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Sale Price less than Purchase Price at: ' + message
+      });
+      return;
+    }
+
     this.displayModal = true;
     const lastItem = this.saleDtl[this.saleDtl.length - 1];
     if (lastItem.itemName === '')
@@ -652,5 +683,28 @@ export class SaleFormComponent {
     this.cashReceivedChange();
     this.cashChargedChange();
     this.cashBackChange();
+  }
+  visibleProdSrchMdl: boolean = false;
+  @HostListener('document:keydown.F8', ['$event'])
+  onF8Pressed(event: any, user: any) {
+    this.visibleProdSrchMdl = true;
+  }
+  childItems: any = [];
+  childItemSearch: any;
+  searchChildItem(barCode: string) {
+    if (barCode.length > 2) {
+      this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
+        this.childItems = res;
+      })
+    }
+
+  }
+  addChildItemToPurchaseList(item: any) {
+    debugger
+    this.saleDtl.push({
+      no: 0, barCode: item.barCode, itemName: item.itemName, qty: 1,
+      salePrice: item.salePrice, discount: 0, netSalePrice: 0
+    });
+
   }
 }

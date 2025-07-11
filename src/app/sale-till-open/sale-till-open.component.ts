@@ -23,7 +23,7 @@ export class SaleTillOpenComponent {
       if(res.id>0){
         this.router.navigate(['till-open-list']);
       } else
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: "There should be one sale open for a day!" });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: "There should be one till open for a day!" });
 
     })
   }
