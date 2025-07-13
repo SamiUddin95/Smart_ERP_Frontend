@@ -105,6 +105,7 @@ export class SaleFormComponent {
     return str;
   }
   cashReceivedChange() {
+    debugger
     if (this.cashReceived > this.grandTotal) {
       this.cashBack = this.cashReceived - this.grandTotal;
       this.cashCharged = this.grandTotal;
@@ -125,22 +126,38 @@ export class SaleFormComponent {
       this.invoiceTypeChange({ value: "Credit" });
     }
   }
-  @HostListener('window:keydown', ['$event'])
+  @ViewChild('cashReceivedInput') cashReceivedInput!: ElementRef;
+  shouldFocusCashInput = false;
+
+  ngAfterViewChecked(): void {
+    if (this.shouldFocusCashInput && this.cashReceivedInput) {
+      this.cashReceivedInput.nativeElement.focus();
+      this.shouldFocusCashInput = false;
+    }
+  }
   opnCashCreditMdlbyShrtKey(event: KeyboardEvent): void {
+    this.searchedItemName = '';
     if (event.key === 'F1') {
       event.preventDefault();
-      console.log('F1 detected');
       this.openCashCreditModal();
       this.invoiceType = "Cash";
       this.invoiceTypeChange({ value: "Cash" });
     }
     if (event.key === 'F2') {
       event.preventDefault();
-      console.log('F2 detected');
       this.openCashCreditModal();
       this.invoiceType = "Credit";
       this.invoiceTypeChange({ value: "Credit" });
     }
+    this.shouldFocusCashInput = true;
+  }
+
+  onCashModalShow() {
+    setTimeout(() => {
+      if (this.invoiceType === 'Cash' && this.cashReceivedInput) {
+        this.cashReceivedInput.nativeElement.focus();
+      }
+    }, 50);
   }
 
   cashChargedChange() {
@@ -180,11 +197,18 @@ export class SaleFormComponent {
       this.displayCredWin = true;
     }
   }
+  NewData() {
+    if (this.saleDtl.length == 0)
+      this.ngOnInit();
+    else
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please remove item first!" });
+  }
   recentItem: any = {};
   salePriceGlobal: number = 0;
   saleDiscGlobal: number = 0;
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
+    this.searchedItemName = '';
     // if (user.barcode.length >= 2 && this.saleDtl.length > 1) {
     //   const matchedIndexes = this.saleDtl
     //     .map((item, index) => item.barcode === user.barcode ? index : -1)
@@ -204,6 +228,7 @@ export class SaleFormComponent {
     //     return;
     //   }
     // }
+
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         if (res != null) {
@@ -225,8 +250,8 @@ export class SaleFormComponent {
             }
           }, 100);
           this.saleDtl.push({
-            no: 0, barCode: '', itemName: '', qty: 1,disableBarcode: false,
-            salePrice: 0, discount: 0, netSalePrice: 0,purchasePrice:0
+            no: 0, barCode: '', itemName: '', qty: 1, disableBarcode: false,
+            salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0
           });
           this.qtyChange(user);
         }
@@ -387,11 +412,13 @@ export class SaleFormComponent {
     if (lastItem.itemName === '')
       this.saleDtl.pop();
     this.paymentDetails = [];
+    debugger
     this.invoiceType = "Cash";
     this.invoiceTypeChange({ value: "Cash" });
   }
   addSale() {
     debugger
+    this.searchedItemName = '';
     if (this.saleDtl.length == 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please Add Item first!" });
       return;
@@ -625,17 +652,13 @@ export class SaleFormComponent {
     }
     this.itemSearchDialog = false;
   }
-
   highlightedRowId: number | null = null;
-
   selectItemFromSearch(item: any) {
     this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
     this.itemSearchDialog = false; // Close the search dialog
     this.searchedItemName = "";
   }
-  focusedField: any = null; // To track the focused field
-
-  // Set the currently focused input field (either amount or any other)
+  focusedField: any = null;
   setFocusedField(field: { data: any; field: string }) {
     this.focusedField = field;
   }

@@ -114,7 +114,7 @@
                                                                                         </td>
                                                                                         <td><input type="text"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
-                                                                                                   placeholder="Bar Code" (keypress)="onKey($event,purcRetDtl)"
+                                                                                                   placeholder="Bar Code" (keydown.enter)="onKey($event,purcRetDtl)"
                                                                                                    [disabled]="false" [disabled]="purcRetDtl.disableBarcode"
                                                                                                    [(ngModel)]="purcRetDtl.barcode" appFocusNavigation>
                                                                                         </td>

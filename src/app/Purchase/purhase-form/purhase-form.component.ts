@@ -47,9 +47,12 @@ export class PurhaseFormComponent {
       this.formData.id = res;
     })
   }
+  isPosted: boolean = false;
   getPurchaseById(id: number) {
+    debugger
     this.api.getPurchaseById(id).subscribe(res => {
       var res = JSON.parse(res);
+      this.isPosted = res.purchase[0].postUnPostStatus === "Y";
       this.formData.id = res.purchase[0].id;
       this.formData.partyId = res.purchase[0].vendorId;
       this.formData.remarks = res.purchase[0].remarks;
@@ -470,6 +473,7 @@ export class PurhaseFormComponent {
   }
   unPostPurchase() {
     debugger
+    this.isPosted=false;
     this.barCodes = this.purcDtl.map(x => x.barcode).join(',');
     this.purchasePrice = this.purcDtl.map(x => x.purchasePrice).join(',');
     this.salePrice = this.purcDtl.map(x => x.netSalePrice).join(',');

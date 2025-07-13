@@ -34,6 +34,7 @@ export class SaleTillCloseComponent {
   } 
   dummyTillClose(){
     this.api.getDummyTillClose().subscribe(res=>{
+      debugger
       this.formData.cashIn=res[0].cashIn;
       this.formData.cashOut=res[0].cashOut;
       this.formData.grossSale=res[0].grossSale;

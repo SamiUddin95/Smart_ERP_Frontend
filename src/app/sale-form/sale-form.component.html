@@ -27,12 +27,17 @@
                                                             <button pButton pRipple type="button" icon="pi pi-save"
                                                                 (click)="AddData()" label="Add"
                                                                 class="p-button-sm p-button-success"> </button>
+                                                            <button pButton pRipple type="button"
+                                                                icon="pi pi-arrow-circle-right" (click)="NewData()"
+                                                                label="New" class="ml-2 p-button-sm p-button-warning">
+                                                            </button>
                                                             <!-- <button pButton pRipple type="button" icon="pi pi-trash"
                                                                 (click)="RemoveData()" label="Remove"
                                                                 class="ml-2 p-button-sm p-button-danger"> </button> -->
                                                             <button pButton pRipple type="button" icon="pi pi-info"
-                                                                (click)="openCashCreditModal()" [disabled]="saleDtl.length==0"
-                                                                label="Post" class="ml-2 p-button-sm p-button-info">
+                                                                (click)="openCashCreditModal()"
+                                                                [disabled]="saleDtl.length==0" label="Post"
+                                                                class="ml-2 p-button-sm p-button-info">
                                                             </button>
                                                         </div>
                                                         <div class="mt-3 pad-wrapper">
@@ -92,49 +97,59 @@
 
                                                                                 <ng-template pTemplate="body"
                                                                                     let-saleDtl let-i="rowIndex">
-                                                                                    <tr #rowElement [id]="'row-' + i">
+                                                                                    <tr [ngClass]="{'highlighted': saleDtl.barcode== searchedItemName}"
+                                                                                        #rowElement [id]="'row-' + i">
                                                                                         <td>{{ i + 1 }}</td>
-                                                                                        <td
-                                                                                            [ngClass]="{'highlighted': saleDtl.barcode== searchedItemName}">
+                                                                                        <td>
                                                                                             <input type="text"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Bar Code"
                                                                                                 autofocus
                                                                                                 (keydown.enter)="onKey($event, saleDtl)"
                                                                                                 [disabled]="saleDtl.disableBarcode"
-                                                                                                [(ngModel)]="saleDtl.barCode" appFocusNavigation>
+                                                                                                [(ngModel)]="saleDtl.barCode"
+                                                                                                appFocusNavigation>
                                                                                         </td>
                                                                                         <td> <input type="text"
                                                                                                 class="form-control form-control-sm"
-                                                                                                placeholder="Item Name" [disabled]="saleDtl.disableBarcode"
-                                                                                                [(ngModel)]="saleDtl.itemName" appFocusNavigation>
+                                                                                                placeholder="Item Name"
+                                                                                                [disabled]="saleDtl.disableBarcode"
+                                                                                                [(ngModel)]="saleDtl.itemName"
+                                                                                                appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Quantity"
                                                                                                 [disabled]="false"
                                                                                                 (input)="qtyChange(saleDtl)"
-                                                                                                [(ngModel)]="saleDtl.qty" appFocusNavigation>
+                                                                                                [(ngModel)]="saleDtl.qty"
+                                                                                                appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Sale Price"
-                                                                                                [disabled]="false" [disabled]="true"
+                                                                                                [disabled]="false"
+                                                                                                [disabled]="true"
                                                                                                 (input)="salePriceChange(saleDtl)"
-                                                                                                [(ngModel)]="saleDtl.salePrice" appFocusNavigation>
+                                                                                                [(ngModel)]="saleDtl.salePrice"
+                                                                                                appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Discount"
-                                                                                                [disabled]="false" [disabled]="true"
+                                                                                                [disabled]="false"
+                                                                                                [disabled]="true"
                                                                                                 (input)="discChange(saleDtl)"
-                                                                                                [(ngModel)]="saleDtl.discount" appFocusNavigation>
+                                                                                                [(ngModel)]="saleDtl.discount"
+                                                                                                appFocusNavigation>
                                                                                         </td>
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
-                                                                                                placeholder="Total" [disabled]="true"
+                                                                                                placeholder="Total"
+                                                                                                [disabled]="true"
                                                                                                 (input)="netSalePriceChange()"
-                                                                                                [(ngModel)]="saleDtl.netSalePrice" appFocusNavigation>
+                                                                                                [(ngModel)]="saleDtl.netSalePrice"
+                                                                                                appFocusNavigation>
                                                                                         </td>
                                                                                         <td><button pButton pRipple
                                                                                                 type="button"
@@ -244,7 +259,7 @@
     </section>
 </div>
 <p-dialog header="Cashier Window" [modal]="true" [(visible)]="displayModal"
-    [style]="{ width: '75rem', height: '50rem' }">
+    [style]="{ width: '75rem', height: '50rem' }" (onShow)="onCashModalShow()">
     <div class="row">
         <div class="col-md-4 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -260,7 +275,8 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Net Total</label>
-            <input type="text" [disabled]="true" class="form-control col-md-12" placeholder="Inv" [(ngModel)]="grandTotal">
+            <input type="text" [disabled]="true" class="form-control col-md-12" placeholder="Inv"
+                [(ngModel)]="grandTotal">
         </div>
         <!-- <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -271,9 +287,12 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Cash Recevied</label>
-            <input type="number" (keydown.enter)="opnCrdtWinLessAmnt()" (focus)="setFocusedField({ data: this, field: 'cashReceived' })"
-                class="form-control col-md-12" (input)="cashReceivedChange()" placeholder="Remarks"
-                [(ngModel)]="cashReceived" />
+            <input #cashReceivedInput type="number"
+            (keydown.enter)="opnCrdtWinLessAmnt()"
+            (focus)="setFocusedField({ data: this, field: 'cashReceived' })"
+            class="form-control col-md-12"
+            (input)="cashReceivedChange()" placeholder="Cash Received"
+            [(ngModel)]="cashReceived" appFocusNavigation />
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -285,14 +304,14 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Cash Back</label>
-            <input type="number" [disabled]="true" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Inv"
-                [(ngModel)]="cashBack" (focus)="setFocusedField({ data: this, field: 'cashBack' })">
+            <input type="number" [disabled]="true" class="form-control col-md-12" (input)="cashBackChange()"
+                placeholder="Inv" [(ngModel)]="cashBack" (focus)="setFocusedField({ data: this, field: 'cashBack' })">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Amount in Words</label>
-            <input type="text" [disabled]="true" class="form-control col-md-12" (input)="cashBackChange()" placeholder="Amount In Words"
-                [(ngModel)]="amountInWords">
+            <input type="text" [disabled]="true" class="form-control col-md-12" (input)="cashBackChange()"
+                placeholder="Amount In Words" [(ngModel)]="amountInWords">
         </div>
         <p-divider></p-divider>
         <div class="mt-3 col-md-6 offset-6 text-right">
@@ -306,7 +325,8 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Remaining Amount</label>
-            <input type="number" [disabled]="true" class="form-control col-md-12" placeholder="Net Total" [(ngModel)]="remainingAmount">
+            <input type="number" [disabled]="true" class="form-control col-md-12" placeholder="Net Total"
+                [(ngModel)]="remainingAmount">
         </div>
         <!-- <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -351,14 +371,14 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Final Amount</label>
-            <input type="number" class="form-control col-md-12" [disabled]="true" (input)="extraChargeChange()" placeholder="Final Amount"
-                [(ngModel)]="finalAmount">
+            <input type="number" class="form-control col-md-12" [disabled]="true" (input)="extraChargeChange()"
+                placeholder="Final Amount" [(ngModel)]="finalAmount">
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Amount in Words</label>
-            <input type="text" class="form-control col-md-12" [disabled]="true" (input)="cashBackChange()" placeholder="Amount in Words"
-                [(ngModel)]="amountInWords">
+            <input type="text" class="form-control col-md-12" [disabled]="true" (input)="cashBackChange()"
+                placeholder="Amount in Words" [(ngModel)]="amountInWords">
         </div>
         <p-divider></p-divider>
         <div class="mt-3 col-md-6 offset-6 text-right">
@@ -409,9 +429,12 @@
                         <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(50)">50</button>
                         <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(100)">100</button>
                         <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(500)">500</button>
-                        <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(1000)">1000</button>
-                        <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(10000)">10000</button>
-                        <button class="keypad-btn btn btn-outline-primary btn-lg" (click)="addAmount(50000)">50000</button>
+                        <button class="keypad-btn btn btn-outline-primary btn-lg"
+                            (click)="addAmount(1000)">1000</button>
+                        <button class="keypad-btn btn btn-outline-primary btn-lg"
+                            (click)="addAmount(10000)">10000</button>
+                        <button class="keypad-btn btn btn-outline-primary btn-lg"
+                            (click)="addAmount(50000)">50000</button>
                     </div>
 
 
@@ -494,13 +517,15 @@
                                                         <td>{{ i + 1 }}</td>
                                                         <td><input type="text"
                                                                 class="form-control form-control-sm col-md-12 pwd"
-                                                                placeholder="Bar Code" [disabled]="saleRtnDtl.disableBarcode"
+                                                                placeholder="Bar Code"
+                                                                [disabled]="saleRtnDtl.disableBarcode"
                                                                 (keydown.enter)="onSaleRtnKey($event, saleRtnDtl)"
                                                                 [(ngModel)]="saleRtnDtl.barCode">
                                                         </td>
                                                         <td><input type="text"
                                                                 class="form-control form-control-sm col-md-12 pwd"
-                                                                placeholder="Bar Code" [disabled]="saleRtnDtl.disableBarcode"
+                                                                placeholder="Bar Code"
+                                                                [disabled]="saleRtnDtl.disableBarcode"
                                                                 [(ngModel)]="saleRtnDtl.ItemName">
                                                         </td>
                                                         <td><input type="number"

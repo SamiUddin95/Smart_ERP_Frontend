@@ -46,10 +46,15 @@ export class PurcReturnFormComponent {
     user.barcode = event.target.value;
     if (user.barcode.length > 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
-        user.disableBarcode = true;
-        user.itemName = res[0].itemName;
-        user.purchasePrice = res[0].purchasePrice;
-        user.salePrice = res[0].salePrice
+        if(res!=null){
+          user.disableBarcode = true;
+          user.itemName = res[0].itemName;
+          user.purchasePrice = res[0].purchasePrice;
+          user.salePrice = res[0].salePrice
+        }else {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: "No data found" });
+          return;
+        }
       })
     }
   }
@@ -61,6 +66,7 @@ export class PurcReturnFormComponent {
   getUserById(id: any) {
 		this.api.getPurchaseReturnById(String(id)).subscribe(res => { 
       var res=JSON.parse(res); 
+      debugger
       this.purcRetDtl=res.purchaseOrderDetails;
       this.formData.id=res.purchaseOrders[0].id;
       this.formData.remarks=res.purchaseOrders[0].remarks;
@@ -121,7 +127,7 @@ export class PurcReturnFormComponent {
     this.netAmount=this.earnedPoints-this.return;
   }
   AddData(){
-    this.purcRetDtl.push({no:0,barCode:'',itemId:0,qty:'',disableBarcode: false,
+    this.purcRetDtl.push({no:0,barCode:'',itemId:0,qty:0,disableBarcode: false,
     salePrice:0,disc:0,total:0,netTotal:0});
   }
   RemoveData(){
