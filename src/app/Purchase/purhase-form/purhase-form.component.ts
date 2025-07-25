@@ -327,7 +327,7 @@ export class PurhaseFormComponent {
   }
   addChildItemToPurchaseList(item: any) {
     this.purcDtl.push({
-      no: 0, barcode: item.barCode, ItemName: item.itemName, quantity: 0,disableBarcode: false,
+      no: 0, barcode: item.barCode, ItemName: item.itemName, quantity: 0, disableBarcode: false,
       bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
       discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
       saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0
@@ -376,21 +376,38 @@ export class PurhaseFormComponent {
   }
   PurchaseDetailModel: any[] = [];
   AddData() {
-    this.purcDtl.push({
-      no: 0, barCode: '', ItemName: '', quantity: 0,disableBarcode: false,
-      bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
-      discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
-      saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0, royalty: 0, grandTotal: 0
-    });
+    const lastItem = this.purcDtl[this.purcDtl.length - 1];
+    if (!lastItem || (lastItem.barcode && lastItem.barcode.trim() !== '')) {
+      this.purcDtl.push({
+        no: 0, barCode: '', ItemName: '', quantity: 0, disableBarcode: false,
+        bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
+        discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
+        saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0, royalty: 0, grandTotal: 0
+      });
+    }
+
   }
   RemoveData() {
     this.purcDtl = [];
     this.resetTotals();
   }
-  RemoveCol(index: number) {
-    this.purcDtl.splice(index, 1);
-    this.resetTotals();
-    this.calculateTotals();
+  selectedRow: any;
+  RemoveCol() {
+    if (this.selectedRow) {
+      const index = this.purcDtl.indexOf(this.selectedRow);
+      if (index > -1) {
+        this.purcDtl.splice(index, 1);
+        this.selectedRow = null; // Clear selection after removal
+        this.resetTotals();
+        this.calculateTotals();
+      }
+    } else {
+      console.warn('No row selected to remove.');
+    }
+  }
+
+  onRowSelect(e: any) {
+
   }
   items: any = []
   getItems() {
@@ -467,13 +484,19 @@ export class PurhaseFormComponent {
       if (res.status == "OK") {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
         this.purcDtl = [];
+        this.purcDtl.push({
+          no: 0, barCode: '', ItemName: '', quantity: 0, disableBarcode: false,
+          bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
+          discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
+          saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0, royalty: 0, grandTotal: 0
+        });
       }
     });
 
   }
   unPostPurchase() {
     debugger
-    this.isPosted=false;
+    this.isPosted = false;
     this.barCodes = this.purcDtl.map(x => x.barcode).join(',');
     this.purchasePrice = this.purcDtl.map(x => x.purchasePrice).join(',');
     this.salePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
@@ -485,6 +508,13 @@ export class PurhaseFormComponent {
       this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
         if (res.status == "OK")
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
+        this.purcDtl = [];
+        this.purcDtl.push({
+          no: 0, barCode: '', ItemName: '', quantity: 0, disableBarcode: false,
+          bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
+          discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
+          saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0, royalty: 0, grandTotal: 0
+        });
       });
 
   }

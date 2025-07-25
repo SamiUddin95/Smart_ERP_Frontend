@@ -329,10 +329,13 @@ export class SaleFormComponent {
     this.netAmount = this.earnedPoints - this.return;
   }
   AddData() {
-    this.saleDtl.push({
-      no: 0, barCode: '', itemName: 0, qty: 1,
-      salePrice: 0, discount: 0, netSalePrice: 0
-    });
+    const lastItem = this.saleDtl[this.saleDtl.length - 1];
+    if (!lastItem || (lastItem.barCode && lastItem.barCode.trim() !== '')) {
+      this.saleDtl.push({
+        no: 0, barCode: '', itemName: 0, qty: 1,
+        salePrice: 0, discount: 0, netSalePrice: 0
+      });
+    }
   }
   RemoveData() {
     this.saleDtl = [];

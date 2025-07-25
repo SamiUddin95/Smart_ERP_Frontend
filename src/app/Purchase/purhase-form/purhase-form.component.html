@@ -65,6 +65,9 @@
                                                             [disabled]="purcDtl.length==0" (click)="unPostPurchase()"
                                                             class="mr-2 p-button-sm p-button-primary" pTooltip="PDF"
                                                             tooltipPosition="bottom"></button>
+                                                        <button pButton pRipple type="button" icon="pi pi-trash"
+                                                            (click)="RemoveCol()" [disabled]="!selectedRow"
+                                                            class="p-button-sm p-button-danger"></button>
                                                     </div>
                                                     <div class="col-md-12 mt-4">
                                                         <div class="pad-wrapper">
@@ -74,6 +77,9 @@
                                                                         <div class="col-md-9">
                                                                             <div class="table-scroll-container">
                                                                                 <p-table #tableRef #dt
+                                                                                    [selectionMode]="'single'"
+                                                                                    [(selection)]="selectedRow"
+                                                                                    (onRowSelect)="onRowSelect($event)"
                                                                                     [scrollable]="true"
                                                                                     scrollHeight="600px"
                                                                                     responsiveLayout="scroll"
@@ -149,43 +155,46 @@
                                                                                             <th>
                                                                                                 Grand Total
                                                                                             </th>
-                                                                                            <th>
-                                                                                                Action
-                                                                                            </th>
                                                                                         </tr>
                                                                                     </ng-template>
 
                                                                                     <ng-template pTemplate="body"
                                                                                         let-user let-i="rowIndex">
-                                                                                        <tr #rowElement
+                                                                                        <tr [pSelectableRow]="user"
+                                                                                            [class.p-highlight]="selectedRow === user"
                                                                                             [id]="'row-' + i"
-                                                                                            [ngClass]="{'highlighted': user.barcode== searchedItemName}">
+                                                                                            [ngClass]="{'highlighted': user.barcode == searchedItemName}">
                                                                                             <td>{{i+1}}</td>
                                                                                             <td>
                                                                                                 <input type="text"
                                                                                                     class="form-control form-control-sm w-100"
                                                                                                     placeholder="Enter Barcode Here"
                                                                                                     (keydown.enter)="onKey($event, user)"
-                                                                                                    [(ngModel)]="user.barcode" [disabled]="user.disableBarcode||isPosted"
+                                                                                                    [(ngModel)]="user.barcode"
+                                                                                                    [disabled]="user.disableBarcode||isPosted"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td>
                                                                                                 <input type="text"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Item Name"
-                                                                                                    [(ngModel)]="user.ItemName" [disabled]="user.disableBarcode ||isPosted"
+                                                                                                    [(ngModel)]="user.ItemName"
+                                                                                                    [disabled]="user.disableBarcode ||isPosted"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Quantity" [disabled]="isPosted"
-                                                                                                    [(ngModel)]="user.quantity" (keydown.enter)="AddData()"
+                                                                                                    placeholder="Quantity"
+                                                                                                    [disabled]="isPosted"
+                                                                                                    [(ngModel)]="user.quantity"
+                                                                                                    (keydown.enter)="AddData()"
                                                                                                     (input)="qtyChange(user)"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Bonus Qty" [disabled]="isPosted"
+                                                                                                    placeholder="Bonus Qty"
+                                                                                                    [disabled]="isPosted"
                                                                                                     (input)="bonusQtyChange(user)"
                                                                                                     [(ngModel)]="user.bonusQuantity"
                                                                                                     appFocusNavigation>
@@ -200,7 +209,8 @@
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Purchase Price" [disabled]="isPosted"
+                                                                                                    placeholder="Purchase Price"
+                                                                                                    [disabled]="isPosted"
                                                                                                     [(ngModel)]="user.purchasePrice"
                                                                                                     (input)="purchasePriceChange(user)"
                                                                                                     appFocusNavigation>
@@ -215,20 +225,22 @@
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Disc%" [disabled]="isPosted"
+                                                                                                    placeholder="Disc%"
+                                                                                                    [disabled]="isPosted"
                                                                                                     (input)="discPerChange(user)"
                                                                                                     [(ngModel)]="user.discountByPercent"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Disc Value" [disabled]="isPosted"
+                                                                                                    placeholder="Disc Value"
+                                                                                                    [disabled]="isPosted"
                                                                                                     (input)="discvallueChange(user)"
                                                                                                     [(ngModel)]="user.discountByValue"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
-                                                                                                    [disabled]="true||isPosted" 
+                                                                                                    [disabled]="true||isPosted"
                                                                                                     class="form-control form-control-sm"
                                                                                                     placeholder="Total Inc Disc"
                                                                                                     [(ngModel)]="user.totalIncDisc"
@@ -236,14 +248,16 @@
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Gst %" [disabled]="isPosted"
+                                                                                                    placeholder="Gst %"
+                                                                                                    [disabled]="isPosted"
                                                                                                     (input)="gstPerChange(user)"
                                                                                                     [(ngModel)]="user.gstByPercent"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Gst Value" [disabled]="isPosted"
+                                                                                                    placeholder="Gst Value"
+                                                                                                    [disabled]="isPosted"
                                                                                                     (input)="gstValueChange(user)"
                                                                                                     [(ngModel)]="user.gstByValue"
                                                                                                     appFocusNavigation>
@@ -264,56 +278,57 @@
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Sale Price" [disabled]="isPosted"
+                                                                                                    placeholder="Sale Price"
+                                                                                                    [disabled]="isPosted"
                                                                                                     (input)="salePriceChange(user)"
                                                                                                     [(ngModel)]="user.salePrice"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Sale disc" [disabled]="isPosted"
+                                                                                                    placeholder="Sale disc"
+                                                                                                    [disabled]="isPosted"
                                                                                                     (input)="saleDiscountByValueChange(user)"
                                                                                                     [(ngModel)]="user.saleDiscountByValue"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Net Sale Price" [disabled]="true||isPosted"
+                                                                                                    placeholder="Net Sale Price"
+                                                                                                    [disabled]="true||isPosted"
                                                                                                     (input)="netSalePriceChange(user)"
                                                                                                     [(ngModel)]="user.netSalePrice"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Total sale Price" [disabled]="true||isPosted"
+                                                                                                    placeholder="Total sale Price"
+                                                                                                    [disabled]="true||isPosted"
                                                                                                     [(ngModel)]="user.totalSalePrice"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Margin %" [disabled]="isPosted"
+                                                                                                    placeholder="Margin %"
+                                                                                                    [disabled]="isPosted"
                                                                                                     (input)="marginPerentChange(user)"
                                                                                                     [(ngModel)]="user.marginPercent"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Royalty" [disabled]="true||isPosted"
+                                                                                                    placeholder="Royalty"
+                                                                                                    [disabled]="true||isPosted"
                                                                                                     [(ngModel)]="user.royalty"
                                                                                                     (input)="royaltyChange(user)"
                                                                                                     appFocusNavigation>
                                                                                             </td>
                                                                                             <td><input type="number"
                                                                                                     class="form-control form-control-sm"
-                                                                                                    placeholder="Grand Total" [disabled]="true ||isPosted"
+                                                                                                    placeholder="Grand Total"
+                                                                                                    [disabled]="true ||isPosted"
                                                                                                     [(ngModel)]="user.grandTotal"
                                                                                                     appFocusNavigation>
-                                                                                            </td>
-                                                                                            <td><button pButton pRipple
-                                                                                                    type="button"
-                                                                                                    icon="pi pi-trash"
-                                                                                                    (click)="RemoveCol(i)"
-                                                                                                    class="p-button-sm p-button-danger"></button>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </ng-template>
