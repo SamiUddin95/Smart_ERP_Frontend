@@ -450,10 +450,10 @@
         </div>
     </section>
 </div>
-<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visible" [style]="{ width: '75rem' }">
+<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visible" [style]="{ width: '75rem' }" (onShow)="focusProductSearchInput()">
     <div class="flex items-center gap-4 mb-4">
         <label for="username" class="font-semibold w-25">Searching Criteria</label>
-        <input type="text" class="w-75" (input)="searchChildItem(childItemSearch)" class="form-control form-control-sm"
+        <input type="text" #searchProdItemInput class="w-75" (input)="searchChildItem(childItemSearch)" class="form-control form-control-sm"
             placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
     </div>
     <div class="pad-wrapper">
@@ -491,13 +491,13 @@
     </div>
 </p-dialog>
 
-<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog">
+<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog" (onShow)="focusSearchInput()">
     <div class="card shadow-3">
         <div class="card-body">
             <div class="grid">
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
-                        <input type="text" class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
+                        <input type="text" #searchItemInput class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
                             (input)="itemSearchFromDialog($event)" (keydown.enter)="onSearchDialogEnter($event)"
                             [(ngModel)]="searchedItemName">
                     </div>
@@ -505,45 +505,6 @@
                         <div class="mt-2 pad-wrapper">
                             <div class="box">
                                 <div class="content">
-                                    <!-- <div class="row">
-                                        <p-table #dt responsiveLayout="scroll" [value]="itemDtl"
-                                            styleClass="p-datatable-sm p-datatable-gridlines"
-                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                                            [rows]="10" [showCurrentPageReport]="true"
-                                            [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
-
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th pSortableColumn="code">No.
-                                                        <p-sortIcon field="code"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="name">BarCode
-                                                        <p-sortIcon field="name"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="price">Item Name
-                                                        <p-sortIcon field="price"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="price">Purchase Price
-                                                        <p-sortIcon field="price"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="price">Sale Price
-                                                        <p-sortIcon field="price"></p-sortIcon>
-                                                    </th>
-                                                </tr>
-                                            </ng-template>
-
-                                            <ng-template pTemplate="body" let-itm let-i="rowIndex">
-                                                <tr>
-                                                    <td>{{ i + 1 }}</td>
-                                                    <td>{{itm.aliasName}}</td>
-                                                    <td>{{itm.itemName}}</td>
-                                                    <td>{{itm.purchasePrice}}</td>
-                                                    <td>{{itm.salePrice}}</td>
-                                                </tr>
-                                            </ng-template>
-
-                                        </p-table>
-                                    </div> -->
                                 </div>
 
                             </div>

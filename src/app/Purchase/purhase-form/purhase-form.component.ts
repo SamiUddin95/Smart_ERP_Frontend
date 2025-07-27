@@ -68,7 +68,7 @@ export class PurhaseFormComponent {
     this.visible = true;
   }
   searchChildItem(barCode: string) {
-    if (barCode.length > 2) {
+    if (barCode.length > 1) {
       this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
         this.childItems = res;
       })
@@ -596,6 +596,18 @@ export class PurhaseFormComponent {
     });
     doc.save('purchase-details-with-summary.pdf');
   }
+  @ViewChild('searchItemInput') searchItemInput!: ElementRef;
+  focusSearchInput(): void {
+    setTimeout(() => {
+      this.searchItemInput?.nativeElement?.focus();
+    });
+  }
+  @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
+  focusProductSearchInput(): void {
+    setTimeout(() => {
+      this.searchProdItemInput?.nativeElement?.focus();
+    });
+  }
   itemSearchDialog: boolean = false;
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
@@ -629,8 +641,8 @@ export class PurhaseFormComponent {
   highlightedRowId: number | null = null;
 
   selectItemFromSearch(item: any) {
-    this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
-    this.itemSearchDialog = false; // Close the search dialog
+    this.highlightedRowId = item.purchaseId;
+    this.itemSearchDialog = false;
     this.searchedItemName = "";
   }
 

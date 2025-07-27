@@ -618,9 +618,20 @@ export class SaleFormComponent {
     })
 
   }
+  @ViewChild('searchItemInput') searchItemInput!: ElementRef;
+  focusSearchInput(): void {
+    setTimeout(() => {
+      this.searchItemInput?.nativeElement?.focus();
+    });
+  }
+  @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
+  focusProductSearchInput(): void {
+    setTimeout(() => {
+      this.searchProdItemInput?.nativeElement?.focus();
+    });
+  }
   saleReturnDialog: boolean = false;
   @HostListener('document:keydown', ['$event'])
-
   itemSearchDialog: boolean = false;
   @HostListener('document:keydown', ['$event'])
   itemDtl: any = [];

@@ -626,13 +626,13 @@
         </div>
     </div>
 </p-dialog>
-<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog">
+<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog" (onShow)="focusSearchInput()">
     <div class="card shadow-3">
         <div class="card-body">
             <div class="grid">
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
-                        <input type="text" class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
+                        <input type="text" #searchItemInput class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
                             (input)="itemSearchFromDialog($event)" [(ngModel)]="searchedItemName"
                             (keydown.enter)="onSearchDialogEnter($event)">
                     </div>
@@ -653,10 +653,10 @@
     </div>
 </p-dialog>
 
-<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visibleProdSrchMdl" [style]="{ width: '75rem' }">
+<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visibleProdSrchMdl" [style]="{ width: '75rem' }" (onShow)="focusProductSearchInput()">
     <div class="flex items-center gap-4 mb-4">
         <label for="username" class="font-semibold w-25">Searching Criteria</label>
-        <input type="text" class="w-75" (input)="searchChildItem(childItemSearch)" class="form-control form-control-sm"
+        <input type="text" #searchProdItemInput class="w-75" (input)="searchChildItem(childItemSearch)" class="form-control form-control-sm"
             placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
     </div>
     <div class="pad-wrapper">
