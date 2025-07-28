@@ -729,20 +729,67 @@ export class SaleFormComponent {
   }
   childItems: any = [];
   childItemSearch: any;
+  selectedChildItem: any;
   searchChildItem(barCode: string) {
     if (barCode.length > 2) {
       this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
         this.childItems = res;
+        this.selectedChildItem = this.childItems[0];
       })
     }
 
   }
-  addChildItemToPurchaseList(item: any) {
-    debugger
-    this.saleDtl.push({
-      no: 0, barCode: item.barCode, itemName: item.itemName, qty: 1,
-      salePrice: item.salePrice, discount: 0, netSalePrice: 0
-    });
+@HostListener('document:keydown', ['$event'])
+handleTableKeydown(event: KeyboardEvent) {
+  if (!this.visibleProdSrchMdl || !this.childItems?.length) return;
 
+  const currentIndex = this.childItems.findIndex((item: any) => item === this.selectedChildItem);
+
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    const nextIndex = (currentIndex + 1) % this.childItems.length;
+    this.selectedChildItem = this.childItems[nextIndex];
+    this.scrollToRow(nextIndex);
   }
+
+  if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    const prevIndex = (currentIndex - 1 + this.childItems.length) % this.childItems.length;
+    this.selectedChildItem = this.childItems[prevIndex];
+    this.scrollToRow(prevIndex);
+  }
+
+  if (event.key === 'Enter' && this.selectedChildItem) {
+    event.preventDefault();
+    this.addChildItemToPurchaseList(this.selectedChildItem);
+  }
+}
+
+  scrollToRow(index: number): void {
+    setTimeout(() => {
+      const tableBody = document.querySelector('.p-datatable-scrollable-body');
+      if (!tableBody) return;
+
+      const rows = tableBody.querySelectorAll('tr');
+      const row = rows[index] as HTMLElement;
+      row?.scrollIntoView({ block: 'nearest' });
+    }, 10);
+  }
+  addChildItemToPurchaseList(item: any) {
+  const lastIndex = this.saleDtl.length - 1;
+
+  const newItem = {
+    no: 0,barCode: item.barCode,itemName: item.itemName,qty: 1,salePrice: item.salePrice,
+    discount: 0,netSalePrice: 0
+  };
+
+  if (this.saleDtl.length > 0 && !this.saleDtl[lastIndex].barCode) {
+    this.saleDtl[lastIndex] = newItem;
+  } else {
+    this.saleDtl.push(newItem);
+  }
+  this.visibleProdSrchMdl = false;
+  this.childItemSearch = "";
+}
+
 }

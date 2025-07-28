@@ -662,7 +662,7 @@
     <div class="pad-wrapper">
         <div class="box">
             <div class="content">
-                <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
+                <p-table [(selection)]="selectedChildItem" selectionMode="single" dataKey="barCode" #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
                     styleClass="p-datatable-sm p-datatable-gridlines"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
                     [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
@@ -678,7 +678,7 @@
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-itm>
-                        <tr>
+                        <tr [pSelectableRow]="itm">
                             <td>{{itm.barCode}}</td>
                             <td>{{itm.itemName}}</td>
                             <td>{{itm.cost}}</td>
