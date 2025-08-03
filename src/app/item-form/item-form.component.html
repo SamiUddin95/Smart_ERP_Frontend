@@ -38,12 +38,12 @@
                                                             placeholder="SNo" [(ngModel)]="formData.sno" name="sno"
                                                             disabled style="width: 100px;">
                                                     </div>
-                                                    <!-- <div class="col-md-6 col-sm-12">
+                                                     <!-- <div class="col-md-6 col-sm-12">
                                                         <label for="aliasName">Barcode <span class="text-danger">*</span></label>
                                                         <input type="text" id="aliasName-0" name="aliasName" (blur)="checkDuplicate('aliasName')" (keypress)="onKey($event)" (keydown)="moveFocus($event, 0, 'aliasName')" autofocus 
                                                                class="form-control col-md-12" placeholder="Alias Name" [(ngModel)]="formData.aliasName">
-                                                    </div>
-                                                    
+                                                    </div> -->
+                                                    <!--
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="itemName">Item Name <span class="text-danger">*</span></label>
                                                         <input type="text" id="itemName-0" name="itemName" (blur)="checkDuplicate('itemName')" 
@@ -53,6 +53,7 @@
                                                         <label for="aliasName">Barcode <span
                                                                 class="text-danger">*</span></label>
                                                         <input type="text" id="aliasName-0" name="aliasName"
+                                                            (blur)="checkDuplicate('aliasName')"
                                                             (keypress)="onKey($event)"
                                                             (keydown)="moveFocus($event, 0, 'aliasName')" autofocus
                                                             class="form-control col-md-12" placeholder="Alias Name"
@@ -340,73 +341,6 @@
                                         </div>
                                         <hr style="margin: 15px 0; border: 1px solid #ccc;">
                                         <div class="popup-content">
-                                            <!-- Second Line: Parent Item Title -->
-                                            <!-- <div class="second-line">
-                                                <h4>Parent Item</h4>
-                                            </div> -->
-
-                                            <!-- Third Line: Parent Item Fields -->
-                                            <!-- <div class="parent-item-fields" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Barcode</label>
-                                                    <input type="text" [(ngModel)]="formData.aliasName" class="form-control" style="width: 100px; height: 30px; font-size: 12px;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Parent Name</label>
-                                                    <input type="text" [(ngModel)]="formData.itemName" class="form-control" style="width: 170px; height: 30px; font-size: 12px;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>UOM</label>
-                                                    <p-dropdown
-                                                        class="uom-dropdown"
-                                                        [options]="uomOptions"
-                                                        [(ngModel)]="selectedUOM"
-                                                        (ngModelChange)="onParentInputChange()"
-                                                        [style]="{ width: '80px', height: '30px', 'display': 'flex', 'align-items': 'center' }"
-                                                        [panelStyle]="{ fontSize: '12px' }">
-                                                        <ng-template pTemplate="selectedItem" let-selectedOption>
-                                                            <span style="font-size: 11px; line-height: 30px; display: flex; align-items: center;">
-                                                                {{ selectedOption }}
-                                                            </span>
-                                                        </ng-template>
-                                                    </p-dropdown>
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Weight</label>
-                                                    <input type="number" [(ngModel)]="childParentData.weight" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 60px; height: 30px; font-size: 12px;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Misc</label>
-                                                    <input type="number" [(ngModel)]="childParentData.misc" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 50px; height: 30px; font-size: 12px;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;" (ngOnInit)="onParentInputChange()">
-                                                    <label>Net Cost</label>
-                                                    <input type="number" [(ngModel)]="childParentData.netCost" class="form-control" style="width: 80px; height: 30px; font-size: 12px;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Sale Price</label>
-                                                    <input type="number" [(ngModel)]="childParentData.salePrice" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 70px; height: 30px; font-size: 12px;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Disc Value</label>
-                                                    <input type="number" [(ngModel)]="childParentData.discValue" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 70px; height: 30px; font-size: 12px;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Net Sale Price</label>
-                                                    <input type="number" [(ngModel)]="childParentData.netSalePrice" [readonly]="true" class="form-control" style="width: 80px; height: 30px; font-size: 12px; background-color: #f0f0f0;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Profit</label>
-                                                    <input type="number" [(ngModel)]="childParentData.profit" [readonly]="true" class="form-control" style="width: 80px; height: 30px; font-size: 12px; background-color: #f0f0f0;">
-                                                </div>
-                                                <div class="field-row" style="display: flex; flex-direction: column; align-items: last baseline; font-size: 12px;">
-                                                    <label>Manual Sale Price</label>
-                                                    <input type="number" [(ngModel)]="childParentData.manualSalePrice" (ngModelChange)="onParentInputChange()" class="form-control" style="width: 80px; height: 30px; font-size: 12px;">
-                                                </div>
-                                              
-                                            </div>
-                                            <hr style="margin: 15px 0; border: 1px solid #ccc;"> -->
-
                                             <!-- Fourth Line: Child Item Title -->
                                             <div class="fourth-line"
                                                 style="display: flex; align-items: center; justify-content: space-between;">
@@ -582,82 +516,88 @@
 <!-- product-search.component.html -->
 
 
-<p-dialog header="Product Searching Form" [(visible)]="showDialog" [modal]="true" [style]="{width: '70vw'}"
-    [contentStyle]="{ 'max-height': '80vh', 'overflow': 'auto' }" styleClass="mvboli-dialog">
+<p-dialog header="Product Searching Form"
+          [(visible)]="showDialog"
+          [modal]="true"
+          [style]="{ width: '70vw' }"
+          [contentStyle]="{ 'max-height': '80vh', 'overflow': 'auto' }"
+          styleClass="mvboli-dialog">
 
+  <div class="p-fluid p-3">
+    <!-- Search Controls -->
+    <div class="p-grid p-align-center p-mb-3">
 
-    <div class="p-fluid p-3">
-
-        <!-- Search Controls -->
-        <div class="p-grid p-align-center p-mb-3">
-
-            <!-- Radio Buttons and Input Aligned Side by Side -->
-            <div class="p-col-12 p-md-6">
-                <div class="radio-inline-group">
-
-                    <!-- Start With -->
-                    <div class="radio-item">
-                        <p-radioButton name="searchMode" inputId="startWith" [value]="'start'"
-                            [(ngModel)]="searchMode"></p-radioButton>
-                        <label for="startWith">Start With</label>
-                    </div>
-
-                    <!-- Advanced Searching -->
-                    <div class="radio-item">
-                        <p-radioButton name="searchMode" inputId="advancedSearch" [value]="'advanced'"
-                            [(ngModel)]="searchMode"></p-radioButton>
-                        <label for="advancedSearch">Advanced Searching</label>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Item Name Input -->
-            <div class="p-col-12 p-md-6">
-                <div class="inline-field">
-                    <label for="itemName">Find</label>
-                    <input type="text" id="itemName" pInputText [(ngModel)]="filter.itemName"
-                        (keydown.enter)="getItemList()" autofocus />
-                </div>
-            </div>
-
+      <!-- Radio Buttons -->
+      <div class="p-col-12 p-md-6">
+        <div class="radio-inline-group">
+          <div class="radio-item">
+            <p-radioButton name="searchMode" inputId="startWith" [value]="'start'" [(ngModel)]="searchMode"></p-radioButton>
+            <label for="startWith">Start With</label>
+          </div>
+          <div class="radio-item">
+            <p-radioButton name="searchMode" inputId="advancedSearch" [value]="'advanced'" [(ngModel)]="searchMode"></p-radioButton>
+            <label for="advancedSearch">Advanced Searching</label>
+          </div>
         </div>
+      </div>
 
-        <!-- Results Table -->
-        <p-table [value]="item" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'"
-            [style]="{ 'margin-top': '1rem' }">
-
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Alias Name</th>
-                    <th>Item Name</th>
-                    <th>Purchase Price</th>
-                    <th>Sale Price</th>
-                    <th>Category</th>
-                    <th>Class</th>
-                    <th>Manufacturer</th>
-                    <th>Brand</th>
-                    <th>Remarks</th>
-                </tr>
-            </ng-template>
-
-            <ng-template pTemplate="body" let-rowData>
-                <tr>
-                    <td>{{ rowData.aliasName }}</td>
-                    <td>{{ rowData.itemName }}</td>
-                    <td>{{ rowData.purchasePrice | number: '1.2-2' }}</td>
-                    <td>{{ rowData.salePrice | number: '1.2-2' }}</td>
-                    <td>{{ rowData.categoryId }}</td>
-                    <td>{{ rowData.classId }}</td>
-                    <td>{{ rowData.manufacturerId }}</td>
-                    <td>{{ rowData.brandId }}</td>
-                    <td>{{ rowData.remarks }}</td>
-                </tr>
-            </ng-template>
-
-        </p-table>
+      <!-- Input -->
+      <div class="p-col-12 p-md-6">
+        <div class="inline-field">
+          <label for="itemName">Find</label>
+          <input
+            #searchInput
+            type="text"
+            id="itemName"
+            [(ngModel)]="filter.itemName"
+            (input)="getItemList()"
+            class="p-inputtext p-component p-element"
+            placeholder="Search Item" />
+        </div>
+      </div>
 
     </div>
+
+    <!-- Results Table -->
+    <p-table
+      [value]="item"
+      [(selection)]="selectedItem"
+      selectionMode="single"
+      dataKey="id"
+      [paginator]="true"
+      [rows]="10"
+      [responsiveLayout]="'scroll'"
+      styleClass="p-datatable-sm p-datatable-gridlines"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Alias Name</th>
+          <th>Item Name</th>
+          <th>Purchase Price</th>
+          <th>Sale Price</th>
+          <th>Category</th>
+          <th>Class</th>
+          <th>Manufacturer</th>
+          <th>Brand</th>
+          <th>Remarks</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="rowData" [id]="'row-' + rowIndex">
+          <td>{{ rowData.aliasName }}</td>
+          <td>{{ rowData.itemName }}</td>
+          <td>{{ rowData.purchasePrice | number: '1.2-2' }}</td>
+          <td>{{ rowData.salePrice | number: '1.2-2' }}</td>
+          <td>{{ rowData.categoryId }}</td>
+          <td>{{ rowData.classId }}</td>
+          <td>{{ rowData.manufacturerId }}</td>
+          <td>{{ rowData.brandId }}</td>
+          <td>{{ rowData.remarks }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </p-dialog>
 
 
