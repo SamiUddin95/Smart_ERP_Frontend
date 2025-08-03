@@ -47,9 +47,12 @@ export class PurhaseFormComponent {
       this.formData.id = res;
     })
   }
+  newScreenData() {
+    this.getMaxSerialNo();
+    this.purcDtl = [];
+  }
   isPosted: boolean = false;
   getPurchaseById(id: number) {
-    debugger
     this.api.getPurchaseById(id).subscribe(res => {
       var res = JSON.parse(res);
       this.isPosted = res.purchase[0].postUnPostStatus === "Y";
@@ -67,14 +70,70 @@ export class PurhaseFormComponent {
   onF8Pressed(event: any, user: any) {
     this.visible = true;
   }
-  searchChildItem(barCode: string) {
-    if (barCode.length > 1) {
-      this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
-        this.childItems = res;
-      })
-    }
-
+searchChildItem(barCode: string) {
+  if (barCode.length > 1) {
+    this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
+      this.childItems = res;
+      this.selectedChildItem = this.childItems[0]; // highlight first row
+    });
   }
+}
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeydownEvents(event: KeyboardEvent): void {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+      event.preventDefault();
+      this.itemSearchDialog = true;
+      return;
+    }
+  }
+  scrollToRow(index: number): void {
+    setTimeout(() => {
+      const tableBody = document.querySelector('.p-datatable-scrollable-body');
+      if (!tableBody) return;
+
+      const rows = tableBody.querySelectorAll('tr');
+      const row = rows[index] as HTMLElement;
+      row?.scrollIntoView({ block: 'nearest' });
+    }, 10);
+  }
+  @HostListener('document:keydown.arrowdown', ['$event'])
+  handleArrowDown(event: KeyboardEvent) {
+    if (this.visible && this.childItems?.length) {
+    const currentIndex = this.childItems.findIndex(
+      (item: any) => item === this.selectedChildItem
+    );
+    if (this.visible && this.childItems?.length > 0) {
+      event.preventDefault();
+      const nextIndex = (currentIndex + 1) % this.childItems.length;
+      this.selectedChildItem = this.childItems[nextIndex];
+      this.scrollToRow(nextIndex);
+    }
+  }
+}
+
+  @HostListener('document:keydown.arrowup', ['$event'])
+  handleArrowUp(event: KeyboardEvent) {
+        const currentIndex = this.childItems.findIndex(
+      (item: any) => item === this.selectedChildItem
+    );
+    if (this.visible && this.childItems?.length > 0) {
+      event.preventDefault();
+      const nextIndex = (currentIndex + 1) % this.childItems.length;
+      this.selectedChildItem = this.childItems[nextIndex];
+      this.scrollToRow(nextIndex);
+    }
+  }
+
+  @HostListener('document:keydown.enter', ['$event'])
+  handleEnterKey(event: KeyboardEvent) {
+    if (this.visible && this.selectedChildItem) {
+      event.preventDefault();
+      this.addChildItemToPurchaseList(this.selectedChildItem);
+      this.visible = false;
+    }
+  }
+
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
     if (user.barcode.length >= 2) {
@@ -397,7 +456,7 @@ export class PurhaseFormComponent {
       const index = this.purcDtl.indexOf(this.selectedRow);
       if (index > -1) {
         this.purcDtl.splice(index, 1);
-        this.selectedRow = null; // Clear selection after removal
+        this.selectedRow = null;
         this.resetTotals();
         this.calculateTotals();
       }
@@ -406,9 +465,11 @@ export class PurhaseFormComponent {
     }
   }
 
-  onRowSelect(e: any) {
-
-  }
+  // onRowSelect(e: any) {
+  //   if (e.data.barcode.length >= 2) {
+  //     this.tdChange(e.data);
+  //   }
+  // }
   items: any = []
   getItems() {
     this.api.getAllItemsdetails().subscribe(res => {
@@ -602,6 +663,7 @@ export class PurhaseFormComponent {
       this.searchItemInput?.nativeElement?.focus();
     });
   }
+  selectedChildItem: any;
   @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
   focusProductSearchInput(): void {
     setTimeout(() => {

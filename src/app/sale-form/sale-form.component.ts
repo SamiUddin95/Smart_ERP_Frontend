@@ -631,22 +631,49 @@ export class SaleFormComponent {
     });
   }
   saleReturnDialog: boolean = false;
-  @HostListener('document:keydown', ['$event'])
   itemSearchDialog: boolean = false;
-  @HostListener('document:keydown', ['$event'])
   itemDtl: any = [];
   searchedItemName: string = '';
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent): void {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+@HostListener('document:keydown', ['$event'])
+handleKeydownEvents(event: KeyboardEvent): void {
+  if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+    event.preventDefault();
+    this.itemSearchDialog = true;
+    return;
+  }
+  if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
+    event.preventDefault();
+    this.saleReturnDialog = true;
+    return;
+  }
+  if (this.visibleProdSrchMdl && this.childItems?.length) {
+    const currentIndex = this.childItems.findIndex(
+      (item: any) => item === this.selectedChildItem
+    );
+
+    if (event.key === 'ArrowDown') {
       event.preventDefault();
-      this.itemSearchDialog = true;
+      const nextIndex = (currentIndex + 1) % this.childItems.length;
+      this.selectedChildItem = this.childItems[nextIndex];
+      this.scrollToRow(nextIndex);
     }
-    if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
+
+    if (event.key === 'ArrowUp') {
       event.preventDefault();
-      this.saleReturnDialog = true;
+      const prevIndex =
+        (currentIndex - 1 + this.childItems.length) % this.childItems.length;
+      this.selectedChildItem = this.childItems[prevIndex];
+      this.scrollToRow(prevIndex);
+    }
+
+    if (event.key === 'Enter' && this.selectedChildItem) {
+      event.preventDefault();
+      this.addChildItemToPurchaseList(this.selectedChildItem);
     }
   }
+}
+
+
   itemNotFound: boolean = false;
   itemSearchFromDialog(e: any) {
     this.api.getAllItemsdetailsFilterbased(this.searchedItemName, 'All', 0, 0).subscribe(res => {
@@ -739,31 +766,6 @@ export class SaleFormComponent {
     }
 
   }
-@HostListener('document:keydown', ['$event'])
-handleTableKeydown(event: KeyboardEvent) {
-  if (!this.visibleProdSrchMdl || !this.childItems?.length) return;
-
-  const currentIndex = this.childItems.findIndex((item: any) => item === this.selectedChildItem);
-
-  if (event.key === 'ArrowDown') {
-    event.preventDefault();
-    const nextIndex = (currentIndex + 1) % this.childItems.length;
-    this.selectedChildItem = this.childItems[nextIndex];
-    this.scrollToRow(nextIndex);
-  }
-
-  if (event.key === 'ArrowUp') {
-    event.preventDefault();
-    const prevIndex = (currentIndex - 1 + this.childItems.length) % this.childItems.length;
-    this.selectedChildItem = this.childItems[prevIndex];
-    this.scrollToRow(prevIndex);
-  }
-
-  if (event.key === 'Enter' && this.selectedChildItem) {
-    event.preventDefault();
-    this.addChildItemToPurchaseList(this.selectedChildItem);
-  }
-}
 
   scrollToRow(index: number): void {
     setTimeout(() => {
@@ -776,20 +778,20 @@ handleTableKeydown(event: KeyboardEvent) {
     }, 10);
   }
   addChildItemToPurchaseList(item: any) {
-  const lastIndex = this.saleDtl.length - 1;
+    const lastIndex = this.saleDtl.length - 1;
 
-  const newItem = {
-    no: 0,barCode: item.barCode,itemName: item.itemName,qty: 1,salePrice: item.salePrice,
-    discount: 0,netSalePrice: 0
-  };
+    const newItem = {
+      no: 0, barCode: item.barCode, itemName: item.itemName, qty: 1, salePrice: item.salePrice,
+      discount: 0, netSalePrice: 0
+    };
 
-  if (this.saleDtl.length > 0 && !this.saleDtl[lastIndex].barCode) {
-    this.saleDtl[lastIndex] = newItem;
-  } else {
-    this.saleDtl.push(newItem);
+    if (this.saleDtl.length > 0 && !this.saleDtl[lastIndex].barCode) {
+      this.saleDtl[lastIndex] = newItem;
+    } else {
+      this.saleDtl.push(newItem);
+    }
+    this.visibleProdSrchMdl = false;
+    this.childItemSearch = "";
   }
-  this.visibleProdSrchMdl = false;
-  this.childItemSearch = "";
-}
 
 }

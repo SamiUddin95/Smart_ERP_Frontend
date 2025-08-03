@@ -287,12 +287,10 @@
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
                 </span>Cash Recevied</label>
-            <input #cashReceivedInput type="number"
-            (keydown.enter)="opnCrdtWinLessAmnt()"
-            (focus)="setFocusedField({ data: this, field: 'cashReceived' })"
-            class="form-control col-md-12"
-            (input)="cashReceivedChange()" placeholder="Cash Received"
-            [(ngModel)]="cashReceived" appFocusNavigation />
+            <input #cashReceivedInput type="number" (keydown.enter)="opnCrdtWinLessAmnt()"
+                (focus)="setFocusedField({ data: this, field: 'cashReceived' })" class="form-control col-md-12"
+                (input)="cashReceivedChange()" placeholder="Cash Received" [(ngModel)]="cashReceived"
+                appFocusNavigation />
         </div>
         <div class="col-md-6 col-sm-12 pl-2">
             <label for="lastname"><span class="text-danger">
@@ -632,9 +630,9 @@
             <div class="grid">
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
-                        <input type="text" #searchItemInput class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
-                            (input)="itemSearchFromDialog($event)" [(ngModel)]="searchedItemName"
-                            (keydown.enter)="onSearchDialogEnter($event)">
+                        <input type="text" #searchItemInput class="p-3 form-control form-control-sm"
+                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
+                            [(ngModel)]="searchedItemName" (keydown.enter)="onSearchDialogEnter($event)">
                     </div>
                     <div class="mt-2 col-md-12">
                         <div class="mt-2 pad-wrapper">
@@ -653,16 +651,18 @@
     </div>
 </p-dialog>
 
-<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visibleProdSrchMdl" [style]="{ width: '75rem' }" (onShow)="focusProductSearchInput()">
+<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visibleProdSrchMdl" [style]="{ width: '75rem' }"
+    (onShow)="focusProductSearchInput()">
     <div class="flex items-center gap-4 mb-4">
         <label for="username" class="font-semibold w-25">Searching Criteria</label>
-        <input type="text" #searchProdItemInput class="w-75" (input)="searchChildItem(childItemSearch)" class="form-control form-control-sm"
-            placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
+        <input type="text" #searchProdItemInput class="w-75" (input)="searchChildItem(childItemSearch)"
+            class="form-control form-control-sm" placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
     </div>
     <div class="pad-wrapper">
         <div class="box">
             <div class="content">
-                <p-table [(selection)]="selectedChildItem" selectionMode="single" dataKey="barCode" #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
+                <p-table [(selection)]="selectedChildItem" selectionMode="single" dataKey="barCode" #dt
+                    [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
                     styleClass="p-datatable-sm p-datatable-gridlines"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
                     [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
