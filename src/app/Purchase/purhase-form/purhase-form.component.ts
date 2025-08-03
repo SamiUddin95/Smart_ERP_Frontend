@@ -47,9 +47,15 @@ export class PurhaseFormComponent {
       this.formData.id = res;
     })
   }
+  newScreenData() {
+    this.getMaxSerialNo();
+    this.purcDtl = [];
+  }
+  isPosted: boolean = false;
   getPurchaseById(id: number) {
     this.api.getPurchaseById(id).subscribe(res => {
       var res = JSON.parse(res);
+      this.isPosted = res.purchase[0].postUnPostStatus === "Y";
       this.formData.id = res.purchase[0].id;
       this.formData.partyId = res.purchase[0].vendorId;
       this.formData.remarks = res.purchase[0].remarks;
@@ -64,40 +70,77 @@ export class PurhaseFormComponent {
   onF8Pressed(event: any, user: any) {
     this.visible = true;
   }
-  searchChildItem(barCode: string) {
-    if (barCode.length > 2) {
-      this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
-        this.childItems = res;
-      })
-    }
-
+searchChildItem(barCode: string) {
+  if (barCode.length > 1) {
+    this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
+      this.childItems = res;
+      this.selectedChildItem = this.childItems[0]; // highlight first row
+    });
   }
+}
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeydownEvents(event: KeyboardEvent): void {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+      event.preventDefault();
+      this.itemSearchDialog = true;
+      return;
+    }
+  }
+  scrollToRow(index: number): void {
+    setTimeout(() => {
+      const tableBody = document.querySelector('.p-datatable-scrollable-body');
+      if (!tableBody) return;
+
+      const rows = tableBody.querySelectorAll('tr');
+      const row = rows[index] as HTMLElement;
+      row?.scrollIntoView({ block: 'nearest' });
+    }, 10);
+  }
+  @HostListener('document:keydown.arrowdown', ['$event'])
+  handleArrowDown(event: KeyboardEvent) {
+    if (this.visible && this.childItems?.length) {
+    const currentIndex = this.childItems.findIndex(
+      (item: any) => item === this.selectedChildItem
+    );
+    if (this.visible && this.childItems?.length > 0) {
+      event.preventDefault();
+      const nextIndex = (currentIndex + 1) % this.childItems.length;
+      this.selectedChildItem = this.childItems[nextIndex];
+      this.scrollToRow(nextIndex);
+    }
+  }
+}
+
+  @HostListener('document:keydown.arrowup', ['$event'])
+  handleArrowUp(event: KeyboardEvent) {
+        const currentIndex = this.childItems.findIndex(
+      (item: any) => item === this.selectedChildItem
+    );
+    if (this.visible && this.childItems?.length > 0) {
+      event.preventDefault();
+      const nextIndex = (currentIndex + 1) % this.childItems.length;
+      this.selectedChildItem = this.childItems[nextIndex];
+      this.scrollToRow(nextIndex);
+    }
+  }
+
+  @HostListener('document:keydown.enter', ['$event'])
+  handleEnterKey(event: KeyboardEvent) {
+    if (this.visible && this.selectedChildItem) {
+      event.preventDefault();
+      this.addChildItemToPurchaseList(this.selectedChildItem);
+      this.visible = false;
+    }
+  }
+
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
-    if (user.barcode.length >= 2 && this.purcDtl.length > 1) {
-      const matchedIndexes = this.purcDtl
-        .map((item, index) => item.barcode === user.barcode ? index : -1)
-        .filter(index => index !== -1);
-
-      if (matchedIndexes.length > 1) {
-        // Duplicate exists
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Item already exists, please choose a different one!'
-        });
-
-        // Remove second-last duplicate
-        const secondLastIndex = matchedIndexes[matchedIndexes.length - 2];
-        this.purcDtl.splice(secondLastIndex, 1);
-        return;
-      }
-    }
-
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         if (res != null) {
           this.recentItem = res;
+          user.disableBarcode = true;
           user.ItemName = user.ItemName = res[0]?.itemName || res[0]?.alternateItemName || res[0]?.childName;
           user.purchasePrice = res[0]?.purchasePrice ? res[0]?.purchasePrice : 0;
           setTimeout(() => {
@@ -343,7 +386,7 @@ export class PurhaseFormComponent {
   }
   addChildItemToPurchaseList(item: any) {
     this.purcDtl.push({
-      no: 0, barcode: item.barCode, ItemName: item.itemName, quantity: 0,
+      no: 0, barcode: item.barCode, ItemName: item.itemName, quantity: 0, disableBarcode: false,
       bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
       discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
       saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0
@@ -385,29 +428,48 @@ export class PurhaseFormComponent {
     this.resetTotals();
     this.calculateTotals();
   }
-  royaltyChange(user:any){
-    user.grandTotal=user.totalSalePrice+((user.royalty/100)*user.totalSalePrice);
+  royaltyChange(user: any) {
+    user.grandTotal = user.totalSalePrice + ((user.royalty / 100) * user.totalSalePrice);
     this.resetTotals();
     this.calculateTotals();
   }
   PurchaseDetailModel: any[] = [];
   AddData() {
-    this.purcDtl.push({
-      no: 0, barCode: '', ItemName: '', quantity: 0,
-      bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
-      discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
-      saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0,royalty:0,grandTotal:0
-    });
+    const lastItem = this.purcDtl[this.purcDtl.length - 1];
+    if (!lastItem || (lastItem.barcode && lastItem.barcode.trim() !== '')) {
+      this.purcDtl.push({
+        no: 0, barCode: '', ItemName: '', quantity: 0, disableBarcode: false,
+        bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
+        discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
+        saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0, royalty: 0, grandTotal: 0
+      });
+    }
+
   }
   RemoveData() {
     this.purcDtl = [];
     this.resetTotals();
   }
-  RemoveCol(index: number) {
-    this.purcDtl.splice(index, 1);
-    this.resetTotals();
-    this.calculateTotals();
+  selectedRow: any;
+  RemoveCol() {
+    if (this.selectedRow) {
+      const index = this.purcDtl.indexOf(this.selectedRow);
+      if (index > -1) {
+        this.purcDtl.splice(index, 1);
+        this.selectedRow = null;
+        this.resetTotals();
+        this.calculateTotals();
+      }
+    } else {
+      console.warn('No row selected to remove.');
+    }
   }
+
+  // onRowSelect(e: any) {
+  //   if (e.data.barcode.length >= 2) {
+  //     this.tdChange(e.data);
+  //   }
+  // }
   items: any = []
   getItems() {
     this.api.getAllItemsdetails().subscribe(res => {
@@ -425,6 +487,10 @@ export class PurhaseFormComponent {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
         return;
       }
+    }
+    if (this.purcDtl.length == 0) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please add Items first!" });
+      return;
     }
     let formData: any = {
       id: this.urlId ? this.urlId : undefined,
@@ -479,12 +545,19 @@ export class PurhaseFormComponent {
       if (res.status == "OK") {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
         this.purcDtl = [];
+        this.purcDtl.push({
+          no: 0, barCode: '', ItemName: '', quantity: 0, disableBarcode: false,
+          bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
+          discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
+          saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0, royalty: 0, grandTotal: 0
+        });
       }
     });
 
   }
   unPostPurchase() {
     debugger
+    this.isPosted = false;
     this.barCodes = this.purcDtl.map(x => x.barcode).join(',');
     this.purchasePrice = this.purcDtl.map(x => x.purchasePrice).join(',');
     this.salePrice = this.purcDtl.map(x => x.netSalePrice).join(',');
@@ -496,6 +569,13 @@ export class PurhaseFormComponent {
       this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
         if (res.status == "OK")
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
+        this.purcDtl = [];
+        this.purcDtl.push({
+          no: 0, barCode: '', ItemName: '', quantity: 0, disableBarcode: false,
+          bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
+          discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
+          saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0, royalty: 0, grandTotal: 0
+        });
       });
 
   }
@@ -577,6 +657,19 @@ export class PurhaseFormComponent {
     });
     doc.save('purchase-details-with-summary.pdf');
   }
+  @ViewChild('searchItemInput') searchItemInput!: ElementRef;
+  focusSearchInput(): void {
+    setTimeout(() => {
+      this.searchItemInput?.nativeElement?.focus();
+    });
+  }
+  selectedChildItem: any;
+  @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
+  focusProductSearchInput(): void {
+    setTimeout(() => {
+      this.searchProdItemInput?.nativeElement?.focus();
+    });
+  }
   itemSearchDialog: boolean = false;
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
@@ -610,8 +703,8 @@ export class PurhaseFormComponent {
   highlightedRowId: number | null = null;
 
   selectItemFromSearch(item: any) {
-    this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
-    this.itemSearchDialog = false; // Close the search dialog
+    this.highlightedRowId = item.purchaseId;
+    this.itemSearchDialog = false;
     this.searchedItemName = "";
   }
 

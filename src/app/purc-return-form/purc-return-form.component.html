@@ -114,14 +114,14 @@
                                                                                         </td>
                                                                                         <td><input type="text"
                                                                                                    class="form-control form-control-sm col-md-12 pwd"
-                                                                                                   placeholder="Bar Code" (keypress)="onKey($event,purcRetDtl)"
-                                                                                                   [disabled]="false"
+                                                                                                   placeholder="Bar Code" (keydown.enter)="onKey($event,purcRetDtl)"
+                                                                                                   [disabled]="false" [disabled]="purcRetDtl.disableBarcode"
                                                                                                    [(ngModel)]="purcRetDtl.barcode" appFocusNavigation>
                                                                                         </td>
                                                                                         <td>
                                                                                             <input type="text"
                                                                                                 class="form-control form-control-sm"
-                                                                                                placeholder="Item Name"
+                                                                                                placeholder="Item Name" [disabled]="purcRetDtl.disableBarcode"
                                                                                                 [(ngModel)]="purcRetDtl.itemName" appFocusNavigation>
                                                                                             
                                                                                         </td>
@@ -255,18 +255,71 @@
 
     </section>
 </div>
-<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog">
+<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog" (onShow)="focusSearchInput()">
     <div class="card shadow-3">
         <div class="card-body">
             <div class="grid">
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
-                        <input type="text"
-                            class="p-3 form-control form-control-sm"
+                        <input type="text" #searchItemInput class="p-3 form-control form-control-sm"
                             placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
-                            [(ngModel)]="searchedItemName">
+                            [(ngModel)]="searchedItemName" (keydown.enter)="onSearchDialogEnter($event)">
+                    </div>
+                    <div class="mt-2 col-md-12">
+                        <div class="mt-2 pad-wrapper">
+                            <div class="box">
+                                <div class="content">
+                                    <div class="row">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visibleProdSrchMdl" [style]="{ width: '75rem' }"
+    (onShow)="focusProductSearchInput()">
+    <div class="flex items-center gap-4 mb-4">
+        <label for="username" class="font-semibold w-25">Searching Criteria</label>
+        <input type="text" #searchProdItemInput class="w-75" (input)="searchChildItem(childItemSearch)"
+            class="form-control form-control-sm" placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
+    </div>
+    <div class="pad-wrapper">
+        <div class="box">
+            <div class="content">
+                <p-table [(selection)]="selectedChildItem" selectionMode="single" dataKey="barCode" #dt
+                    [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
+                    styleClass="p-datatable-sm p-datatable-gridlines"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="code">Bar Code <p-sortIcon field="code"></p-sortIcon></th>
+                            <th pSortableColumn="name">Child Name <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="category">Purchase Price <p-sortIcon field="category"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="quantity">Sale Price <p-sortIcon field="quantity"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-itm>
+                        <tr [pSelectableRow]="itm">
+                            <td>{{itm.barCode}}</td>
+                            <td>{{itm.itemName}}</td>
+                            <td>{{itm.cost}}</td>
+                            <td>{{itm.salePrice}}</td>
+                            <button style="margin-right: 3px" pButton pRipple label="Add"
+                                class="p-button-rounded p-button-info"
+                                (click)="addChildItemToPurchaseList(itm)"></button>
+                        </tr>
+                    </ng-template>
+                </p-table>
             </div>
         </div>
     </div>

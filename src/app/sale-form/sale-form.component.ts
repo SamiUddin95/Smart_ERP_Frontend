@@ -105,6 +105,7 @@ export class SaleFormComponent {
     return str;
   }
   cashReceivedChange() {
+    debugger
     if (this.cashReceived > this.grandTotal) {
       this.cashBack = this.cashReceived - this.grandTotal;
       this.cashCharged = this.grandTotal;
@@ -118,6 +119,47 @@ export class SaleFormComponent {
     }
     this.convertToWords();
   }
+
+  opnCrdtWinLessAmnt() {
+    if (this.cashReceived < this.grandTotal) {
+      this.invoiceType = "Credit";
+      this.invoiceTypeChange({ value: "Credit" });
+    }
+  }
+  @ViewChild('cashReceivedInput') cashReceivedInput!: ElementRef;
+  shouldFocusCashInput = false;
+
+  ngAfterViewChecked(): void {
+    if (this.shouldFocusCashInput && this.cashReceivedInput) {
+      this.cashReceivedInput.nativeElement.focus();
+      this.shouldFocusCashInput = false;
+    }
+  }
+  opnCashCreditMdlbyShrtKey(event: KeyboardEvent): void {
+    this.searchedItemName = '';
+    if (event.key === 'F1') {
+      event.preventDefault();
+      this.openCashCreditModal();
+      this.invoiceType = "Cash";
+      this.invoiceTypeChange({ value: "Cash" });
+    }
+    if (event.key === 'F2') {
+      event.preventDefault();
+      this.openCashCreditModal();
+      this.invoiceType = "Credit";
+      this.invoiceTypeChange({ value: "Credit" });
+    }
+    this.shouldFocusCashInput = true;
+  }
+
+  onCashModalShow() {
+    setTimeout(() => {
+      if (this.invoiceType === 'Cash' && this.cashReceivedInput) {
+        this.cashReceivedInput.nativeElement.focus();
+      }
+    }, 50);
+  }
+
   cashChargedChange() {
     this.cashBack = this.cashReceived - this.cashCharged;
     this.invoiceBalance = this.grandTotal - this.cashCharged;
@@ -155,37 +197,47 @@ export class SaleFormComponent {
       this.displayCredWin = true;
     }
   }
+  NewData() {
+    if (this.saleDtl.length == 0)
+      this.ngOnInit();
+    else
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please remove item first!" });
+  }
   recentItem: any = {};
   salePriceGlobal: number = 0;
   saleDiscGlobal: number = 0;
   onKey(event: any, user: any) {
     user.barcode = event.target.value;
-        if (user.barcode.length >= 2 && this.saleDtl.length > 1) {
-      const matchedIndexes = this.saleDtl
-        .map((item, index) => item.barcode === user.barcode ? index : -1)
-        .filter(index => index !== -1);
+    this.searchedItemName = '';
+    // if (user.barcode.length >= 2 && this.saleDtl.length > 1) {
+    //   const matchedIndexes = this.saleDtl
+    //     .map((item, index) => item.barcode === user.barcode ? index : -1)
+    //     .filter(index => index !== -1);
 
-      if (matchedIndexes.length > 1) {
-        // Duplicate exists
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Item already exists, please choose a different one!'
-        });
+    //   if (matchedIndexes.length > 1) {
+    //     // Duplicate exists
+    //     this.messageService.add({
+    //       severity: 'error',
+    //       summary: 'Error',
+    //       detail: 'Item already exists, please choose a different one!'
+    //     });
 
-        // Remove second-last duplicate
-        const secondLastIndex = matchedIndexes[matchedIndexes.length - 2];
-        this.saleDtl.splice(secondLastIndex, 1);
-        return;
-      }
-    }
+    //     // Remove second-last duplicate
+    //     const secondLastIndex = matchedIndexes[matchedIndexes.length - 2];
+    //     this.saleDtl.splice(secondLastIndex, 1);
+    //     return;
+    //   }
+    // }
+
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
         if (res != null) {
+          user.disableBarcode = true;
           this.recentItem = res;
           user.itemName = user.ItemName = res[0]?.itemName || res[0]?.alternateItemName || res[0]?.childName;
           user.discount = res[0]?.discflat ? res[0]?.discflat : 0;
           user.salePrice = res[0]?.salePrice ? res[0]?.salePrice : 0;
+          user.purchasePrice = res[0]?.purchasePrice ? res[0]?.purchasePrice : 0;
           user.qty = 1;
           this.salePriceGlobal = res[0]?.salePrice;
           this.saleDiscGlobal = res[0]?.discflat;
@@ -197,10 +249,10 @@ export class SaleFormComponent {
               quantityInput?.focus();
             }
           }, 100);
-          // this.saleDtl.push({
-          //   no: 0, barCode: '', itemName: '', qty: 1,
-          //   salePrice: 0, discount: 0, netSalePrice: 0
-          // });
+          this.saleDtl.push({
+            no: 0, barCode: '', itemName: '', qty: 1, disableBarcode: false,
+            salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0
+          });
           this.qtyChange(user);
         }
         else {
@@ -277,10 +329,13 @@ export class SaleFormComponent {
     this.netAmount = this.earnedPoints - this.return;
   }
   AddData() {
-    this.saleDtl.push({
-      no: 0, barCode: '', itemName: 0, qty: 1,
-      salePrice: 0, discount: 0, netSalePrice: 0
-    });
+    const lastItem = this.saleDtl[this.saleDtl.length - 1];
+    if (!lastItem || (lastItem.barCode && lastItem.barCode.trim() !== '')) {
+      this.saleDtl.push({
+        no: 0, barCode: '', itemName: 0, qty: 1,
+        salePrice: 0, discount: 0, netSalePrice: 0
+      });
+    }
   }
   RemoveData() {
     this.saleDtl = [];
@@ -296,22 +351,81 @@ export class SaleFormComponent {
     this.router.navigate(['counter-sales']);
   }
   paymentDetails = [{ account: '', amount: 0, extraChargesPer: 0, extraCharges: 0, total: 0, remarks: '' }];
-  openModal() {
+  openCashCreditModal() {
+    const barcodeMap = new Map<string, number[]>();
+    const duplicateInfo: { row: number, itemName: string }[] = [];
+    const lowPriceInfo: { row: number, itemName: string, salePrice: number, purchasePrice: number }[] = [];
+
+    // Scan the saleDtl
+    this.saleDtl.forEach((e, index) => {
+      // 1. Check barcode duplicates
+      if (e.barCode) {
+        if (!barcodeMap.has(e.barCode)) {
+          barcodeMap.set(e.barCode, []);
+        }
+        barcodeMap.get(e.barCode)!.push(index);
+      }
+
+      // 2. Check salePrice < purchasePrice
+      if (e.salePrice < e.purchasePrice) {
+        lowPriceInfo.push({
+          row: index + 1,
+          itemName: e.itemName,
+          salePrice: e.salePrice,
+          purchasePrice: e.purchasePrice
+        });
+      }
+    });
+
+    // Collect duplicate barcode info
+    barcodeMap.forEach((indexes) => {
+      if (indexes.length > 1) {
+        indexes.slice(1).forEach(i => {
+          duplicateInfo.push({ row: i + 1, itemName: this.saleDtl[i].itemName });
+        });
+      }
+    });
+
+    // Show duplicate barcode error
+    if (duplicateInfo.length > 0) {
+      const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Duplicate Items at: ' + message
+      });
+      return;
+    }
+
+    // Show sale price < purchase price error
+    if (lowPriceInfo.length > 0) {
+      const message = lowPriceInfo.map(d =>
+        `Row ${d.row} (${d.itemName}) - Sale: ${d.salePrice}, Purchase: ${d.purchasePrice}`
+      ).join(', ');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Sale Price less than Purchase Price at: ' + message
+      });
+      return;
+    }
+
     this.displayModal = true;
     const lastItem = this.saleDtl[this.saleDtl.length - 1];
     if (lastItem.itemName === '')
       this.saleDtl.pop();
     this.paymentDetails = [];
+    debugger
     this.invoiceType = "Cash";
     this.invoiceTypeChange({ value: "Cash" });
   }
   addSale() {
     debugger
+    this.searchedItemName = '';
     if (this.saleDtl.length == 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please Add Item first!" });
       return;
     }
-
     if ((this.cashReceived < this.grandTotal) && (this.cardNumber == "")) {
       this.displayCashWin = false;
       this.displayCredWin = true;
@@ -320,7 +434,6 @@ export class SaleFormComponent {
         account: "Cash", amount: this.cashReceived, extraChargesPer: this.extraChargesPer,
         extraCharges: this.extraCharges, total: this.cashReceived, remarks: ''
       });
-
       // if(this.invoiceType=="Cash")
       this.paymentDetails.push({
         account: 'Credit', amount: this.remainingAmount, extraChargesPer: 0,
@@ -505,24 +618,62 @@ export class SaleFormComponent {
     })
 
   }
+  @ViewChild('searchItemInput') searchItemInput!: ElementRef;
+  focusSearchInput(): void {
+    setTimeout(() => {
+      this.searchItemInput?.nativeElement?.focus();
+    });
+  }
+  @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
+  focusProductSearchInput(): void {
+    setTimeout(() => {
+      this.searchProdItemInput?.nativeElement?.focus();
+    });
+  }
   saleReturnDialog: boolean = false;
-  @HostListener('document:keydown', ['$event'])
-
   itemSearchDialog: boolean = false;
-  @HostListener('document:keydown', ['$event'])
   itemDtl: any = [];
   searchedItemName: string = '';
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent): void {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+@HostListener('document:keydown', ['$event'])
+handleKeydownEvents(event: KeyboardEvent): void {
+  if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+    event.preventDefault();
+    this.itemSearchDialog = true;
+    return;
+  }
+  if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
+    event.preventDefault();
+    this.saleReturnDialog = true;
+    return;
+  }
+  if (this.visibleProdSrchMdl && this.childItems?.length) {
+    const currentIndex = this.childItems.findIndex(
+      (item: any) => item === this.selectedChildItem
+    );
+
+    if (event.key === 'ArrowDown') {
       event.preventDefault();
-      this.itemSearchDialog = true;
+      const nextIndex = (currentIndex + 1) % this.childItems.length;
+      this.selectedChildItem = this.childItems[nextIndex];
+      this.scrollToRow(nextIndex);
     }
-    if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
+
+    if (event.key === 'ArrowUp') {
       event.preventDefault();
-      this.saleReturnDialog = true;
+      const prevIndex =
+        (currentIndex - 1 + this.childItems.length) % this.childItems.length;
+      this.selectedChildItem = this.childItems[prevIndex];
+      this.scrollToRow(prevIndex);
+    }
+
+    if (event.key === 'Enter' && this.selectedChildItem) {
+      event.preventDefault();
+      this.addChildItemToPurchaseList(this.selectedChildItem);
     }
   }
+}
+
+
   itemNotFound: boolean = false;
   itemSearchFromDialog(e: any) {
     this.api.getAllItemsdetailsFilterbased(this.searchedItemName, 'All', 0, 0).subscribe(res => {
@@ -542,17 +693,13 @@ export class SaleFormComponent {
     }
     this.itemSearchDialog = false;
   }
-
   highlightedRowId: number | null = null;
-
   selectItemFromSearch(item: any) {
     this.highlightedRowId = item.purchaseId; // Store the ID of the selected purchase
     this.itemSearchDialog = false; // Close the search dialog
     this.searchedItemName = "";
   }
-  focusedField: any = null; // To track the focused field
-
-  // Set the currently focused input field (either amount or any other)
+  focusedField: any = null;
   setFocusedField(field: { data: any; field: string }) {
     this.focusedField = field;
   }
@@ -602,7 +749,49 @@ export class SaleFormComponent {
     this.cashChargedChange();
     this.cashBackChange();
   }
+  visibleProdSrchMdl: boolean = false;
+  @HostListener('document:keydown.F8', ['$event'])
+  onF8Pressed(event: any, user: any) {
+    this.visibleProdSrchMdl = true;
+  }
+  childItems: any = [];
+  childItemSearch: any;
+  selectedChildItem: any;
+  searchChildItem(barCode: string) {
+    if (barCode.length > 2) {
+      this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
+        this.childItems = res;
+        this.selectedChildItem = this.childItems[0];
+      })
+    }
 
+  }
 
+  scrollToRow(index: number): void {
+    setTimeout(() => {
+      const tableBody = document.querySelector('.p-datatable-scrollable-body');
+      if (!tableBody) return;
+
+      const rows = tableBody.querySelectorAll('tr');
+      const row = rows[index] as HTMLElement;
+      row?.scrollIntoView({ block: 'nearest' });
+    }, 10);
+  }
+  addChildItemToPurchaseList(item: any) {
+    const lastIndex = this.saleDtl.length - 1;
+
+    const newItem = {
+      no: 0, barCode: item.barCode, itemName: item.itemName, qty: 1, salePrice: item.salePrice,
+      discount: 0, netSalePrice: 0
+    };
+
+    if (this.saleDtl.length > 0 && !this.saleDtl[lastIndex].barCode) {
+      this.saleDtl[lastIndex] = newItem;
+    } else {
+      this.saleDtl.push(newItem);
+    }
+    this.visibleProdSrchMdl = false;
+    this.childItemSearch = "";
+  }
 
 }

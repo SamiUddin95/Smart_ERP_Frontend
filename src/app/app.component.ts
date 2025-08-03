@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  currentYear: number = new Date().getFullYear();
   public isLoggedIn: boolean = false;
   constructor(private router: Router, private messageService: MessageService, private api: ApiService, private datePipe: DatePipe, private common: CommonService, private authService: AuthService) { }
 

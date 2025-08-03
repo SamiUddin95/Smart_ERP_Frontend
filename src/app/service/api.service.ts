@@ -622,6 +622,9 @@ export class ApiService {
 	createSaleTillClose(obj: any) {
 		return this.app.post('createSaleTIllClose', obj);
 	}
+	getDummyTillClose() {
+		return this.app.get('getDummyTillClose');
+	}
 	getAllTillClose() {
 		return this.app.get('getAllTillClose');
 	}

@@ -20,13 +20,35 @@ export class SaleTillCloseComponent {
   }
   createSaleTIll(){
     this.formData.userId=this.currentUser.userId;
-    this.formData.id=this.urlId;
+    this.formData.id=Number(this.urlId);
     this.api.createSaleTillClose(this.formData).subscribe(res=>{
       if(res.id>0){
         this.router.navigate(['till-close-list']);
       } 
+      // else
+      // if(res.msg=="Till already Open")
+      // {
+      //   this.messageService.add({ severity: 'error', summary: 'Error', detail: "There should be one till open for a day!" });
+      // }
     })
   } 
+  dummyTillClose(){
+    this.api.getDummyTillClose().subscribe(res=>{
+      debugger
+      this.formData.cashIn=res[0].cashIn;
+      this.formData.cashOut=res[0].cashOut;
+      this.formData.grossSale=res[0].grossSale;
+      this.formData.misc=res[0].misc;
+      this.formData.netCash=res[0].netCash;
+      this.formData.netSale=res[0].netSale;
+      this.formData.shortage=res[0].shortage;
+      this.formData.tillOpenAmount=res[0].tillOpenAmount;
+      this.formData.totalCreditAmount=res[0].totalCreditAmount;
+      this.formData.totalDisc=res[0].totalDisc;
+      this.formData.totalGst=res[0].totalGst;
+      this.formData.totalSaleReturn=res[0].totalSaleReturn;
+    })
+  }
   currentUser:any={};
   getCurrentUser(){
     this.api.getUserById(Number(localStorage.getItem("loginId"))).subscribe(res=>{
@@ -41,7 +63,7 @@ export class SaleTillCloseComponent {
     one0: 10,    one0v: 0,    one0t: 0,    five: 5,    fivev: 0,
     fivet: 0,    two: 2,    twov: 0,    twot: 0,    one: 1,    onev: 0,
     onet: 0};
-    formData:any={};
+    formData:any={grossSale:0};
     updateTotal() {
       this.formData.tillCloseAmount = this.tillCloseForm.five000t + this.tillCloseForm.one0000t + 
                              this.tillCloseForm.five00t + this.tillCloseForm.one00t + 
@@ -101,6 +123,6 @@ export class SaleTillCloseComponent {
   }
   add(){}
   cancel(){
-    this.router.navigate(['till-open-list']);
+    this.router.navigate(['till-close-list']);
   }
 }

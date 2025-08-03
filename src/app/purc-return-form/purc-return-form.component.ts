@@ -46,9 +46,15 @@ export class PurcReturnFormComponent {
     user.barcode = event.target.value;
     if (user.barcode.length > 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
-        user.itemName = res[0].itemName;
-        user.purchasePrice = res[0].purchasePrice;
-        user.salePrice = res[0].salePrice
+        if(res!=null){
+          user.disableBarcode = true;
+          user.itemName = res[0].itemName;
+          user.purchasePrice = res[0].purchasePrice;
+          user.salePrice = res[0].salePrice
+        }else {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: "No data found" });
+          return;
+        }
       })
     }
   }
@@ -60,6 +66,7 @@ export class PurcReturnFormComponent {
   getUserById(id: any) {
 		this.api.getPurchaseReturnById(String(id)).subscribe(res => { 
       var res=JSON.parse(res); 
+      debugger
       this.purcRetDtl=res.purchaseOrderDetails;
       this.formData.id=res.purchaseOrders[0].id;
       this.formData.remarks=res.purchaseOrders[0].remarks;
@@ -120,7 +127,7 @@ export class PurcReturnFormComponent {
     this.netAmount=this.earnedPoints-this.return;
   }
   AddData(){
-    this.purcRetDtl.push({no:0,barCode:'',itemId:0,qty:'',
+    this.purcRetDtl.push({no:0,barCode:'',itemId:0,qty:0,disableBarcode: false,
     salePrice:0,disc:0,total:0,netTotal:0});
   }
   RemoveData(){
@@ -247,5 +254,90 @@ export class PurcReturnFormComponent {
       });
     
   }
+
+  @ViewChild('searchItemInput') searchItemInput!: ElementRef;
+  focusSearchInput(): void {
+    setTimeout(() => {
+      this.searchItemInput?.nativeElement?.focus();
+    });
+  }
+  @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
+  focusProductSearchInput(): void {
+    setTimeout(() => {
+      this.searchProdItemInput?.nativeElement?.focus();
+    });
+  }
+    visibleProdSrchMdl: boolean = false;
+  @HostListener('document:keydown.F8', ['$event'])
+  onF8Pressed(event: any, user: any) {
+    this.visibleProdSrchMdl = true;
+  }
+  childItems: any = [];
+  childItemSearch: any;
+  selectedChildItem: any;
+  searchChildItem(barCode: string) {
+    if (barCode.length > 2) {
+      this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
+        this.childItems = res;
+        this.selectedChildItem = this.childItems[0];
+      })
+    }
+
+  }
+
+  scrollToRow(index: number): void {
+    setTimeout(() => {
+      const tableBody = document.querySelector('.p-datatable-scrollable-body');
+      if (!tableBody) return;
+
+      const rows = tableBody.querySelectorAll('tr');
+      const row = rows[index] as HTMLElement;
+      row?.scrollIntoView({ block: 'nearest' });
+    }, 10);
+  }
+  addChildItemToPurchaseList(item: any) {
+    const lastIndex = this.purcRetDtl.length - 1;
+
+    const newItem = {
+      no: 0, barCode: item.barCode, itemName: item.itemName, qty: 1, salePrice: item.salePrice,
+      discount: 0, netSalePrice: 0
+    };
+
+    if (this.purcRetDtl.length > 0 && !this.purcRetDtl[lastIndex].barCode) {
+      this.purcRetDtl[lastIndex] = newItem;
+    } else {
+      this.purcRetDtl.push(newItem);
+    }
+    this.visibleProdSrchMdl = false;
+    this.childItemSearch = "";
+  }
+  @HostListener('document:keydown', ['$event'])
+  handleKeydownEvents(event: KeyboardEvent): void {
+
+    if (this.visibleProdSrchMdl && this.childItems?.length) {
+      const currentIndex = this.childItems.findIndex(
+        (item: any) => item === this.selectedChildItem
+      );
   
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        const nextIndex = (currentIndex + 1) % this.childItems.length;
+        this.selectedChildItem = this.childItems[nextIndex];
+        this.scrollToRow(nextIndex);
+      }
+  
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        const prevIndex =
+          (currentIndex - 1 + this.childItems.length) % this.childItems.length;
+        this.selectedChildItem = this.childItems[prevIndex];
+        this.scrollToRow(prevIndex);
+      }
+  
+      if (event.key === 'Enter' && this.selectedChildItem) {
+        event.preventDefault();
+        this.addChildItemToPurchaseList(this.selectedChildItem);
+      }
+    }
+  }
 }

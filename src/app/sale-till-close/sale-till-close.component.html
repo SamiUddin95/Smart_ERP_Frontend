@@ -1,7 +1,7 @@
 <div class="container-fluid mt-2 pt-1">
     <h3 class="font-bold ml-1 mb-2">TILL CLOSE</h3>
     <div class="row">  
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card h-100 shadow-3">
                 <div class="card-header font-bold border-100 border-bottom ">Detail Info</div>
                 <div class="card-body">
@@ -89,7 +89,7 @@
                         <div class="col-md-9">
                             <textarea class="border-green-200"
                                 rows="5"
-                                cols="62" 
+                                cols="38" 
                                 pInputTextarea 
                                 [(ngModel)]="formData.notes">
                             </textarea>
@@ -97,9 +97,8 @@
                     </div> 
                 </div>
             </div>
-
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card h-100 shadow-3">
                 <div class="card-header font-bold border-100 border-bottom ">Cash Denominations</div>
                 <div class="card-body">
@@ -397,13 +396,161 @@
             </div>
 
         </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-3">
+                <div class="card-header font-bold border-100 border-bottom ">Info</div>
+                <div class="card-body">
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Gross Sale</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Till No" 
+                                   [(ngModel)]="formData.grossSale">
+                        </div>
+                    </div> 
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Total Disc(+)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter User" 
+                                   [(ngModel)]="formData.totalDisc">
+                        </div>
+                    </div> 
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Total GST(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Amount" 
+                                   [(ngModel)]="formData.totalGST">
+                        </div>
+                    </div> 
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Misc(+)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Amount" 
+                                   [(ngModel)]="formData.misc">
+                        </div>
+                    </div> 
+                     <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Credit Sale(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Amount" 
+                                   [(ngModel)]="formData.creditSale">
+                        </div>
+                    </div> 
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Cash SaleReturn(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Amount" 
+                                   [(ngModel)]="formData.cashSaleReturn">
+                        </div>
+                    </div> 
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Till Open</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Amount" 
+                                   [(ngModel)]="formData.tillOpenAmount">
+                        </div>
+                    </div> 
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Cash In(+)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Amount" 
+                                   [(ngModel)]="formData.cashIn">
+                        </div>
+                    </div> 
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Cash Out(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Amount" 
+                                   [(ngModel)]="formData.cashOut">
+                        </div>
+                    </div> 
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Net Cash(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Amount" 
+                                   [(ngModel)]="formData.netCash">
+                        </div>
+                    </div> 
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Shortage(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Amount" 
+                                   [(ngModel)]="formData.shortage">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success">Net Sale(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="Enter Amount" 
+                                   [(ngModel)]="formData.netSale">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                           <label class="mt-1 font-bold text-success"></label>
+                        </div>
+                        <div class="col-md-7">
+                            <button pButton pRipple type="button" icon="pi pi-shopping-bag" (click)="dummyTillClose()"
+                            label="Dummy Till Close" class="float-end p-button-sm p-button-success"> </button>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row mt-4">
         <div class="col-md-12">
             <div class="card shadow-3 ">
                 <div class="card-body"> 
                     <button pButton pRipple type="button" icon="pi pi-save" (click)="createSaleTIll()"
-                    label="Save" class="mr-3 float-end p-button-sm p-button-success"> </button>
+                    label="Till Close" class="mr-3 float-end p-button-sm p-button-success"> </button>
                     <button style="margin-right: 3px" pButton pRipple type="button"
                     icon="pi pi-arrow-left" (click)="cancel()" label="Back"
                     class="float-end p-button-sm p-button-danger"> </button>

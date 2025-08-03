@@ -4,9 +4,8 @@
             <h3>PURCHASE ORDER</h3>
         </div>
         <div>
-            <button pButton pRipple type="button" icon="pi pi-plus" label="Add Purchase"
-                class="p-button-sm p-button-success float-right"
-                 (click)="addPurchase()"></button>
+            <button pButton pRipple type="button" icon="pi pi-plus" label="Add Purchase Order"
+                class="p-button-sm p-button-success float-right" (click)="addPurchase()"></button>
         </div>
     </div>
     <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
@@ -16,41 +15,36 @@
                     <div class="row mt-1 px-2 col-12">
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">User Name</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
+                            <input type="text" class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Email</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
+                            <input type="text" class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Phone</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
+                            <input type="text" class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
-                             </div>
+                        </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Gender</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
+                            <input type="text" class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
-                            </div>
+                        </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="mb-0 mx-2" for="Name">Joining Date</label>
-                            <input type="text"
-                            class="form-control p-inputtext p-component txt"
+                            <input type="text" class="form-control p-inputtext p-component txt"
                                 placeholder="Search By Helmet Code">
-                            </div>
-                         <div class="col-md-4 col-sm-12 text-right mt-1">
+                        </div>
+                        <div class="col-md-4 col-sm-12 text-right mt-1">
                             <button pButton pRipple type="button" icon="pi pi-eraser" label="Clear"
-                                class="p-button-sm p-button-secondary float-right mx-1  mt-4"
-                                style="width:130px" (click)="clearFilter()"></button>
+                                class="p-button-sm p-button-secondary float-right mx-1  mt-4" style="width:130px"
+                                (click)="clearFilter()"></button>
                             <button pButton pRipple type="button" icon="pi pi-search" label="Search"
-                                class="p-button-sm p-button-info float-right mx-1 mt-4"
-                                style="width:130px" (click)="getData()"></button>
+                                class="p-button-sm p-button-info float-right mx-1 mt-4" style="width:130px"
+                                (click)="getData()"></button>
 
                         </div>
                     </div>
@@ -61,16 +55,26 @@
         <div class="pad-wrapper">
             <div class="box">
                 <div class="content">
-                    <p-table #dt [scrollable]="true" scrollHeight="600px"  responsiveLayout="scroll" [value]="purchOrder" styleClass="p-datatable-sm p-datatable-gridlines" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
-                    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
-                    <ng-template pTemplate="caption">
-                        <div class="flex">
-                            <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF" (click)="exportPdf()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
-                            <button type="button" pButton pRipple icon="pi pi-file-excel" label="Export XLS" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
-                            <button type="button" pButton pRipple icon="pi pi-file" label="Export CSV" (click)="dt.exportCSV()"  class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>                        </div>
-                    </ng-template>    
-                    <ng-template pTemplate="header">
+                    <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="purchOrder"
+                        styleClass="p-datatable-sm p-datatable-gridlines"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+                        [rows]="10">
+                        <ng-template pTemplate="caption">
+                            <div class="flex">
+                                <button type="button" pButton pRipple icon="pi pi-file-pdf" label="Export PDF"
+                                    (click)="exportPdf()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file-excel" label="Export XLS"
+                                    (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS"
+                                    tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file" label="Export CSV"
+                                    (click)="dt.exportCSV()" class="p-button-warning mr-2" pTooltip="PDF"
+                                    tooltipPosition="bottom"></button>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
                             <tr>
+                                <th pSortableColumn="code">S.No <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="code">Order ID <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="code">Party <p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="code">Invoice Total <p-sortIcon field="code"></p-sortIcon></th>
@@ -78,12 +82,14 @@
                                 <th pSortableColumn="name">Start Date <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">End Date <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Posted Date <p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="name">Post/UnPost Status <p-sortIcon field="name"></p-sortIcon></th>
+                                <th pSortableColumn="name">Post/UnPost Status <p-sortIcon field="name"></p-sortIcon>
+                                </th>
                                 <th pSortableColumn="price">Action<p-sortIcon field="price"></p-sortIcon></th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-user>
+                        <ng-template pTemplate="body" let-user let-i="rowIndex">
                             <tr>
+                                <td>{{i+1}}</td>
                                 <td>{{user.id}}</td>
                                 <td>{{user.partyId}}</td>
                                 <td>{{user.invTotal}}</td>
@@ -93,11 +99,10 @@
                                 <td>{{user.postedDate | date:'dd-MMM-yyyy' }}</td>
                                 <td>{{user.status }}</td>
                                 <td style="position: relative;" class="d-flex">
-                                    <button style="margin-right: 3px" pButton pRipple
-                                        icon="pi pi-pencil" class="p-button-rounded p-button-info"
-                                        (click)="editUser(user.id)"></button>
-                                    <button pButton pRipple icon="pi pi-trash"
-                                        class="p-button-rounded p-button-danger" (click)="deleteUser(user)"></button>
+                                    <button style="margin-right: 3px" pButton pRipple icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-info" (click)="editUser(user.id)"></button>
+                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                        (click)="deleteUser(user)"></button>
                                 </td>
                             </tr>
                         </ng-template>
