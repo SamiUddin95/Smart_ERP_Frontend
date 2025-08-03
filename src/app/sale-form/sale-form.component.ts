@@ -793,5 +793,9 @@ handleKeydownEvents(event: KeyboardEvent): void {
     this.visibleProdSrchMdl = false;
     this.childItemSearch = "";
   }
-
+preventQtyArrowKeys(event: KeyboardEvent) {
+  if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+    event.preventDefault();
+  }
+}
 }
