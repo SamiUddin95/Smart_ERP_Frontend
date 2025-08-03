@@ -14,6 +14,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 export class ItemFormComponent {
 @ViewChild('tableRef') tableRef!: ElementRef;
+@ViewChild('searchInput') searchInput!: ElementRef;
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
   status:any=[{label:"Active",value:1},{label:"Not Active",value:0}];
   formData: any = {  };
@@ -28,7 +29,16 @@ export class ItemFormComponent {
     // return `${this.formData.itemName} ${this.selectedWeight} ${this.selectedUOM}`;
     return `${this.formData.itemName}`;
   }
+showDialog: boolean = false;
+  searchMode: 'start' | 'advanced' = 'start';
 
+  filter = {
+    itemName: ''
+  };
+
+  item: any[] = [];
+  selectedItem: any;
+  currentIndex: number = 0;
   pictureUrl: string | undefined;
   selectedFile: File | null = null;
   onFileSelected(event: any) {
@@ -138,23 +148,7 @@ export class ItemFormComponent {
     if (this.urlId) {
         this.formData.id = this.urlId;
     }
-  //   const payload = {
-  //     Id:this.urlId,
-  //     aliasName: this.formData.aliasName,
-  //     itemName:this.formData.itemName,
-  //     purchasePrice:this.formData.purchasePrice,
-  //     salePrice:this.formData.salePrice,
-  //     categoryId:this.formData.categoryId,
-  //     classId:this.formData.classId,
-  //     manufacturerId:this.formData.manufacturerId,
-  //     remarks:this.formData.remarks,
-  //     recentPurchase:this.formData.recentPurchase,
-  //     brandId:this.formData.brandId,
-  //     discflat:this.formData.discflat,
-  //     lockdisc:this.formData.lockdisc,
-  //     alternateItem: this.altrnateBarCodeData,
 
-  // };
   debugger
   const formDataToSend = new FormData();
         formDataToSend.append('Id', this.urlId || 0);
@@ -201,7 +195,7 @@ export class ItemFormComponent {
                   manufacturerId: savedManufacturer,
                   classId: savedClass,
                   categoryId: savedCategory,
-                  partyId:savedParty
+                  partyId:savedParty,
               };
 
               // Clear image preview if needed
@@ -615,115 +609,116 @@ export class ItemFormComponent {
 }
 
 
- showDialog = false;
-
-  filter = {
-    itemName: '',
-    aliasName: '',
-    purchasePrice: 0,
-    salePrice: 0
-  };
-
-  item: any[] = [];
-
   // Listen for F8 key globally
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'F8') {
+ @HostListener('document:keydown', ['$event'])
+ 
+  handleKeydownEvents(event: KeyboardEvent): void {
+  // Only handle navigation if the dialog is shown and items exist
+  if (this.showDialog && this.item.length > 0) {
+    const currentIndex = this.item.findIndex(itm => itm === this.selectedItem);
+    const safeIndex = currentIndex === -1 ? 0 : currentIndex;
+
+    // Navigate down the list
+    if (event.key === 'ArrowDown') {
       event.preventDefault();
-      this.openSearchDialog();
+      const nextIndex = (safeIndex + 1) % this.item.length;
+      this.selectedItem = this.item[nextIndex];
+      this.currentIndex = nextIndex;
+      this.scrollToRow(nextIndex);
+      return;
+    }
+
+    // Navigate up the list
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      const prevIndex = (safeIndex - 1 + this.item.length) % this.item.length;
+      this.selectedItem = this.item[prevIndex];
+      this.currentIndex = prevIndex;
+      this.scrollToRow(prevIndex);
+      return;
+    }
+
+    // Enter key - go to item form
+    if (event.key === 'Enter' && this.selectedItem) {
+      event.preventDefault();
+      const itemId = this.selectedItem.id;
+      this.showDialog = false;
+
+      // Force component reload by first navigating to dummy route
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['item-form', itemId]);
+      });
+      return;
     }
   }
 
-  openSearchDialog() {
-    this.showDialog = true;
-    this.filter.itemName = '';
-    this.item = [];
+  // F8 - open search dialog
+  if (event.key === 'F8') {
+    event.preventDefault();
+    this.openSearchDialog();
   }
+}
 
-  filterProducts() {
-    this.getItemList();
-  }
-  searchMode: 'start' | 'advanced' = 'start';
+  openSearchDialog(): void {
+  this.showDialog = true;
+  this.filter.itemName = '';
+  // this.item = [];
+  // this.selectedItem = null;
 
-  onSearchModeChange(mode: 'start' | 'advanced') {
-    this.searchMode = mode;
-  }
-  getItemList() {
-  const itemName = this.filter.itemName ? this.filter.itemName : 'All';
+  //this.getItemList(); // Load data first
 
-  this.api.getAllItemsSearching(
-    itemName,
-    this.searchMode // 'start' or 'advanced' from checkbox
-  ).subscribe((res: any) => {
-    this.item = res.map((ele: any) => {
-      return {
-        id: ele.id,
-        sno: ele.sno,
-        aliasName: ele.aliasName,
-        itemName: ele.itemName,
-        purchasePrice: ele.purchasePrice,
-        salePrice: ele.salePrice,
-        categoryId: ele.categoryId,
-        classId: ele.classId,
-        manufacturerId: ele.manufacturerId,
-        remarks: ele.remarks,
-        recentPurchase: ele.recentPurchase,
-        brandId: ele.brandId,
-        discFlat: ele.discFlat,
-        lockDisc: ele.lockDisc
-      };
-    });
+  // Focus input after dialog is rendered
+  setTimeout(() => {
+    this.searchInput?.nativeElement?.focus();
+  }, 100);
+}
+
+  getItemList(): void {
+  const itemName = this.filter.itemName || 'All';
+
+  this.api.getAllItemsSearching(itemName, this.searchMode).subscribe((res: any[]) => {
+    this.item = res.map((ele: any) => ({
+      id: ele.id,
+      sno: ele.sno,
+      aliasName: ele.aliasName,
+      itemName: ele.itemName,
+      purchasePrice: ele.purchasePrice,
+      salePrice: ele.salePrice,
+      categoryId: ele.categoryId,
+      classId: ele.classId,
+      manufacturerId: ele.manufacturerId,
+      remarks: ele.remarks,
+      recentPurchase: ele.recentPurchase,
+      brandId: ele.brandId,
+      discFlat: ele.discFlat,
+      lockDisc: ele.lockDisc
+    }));
+
     if (this.item.length > 0) {
       this.currentIndex = 0;
       this.selectedItem = this.item[0];
-
-      // Optional: focus table so arrow keys work immediately
-      setTimeout(() => this.tableRef?.nativeElement?.focus(), 100);
+      this.scrollToRow(0);
+    } else {
+      this.currentIndex = -1;
+      this.selectedItem = null;
     }
   });
 }
-
-selectedItem: any;
-currentIndex: number = 0;
-
-
-onRowSelect(event: any) {
-  // Optional: do something on row select
-}
-
-onRowUnselect(event: any) {
-  // Optional: do something on row unselect
-}
-onTableKeyDown(event: KeyboardEvent) {
-  const totalItems = this.item.length;
-
-  debugger
-  if (event.key === 'ArrowDown') {
-    this.currentIndex = Math.min(this.currentIndex + 1, totalItems - 1);
-    this.selectedItem = this.item[this.currentIndex];
-    event.preventDefault();
+  scrollToRow(index: number): void {
+    const rowId = 'row-' + index;
+    const rowElem = document.getElementById(rowId);
+    if (rowElem) {
+      rowElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
 
-  if (event.key === 'ArrowUp') {
-    this.currentIndex = Math.max(this.currentIndex - 1, 0);
-    this.selectedItem = this.item[this.currentIndex];
-    event.preventDefault();
+  getRowClass(rowData: any): { [klass: string]: boolean } {
+    return {
+      'selected-row': this.selectedItem && rowData.id === this.selectedItem.id
+    };
   }
-  if (event.key === 'Enter') {
-   if (this.selectedItem) {
-    this.router.navigate(['item-form/' + this.urlId]);
-    this.showDialog = false; // Close dialog
-  }
-  }
-  
 
-}
-getRowClass(rowData: any): { [klass: string]: boolean } {
-  return {
-    'selected-row': this.selectedItem && rowData.id === this.selectedItem.id
-  };
-}
+
 
 //suppplier
 selectedSupplier: any;
