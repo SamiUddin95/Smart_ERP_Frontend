@@ -38,12 +38,12 @@
                                                             placeholder="SNo" [(ngModel)]="formData.sno" name="sno"
                                                             disabled style="width: 100px;">
                                                     </div>
-                                                    <!-- <div class="col-md-6 col-sm-12">
+                                                     <!-- <div class="col-md-6 col-sm-12">
                                                         <label for="aliasName">Barcode <span class="text-danger">*</span></label>
                                                         <input type="text" id="aliasName-0" name="aliasName" (blur)="checkDuplicate('aliasName')" (keypress)="onKey($event)" (keydown)="moveFocus($event, 0, 'aliasName')" autofocus 
                                                                class="form-control col-md-12" placeholder="Alias Name" [(ngModel)]="formData.aliasName">
-                                                    </div>
-                                                    
+                                                    </div> -->
+                                                    <!--
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="itemName">Item Name <span class="text-danger">*</span></label>
                                                         <input type="text" id="itemName-0" name="itemName" (blur)="checkDuplicate('itemName')" 
@@ -53,6 +53,7 @@
                                                         <label for="aliasName">Barcode <span
                                                                 class="text-danger">*</span></label>
                                                         <input type="text" id="aliasName-0" name="aliasName"
+                                                            (blur)="checkDuplicate('aliasName')"
                                                             (keypress)="onKey($event)"
                                                             (keydown)="moveFocus($event, 0, 'aliasName')" autofocus
                                                             class="form-control col-md-12" placeholder="Alias Name"
@@ -624,8 +625,19 @@
         </div>
 
         <!-- Results Table -->
-        <p-table [value]="item" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'"
-            [style]="{ 'margin-top': '1rem' }">
+<p-table
+  #tableRef
+  [value]="item"
+  [(selection)]="selectedItem"
+  selectionMode="single"
+  dataKey="id"
+  [paginator]="true"
+  [rows]="10"
+  [responsiveLayout]="'scroll'"
+  [tabindex]="0"
+  (keydown)="onTableKeyDown($event)"
+  [rowStyleClass]="getRowClass"
+>
 
             <ng-template pTemplate="header">
                 <tr>

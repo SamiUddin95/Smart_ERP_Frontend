@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 import { MessageService } from 'primeng/api';
@@ -11,8 +11,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   templateUrl: './item-form.component.html',
   styleUrls: ['./item-form.component.css']
 })
-export class ItemFormComponent {
 
+export class ItemFormComponent {
+@ViewChild('tableRef') tableRef!: ElementRef;
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
   status:any=[{label:"Active",value:1},{label:"Not Active",value:0}];
   formData: any = {  };
@@ -673,7 +674,55 @@ export class ItemFormComponent {
         lockDisc: ele.lockDisc
       };
     });
+    if (this.item.length > 0) {
+      this.currentIndex = 0;
+      this.selectedItem = this.item[0];
+
+      // Optional: focus table so arrow keys work immediately
+      setTimeout(() => this.tableRef?.nativeElement?.focus(), 100);
+    }
   });
+}
+
+selectedItem: any;
+currentIndex: number = 0;
+
+
+onRowSelect(event: any) {
+  // Optional: do something on row select
+}
+
+onRowUnselect(event: any) {
+  // Optional: do something on row unselect
+}
+onTableKeyDown(event: KeyboardEvent) {
+  const totalItems = this.item.length;
+
+  debugger
+  if (event.key === 'ArrowDown') {
+    this.currentIndex = Math.min(this.currentIndex + 1, totalItems - 1);
+    this.selectedItem = this.item[this.currentIndex];
+    event.preventDefault();
+  }
+
+  if (event.key === 'ArrowUp') {
+    this.currentIndex = Math.max(this.currentIndex - 1, 0);
+    this.selectedItem = this.item[this.currentIndex];
+    event.preventDefault();
+  }
+  if (event.key === 'Enter') {
+   if (this.selectedItem) {
+    this.router.navigate(['item-form/' + this.urlId]);
+    this.showDialog = false; // Close dialog
+  }
+  }
+  
+
+}
+getRowClass(rowData: any): { [klass: string]: boolean } {
+  return {
+    'selected-row': this.selectedItem && rowData.id === this.selectedItem.id
+  };
 }
 
 //suppplier
@@ -707,3 +756,4 @@ addSupplier() {
   }
 }
 }
+
