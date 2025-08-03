@@ -51,6 +51,14 @@ export class SaleReturnFormComponent {
           user.salePrice = res[0].salePrice ? res[0].salePrice : 0;
           //user.netRate = res[0]?.salePrice;
           //user.quantity = res[0]?.qty
+                    setTimeout(() => {
+            const currentInput = event.target as HTMLElement;
+            const row = currentInput.closest('tr');
+            if (row) {
+              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLElement;
+              quantityInput?.focus();
+            }
+          }, 100);
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: "No data found" });
@@ -291,10 +299,6 @@ handleKeydownEvents(event: KeyboardEvent): void {
   }
 }
 
-preventQtyArrowKeys(event: KeyboardEvent) {
-  if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-    event.preventDefault();
-  }
-}
+
 
 }

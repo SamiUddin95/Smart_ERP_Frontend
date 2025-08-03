@@ -4,7 +4,7 @@ import { Directive, HostListener, ElementRef, AfterViewInit } from '@angular/cor
   selector: '[appFocusNavigation]'
 })
 export class FocusNavigationDirective implements AfterViewInit {
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) { }
 
   ngAfterViewInit() {
     this.setFocusToFirstInputInRow();
@@ -14,7 +14,7 @@ export class FocusNavigationDirective implements AfterViewInit {
   handleKeyDown(event: KeyboardEvent) {
     const currentInput = this.el.nativeElement as HTMLElement;
     const currentRow = currentInput.closest('tr');
-    const parentTableWrapper = currentInput.closest('.p-datatable'); // <- only within p-table
+    const parentTableWrapper = currentInput.closest('.p-datatable');
 
     if (!currentRow || !parentTableWrapper) return;
 
@@ -37,25 +37,36 @@ export class FocusNavigationDirective implements AfterViewInit {
         targetIndex = currentIndex - 1;
         break;
       case 'ArrowDown':
+        event.preventDefault();
         if (rowIndex + 1 < allRows.length) {
-          const nextRowInputs = Array.from(allRows[rowIndex + 1].querySelectorAll('.form-control:not([disabled])')) as HTMLInputElement[];
+          const nextRow = allRows[rowIndex + 1];
+          const nextRowInputs = Array.from(nextRow.querySelectorAll('.form-control:not([disabled])')) as HTMLInputElement[];
           const colIndex = rowInputs.indexOf(currentInput as HTMLInputElement);
-          if (nextRowInputs[colIndex]) {
+
+          if (colIndex >= 0 && nextRowInputs[colIndex]) {
             nextRowInputs[colIndex].focus();
-            event.preventDefault();
+          } else if (nextRowInputs.length > 0) {
+            nextRowInputs[0].focus(); // fallback to first input in next row
           }
         }
         return;
+
       case 'ArrowUp':
+        event.preventDefault();
         if (rowIndex > 0) {
-          const prevRowInputs = Array.from(allRows[rowIndex - 1].querySelectorAll('.form-control:not([disabled])')) as HTMLInputElement[];
+          const prevRow = allRows[rowIndex - 1];
+          const prevRowInputs = Array.from(prevRow.querySelectorAll('.form-control:not([disabled])')) as HTMLInputElement[];
           const colIndex = rowInputs.indexOf(currentInput as HTMLInputElement);
-          if (prevRowInputs[colIndex]) {
+
+          if (colIndex >= 0 && prevRowInputs[colIndex]) {
             prevRowInputs[colIndex].focus();
-            event.preventDefault();
+          } else if (prevRowInputs.length > 0) {
+            prevRowInputs[0].focus(); // fallback to first input in previous row
           }
         }
         return;
+
+
       default:
         return;
     }
