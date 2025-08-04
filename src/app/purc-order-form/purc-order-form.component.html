@@ -67,27 +67,43 @@
 
                                                     </div>
                                                     <div class="col-md-4 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Date of Invoice</label>
-                                                        <p-calendar [(ngModel)]="formData.dateOfInvoice"
-                                                            [style]="{width:100}" dateFormat="yy-mm-dd"
-                                                            [inputId]="'dateOfInvoice'"
-                                                            (keydown)="moveDateFocus($event, 'dateOfInvoice')"></p-calendar>
+                                                        <label for="dateOfInvoice">Date of Invoice</label>
+                                                        <p-calendar 
+                                                            [(ngModel)]="formData.dateOfInvoice"
+                                                            dateFormat="yy-mm-dd"
+                                                            inputId="dateOfInvoice"
+                                                            (keydown)="moveDateFocus($event, 'dateOfInvoice')"
+                                                            appendTo="body" 
+                                                            [style]="{ 'width': '100%' }"
+                                                            [showIcon]="true"
+                                                            panelStyleClass="custom-calendar-panel">
+                                                        </p-calendar>
                                                     </div>
                                                     <div class="col-md-4 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>Start Date</label>
-                                                        <p-calendar [(ngModel)]="formData.startDate"
-                                                            [style]="{width:100}" dateFormat="yy-mm-dd"
-                                                            [inputId]="'startDate'"
-                                                            (keydown)="moveDateFocus($event, 'startDate')"></p-calendar>
+                                                        <label for="startDate">Start Date</label>
+                                                        <p-calendar 
+                                                            [(ngModel)]="formData.startDate"
+                                                            dateFormat="yy-mm-dd"
+                                                            inputId="startDate"
+                                                            (keydown)="moveDateFocus($event, 'startDate')"
+                                                            appendTo="body" 
+                                                            [style]="{ 'width': '100%' }"
+                                                            [showIcon]="true"
+                                                            panelStyleClass="custom-calendar-panel">
+                                                        </p-calendar>
                                                     </div>
                                                     <div class="col-md-4 col-sm-12">
-                                                        <label for="lastname"><span class="text-danger">
-                                                            </span>End Date</label>
-                                                        <p-calendar [(ngModel)]="formData.endDate" [style]="{width:100}"
-                                                            dateFormat="yy-mm-dd" [inputId]="'endDate'"
-                                                            (keydown)="moveDateFocus($event, 'endDate')"></p-calendar>
+                                                        <label for="endDate">End Date</label>
+                                                        <p-calendar 
+                                                            [(ngModel)]="formData.endDate"
+                                                            dateFormat="yy-mm-dd"
+                                                            inputId="endDate"
+                                                            (keydown)="moveDateFocus($event, 'endDate')"
+                                                            appendTo="body" 
+                                                            [style]="{ 'width': '100%' }"
+                                                            [showIcon]="true"
+                                                            panelStyleClass="custom-calendar-panel">
+                                                        </p-calendar>
                                                     </div>
                                                     
                                                     <div class="col-md-4 col-sm-12">
@@ -108,9 +124,9 @@
                                                     
                                                     <div class="col-md-4 col-sm-12 pl-2">
                                                         <label for="lastname"><span class="text-danger">
-                                                            </span>Projection Days</label>
+                                                            </span>Duration</label>
                                                         <input type="text" class="form-control col-md-12"
-                                                            placeholder="Projection Days"
+                                                            placeholder="Duration"
                                                             [(ngModel)]="formData.projectionDays"
                                                             [inputId]="'projectionDays'" id="projectionDays"
                                                             (keydown)="moveDateFocus($event, 'projectionDays')">
@@ -261,13 +277,15 @@
                                                                                         (keydown)="moveFocus($event, i, 'currentStock')"
                                                                                         [(ngModel)]="user.currentStock">
                                                                                 </td>
-                                                                                <td> <input type="number"
-                                                                                        class="form-control form-control-sm col-md-12 pwd"
-                                                                                        placeholder="Required Qty"
-                                                                                        [disabled]="false"
-                                                                                        [id]="'requiredQty-' + i"
-                                                                                        (keydown)="moveFocus($event, i, 'requiredQty')"
-                                                                                        [(ngModel)]="user.requiredQty">
+                                                                                <td>
+                                                                                    <input type="number"
+                                                                                            class="form-control form-control-sm col-md-12 pwd"
+                                                                                            placeholder="Required Qty"
+                                                                                            [disabled]="false"
+                                                                                            [id]="'requiredQty-' + i"
+                                                                                            (keydown)="moveFocus($event, i, 'requiredQty')"
+                                                                                            [(ngModel)]="user.requiredQty"
+                                                                                            (ngModelChange)="updateTotal(user)">
                                                                                 </td>
                                                                                 <td> <input type="number"
                                                                                         class="form-control form-control-sm col-md-12 pwd"
@@ -298,7 +316,7 @@
                                                 icon="pi pi-arrow-left" (click)="cancel()" label="Back"
                                                 class="p-button-sm p-button-danger"> </button>
                                             <button pButton pRipple type="button" icon="pi pi-save"
-                                                (click)="addPurchaseOrder()" label="Save"
+                                                (click)="addPO()" label="Save"
                                                 class="p-button-sm p-button-success"> </button>
                                         </div>
                                     </div>
