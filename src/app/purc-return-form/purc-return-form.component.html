@@ -6,9 +6,11 @@
             <button pButton pRipple type="button" icon="pi pi-save"
                 (click)="AddData()" label="Add"
                 class="p-button-sm p-button-success mr-2"> </button>
-            <!-- <button pButton pRipple type="button" icon="pi pi-trash"
-                (click)="RemoveData()" label="Remove"
-                class="ml-2 p-button-sm p-button-danger"> </button> -->
+            <button pButton pRipple type="button" icon="pi pi-trash"
+                (click)="RemoveFocusedRow()"
+                [disabled]="focusedRowIndex === null"
+                class="mr-1 p-button-sm p-button-danger">
+            </button>
             <button pButton pRipple  label="Post" [disabled]="urlId == 0"
                 (click)="postPurchase()" class="mr-2 p-button-sm p-button-warning" pTooltip="PDF" tooltipPosition="bottom"></button>
             <button pButton pRipple label="UnPost" [disabled]="urlId == 0"
@@ -102,14 +104,16 @@
                                                                                         <th pSortableColumn="price">Total
                                                                                             <p-sortIcon field="price"></p-sortIcon>
                                                                                         </th> 
-                                                                                        <th pSortableColumn="price">Action
+                                                                                        <!-- <th pSortableColumn="price">Action
                                                                                             <p-sortIcon field="price"></p-sortIcon>
-                                                                                        </th> 
+                                                                                        </th>  -->
                                                                                     </tr>
                                                                                 </ng-template>
                                                                 
                                                                                 <ng-template pTemplate="body" let-purcRetDtl let-i="rowIndex">
-                                                                                    <tr [ngClass]="{'highlighted': purcRetDtl.barcode== searchedItemName}">
+                                                                                    <tr  [id]="'row-' + i"
+                                                                                            (click)="focusedRowIndex = i"
+                                                                                            [class.selected-row]="focusedRowIndex === i" [ngClass]="{'highlighted': purcRetDtl.barcode== searchedItemName}">
                                                                                         <td class="text-center">{{i + 1}}
                                                                                         </td>
                                                                                         <td><input type="text"
@@ -155,12 +159,12 @@
                                                                                                    [disabled]="true"
                                                                                                    [(ngModel)]="purcRetDtl.total" appFocusNavigation>
                                                                                         </td>
-                                                                                        <td><button pButton pRipple
+                                                                                        <!-- <td><button pButton pRipple
                                                                                                     type="button"
                                                                                                     icon="pi pi-trash"
                                                                                                     (click)="RemoveCol(i)"
                                                                                                     class="p-button-sm p-button-danger">
-                                                                                            </button></td>
+                                                                                            </button></td> -->
                                                                                     </tr>
                                                                                 </ng-template>
                                                                 

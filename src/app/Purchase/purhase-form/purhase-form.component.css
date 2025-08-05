@@ -18,5 +18,9 @@
   background-color: #1d0fe2 !important; /* Blue highlight */
   color: white !important;
 }
+.selected-row {
+  background-color: #d4edda !important;
+}
+
 
 

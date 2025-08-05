@@ -147,8 +147,11 @@ searchChildItem(barCode: string) {
             const currentInput = event.target as HTMLElement;
             const row = currentInput.closest('tr');
             if (row) {
-              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLElement;
-              quantityInput?.focus();
+              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLInputElement;
+              if (quantityInput) {
+                quantityInput.focus();
+                quantityInput.select(); // ✅ This now works without error
+              }
             }
           }, 100);
         }
@@ -450,20 +453,31 @@ searchChildItem(barCode: string) {
     this.purcDtl = [];
     this.resetTotals();
   }
-  selectedRow: any;
-  RemoveCol() {
-    if (this.selectedRow) {
-      const index = this.purcDtl.indexOf(this.selectedRow);
-      if (index > -1) {
-        this.purcDtl.splice(index, 1);
-        this.selectedRow = null;
-        this.resetTotals();
-        this.calculateTotals();
-      }
-    } else {
-      console.warn('No row selected to remove.');
+  // selectedRow: any;
+  // RemoveCol() {
+  //   if (this.selectedRow) {
+  //     const index = this.purcDtl.indexOf(this.selectedRow);
+  //     if (index > -1) {
+  //       this.purcDtl.splice(index, 1);
+  //       this.selectedRow = null;
+  //       this.resetTotals();
+  //       this.calculateTotals();
+  //     }
+  //   } else {
+  //     console.warn('No row selected to remove.');
+  //   }
+  // }
+
+  focusedRowIndex: number | null = null;
+  RemoveFocusedRow() {
+    if (this.focusedRowIndex !== null && this.focusedRowIndex >= 0 && this.focusedRowIndex < this.purcDtl.length) {
+      this.purcDtl.splice(this.focusedRowIndex, 1);
+      this.focusedRowIndex = null;
+      this.resetTotals();
+      this.calculateTotals();
     }
   }
+
 
   // onRowSelect(e: any) {
   //   if (e.data.barcode.length >= 2) {

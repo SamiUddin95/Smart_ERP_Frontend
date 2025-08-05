@@ -245,10 +245,14 @@ export class SaleFormComponent {
             const currentInput = event.target as HTMLElement;
             const row = currentInput.closest('tr');
             if (row) {
-              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLElement;
-              quantityInput?.focus();
+              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLInputElement;
+              if (quantityInput) {
+                quantityInput.focus();
+                quantityInput.select(); // ✅ This now works without error
+              }
             }
           }, 100);
+
           this.saleDtl.push({
             no: 0, barCode: '', itemName: '', qty: 1, disableBarcode: false,
             salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0

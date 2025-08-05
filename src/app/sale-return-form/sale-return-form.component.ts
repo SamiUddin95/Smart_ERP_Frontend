@@ -51,12 +51,15 @@ export class SaleReturnFormComponent {
           user.salePrice = res[0].salePrice ? res[0].salePrice : 0;
           //user.netRate = res[0]?.salePrice;
           //user.quantity = res[0]?.qty
-                    setTimeout(() => {
+           setTimeout(() => {
             const currentInput = event.target as HTMLElement;
             const row = currentInput.closest('tr');
             if (row) {
-              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLElement;
-              quantityInput?.focus();
+              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLInputElement;
+              if (quantityInput) {
+                quantityInput.focus();
+                quantityInput.select(); // ✅ This now works without error
+              }
             }
           }, 100);
         }
@@ -255,50 +258,52 @@ export class SaleReturnFormComponent {
     this.visibleProdSrchMdl = false;
     this.childItemSearch = "";
   }
-@HostListener('document:keydown', ['$event'])
-handleKeydownEvents(event: KeyboardEvent): void {
-  // Ctrl + F opens item search dialog
-  if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
-    event.preventDefault();
-    this.itemSearchDialog = true;
-    return;
-  }
-
-  // Handle F8 key to open product search
-  if (event.key === 'F8') {
-    event.preventDefault();
-    this.visibleProdSrchMdl = true;
-    return;
-  }
-
-  // Handle product search navigation
-  if (this.visibleProdSrchMdl && this.childItems?.length) {
-    const currentIndex = this.childItems.findIndex(
-      (item: any) => item === this.selectedChildItem
-    );
-
-    if (event.key === 'ArrowDown') {
+  @HostListener('document:keydown', ['$event'])
+  handleKeydownEvents(event: KeyboardEvent): void {
+    // Ctrl + F opens item search dialog
+    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
       event.preventDefault();
-      const nextIndex = (currentIndex + 1) % this.childItems.length;
-      this.selectedChildItem = this.childItems[nextIndex];
-      this.scrollToRow(nextIndex);
+      this.itemSearchDialog = true;
+      return;
     }
 
-    if (event.key === 'ArrowUp') {
+    // Handle F8 key to open product search
+    if (event.key === 'F8') {
       event.preventDefault();
-      const prevIndex =
-        (currentIndex - 1 + this.childItems.length) % this.childItems.length;
-      this.selectedChildItem = this.childItems[prevIndex];
-      this.scrollToRow(prevIndex);
+      this.visibleProdSrchMdl = true;
+      return;
     }
 
-    if (event.key === 'Enter' && this.selectedChildItem) {
-      event.preventDefault();
-      this.addChildItemToPurchaseList(this.selectedChildItem);
+    // Handle product search navigation
+    if (this.visibleProdSrchMdl && this.childItems?.length) {
+      const currentIndex = this.childItems.findIndex(
+        (item: any) => item === this.selectedChildItem
+      );
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        const nextIndex = (currentIndex + 1) % this.childItems.length;
+        this.selectedChildItem = this.childItems[nextIndex];
+        this.scrollToRow(nextIndex);
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        const prevIndex =
+          (currentIndex - 1 + this.childItems.length) % this.childItems.length;
+        this.selectedChildItem = this.childItems[prevIndex];
+        this.scrollToRow(prevIndex);
+      }
+
+      if (event.key === 'Enter' && this.selectedChildItem) {
+        event.preventDefault();
+        this.addChildItemToPurchaseList(this.selectedChildItem);
+      }
     }
   }
-}
 
-
-
+    newScreenData() {
+      this.saleDtl = [];
+      this.resetTotal();
+  }
 }

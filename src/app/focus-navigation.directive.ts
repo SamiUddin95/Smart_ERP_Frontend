@@ -33,9 +33,11 @@ export class FocusNavigationDirective implements AfterViewInit {
       case 'ArrowRight':
         targetIndex = currentIndex + 1;
         break;
+
       case 'ArrowLeft':
         targetIndex = currentIndex - 1;
         break;
+
       case 'ArrowDown':
         event.preventDefault();
         if (rowIndex + 1 < allRows.length) {
@@ -45,8 +47,10 @@ export class FocusNavigationDirective implements AfterViewInit {
 
           if (colIndex >= 0 && nextRowInputs[colIndex]) {
             nextRowInputs[colIndex].focus();
+            nextRowInputs[colIndex].select(); // 👈 select text
           } else if (nextRowInputs.length > 0) {
-            nextRowInputs[0].focus(); // fallback to first input in next row
+            nextRowInputs[0].focus();
+            nextRowInputs[0].select(); // 👈 fallback
           }
         }
         return;
@@ -60,20 +64,23 @@ export class FocusNavigationDirective implements AfterViewInit {
 
           if (colIndex >= 0 && prevRowInputs[colIndex]) {
             prevRowInputs[colIndex].focus();
+            prevRowInputs[colIndex].select(); // 👈 select text
           } else if (prevRowInputs.length > 0) {
-            prevRowInputs[0].focus(); // fallback to first input in previous row
+            prevRowInputs[0].focus();
+            prevRowInputs[0].select(); // 👈 fallback
           }
         }
         return;
-
 
       default:
         return;
     }
 
+    // Horizontal (Left/Right) navigation
     while (targetIndex >= 0 && targetIndex < allInputs.length) {
       if (!allInputs[targetIndex].disabled) {
         allInputs[targetIndex].focus();
+        allInputs[targetIndex].select(); // 👈 select text
         event.preventDefault();
         break;
       }
@@ -89,7 +96,10 @@ export class FocusNavigationDirective implements AfterViewInit {
 
     const firstInput = row.querySelector('.form-control:not([disabled])') as HTMLInputElement;
     if (firstInput) {
-      setTimeout(() => firstInput.focus(), 100);
+      setTimeout(() => {
+        firstInput.focus();
+        firstInput.select(); // 👈 initial select (optional)
+      }, 100);
     }
   }
 }

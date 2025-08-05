@@ -50,7 +50,18 @@ export class PurcReturnFormComponent {
           user.disableBarcode = true;
           user.itemName = res[0].itemName;
           user.purchasePrice = res[0].purchasePrice;
-          user.salePrice = res[0].salePrice
+          user.salePrice = res[0].salePrice;
+           setTimeout(() => {
+            const currentInput = event.target as HTMLElement;
+            const row = currentInput.closest('tr');
+            if (row) {
+              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLInputElement;
+              if (quantityInput) {
+                quantityInput.focus();
+                quantityInput.select(); // ✅ This now works without error
+              }
+            }
+          }, 100);
         }else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: "No data found" });
           return;
@@ -133,9 +144,16 @@ export class PurcReturnFormComponent {
   RemoveData(){
     this.purcRetDtl=[];
   }
-  RemoveCol(index:number){
+  // RemoveCol(index:number){
     
-    this.purcRetDtl.splice(index,1);
+  //   this.purcRetDtl.splice(index,1);
+  // }
+    focusedRowIndex: number | null = null;
+  RemoveFocusedRow() {
+    if (this.focusedRowIndex !== null && this.focusedRowIndex >= 0 && this.focusedRowIndex < this.purcRetDtl.length) {
+      this.purcRetDtl.splice(this.focusedRowIndex, 1);
+      this.focusedRowIndex = null;
+    }
   }
   cancel(){
     this.router.navigate(['purch-return-list']);
@@ -297,9 +315,8 @@ export class PurcReturnFormComponent {
   }
   addChildItemToPurchaseList(item: any) {
     const lastIndex = this.purcRetDtl.length - 1;
-
     const newItem = {
-      no: 0, barCode: item.barCode, itemName: item.itemName, qty: 1, salePrice: item.salePrice,
+      no: 0, barcode: item.barCode, itemName: item.itemName, qty: 1, salePrice: item.salePrice,
       discount: 0, netSalePrice: 0
     };
 
@@ -311,33 +328,37 @@ export class PurcReturnFormComponent {
     this.visibleProdSrchMdl = false;
     this.childItemSearch = "";
   }
-  @HostListener('document:keydown', ['$event'])
-  handleKeydownEvents(event: KeyboardEvent): void {
+@HostListener('document:keydown', ['$event'])
+handleKeydownEvents(event: KeyboardEvent): void {
+  if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+    event.preventDefault();
+    this.itemSearchDialog = true;
+    return;
+  }
+  if (this.visibleProdSrchMdl && this.childItems?.length) {
+    const currentIndex = this.childItems.findIndex(
+      (item: any) => item === this.selectedChildItem
+    );
 
-    if (this.visibleProdSrchMdl && this.childItems?.length) {
-      const currentIndex = this.childItems.findIndex(
-        (item: any) => item === this.selectedChildItem
-      );
-  
-      if (event.key === 'ArrowDown') {
-        event.preventDefault();
-        const nextIndex = (currentIndex + 1) % this.childItems.length;
-        this.selectedChildItem = this.childItems[nextIndex];
-        this.scrollToRow(nextIndex);
-      }
-  
-      if (event.key === 'ArrowUp') {
-        event.preventDefault();
-        const prevIndex =
-          (currentIndex - 1 + this.childItems.length) % this.childItems.length;
-        this.selectedChildItem = this.childItems[prevIndex];
-        this.scrollToRow(prevIndex);
-      }
-  
-      if (event.key === 'Enter' && this.selectedChildItem) {
-        event.preventDefault();
-        this.addChildItemToPurchaseList(this.selectedChildItem);
-      }
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      const nextIndex = (currentIndex + 1) % this.childItems.length;
+      this.selectedChildItem = this.childItems[nextIndex];
+      this.scrollToRow(nextIndex);
+    }
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      const prevIndex =
+        (currentIndex - 1 + this.childItems.length) % this.childItems.length;
+      this.selectedChildItem = this.childItems[prevIndex];
+      this.scrollToRow(prevIndex);
+    }
+
+    if (event.key === 'Enter' && this.selectedChildItem) {
+      event.preventDefault();
+      this.addChildItemToPurchaseList(this.selectedChildItem);
     }
   }
+}
 }
