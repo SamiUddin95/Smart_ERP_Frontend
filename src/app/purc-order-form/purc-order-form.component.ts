@@ -53,6 +53,7 @@ export class PurcOrderFormComponent {
       console.error("Error fetching table data", err); // DEBUG
     });
   }
+
   fetchDataByDate() {
     if (!this.formData.startDate || !this.formData.endDate) {
       alert("Please select both Start Date and End Date.");
@@ -79,7 +80,7 @@ export class PurcOrderFormComponent {
     const formattedStart = formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en-US');
     const formattedEnd = formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en-US');
   
-    this.api.fetchPurchaseOrdersByDate(formattedStart, formattedEnd, this.zeroQty)
+    this.api.fetchPurchaseOrdersByDate(formattedStart, formattedEnd, this.zeroQty,this.selectedTable, this.formData.partyId)
       .subscribe(res => {
         const result = JSON.parse(res);
         this.originalPurchOrderDtlData = result.purchaseOrderDetails;
@@ -174,6 +175,22 @@ export class PurcOrderFormComponent {
     
       })
   }
+addPO(){
+  debugger
+  let formData = this.purchOrderDtlData.map((item: any) => ({
+    itemName: item.itemName,
+    requiredQty: item.requiredQty
+  }));
+
+    this.api.createPO(formData).subscribe((res: any)=>{
+    
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: "Purchase Order Saved Successfully" });	
+      this.router.navigate(['purch-order-list']);
+      },(err: any)=>{
+    
+      })
+  }
+
   AddData(){
     this.purchOrderDtlData.push({no:0,barCode:'',itemName:'',bonusQty:'',
     salePrice:0,desc:0,flatDesconeachQty:0,gST:0,gSTPer2:0,remakrs:''});
@@ -317,5 +334,9 @@ export class PurcOrderFormComponent {
       nextElement.focus();
     }
   }
-
+  updateTotal(user: any): void {
+    const rate = user.rate || 0;
+    const requiredQty = user.requiredQty || 0;
+    user.total = rate * requiredQty;
+  }
 }
