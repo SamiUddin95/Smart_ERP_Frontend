@@ -124,6 +124,9 @@ export class ApiService {
 	createPurchaseOrder(obj: any) {
 		return this.app.post('createPurchaseOrder', obj);
 	}
+	createPO(obj: any) {
+		return this.app.post('createPO', obj);
+	}
 	createMinimumQty(obj: any) {
 		return this.app.post('createMinimumQty', obj);
 	}
@@ -144,8 +147,8 @@ export class ApiService {
 	getPurchaseOrderById(id: any) {
 		return this.app.get('getPurchaseOrderById?id=' + id, id);
 	}
-	fetchPurchaseOrdersByDate(startDate: any, endDate: any, zeroQty:any) {
-		return this.app.get(`GetPurchaseOrdersByDateRange?startDate=${startDate}&endDate=${endDate}&zeroQty=${zeroQty}`);
+	fetchPurchaseOrdersByDate(startDate: any, endDate: any, zeroQty:any, selectedTable: any, partyId:any) {
+		return this.app.get(`GetPurchaseOrdersByDateRange?startDate=${startDate}&endDate=${endDate}&zeroQty=${zeroQty}&selectedTable=${selectedTable}&partyId=${partyId}`);
 	  }
 	  fetchGetItemsBySupplier(PartyId: any, PartyName: any) {
 		debugger
