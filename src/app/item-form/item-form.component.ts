@@ -197,7 +197,9 @@ showDialog: boolean = false;
                   categoryId: savedCategory,
                   partyId:savedParty,
               };
-
+            this.altrnateBarCodeData = [
+              { alternateItemName: '', qty: 0, salePrice: 0, saleDisc: 0, remarks: '', barcode: '',netSalePrice: '' }
+            ];
               // Clear image preview if needed
           
             }
@@ -360,9 +362,9 @@ showDialog: boolean = false;
               if (res?.msg === "An item with this name already exists.") {
                   this.messageService.add({ severity: 'warn', summary: 'Warning', detail: res.msg });
               } else {
-                  this.router.navigate(['item-form']);
+                  // this.router.navigate(['item-form']);
+                  this.displayPopup =  false;
                   this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Item Added Successfully' });
-
                 }
           },
           err => {
