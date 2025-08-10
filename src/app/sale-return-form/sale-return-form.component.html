@@ -20,6 +20,9 @@
                                                             <button pButton pRipple type="button" icon="pi pi-save"
                                                                 (click)="AddData()" label="Add"
                                                                 class="p-button-sm p-button-success"> </button>
+                                                             <button pButton pRipple type="button"
+                                                            (click)="newScreenData()" label="New"
+                                                            class="ml-1 p-button-sm"> </button>
                                                         </div>
                                                         <div class="mt-2 pad-wrapper">
                                                             <div class="box">
@@ -101,7 +104,6 @@
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Quantity"
                                                                                                 [disabled]="false"
-                                                                                                (keydown)="preventQtyArrowKeys($event)"
                                                                                                 (input)="qtyChange(saleDtl)"
                                                                                                 [(ngModel)]="saleDtl.qty"
                                                                                                 appFocusNavigation>

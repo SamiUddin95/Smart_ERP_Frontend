@@ -53,9 +53,8 @@
                                                             [disabled]="postAddBtnDsbld==true" (click)="AddData()"
                                                             label="Add" class="mr-2 p-button-sm p-button-success">
                                                         </button>
-                                                        <button pButton pRipple type="button"
-                                                            (click)="newScreenData()" label="New"
-                                                            class="mr-1 p-button-sm"> </button>
+                                                        <button pButton pRipple type="button" (click)="newScreenData()"
+                                                            label="New" class="mr-1 p-button-sm"> </button>
                                                         <button pButton pRipple label="Post"
                                                             [disabled]="purcDtl.length==0||postAddBtnDsbld==true"
                                                             (click)="postPurchase()"
@@ -66,8 +65,11 @@
                                                             class="mr-2 p-button-sm p-button-primary" pTooltip="PDF"
                                                             tooltipPosition="bottom"></button>
                                                         <button pButton pRipple type="button" icon="pi pi-trash"
-                                                            (click)="RemoveCol()" [disabled]="!selectedRow"
-                                                            class="p-button-sm p-button-danger"></button>
+                                                            (click)="RemoveFocusedRow()"
+                                                            [disabled]="focusedRowIndex === null || isPosted"
+                                                            class="p-button-sm p-button-danger">
+                                                        </button>
+
                                                     </div>
                                                     <div class="col-md-12 mt-4">
                                                         <div class="pad-wrapper">
@@ -157,11 +159,17 @@
                                                                                             </th>
                                                                                         </tr>
                                                                                     </ng-template>
-[pSelectableRow]="user"
-                                                                                            <!-- [class.p-highlight]="selectedRow === user" -->
+                                                                                    [pSelectableRow]="user"
+                                                                                    <!-- [class.p-highlight]="selectedRow === user" -->
                                                                                     <ng-template pTemplate="body"
                                                                                         let-user let-i="rowIndex">
                                                                                         <tr [id]="'row-' + i"
+                                                                                            appRowNavigation
+                                                                                            tabindex="0"
+                                                                                            [rowIndex]="i"
+                                                                                            (rowFocused)="tdChange(purcDtl[$event])"
+                                                                                            (click)="setFocusedRow(i, user)"
+                                                                                            [class.selected-row]="focusedRowIndex === i"
                                                                                             [ngClass]="{'highlighted': user.barcode == searchedItemName}">
                                                                                             <td>{{i+1}}</td>
                                                                                             <td>
@@ -449,17 +457,19 @@
         </div>
     </section>
 </div>
-<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visible" [style]="{ width: '75rem' }" (onShow)="focusProductSearchInput()">
+<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="visible" [style]="{ width: '75rem' }"
+    (onShow)="focusProductSearchInput()">
     <div class="flex items-center gap-4 mb-4">
         <label for="username" class="font-semibold w-25">Searching Criteria</label>
-        <input type="text" #searchProdItemInput class="w-75" (input)="searchChildItem(childItemSearch)" class="form-control form-control-sm"
-            placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
+        <input type="text" #searchProdItemInput class="w-75" (input)="searchChildItem(childItemSearch)"
+            class="form-control form-control-sm" placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
     </div>
     <div class="pad-wrapper">
         <div class="box">
             <div class="content">
                 <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
-                    styleClass="p-datatable-sm p-datatable-gridlines" [(selection)]="selectedChildItem" selectionMode="single" dataKey="barCode"
+                    styleClass="p-datatable-sm p-datatable-gridlines" [(selection)]="selectedChildItem"
+                    selectionMode="single" dataKey="barCode"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
                     [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
                     <ng-template pTemplate="header">
@@ -496,9 +506,9 @@
             <div class="grid">
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
-                        <input type="text" #searchItemInput class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
-                            (input)="itemSearchFromDialog($event)" (keydown.enter)="onSearchDialogEnter($event)"
-                            [(ngModel)]="searchedItemName">
+                        <input type="text" #searchItemInput class="p-3 form-control form-control-sm"
+                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
+                            (keydown.enter)="onSearchDialogEnter($event)" [(ngModel)]="searchedItemName">
                     </div>
                     <div class="mt-2 col-md-12">
                         <div class="mt-2 pad-wrapper">

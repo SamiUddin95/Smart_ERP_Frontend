@@ -111,6 +111,11 @@ export class SaleFormComponent {
       this.cashCharged = this.grandTotal;
       this.remainingAmount = 0;
     }
+    if (this.cashReceived >= this.grandTotal) {
+      this.cashBack = this.cashReceived - this.grandTotal;
+      this.cashCharged = this.grandTotal;
+      this.remainingAmount = 0;
+    }
     if (this.cashReceived < this.grandTotal) {
       this.cashCharged = this.cashReceived;
       this.remainingAmount = this.grandTotal - this.cashReceived;
@@ -168,7 +173,7 @@ export class SaleFormComponent {
     this.invoiceBalance = this.grandTotal - this.cashCharged;
   }
   extraChargePerChange() {
-    this.extraCharges = (this.extraChargesPer / 100) * this.grandTotal;
+    this.extraCharges = (this.extraChargesPer / 100) * this.remainingAmount;
     this.finalAmount = this.grandTotal + this.extraCharges;
     let creditDetails = this.paymentDetails.find(item => item.account === 'Credit');
     if (creditDetails) {
@@ -245,10 +250,14 @@ export class SaleFormComponent {
             const currentInput = event.target as HTMLElement;
             const row = currentInput.closest('tr');
             if (row) {
-              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLElement;
-              quantityInput?.focus();
+              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLInputElement;
+              if (quantityInput) {
+                quantityInput.focus();
+                quantityInput.select(); // ✅ This now works without error
+              }
             }
           }, 100);
+
           this.saleDtl.push({
             no: 0, barCode: '', itemName: '', qty: 1, disableBarcode: false,
             salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0
@@ -472,6 +481,7 @@ export class SaleFormComponent {
       extraChargePer: this.extraChargesPer,
       extraCharge: this.extraCharges,
       finalAmount: this.finalAmount,
+      creditAmount:this.remainingAmount+this.extraCharges,
       remainingCreditAmount: this.remainingAmount,
       counterSaleDetails: this.saleDtl
 
@@ -793,9 +803,4 @@ handleKeydownEvents(event: KeyboardEvent): void {
     this.visibleProdSrchMdl = false;
     this.childItemSearch = "";
   }
-preventQtyArrowKeys(event: KeyboardEvent) {
-  if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-    event.preventDefault();
-  }
-}
 }

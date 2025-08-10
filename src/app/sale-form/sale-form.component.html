@@ -120,8 +120,6 @@
                                                                                         <td><input type="number"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
                                                                                                 placeholder="Quantity"
-                                                                                                [disabled]="false"
-                                                                                                (keydown)="preventQtyArrowKeys($event)"
                                                                                                 (input)="qtyChange(saleDtl)"
                                                                                                 [(ngModel)]="saleDtl.qty"
                                                                                                 appFocusNavigation>
