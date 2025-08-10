@@ -163,13 +163,11 @@
                                                                                     <!-- [class.p-highlight]="selectedRow === user" -->
                                                                                     <ng-template pTemplate="body"
                                                                                         let-user let-i="rowIndex">
-                                                                                        <tr [id]="'row-' + i"
-                                                                                            appRowNavigation
-                                                                                            tabindex="0"
-                                                                                            [rowIndex]="i"
-                                                                                            (rowFocused)="tdChange(purcDtl[$event])"
+                                                                                        <tr [id]="'row-' + i" 
+                                                                                            appTableRowNavigation
                                                                                             (click)="setFocusedRow(i, user)"
                                                                                             [class.selected-row]="focusedRowIndex === i"
+                                                                                            
                                                                                             [ngClass]="{'highlighted': user.barcode == searchedItemName}">
                                                                                             <td>{{i+1}}</td>
                                                                                             <td>
