@@ -111,6 +111,11 @@ export class SaleFormComponent {
       this.cashCharged = this.grandTotal;
       this.remainingAmount = 0;
     }
+    if (this.cashReceived >= this.grandTotal) {
+      this.cashBack = this.cashReceived - this.grandTotal;
+      this.cashCharged = this.grandTotal;
+      this.remainingAmount = 0;
+    }
     if (this.cashReceived < this.grandTotal) {
       this.cashCharged = this.cashReceived;
       this.remainingAmount = this.grandTotal - this.cashReceived;
@@ -168,7 +173,7 @@ export class SaleFormComponent {
     this.invoiceBalance = this.grandTotal - this.cashCharged;
   }
   extraChargePerChange() {
-    this.extraCharges = (this.extraChargesPer / 100) * this.grandTotal;
+    this.extraCharges = (this.extraChargesPer / 100) * this.remainingAmount;
     this.finalAmount = this.grandTotal + this.extraCharges;
     let creditDetails = this.paymentDetails.find(item => item.account === 'Credit');
     if (creditDetails) {
@@ -476,6 +481,7 @@ export class SaleFormComponent {
       extraChargePer: this.extraChargesPer,
       extraCharge: this.extraCharges,
       finalAmount: this.finalAmount,
+      creditAmount:this.remainingAmount+this.extraCharges,
       remainingCreditAmount: this.remainingAmount,
       counterSaleDetails: this.saleDtl
 

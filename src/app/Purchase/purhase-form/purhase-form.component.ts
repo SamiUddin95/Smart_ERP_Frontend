@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 
+
 @Component({
   selector: 'app-purhase-form',
   templateUrl: './purhase-form.component.html',
@@ -70,14 +71,21 @@ export class PurhaseFormComponent {
   onF8Pressed(event: any, user: any) {
     this.visible = true;
   }
-searchChildItem(barCode: string) {
-  if (barCode.length > 1) {
-    this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
-      this.childItems = res;
-      this.selectedChildItem = this.childItems[0]; // highlight first row
-    });
+  searchChildItem(barCode: string) {
+    if (barCode.length > 1) {
+      this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
+        this.childItems = res;
+        this.selectedChildItem = this.childItems[0]; // highlight first row
+      });
+    }
   }
-}
+  handleRowChange = (rowIndex: number) => {
+    this.focusedRowIndex = rowIndex;
+    const rowData = this.purcDtl[rowIndex];
+    if (rowData) {
+      this.tdChange(rowData);
+    }
+  };
 
   @HostListener('document:keydown', ['$event'])
   handleKeydownEvents(event: KeyboardEvent): void {
@@ -97,24 +105,34 @@ searchChildItem(barCode: string) {
       row?.scrollIntoView({ block: 'nearest' });
     }, 10);
   }
+  setFocusedRow(index: number, user: any) {
+    this.focusedRowIndex = index;
+    this.tdChange(user); // Call immediately when row is focused
+  }
+  onRowFocusChange(event: { rowIndex: number, rowElement: HTMLElement }, user: any) {
+    this.focusedRowIndex = event.rowIndex;
+    this.tdChange(user); // ✅ Call automatically when row focus changes
+  }
+
+
   @HostListener('document:keydown.arrowdown', ['$event'])
   handleArrowDown(event: KeyboardEvent) {
     if (this.visible && this.childItems?.length) {
-    const currentIndex = this.childItems.findIndex(
-      (item: any) => item === this.selectedChildItem
-    );
-    if (this.visible && this.childItems?.length > 0) {
-      event.preventDefault();
-      const nextIndex = (currentIndex + 1) % this.childItems.length;
-      this.selectedChildItem = this.childItems[nextIndex];
-      this.scrollToRow(nextIndex);
+      const currentIndex = this.childItems.findIndex(
+        (item: any) => item === this.selectedChildItem
+      );
+      if (this.visible && this.childItems?.length > 0) {
+        event.preventDefault();
+        const nextIndex = (currentIndex + 1) % this.childItems.length;
+        this.selectedChildItem = this.childItems[nextIndex];
+        this.scrollToRow(nextIndex);
+      }
     }
   }
-}
 
   @HostListener('document:keydown.arrowup', ['$event'])
   handleArrowUp(event: KeyboardEvent) {
-        const currentIndex = this.childItems.findIndex(
+    const currentIndex = this.childItems.findIndex(
       (item: any) => item === this.selectedChildItem
     );
     if (this.visible && this.childItems?.length > 0) {
