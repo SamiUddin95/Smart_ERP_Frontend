@@ -103,6 +103,9 @@ export class ApiService {
 	}
 
 	//Purchase Order
+	getAllPOSearching(itemName: string) {
+		return this.app.get('getAllPOSearching?itemName=' + itemName);
+	}
 	getPurchaseMaxSerialNo(){
 		return this.app.get('getPurchaseMaxSerialNo');
 	}

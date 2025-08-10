@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
@@ -11,6 +11,8 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./purc-order-form.component.css']
 })
 export class PurcOrderFormComponent {
+  @ViewChild('tableRef') tableRef!: ElementRef;
+  @ViewChild('searchInput') searchInput!: ElementRef;
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
   formData: any = {  };
   userTypes:any=[];
@@ -119,7 +121,9 @@ export class PurcOrderFormComponent {
       this.party=res;
     })
   }
-  item:any=[]
+  //item:any=[]
+    item: any[] = [];
+  
   getGoDown(){
     this.api.getAllItemsdetails().subscribe(res=>{
       this.item=res;
@@ -339,4 +343,144 @@ addPO(){
     const requiredQty = user.requiredQty || 0;
     user.total = rate * requiredQty;
   }
+
+  showDialog: boolean = false;
+  searchMode: 'start' | 'advanced' = 'start';
+currentIndex: number = 0;
+  filter = {
+    itemName: ''
+  };
+   // Listen for F8 key globally
+ @HostListener('document:keydown', ['$event'])
+ 
+  handleKeydownEvents(event: KeyboardEvent): void {
+  // Only handle navigation if the dialog is shown and items exist
+  if (this.showDialog && this.item.length > 0) {
+    const currentIndex = this.item.findIndex(itm => itm === this.selectedItem);
+    const safeIndex = currentIndex === -1 ? 0 : currentIndex;
+
+    // Navigate down the list
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      const nextIndex = (safeIndex + 1) % this.item.length;
+      this.selectedItem = this.item[nextIndex];
+      this.currentIndex = nextIndex;
+      this.scrollToRow(nextIndex);
+      return;
+    }
+
+    // Navigate up the list
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      const prevIndex = (safeIndex - 1 + this.item.length) % this.item.length;
+      this.selectedItem = this.item[prevIndex];
+      this.currentIndex = prevIndex;
+      this.scrollToRow(prevIndex);
+      return;
+    }
+
+    // Enter key - go to item form
+    if (event.key === 'Enter' && this.selectedItem) {
+      event.preventDefault();
+      const itemId = this.selectedItem.id;
+      this.showDialog = false;
+debugger
+      this.api.getAllPOSearching(this.selectedItem.itemName).subscribe((res: any[]) => {
+    this.purchOrderDtlData = res.map((ele: any) => ({
+      barCode: ele.barCode,
+      itemName: ele.itemName,
+      requiredQty: ele.requiredQty,
+      currentStock: ele.currentStock,
+      createdAt: ele.createdAt,
+      netSaleQty: ele.netSaleQty,
+      rate: ele.rate,
+      soldQty: ele.soldQty,
+      rtnQty: ele.rtnQty,
+      total: ele.total
+    }));
+debugger
+    if (this.purchOrderDtlData.length > 0) {
+      this.currentIndex = 0;
+      this.selectedItem = this.purchOrderDtlData[0];
+      this.scrollToRow(0);
+    } else {
+      this.currentIndex = -1;
+      this.selectedItem = null;
+    }
+  });
+      // Force component reload by first navigating to dummy route
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['purch-order-form', itemId]);
+      });
+      return;
+    }
+  }
+
+  // F8 - open search dialog
+  if (event.key === 'F8') {
+    event.preventDefault();
+    this.openSearchDialog();
+  }
+}
+
+  openSearchDialog(): void {
+  this.showDialog = true;
+  this.filter.itemName = '';
+  // this.item = [];
+  // this.selectedItem = null;
+
+  //this.getItemList(); // Load data first
+
+  // Focus input after dialog is rendered
+  setTimeout(() => {
+    this.searchInput?.nativeElement?.focus();
+  }, 100);
+}
+
+  getItemList(): void {
+  const itemName = this.filter.itemName || 'All';
+
+  this.api.getAllItemsSearching(itemName, this.searchMode).subscribe((res: any[]) => {
+    this.item = res.map((ele: any) => ({
+      id: ele.id,
+      sno: ele.sno,
+      aliasName: ele.aliasName,
+      itemName: ele.itemName,
+      purchasePrice: ele.purchasePrice,
+      salePrice: ele.salePrice,
+      categoryId: ele.categoryId,
+      classId: ele.classId,
+      manufacturerId: ele.manufacturerId,
+      remarks: ele.remarks,
+      recentPurchase: ele.recentPurchase,
+      brandId: ele.brandId,
+      discFlat: ele.discFlat,
+      lockDisc: ele.lockDisc
+    }));
+
+    if (this.item.length > 0) {
+      this.currentIndex = 0;
+      this.selectedItem = this.item[0];
+      this.scrollToRow(0);
+    } else {
+      this.currentIndex = -1;
+      this.selectedItem = null;
+    }
+  });
+}
+  scrollToRow(index: number): void {
+    const rowId = 'row-' + index;
+    const rowElem = document.getElementById(rowId);
+    if (rowElem) {
+      rowElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  getRowClass(rowData: any): { [klass: string]: boolean } {
+    return {
+      'selected-row': this.selectedItem && rowData.id === this.selectedItem.id
+    };
+  }
+
+
 }
