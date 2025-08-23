@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
 })
 export class SaleReturnFormComponent {
   @ViewChild('tableRef') tableRef!: ElementRef;
-  constructor(private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
+  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
   formData: any = {};
   userTypes: any = [];
   genders: any = [{ label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }];
@@ -51,17 +51,26 @@ export class SaleReturnFormComponent {
           user.salePrice = res[0].salePrice ? res[0].salePrice : 0;
           //user.netRate = res[0]?.salePrice;
           //user.quantity = res[0]?.qty
-           setTimeout(() => {
+          setTimeout(() => {
             const currentInput = event.target as HTMLElement;
             const row = currentInput.closest('tr');
             if (row) {
-              const quantityInput = row.querySelectorAll('input[appFocusNavigation]')[2] as HTMLInputElement;
-              if (quantityInput) {
-                quantityInput.focus();
-                quantityInput.select(); // ✅ This now works without error
+              const nextRow = row.nextElementSibling as HTMLElement;
+              if (nextRow) {
+                const nextBarcodeInput = nextRow.querySelectorAll('input[appFocusNavigation]')[0] as HTMLInputElement;
+                if (nextBarcodeInput) {
+                  nextBarcodeInput.focus();
+                  nextBarcodeInput.select();
+                }
               }
             }
           }, 100);
+
+          this.saleDtl.push({
+            no: 0, barCode: '', itemName: '', qty: 1, disableBarcode: false,
+            salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0
+          });
+          this.qtyChange(user);
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: "No data found" });
@@ -98,10 +107,14 @@ export class SaleReturnFormComponent {
     this.grandTotal = this.netSaleReturnTotal - this.deduction;
   }
   AddData() {
-    this.saleDtl.push({
-      no: 0, barCode: '', itemId: 0, qty: 1, discount: 0, netSalePrice: 0, disableBarcode: false,
-      salePrice: 0, disc: 0, total: 0, netTotal: 0
-    });
+    const lastItem = this.saleDtl[this.saleDtl.length - 1];
+    if (!lastItem || (lastItem.barCode && lastItem.barCode.trim() !== '')) {
+      this.saleDtl.push({
+        no: 0, barCode: '', itemId: 0, qty: 1, discount: 0, netSalePrice: 0, disableBarcode: false,
+        salePrice: 0, disc: 0, total: 0, netTotal: 0
+      });
+    }
+
   }
   RemoveData() {
     this.saleDtl = [];
@@ -163,9 +176,17 @@ export class SaleReturnFormComponent {
 
     }
     this.api.createSaleReturn(formData).subscribe((res: any) => {
+      if (res.id > 0) {
+        this.saleDtl = [];
+        this.saleDtl.push({
+          no: 0, barCode: '', itemName: '', qty: 0, disableBarcode: false,
+          salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0
+        });
+        this.resetTotal();
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Return Posted Successfullys" });
+      }
 
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Return Detail Saved Successfully" });
-      this.router.navigate(['sale-return-list']);
+      // this.router.navigate(['sale-return-list']);
     }, (err: any) => {
 
     })
@@ -175,11 +196,25 @@ export class SaleReturnFormComponent {
 
   itemDtl: any = [];
   searchedItemName: string = '';
+  itemSearchTextBox: string = '';
   itemSearchFromDialog(e: any) {
-    this.api.getAllItemsdetailsFilterbased(e.target.value, 'All', 0, 0).subscribe(res => {
+    this.api.getAllItemsdetailsFilterbased(this.searchedItemName, 'All', 0, 0).subscribe(res => {
       this.itemDtl = res;
-
-    })
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        const highlightedRow = document.querySelector('tr.highlighted');
+        if (highlightedRow) {
+          this.itemSearchTextBox = '';
+          this.itemSearchDialog = false;
+          const qtyInput = highlightedRow.querySelectorAll('td input.form-control')[2] as HTMLInputElement;
+          if (qtyInput) {
+            qtyInput.focus();
+            qtyInput.select();
+            console.log("✅ Focused on Quantity input of highlighted row");
+          }
+        }
+      }, 50);
+    });
   }
   onSearchDialogEnter(e: any) {
     this.searchedItemName = e.target.value;
@@ -302,8 +337,13 @@ export class SaleReturnFormComponent {
     }
   }
 
-    newScreenData() {
-      this.saleDtl = [];
-      this.resetTotal();
+  newScreenData() {
+    this.saleDtl = [];
+    this.saleDtl.push({
+      no: 0, barCode: '', itemName: '', qty: 1, disableBarcode: false,
+      salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0
+    });
+    this.resetTotal();
+
   }
 }

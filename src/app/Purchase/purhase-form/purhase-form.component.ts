@@ -153,6 +153,7 @@ export class PurhaseFormComponent {
   }
 
   onKey(event: any, user: any) {
+    this.searchedItemName = "";
     user.barcode = event.target.value;
     if (user.barcode.length >= 2) {
       this.api.getItemDetailbyBarCode(user.barcode).subscribe(res => {
@@ -385,6 +386,7 @@ export class PurhaseFormComponent {
   }
 
   calculateTotals() {
+    this.searchedItemName = "";
     this.purcDtl.forEach(x => {
       if (typeof x.netQuantity === 'number' && !isNaN(x.netQuantity)) {
         this.netQuantity += x.netQuantity;
@@ -456,6 +458,7 @@ export class PurhaseFormComponent {
   }
   PurchaseDetailModel: any[] = [];
   AddData() {
+    this.searchedItemName = "";
     const lastItem = this.purcDtl[this.purcDtl.length - 1];
     if (!lastItem || (lastItem.barcode && lastItem.barcode.trim() !== '')) {
       this.purcDtl.push({
@@ -520,8 +523,54 @@ export class PurhaseFormComponent {
         return;
       }
     }
-    if (this.purcDtl.length == 0) {
+     if (this.purcDtl.length == 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please add Items first!" });
+      return;
+    }
+    const barcodeMap = new Map<string, number[]>();
+    const duplicateInfo: { row: number, itemName: string }[] = [];
+    const lowPriceInfo: { row: number, itemName: string, salePrice: number, purchasePrice: number }[] = [];
+    this.purcDtl.forEach((e, index) => {
+      if (e.barcode) {
+        if (!barcodeMap.has(e.barcode)) {
+          barcodeMap.set(e.barcode, []);
+        }
+        barcodeMap.get(e.barcode)!.push(index);
+      }
+      if (e.salePrice < e.purchasePrice) {
+        lowPriceInfo.push({
+          row: index + 1,
+          itemName: e.ItemName,
+          salePrice: e.salePrice,
+          purchasePrice: e.purchasePrice
+        });
+      }
+    }); 
+    barcodeMap.forEach((indexes) => {
+      if (indexes.length > 1) {
+        indexes.slice(1).forEach(i => {
+          duplicateInfo.push({ row: i + 1, itemName: this.purcDtl[i].ItemName });
+        });
+      }
+    }); 
+    if (duplicateInfo.length > 0) {
+      const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Duplicate Items at: ' + message
+      });
+      return;
+    } 
+    if (lowPriceInfo.length > 0) {
+      const message = lowPriceInfo.map(d =>
+        `Row ${d.row} (${d.itemName}) - Sale: ${d.salePrice}, Purchase: ${d.purchasePrice}`
+      ).join(', ');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Sale Price less than Purchase Price at: ' + message
+      });
       return;
     }
     let formData: any = {
@@ -713,11 +762,28 @@ export class PurhaseFormComponent {
   itemNotFound: boolean = false;
   itemDtl: any = [];
   searchedItemName: string = '';
+  itemSearchTextBox: string = '';
   itemSearchFromDialog(e: any) {
     this.api.getAllItemsdetailsFilterbased(this.searchedItemName, 'All', 0, 0).subscribe(res => {
       this.itemDtl = res;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        const highlightedRow = document.querySelector('tr.highlighted');
+        if (highlightedRow) {
+          this.itemSearchTextBox = '';
+          this.itemSearchDialog = false;
+          const qtyInput = highlightedRow.querySelectorAll('td input.form-control')[2] as HTMLInputElement;
+          if (qtyInput) {
+            qtyInput.focus();
+            qtyInput.select();
+            console.log("✅ Focused on Quantity input of highlighted row");
+          }
+        }
+      }, 50);
     });
   }
+
+
   onSearchDialogEnter(e: any) {
     this.searchedItemName = e.target.value;
     setTimeout(() => {

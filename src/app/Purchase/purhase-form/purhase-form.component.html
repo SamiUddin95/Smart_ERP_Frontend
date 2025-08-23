@@ -164,7 +164,7 @@
                                                                                     <ng-template pTemplate="body"
                                                                                         let-user let-i="rowIndex">
                                                                                         <tr [id]="'row-' + i" 
-                                                                                            appTableRowNavigation
+                                                                                            
                                                                                             (click)="setFocusedRow(i, user)"
                                                                                             [class.selected-row]="focusedRowIndex === i"
                                                                                             
@@ -504,8 +504,8 @@
             <div class="grid">
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
-                        <input type="text" #searchItemInput class="p-3 form-control form-control-sm"
-                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
+                        <input type="text" [(ngModel)]="itemSearchTextBox" #searchItemInput class="p-3 form-control form-control-sm"
+                            placeholder="Search With Item Name" (keydown.enter)="itemSearchFromDialog($event)"
                             (keydown.enter)="onSearchDialogEnter($event)" [(ngModel)]="searchedItemName">
                     </div>
                     <div class="mt-2 col-md-12">

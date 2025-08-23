@@ -19,10 +19,13 @@
                                                         <div class="col-md-3 mt-4 offset-9 text-right col-sm-3">
                                                             <button pButton pRipple type="button" icon="pi pi-save"
                                                                 (click)="AddData()" label="Add"
-                                                                class="p-button-sm p-button-success"> </button>
-                                                             <button pButton pRipple type="button"
-                                                            (click)="newScreenData()" label="New"
-                                                            class="ml-1 p-button-sm"> </button>
+                                                                class="p-button-sm p-button-info"> </button>
+                                                            <button pButton pRipple type="button"
+                                                                (click)="newScreenData()" label="New"
+                                                                class="ml-1 p-button-sm p-button-warning"> </button>
+                                                            <button pButton pRipple type="button" icon="pi pi-save"
+                                                                (click)="addSale()" label="Post"
+                                                                class="ml-2 p-button-sm p-button-success"> </button>
                                                         </div>
                                                         <div class="mt-2 pad-wrapper">
                                                             <div class="box">
@@ -81,7 +84,8 @@
 
                                                                                 <ng-template pTemplate="body"
                                                                                     let-saleDtl let-i="rowIndex">
-                                                                                    <tr [ngClass]="{'highlighted': saleDtl.barcode== searchedItemName}">
+                                                                                    <tr
+                                                                                        [ngClass]="{'highlighted': saleDtl.barcode== searchedItemName}">
                                                                                         <td>{{ i + 1 }}</td>
                                                                                         <td><input type="text"
                                                                                                 class="form-control form-control-sm col-md-12 pwd"
@@ -209,8 +213,6 @@
                                             <button style="margin-right: 3px" pButton pRipple type="button"
                                                 icon="pi pi-arrow-left" (click)="cancel()" label="Back"
                                                 class="p-button-sm p-button-danger"> </button>
-                                            <button pButton pRipple type="button" icon="pi pi-save" (click)="addSale()"
-                                                label="Save" class="p-button-sm p-button-success"> </button>
                                         </div>
                                     </div>
                                 </p-accordionTab>
@@ -232,7 +234,7 @@
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
                         <input type="text" #searchItemInput class="p-3 form-control form-control-sm"
-                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
+                            placeholder="Search With Item Name" (keydown.enter)="itemSearchFromDialog($event)"
                             [(ngModel)]="searchedItemName" (keydown.enter)="onSearchDialogEnter($event)">
                     </div>
                     <div class="mt-2 col-md-12">

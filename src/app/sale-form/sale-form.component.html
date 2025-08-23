@@ -630,7 +630,7 @@
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
                         <input type="text" #searchItemInput class="p-3 form-control form-control-sm"
-                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
+                            placeholder="Search With Item Name" (keydown.enter)="itemSearchFromDialog($event)"
                             [(ngModel)]="searchedItemName" (keydown.enter)="onSearchDialogEnter($event)">
                     </div>
                     <div class="mt-2 col-md-12">

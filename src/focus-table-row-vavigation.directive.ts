@@ -1,12 +1,17 @@
-import { Directive, HostListener, ElementRef, AfterViewInit, Input } from '@angular/core';
+import {
+  Directive,
+  HostListener,
+  ElementRef,
+  AfterViewInit,
+  Input
+} from '@angular/core';
 
 @Directive({
-  selector: '[appFocusNavigation]'
+  selector: '[appTableFocusNavigation]'
 })
 export class FocusNavigationDirective implements AfterViewInit {
   /**
-   * Pass a function from your component that takes the new row index
-   * and handles tdChange logic there.
+   * Parent component se callback pass hoga
    */
   @Input() onRowChange!: (rowIndex: number) => void;
 
@@ -24,17 +29,32 @@ export class FocusNavigationDirective implements AfterViewInit {
 
     if (!currentRow || !parentTableWrapper) return;
 
-    const allRows = Array.from(parentTableWrapper.querySelectorAll('tr'));
+    // ✅ sirf tbody ke rows, header exclude
+    const allRows = Array.from(
+      parentTableWrapper.querySelectorAll('tbody tr')
+    );
     const rowIndex = allRows.indexOf(currentRow);
-    const rowInputs = Array.from(currentRow.querySelectorAll('.form-control:not([disabled])')) as HTMLInputElement[];
+    const rowInputs = Array.from(
+      currentRow.querySelectorAll('.form-control:not([disabled])')
+    ) as HTMLInputElement[];
 
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
         if (rowIndex + 1 < allRows.length) {
           const nextRowIndex = rowIndex + 1;
-          this.focusCell(allRows[nextRowIndex], rowInputs.indexOf(currentInput as HTMLInputElement));
-          if (this.onRowChange) this.onRowChange(nextRowIndex);
+          this.focusCell(
+            allRows[nextRowIndex],
+            rowInputs.indexOf(currentInput as HTMLInputElement)
+          );
+          if (this.onRowChange) {
+            this.onRowChange(nextRowIndex);
+          }
+        } else {
+          // ✅ agar last row par ho to bhi call karein
+          if (this.onRowChange) {
+            this.onRowChange(rowIndex);
+          }
         }
         break;
 
@@ -42,15 +62,27 @@ export class FocusNavigationDirective implements AfterViewInit {
         event.preventDefault();
         if (rowIndex > 0) {
           const prevRowIndex = rowIndex - 1;
-          this.focusCell(allRows[prevRowIndex], rowInputs.indexOf(currentInput as HTMLInputElement));
-          if (this.onRowChange) this.onRowChange(prevRowIndex);
+          this.focusCell(
+            allRows[prevRowIndex],
+            rowInputs.indexOf(currentInput as HTMLInputElement)
+          );
+          if (this.onRowChange) {
+            this.onRowChange(prevRowIndex);
+          }
+        } else {
+          // ✅ first row par bhi call karein
+          if (this.onRowChange) {
+            this.onRowChange(rowIndex);
+          }
         }
         break;
     }
   }
 
   private focusCell(row: Element, colIndex: number) {
-    const inputs = Array.from(row.querySelectorAll('.form-control:not([disabled])')) as HTMLInputElement[];
+    const inputs = Array.from(
+      row.querySelectorAll('.form-control:not([disabled])')
+    ) as HTMLInputElement[];
     if (colIndex >= 0 && inputs[colIndex]) {
       inputs[colIndex].focus();
       inputs[colIndex].select();
@@ -62,7 +94,9 @@ export class FocusNavigationDirective implements AfterViewInit {
 
   private setFocusToFirstInputInRow() {
     const row = this.el.nativeElement.closest('tr');
-    const firstInput = row?.querySelector('.form-control:not([disabled])') as HTMLInputElement;
+    const firstInput = row?.querySelector(
+      '.form-control:not([disabled])'
+    ) as HTMLInputElement;
     if (firstInput) {
       setTimeout(() => {
         firstInput.focus();
