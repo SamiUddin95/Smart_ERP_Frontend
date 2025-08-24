@@ -69,6 +69,8 @@ export class PurhaseFormComponent {
   }
   @HostListener('document:keydown.F8', ['$event'])
   onF8Pressed(event: any, user: any) {
+    this.selectedChildItem=[];
+    this.childItemSearch='';
     this.visible = true;
   }
   searchChildItem(barCode: string) {
@@ -523,7 +525,7 @@ export class PurhaseFormComponent {
         return;
       }
     }
-     if (this.purcDtl.length == 0) {
+    if (this.purcDtl.length == 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please add Items first!" });
       return;
     }

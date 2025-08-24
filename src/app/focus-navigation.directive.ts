@@ -33,7 +33,11 @@ export class FocusNavigationDirective implements AfterViewInit {
     const rowIndex = rows.indexOf(currentRow);
 
     // ✅ Sirf enabled inputs lo
-    const inputsInRow = Array.from(currentRow.querySelectorAll('input.form-control:not([disabled]), select:not([disabled]), textarea:not([disabled])')) as HTMLElement[];
+    const inputsInRow = Array.from(
+      currentRow.querySelectorAll(
+        'input.form-control:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+      )
+    ) as HTMLElement[];
     const colIndex = inputsInRow.indexOf(currentInput);
 
     switch (event.key) {
@@ -56,6 +60,11 @@ export class FocusNavigationDirective implements AfterViewInit {
         event.preventDefault();
         this.moveVertical(rows, rowIndex, colIndex, -1);
         break;
+
+      case 'Enter':   // ✅ Enter par bhi right input par jao
+        event.preventDefault();
+        this.focusNextEnabled(inputsInRow, colIndex + 1, 1);
+        break;
     }
   }
 
@@ -63,7 +72,9 @@ export class FocusNavigationDirective implements AfterViewInit {
     let newRowIndex = rowIndex + step;
     while (newRowIndex >= 0 && newRowIndex < rows.length) {
       const row = rows[newRowIndex];
-      const enabledInputs = Array.from(row.querySelectorAll('input.form-control:not([disabled]), select:not([disabled]), textarea:not([disabled])')) as HTMLElement[];
+      const enabledInputs = Array.from(
+        row.querySelectorAll('input.form-control:not([disabled]), select:not([disabled]), textarea:not([disabled])')
+      ) as HTMLElement[];
       if (enabledInputs.length > 0) {
         if (colIndex < enabledInputs.length) {
           this.focusInput(enabledInputs[colIndex]);
@@ -98,7 +109,9 @@ export class FocusNavigationDirective implements AfterViewInit {
   }
 
   private focusFirstInput(row: Element) {
-    const firstInput = row.querySelector('input.form-control:not([disabled]), select:not([disabled]), textarea:not([disabled])') as HTMLInputElement;
+    const firstInput = row.querySelector(
+      'input.form-control:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+    ) as HTMLInputElement;
     if (firstInput) {
       setTimeout(() => {
         firstInput.focus();

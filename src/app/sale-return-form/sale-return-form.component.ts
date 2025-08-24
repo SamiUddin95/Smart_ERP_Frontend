@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-sale-return-form',
@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
 })
 export class SaleReturnFormComponent {
   @ViewChild('tableRef') tableRef!: ElementRef;
-  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
+  constructor( private confirmationService: ConfirmationService,private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
   formData: any = {};
   userTypes: any = [];
   genders: any = [{ label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }];
@@ -346,4 +346,42 @@ export class SaleReturnFormComponent {
     this.resetTotal();
 
   }
+  postSaleReturn() {
+		this.confirmationService.confirm({
+			message: 'Are you sure that you want to perform this action?',
+			accept: () => {
+    this.urlId ? this.formData.id = this.urlId : undefined;
+    let formData: any = {
+      id: this.urlId ? this.formData.id = this.urlId : undefined,
+      grossSale: this.grossSale,
+      disc: this.disc,
+      discByPercent: this.discPerc,
+      discByValue: this.discValue,
+      netSaleReturnTotal: this.netSaleReturnTotal,
+      grossSaleReturn: this.grossSaleReturn,
+      deduction: this.deduction,
+      grandTotal: this.grandTotal,
+      userId: Number(localStorage.getItem("loginId")),
+      saleReturnDetails: this.saleDtl
+
+    }
+    this.api.createSaleReturn(formData).subscribe((res: any) => {
+      if (res.id > 0) {
+        this.saleDtl = [];
+        this.saleDtl.push({
+          no: 0, barCode: '', itemName: '', qty: 0, disableBarcode: false,
+          salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0
+        });
+        this.resetTotal();
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Return Posted Successfullys" });
+      }
+    }, (err: any) => {
+
+    })
+			},
+			reject: () => {
+
+			}
+		});
+	}
 }

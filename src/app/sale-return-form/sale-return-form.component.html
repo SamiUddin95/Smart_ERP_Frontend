@@ -24,7 +24,7 @@
                                                                 (click)="newScreenData()" label="New"
                                                                 class="ml-1 p-button-sm p-button-warning"> </button>
                                                             <button pButton pRipple type="button" icon="pi pi-save"
-                                                                (click)="addSale()" label="Post"
+                                                                (click)="postSaleReturn()" label="Post"
                                                                 class="ml-2 p-button-sm p-button-success"> </button>
                                                         </div>
                                                         <div class="mt-2 pad-wrapper">
@@ -296,4 +296,15 @@
         </div>
     </div>
 </p-dialog>
+<p-confirmDialog #cd [style]="{width: '30vw'}" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="header">
+        <h3>Alert</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-danger" label="No"
+            (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-success"
+            (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>
 <p-toast position="top-right"></p-toast>
