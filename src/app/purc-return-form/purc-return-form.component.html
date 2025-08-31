@@ -6,6 +6,8 @@
             <button pButton pRipple type="button" icon="pi pi-save"
                 (click)="AddData()" label="Add"
                 class="p-button-sm p-button-success mr-2"> </button>
+            <button pButton pRipple type="button" (click)="newScreenData()"
+                        label="New" class="mr-1 p-button-sm"> </button>
             <button pButton pRipple type="button" icon="pi pi-trash"
                 (click)="RemoveFocusedRow()"
                 [disabled]="focusedRowIndex === null"
@@ -67,7 +69,7 @@
                                                                 <div class="content">
                                                                     <div class="row">
                                                                         <div class="col-md-9">
-                                                                            <p-table #dt [scrollable]="true"
+                                                                            <p-table #tableRef #dt [scrollable]="true"
                                                                                      scrollHeight="600px"
                                                                                      responsiveLayout="scroll"
                                                                                      [value]="purcRetDtl"
@@ -266,7 +268,7 @@
                 <div class="row px-2 col-12">
                     <div class="col-md-12">
                         <input type="text" #searchItemInput class="p-3 form-control form-control-sm"
-                            placeholder="Search With Item Name" (input)="itemSearchFromDialog($event)"
+                            placeholder="Search With Item Name" (keydown.enter)="itemSearchFromDialog($event)"
                             [(ngModel)]="searchedItemName" (keydown.enter)="onSearchDialogEnter($event)">
                     </div>
                     <div class="mt-2 col-md-12">

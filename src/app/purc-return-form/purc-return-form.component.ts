@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./purc-return-form.component.css']
 })
 export class PurcReturnFormComponent {
-  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
+  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
   @ViewChild('tableRef') tableRef!: ElementRef;
   formData: any = {  };
   userTypes:any=[];
@@ -138,8 +138,18 @@ export class PurcReturnFormComponent {
     this.netAmount=this.earnedPoints-this.return;
   }
   AddData(){
+    const lastItem = this.purcRetDtl[this.purcRetDtl.length - 1];
+    if (!lastItem || (lastItem.barcode && lastItem.barcode.trim() !== '')) {
     this.purcRetDtl.push({no:0,barCode:'',itemId:0,qty:0,disableBarcode: false,
-    salePrice:0,disc:0,total:0,netTotal:0});
+      fullRate:0,flatDisc:0,salePrice:0,disc:0,total:0,netTotal:0});
+    }
+
+  }
+  newScreenData() {
+    this.getMaxSerialNo();
+    this.purcRetDtl = [];
+     this.purcRetDtl.push({no:0,barCode:'',itemId:0,qty:0,disableBarcode: false,
+      fullRate:0,flatDisc:0,salePrice:0,disc:0,total:0,netTotal:0});
   }
   RemoveData(){
     this.purcRetDtl=[];
@@ -171,7 +181,52 @@ export class PurcReturnFormComponent {
     })
   }
   addSale(){ 
-    
+    const barcodeMap = new Map<string, number[]>();
+    const duplicateInfo: { row: number, itemName: string }[] = [];
+    const lowPriceInfo: { row: number, itemName: string, salePrice: number, purchasePrice: number }[] = [];
+    this.purcRetDtl.forEach((e: { barcode: string; salePrice: number; purchasePrice: number; itemName: any; }, index: number) => {
+      if (e.barcode) {
+        if (!barcodeMap.has(e.barcode)) {
+          barcodeMap.set(e.barcode, []);
+        }
+        barcodeMap.get(e.barcode)!.push(index);
+      }
+      if (e.salePrice < e.purchasePrice) {
+        lowPriceInfo.push({
+          row: index + 1,
+          itemName: e.itemName,
+          salePrice: e.salePrice,
+          purchasePrice: e.purchasePrice
+        });
+      }
+    }); 
+    barcodeMap.forEach((indexes) => {
+      if (indexes.length > 1) {
+        indexes.slice(1).forEach(i => {
+          duplicateInfo.push({ row: i + 1, itemName: this.purcRetDtl[i].itemName });
+        });
+      }
+    }); 
+    if (duplicateInfo.length > 0) {
+      const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Duplicate Items at: ' + message
+      });
+      return;
+    } 
+    if (lowPriceInfo.length > 0) {
+      const message = lowPriceInfo.map(d =>
+        `Row ${d.row} (${d.itemName}) - Sale: ${d.salePrice}, Purchase: ${d.purchasePrice}`
+      ).join(', ');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Sale Price less than Purchase Price at: ' + message
+      });
+      return;
+    }
     this.urlId?this.formData.id=this.urlId:undefined;
     let formData:any={
       id:this.urlId?this.formData.id=this.urlId:undefined,
@@ -208,9 +263,24 @@ export class PurcReturnFormComponent {
   itemNotFound: boolean = false;
   itemDtl: any = [];
   searchedItemName: string = '';
+  itemSearchTextBox: string = '';
   itemSearchFromDialog(e: any) {
     this.api.getAllItemsdetailsFilterbased(this.searchedItemName, 'All', 0, 0).subscribe(res => {
       this.itemDtl = res;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        const highlightedRow = document.querySelector('tr.highlighted');
+        if (highlightedRow) {
+          this.itemSearchTextBox = '';
+          this.itemSearchDialog = false;
+          const qtyInput = highlightedRow.querySelectorAll('td input.form-control')[2] as HTMLInputElement;
+          if (qtyInput) {
+            qtyInput.focus();
+            qtyInput.select();
+            console.log("✅ Focused on Quantity input of highlighted row");
+          }
+        }
+      }, 50);
     });
   }
   onSearchDialogEnter(e: any) {

@@ -71,7 +71,7 @@
                     </ng-template>    
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="code">Date <p-sortIcon field="code"></p-sortIcon></th>
+                                <th pSortableColumn="code">Date Time &nbsp;&nbsp;&nbsp;&nbsp;<p-sortIcon field="code"></p-sortIcon></th>
                                 <th pSortableColumn="name">User <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Till Open DateTime <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="name">Till Close DateTime <p-sortIcon field="name"></p-sortIcon></th>
@@ -88,7 +88,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-user>
                             <tr>
-                                <td>{{user.updatedAt | date:'dd-MMM-yyyy:hh:mm'}}</td>
+                                <td>{{user.updatedAt | date:'dd-MM-yyyy'}}</td>
                                 <td>{{user.name}}</td>
                                 <td>{{user.tillOpenDateTime}}</td>
                                 <td>{{user.tillCloseDateTime}}</td>

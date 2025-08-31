@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
 })
 export class SaleFormComponent {
   @ViewChild('tableRef') tableRef!: ElementRef;
-  constructor(private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
+  constructor(private cdr: ChangeDetectorRef,private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
   formData: any = {};
   userTypes: any = [];
   genders: any = [{ label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }];
@@ -212,6 +212,7 @@ export class SaleFormComponent {
   salePriceGlobal: number = 0;
   saleDiscGlobal: number = 0;
   onKey(event: any, user: any) {
+    this.searchedItemName = "";
     user.barcode = event.target.value;
     this.searchedItemName = '';
     // if (user.barcode.length >= 2 && this.saleDtl.length > 1) {
@@ -284,6 +285,7 @@ export class SaleFormComponent {
     })
   }
   qtyChange(saleDtl: any) {
+
     saleDtl.salePrice = this.salePriceGlobal * saleDtl.qty;
     saleDtl.discount = this.saleDiscGlobal * saleDtl.qty;
     saleDtl.netSalePrice = (saleDtl.salePrice - saleDtl.discount);
@@ -316,6 +318,7 @@ export class SaleFormComponent {
     this.grandTotal = this.netSaleTotal - (this.return + this.flatDisc);
   }
   resetTotal() {
+    this.searchedItemName = "";
     this.grossSale = 0;
     this.discValue = 0;
     this.grandTotal = 0;
@@ -364,18 +367,13 @@ export class SaleFormComponent {
     const barcodeMap = new Map<string, number[]>();
     const duplicateInfo: { row: number, itemName: string }[] = [];
     const lowPriceInfo: { row: number, itemName: string, salePrice: number, purchasePrice: number }[] = [];
-
-    // Scan the saleDtl
     this.saleDtl.forEach((e, index) => {
-      // 1. Check barcode duplicates
       if (e.barCode) {
         if (!barcodeMap.has(e.barCode)) {
           barcodeMap.set(e.barCode, []);
         }
         barcodeMap.get(e.barCode)!.push(index);
       }
-
-      // 2. Check salePrice < purchasePrice
       if (e.salePrice < e.purchasePrice) {
         lowPriceInfo.push({
           row: index + 1,
@@ -393,9 +391,7 @@ export class SaleFormComponent {
           duplicateInfo.push({ row: i + 1, itemName: this.saleDtl[i].itemName });
         });
       }
-    });
-
-    // Show duplicate barcode error
+    }); 
     if (duplicateInfo.length > 0) {
       const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
       this.messageService.add({
@@ -404,9 +400,7 @@ export class SaleFormComponent {
         detail: 'Duplicate Items at: ' + message
       });
       return;
-    }
-
-    // Show sale price < purchase price error
+    } 
     if (lowPriceInfo.length > 0) {
       const message = lowPriceInfo.map(d =>
         `Row ${d.row} (${d.itemName}) - Sale: ${d.salePrice}, Purchase: ${d.purchasePrice}`
@@ -481,13 +475,14 @@ export class SaleFormComponent {
       extraChargePer: this.extraChargesPer,
       extraCharge: this.extraCharges,
       finalAmount: this.finalAmount,
-      creditAmount:this.remainingAmount+this.extraCharges,
+      creditAmount: this.remainingAmount + this.extraCharges,
       remainingCreditAmount: this.remainingAmount,
       counterSaleDetails: this.saleDtl
 
     }
     this.api.createCounterSale(formData).subscribe((res: any) => {
       if (res.id > 0) {
+        
         this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Detail Saved Successfully" });
         // if(this.invoiceType=="Credit")
         //   this.paymentDetails.push({account:this.cardNumber,amount:this.cashCharged,extraChargesPer:this.extraChargesPer,
@@ -496,7 +491,11 @@ export class SaleFormComponent {
         //   this.paymentDetails.push({account:'',amount:this.cashCharged,extraChargesPer:0,
         //     extraCharges:0,total:this.cashReceived,remarks:''});
         this.displayModal = false;
-        this.saleDtl = [];
+        this.saleDtl=[];
+        this.saleDtl.push({
+            no: 0, barCode: '', itemName: '', qty: 1, disableBarcode: false,
+            salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0
+          });
         this.resetTotal();
       } else if (res.id == 0) {
         this.messageService.add({ severity: 'error', summary: 'Success', detail: "Please Till Open First!" });
@@ -644,50 +643,65 @@ export class SaleFormComponent {
   itemSearchDialog: boolean = false;
   itemDtl: any = [];
   searchedItemName: string = '';
-@HostListener('document:keydown', ['$event'])
-handleKeydownEvents(event: KeyboardEvent): void {
-  if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
-    event.preventDefault();
-    this.itemSearchDialog = true;
-    return;
-  }
-  if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
-    event.preventDefault();
-    this.saleReturnDialog = true;
-    return;
-  }
-  if (this.visibleProdSrchMdl && this.childItems?.length) {
-    const currentIndex = this.childItems.findIndex(
-      (item: any) => item === this.selectedChildItem
-    );
-
-    if (event.key === 'ArrowDown') {
+  @HostListener('document:keydown', ['$event'])
+  handleKeydownEvents(event: KeyboardEvent): void {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
       event.preventDefault();
-      const nextIndex = (currentIndex + 1) % this.childItems.length;
-      this.selectedChildItem = this.childItems[nextIndex];
-      this.scrollToRow(nextIndex);
+      this.itemSearchDialog = true;
+      return;
     }
-
-    if (event.key === 'ArrowUp') {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
       event.preventDefault();
-      const prevIndex =
-        (currentIndex - 1 + this.childItems.length) % this.childItems.length;
-      this.selectedChildItem = this.childItems[prevIndex];
-      this.scrollToRow(prevIndex);
+      this.saleReturnDialog = true;
+      return;
     }
+    if (this.visibleProdSrchMdl && this.childItems?.length) {
+      const currentIndex = this.childItems.findIndex(
+        (item: any) => item === this.selectedChildItem
+      );
 
-    if (event.key === 'Enter' && this.selectedChildItem) {
-      event.preventDefault();
-      this.addChildItemToPurchaseList(this.selectedChildItem);
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        const nextIndex = (currentIndex + 1) % this.childItems.length;
+        this.selectedChildItem = this.childItems[nextIndex];
+        this.scrollToRow(nextIndex);
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        const prevIndex =
+          (currentIndex - 1 + this.childItems.length) % this.childItems.length;
+        this.selectedChildItem = this.childItems[prevIndex];
+        this.scrollToRow(prevIndex);
+      }
+
+      if (event.key === 'Enter' && this.selectedChildItem) {
+        event.preventDefault();
+        this.addChildItemToPurchaseList(this.selectedChildItem);
+      }
     }
   }
-}
 
 
   itemNotFound: boolean = false;
+  itemSearchTextBox: string = '';
   itemSearchFromDialog(e: any) {
     this.api.getAllItemsdetailsFilterbased(this.searchedItemName, 'All', 0, 0).subscribe(res => {
       this.itemDtl = res;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        const highlightedRow = document.querySelector('tr.highlighted');
+        if (highlightedRow) {
+          this.itemSearchTextBox = '';
+          this.itemSearchDialog = false;
+          const qtyInput = highlightedRow.querySelectorAll('td input.form-control')[2] as HTMLInputElement;
+          if (qtyInput) {
+            qtyInput.focus();
+            qtyInput.select();
+            console.log("✅ Focused on Quantity input of highlighted row");
+          }
+        }
+      }, 50);
     });
   }
   onSearchDialogEnter(e: any) {

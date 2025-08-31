@@ -1,73 +1,122 @@
-import { Directive, HostListener, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { Directive, HostListener, ElementRef, AfterViewInit } from '@angular/core';
 
 @Directive({
   selector: '[appFocusNavigation]'
 })
 export class FocusNavigationDirective implements AfterViewInit {
-  /**
-   * Pass a function from your component that takes the new row index
-   * and handles tdChange logic there.
-   */
-  @Input() onRowChange!: (rowIndex: number) => void;
 
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit() {
-    this.setFocusToFirstInputInRow();
+    // ✅ New row add hone par us row ke pehle input ko focus karo
+    const currentRow = this.el.nativeElement.closest('tr');
+    const parentTable = this.el.nativeElement.closest('.p-datatable');
+    if (!currentRow || !parentTable) return;
+
+    const allRows = Array.from(parentTable.querySelectorAll('tbody tr'));
+    const rowIndex = allRows.indexOf(currentRow);
+
+    if (rowIndex === allRows.length - 1) {
+      this.focusFirstInput(currentRow);
+    }
   }
 
   @HostListener('keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
-    const currentInput = this.el.nativeElement as HTMLElement;
+    const currentInput = this.el.nativeElement as HTMLInputElement;
     const currentRow = currentInput.closest('tr');
-    const parentTableWrapper = currentInput.closest('.p-datatable');
+    const table = currentInput.closest('.p-datatable');
 
-    if (!currentRow || !parentTableWrapper) return;
+    if (!currentRow || !table) return;
 
-    const allRows = Array.from(parentTableWrapper.querySelectorAll('tr'));
-    const rowIndex = allRows.indexOf(currentRow);
-    const rowInputs = Array.from(currentRow.querySelectorAll('.form-control:not([disabled])')) as HTMLInputElement[];
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    const rowIndex = rows.indexOf(currentRow);
+
+    // ✅ Sirf enabled inputs lo
+    const inputsInRow = Array.from(
+      currentRow.querySelectorAll(
+        'input.form-control:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+      )
+    ) as HTMLElement[];
+    const colIndex = inputsInRow.indexOf(currentInput);
 
     switch (event.key) {
+      case 'ArrowRight':
+        event.preventDefault();
+        this.focusNextEnabled(inputsInRow, colIndex + 1, 1);
+        break;
+
+      case 'ArrowLeft':
+        event.preventDefault();
+        this.focusNextEnabled(inputsInRow, colIndex - 1, -1);
+        break;
+
       case 'ArrowDown':
         event.preventDefault();
-        if (rowIndex + 1 < allRows.length) {
-          const nextRowIndex = rowIndex + 1;
-          this.focusCell(allRows[nextRowIndex], rowInputs.indexOf(currentInput as HTMLInputElement));
-          if (this.onRowChange) this.onRowChange(nextRowIndex);
-        }
+        this.moveVertical(rows, rowIndex, colIndex, 1);
         break;
 
       case 'ArrowUp':
         event.preventDefault();
-        if (rowIndex > 0) {
-          const prevRowIndex = rowIndex - 1;
-          this.focusCell(allRows[prevRowIndex], rowInputs.indexOf(currentInput as HTMLInputElement));
-          if (this.onRowChange) this.onRowChange(prevRowIndex);
-        }
+        this.moveVertical(rows, rowIndex, colIndex, -1);
+        break;
+
+      case 'Enter':   // ✅ Enter par bhi right input par jao
+        event.preventDefault();
+        this.focusNextEnabled(inputsInRow, colIndex + 1, 1);
         break;
     }
   }
 
-  private focusCell(row: Element, colIndex: number) {
-    const inputs = Array.from(row.querySelectorAll('.form-control:not([disabled])')) as HTMLInputElement[];
-    if (colIndex >= 0 && inputs[colIndex]) {
-      inputs[colIndex].focus();
-      inputs[colIndex].select();
-    } else if (inputs.length > 0) {
-      inputs[0].focus();
-      inputs[0].select();
+  private moveVertical(rows: Element[], rowIndex: number, colIndex: number, step: number) {
+    let newRowIndex = rowIndex + step;
+    while (newRowIndex >= 0 && newRowIndex < rows.length) {
+      const row = rows[newRowIndex];
+      const enabledInputs = Array.from(
+        row.querySelectorAll('input.form-control:not([disabled]), select:not([disabled]), textarea:not([disabled])')
+      ) as HTMLElement[];
+      if (enabledInputs.length > 0) {
+        if (colIndex < enabledInputs.length) {
+          this.focusInput(enabledInputs[colIndex]);
+        } else {
+          this.focusInput(enabledInputs[enabledInputs.length - 1]);
+        }
+        break;
+      }
+      newRowIndex += step; // ✅ skip disabled-only row
     }
   }
 
-  private setFocusToFirstInputInRow() {
-    const row = this.el.nativeElement.closest('tr');
-    const firstInput = row?.querySelector('.form-control:not([disabled])') as HTMLInputElement;
+  private focusNextEnabled(inputs: HTMLElement[], startIndex: number, step: number) {
+    let index = startIndex;
+    while (index >= 0 && index < inputs.length) {
+      const input = inputs[index];
+      if (!input.hasAttribute('disabled')) {
+        this.focusInput(input);
+        break;
+      }
+      index += step; // ✅ skip disabled inputs
+    }
+  }
+
+  private focusInput(input: HTMLElement) {
+    if (input) {
+      input.focus();
+      if ((input as HTMLInputElement).select) {
+        (input as HTMLInputElement).select();
+      }
+    }
+  }
+
+  private focusFirstInput(row: Element) {
+    const firstInput = row.querySelector(
+      'input.form-control:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+    ) as HTMLInputElement;
     if (firstInput) {
       setTimeout(() => {
         firstInput.focus();
         firstInput.select();
-      }, 100);
+      }, 50);
     }
   }
 }

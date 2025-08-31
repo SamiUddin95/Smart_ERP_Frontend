@@ -19,11 +19,12 @@ export class UserFormComponent {
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.getUserType();
-    this.getLocation();
+    this.getLocation()
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
 	}
+
   getUserById(id: any) {
 		this.api.getUserById(String(id)).subscribe(res => {
 			this.userData = res[0];

@@ -107,13 +107,16 @@ export class ApiService {
 	getAllPOSearching(itemName: string) {
 		return this.app.get('getAllPOSearching?itemName=' + itemName);
 	}
-	getPurchaseMaxSerialNo(){
+	getCallForPO() {
+		return this.app.get('getCallForPO');
+	}
+	getPurchaseMaxSerialNo() {
 		return this.app.get('getPurchaseMaxSerialNo');
 	}
-	getSaleMaxSerialNo(){
+	getSaleMaxSerialNo() {
 		return this.app.get('getSaleMaxSerialNo');
 	}
-	getPurchaseReturnMaxSerialNo(){
+	getPurchaseReturnMaxSerialNo() {
 		return this.app.get('getPurchaseReturnMaxSerialNo');
 	}
 	getAllPurchaseOrder() {
@@ -122,8 +125,8 @@ export class ApiService {
 	getAllPurchaseOrderDashboard() {
 		return this.app.get('getAllPurchaseOrderDashboard');
 	}
-	changeDeliveryStatus(ids:string) {
-		return this.app.get('changeDeliveryStatus?ids='+ids);
+	changeDeliveryStatus(ids: string) {
+		return this.app.get('changeDeliveryStatus?ids=' + ids);
 	}
 	createPurchaseOrder(obj: any) {
 		return this.app.post('createPurchaseOrder', obj);
@@ -134,16 +137,16 @@ export class ApiService {
 	createMinimumQty(obj: any) {
 		return this.app.post('createMinimumQty', obj);
 	}
-	postPurchasePrder(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+	postPurchasePrder(postedBy: string, purchaseId: number, barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
 		return this.app.get('postPurchaseOrder?barCodes=' + barCodes + "&currentStock=" + currentStock +
-			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
-		+"&postedBy="+postedBy);
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice + "&purchaseId=" + purchaseId
+			+ "&postedBy=" + postedBy);
 	}
-	unPostPurchaseOrder(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+	unPostPurchaseOrder(postedBy: string, purchaseId: number, barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
 		debugger
 		return this.app.get('unPostPurchaseOrder?barCodes=' + barCodes + "&currentStock=" + currentStock +
-			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
-		+"&postedBy="+postedBy);
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice + "&purchaseId=" + purchaseId
+			+ "&postedBy=" + postedBy);
 	}
 	getPurchaseOrderCategory() {
 		return this.app.get('getPurchaseOrderCategory');
@@ -151,25 +154,27 @@ export class ApiService {
 	getPurchaseOrderById(id: any) {
 		return this.app.get('getPurchaseOrderById?id=' + id, id);
 	}
-	fetchPurchaseOrdersByDate(startDate: any, endDate: any, zeroQty:any, selectedTable: any, partyId:any) {
+	getPurchaseOrderDetailById(id: any) {
+		return this.app.get('getPurchaseOrderDetailById?id=' + id, id);
+	}
+	fetchPurchaseOrdersByDate(startDate: any, endDate: any, zeroQty: any, selectedTable: any, partyId: any) {
 		return this.app.get(`GetPurchaseOrdersByDateRange?startDate=${startDate}&endDate=${endDate}&zeroQty=${zeroQty}&selectedTable=${selectedTable}&partyId=${partyId}`);
-	  }
-	  fetchGetItemsBySupplier(PartyId: any, PartyName: any) {
+	}
+	fetchGetItemsBySupplier(PartyId: any, PartyName: any) {
 		debugger
 		return this.app.get(`GetItemsBySupplier?PartyId=${PartyId}&PartyName=${PartyName}`);
-	  }
+	}
 	getPurchaseById(id: any) {
 		return this.app.get('getPurchaseById?id=' + id, id);
 	}
 	getGoDown() {
 		return this.app.get('getGoDown');
 	}
-	  getTableData(tableName: any) {
-		debugger
-		return this.app.get('SupplierWise?tableName=' + tableName,tableName);
-	  }
+	getTableData(tableName: any) {
+		return this.app.get('SupplierWise?tableName=' + tableName, tableName);
+	}
 
-	  getAllLocation() {
+	getAllLocation() {
 		return this.app.get('getLocation');
 	}
 	//Purchase Return
@@ -379,34 +384,34 @@ export class ApiService {
 	createPurchase(obj: any) {
 		return this.app.post('createPurchase', obj);
 	}
-	postPurchase(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+	postPurchase(postedBy: string, purchaseId: number, barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
 		return this.app.get('postPurchase?barCodes=' + barCodes + "&currentStock=" + currentStock +
-			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
-		+"&postedBy="+postedBy);
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice + "&purchaseId=" + purchaseId
+			+ "&postedBy=" + postedBy);
 	}
 	postPurchaseNew(postedBy: string, purchaseId: number, items: any[]) {
 		debugger
 		const url = `postPurchaseNew?purchaseId=${purchaseId}&postedBy=${postedBy}`;
 		return this.app.post(url, items);
 	}
-	  
-	unPostPurchase(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+
+	unPostPurchase(postedBy: string, purchaseId: number, barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
 		debugger
 		return this.app.get('unPostPurchase?barCodes=' + barCodes + "&currentStock=" + currentStock +
-			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
-		+"&postedBy="+postedBy);
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice + "&purchaseId=" + purchaseId
+			+ "&postedBy=" + postedBy);
 	}
 
-	postPurchaseReturn(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+	postPurchaseReturn(postedBy: string, purchaseId: number, barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
 		return this.app.get('postPurchaseReturn?barCodes=' + barCodes + "&currentStock=" + currentStock +
-			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
-		+"&postedBy="+postedBy);
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice + "&purchaseId=" + purchaseId
+			+ "&postedBy=" + postedBy);
 	}
-	unPostPurchaseReturn(postedBy:string,purchaseId: number,barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
+	unPostPurchaseReturn(postedBy: string, purchaseId: number, barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
 		debugger
 		return this.app.get('unPostPurchaseReturn?barCodes=' + barCodes + "&currentStock=" + currentStock +
-			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice+"&purchaseId="+purchaseId
-		+"&postedBy="+postedBy);
+			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice + "&purchaseId=" + purchaseId
+			+ "&postedBy=" + postedBy);
 	}
 	//Stock Adjustment
 	// getAllStockAdjustment(dateFrom:string,dateTo:string,postedDate:string,postedBy:number,partyId:number,
@@ -458,12 +463,12 @@ export class ApiService {
 		return this.app.get('getBrandById?id=' + id, id);
 	}
 
-	getAllBrandsdetailsFilterbased(brandName: string, sno:any, remarks: string) {
+	getAllBrandsdetailsFilterbased(brandName: string, sno: any, remarks: string) {
 		return this.app.get('getAllBrandsdetailsFilterbased?brandName=' + brandName + '&sno=' + sno + '&remarks=' + remarks);
 	}
 	//Category
 
-	getAllCategorydetailsFilterbased(Name: string, description: string, sno:any) {
+	getAllCategorydetailsFilterbased(Name: string, description: string, sno: any) {
 		return this.app.get('getAllCategorydetailsFilterbased?Name=' + Name + '&description=' + description + '&sno=' + sno);
 	}
 	getAllCategorydetails() {
@@ -489,7 +494,7 @@ export class ApiService {
 	}
 
 	//Class
-	getAllClassdetailsFilterbased(className: string, sno:any, remarks: string) {
+	getAllClassdetailsFilterbased(className: string, sno: any, remarks: string) {
 		return this.app.get('getAllClassdetailsFilterbased?className=' + className + '&sno=' + sno + '&remarks=' + remarks);
 	}
 
@@ -519,8 +524,8 @@ export class ApiService {
 	getAllItemsSearching(itemName: string, searchMode: string) {
 		return this.app.get('getAllItemsSearching?itemName=' + itemName + '&searchMode=' + searchMode);
 	}
-	getItemDetailbyBarCodeAndName(barCode: string,name:string,searchType:string) {
-		return this.app.get('getItemDetailbyBarCodeAndName?barCode=' + barCode+'&name='+name+'&searchType='+searchType);
+	getItemDetailbyBarCodeAndName(barCode: string, name: string, searchType: string) {
+		return this.app.get('getItemDetailbyBarCodeAndName?barCode=' + barCode + '&name=' + name + '&searchType=' + searchType);
 	}
 	getItemDetailbyBarCode(barCode: string) {
 		return this.app.get('getItemDetailbyBarCode?barCode=' + barCode);
@@ -528,8 +533,8 @@ export class ApiService {
 	getPurchaseDetailbyBarCode(barCode: string) {
 		return this.app.get('getPurchaseDetailbyBarCode?barCode=' + barCode);
 	}
-	getAllItemDetailbyBarCode(barCode: string) {
-		return this.app.get('getAllItemDetailbyBarCode?barCode=' + barCode);
+	getAllItemDetailbyBarCode(name: string) {
+		return this.app.get('getAllItemDetailbyItemName?name=' + name);
 	}
 	deleteItemsById(id: any) {
 		return this.app.get('deleteItemById?id=' + id, id);
@@ -545,7 +550,7 @@ export class ApiService {
 		return this.app.get('getItemById?id=' + id, id);
 	}
 	//Manufactutrer
-	getAllManufacturedetailsFilterbased(name: string, email: string, sno:any, address: string) {
+	getAllManufacturedetailsFilterbased(name: string, email: string, sno: any, address: string) {
 		return this.app.get('getAllManufacturedetailsFilterbased?name=' + name + '&email=' + email + '&sno=' + sno + '&address=' + address);
 	}
 
@@ -575,7 +580,7 @@ export class ApiService {
 	}
 	deleteTill(tillName: any) {
 		return this.app.get('deleteTillById?tillName=' + tillName, tillName);
-	  }
+	}
 
 	createLocation(obj: any) {
 		debugger
@@ -585,7 +590,7 @@ export class ApiService {
 		return this.app.get('getLocationById?id=' + id, id);
 	}
 
-	getAllLocationdetailsFilterbased(locationName: string, sno:any) {
+	getAllLocationdetailsFilterbased(locationName: string, sno: any) {
 		return this.app.get('getAllLocationdetailsFilterbased?locationName=' + locationName + '&sno=' + sno);
 	}
 
