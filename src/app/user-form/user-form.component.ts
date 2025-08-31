@@ -13,11 +13,13 @@ export class UserFormComponent {
   constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
   userData: any = {  };
   userTypes:any=[];
+  location:any=[];
   genders:any=[{label:'Male',value:'Male'},{label:'Female',value:'Female'}];
   urlId: any;
   ngOnInit(): void {
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.getUserType();
+    this.getLocation();
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
@@ -31,11 +33,13 @@ export class UserFormComponent {
     this.router.navigate(['user-list']);
   }
   addUser(){
+    debugger
     const requiredFields = [
       { key: 'name', message: 'Name is required.' },
       { key: 'password', message: 'Password is required.' },
       { key: 'gender', message: 'Gender is required.' },
       { key: 'userTypeId', message: 'User Group is required.' },
+      { key: 'locationId', message: 'Location is required.' },
     ];
 
       for (const field of requiredFields) {
@@ -51,7 +55,7 @@ export class UserFormComponent {
 		this.router.navigate(['user-list']);
 		this.messageService.add({ severity: 'success', summary: 'Success', detail: "User Saved Successfully" });	
 		},err=>{
-	
+      	this.messageService.add({ severity: 'failed', summary: 'failed', detail: "Error while saving user data" });
 		})
 
   }
@@ -61,4 +65,9 @@ export class UserFormComponent {
     })
   }
 
+    getLocation(){
+    this.api.getAllLocation().subscribe(res=>{
+      this.location=res;
+    })
+  }
 }

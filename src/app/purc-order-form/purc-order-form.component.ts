@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { MessageService } from 'primeng/api';
@@ -13,7 +13,7 @@ import { formatDate } from '@angular/common';
 export class PurcOrderFormComponent {
   @ViewChild('tableRef') tableRef!: ElementRef;
   @ViewChild('searchInput') searchInput!: ElementRef;
-  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService,) { }
+  constructor(private route: ActivatedRoute,private router: Router,private api: ApiService,private messageService: MessageService, private cd: ChangeDetectorRef) { }
   formData: any = {  };
   userTypes:any=[];
   genders:any=[{label:'Male',value:'Male'},{label:'Female',value:'Female'}];
@@ -35,10 +35,12 @@ export class PurcOrderFormComponent {
     this.getGoDown();
     this.getManufact();
     this.getlocation();
+    this.loadPurchaseOrderData(this.selectedItem.itemName);
+ 
     if (this.urlId) {
       this.getUserById(this.urlId);
     }
-    
+     
 	}
 
   onTableChange() {
@@ -87,7 +89,7 @@ export class PurcOrderFormComponent {
         const result = JSON.parse(res);
         this.originalPurchOrderDtlData = result.purchaseOrderDetails;
         this.purchOrderDtlData = [...result.purchaseOrderDetails];
-  
+  debugger
         if (result.purchaseOrders.length > 0) {
           const firstOrder = result.purchaseOrders[0];
           this.formData = { ...this.formData, ...firstOrder };
@@ -252,13 +254,13 @@ addPO(){
   }
 
     itemSearchDialog: boolean = false;
-    @HostListener('document:keydown', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent): void {
-      if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
-        event.preventDefault();
-        this.itemSearchDialog=true;
-      }
-    }
+    // @HostListener('document:keydown', ['$event'])
+    // handleKeyboardEvent(event: KeyboardEvent): void {
+    //   if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+    //     event.preventDefault();
+    //     this.itemSearchDialog=true;
+    //   }
+    // }
     itemDtl:any=[];
     searchedItemName:string='';
     itemSearchFromDialog(e:any){
@@ -350,43 +352,10 @@ currentIndex: number = 0;
   filter = {
     itemName: ''
   };
-   // Listen for F8 key globally
- @HostListener('document:keydown', ['$event'])
- 
-  handleKeydownEvents(event: KeyboardEvent): void {
-  // Only handle navigation if the dialog is shown and items exist
-  if (this.showDialog && this.item.length > 0) {
-    const currentIndex = this.item.findIndex(itm => itm === this.selectedItem);
-    const safeIndex = currentIndex === -1 ? 0 : currentIndex;
 
-    // Navigate down the list
-    if (event.key === 'ArrowDown') {
-      event.preventDefault();
-      const nextIndex = (safeIndex + 1) % this.item.length;
-      this.selectedItem = this.item[nextIndex];
-      this.currentIndex = nextIndex;
-      this.scrollToRow(nextIndex);
-      return;
-    }
-
-    // Navigate up the list
-    if (event.key === 'ArrowUp') {
-      event.preventDefault();
-      const prevIndex = (safeIndex - 1 + this.item.length) % this.item.length;
-      this.selectedItem = this.item[prevIndex];
-      this.currentIndex = prevIndex;
-      this.scrollToRow(prevIndex);
-      return;
-    }
-
-    // Enter key - go to item form
-    if (event.key === 'Enter' && this.selectedItem) {
-      event.preventDefault();
-      const itemId = this.selectedItem.id;
-      this.showDialog = false;
-debugger
-      this.api.getAllPOSearching(this.selectedItem.itemName).subscribe((res: any[]) => {
-    this.purchOrderDtlData = res.map((ele: any) => ({
+   private loadPurchaseOrderData(itemName: string): void {
+  this.api.getAllPOSearching(itemName).subscribe((res: any[]) => {
+    const mappedData = res.map((ele: any) => ({
       barCode: ele.barCode,
       itemName: ele.itemName,
       requiredQty: ele.requiredQty,
@@ -398,7 +367,13 @@ debugger
       rtnQty: ele.rtnQty,
       total: ele.total
     }));
-debugger
+
+    // Assign NEW array reference so Angular detects change
+    this.purchOrderDtlData = [...mappedData];
+
+    // Debug: Confirm it's really updated
+    console.log("Grid Data Set:", this.purchOrderDtlData);
+
     if (this.purchOrderDtlData.length > 0) {
       this.currentIndex = 0;
       this.selectedItem = this.purchOrderDtlData[0];
@@ -408,34 +383,68 @@ debugger
       this.selectedItem = null;
     }
   });
-      // Force component reload by first navigating to dummy route
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['purch-order-form', itemId]);
-      });
-      return;
+}
+   // Listen for F8 key globally
+@HostListener('document:keydown', ['$event'])
+  handleKeydownEvents(event: KeyboardEvent): void {
+    // Only handle navigation if the dialog is shown and items exist
+    if (this.showDialog && this.item.length > 0) {
+      const currentIndex = this.item.findIndex(itm => itm === this.selectedItem);
+      const safeIndex = currentIndex === -1 ? 0 : currentIndex;
+
+      // Navigate down the list
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        const nextIndex = (safeIndex + 1) % this.item.length;
+        this.selectedItem = this.item[nextIndex];
+        this.currentIndex = nextIndex;
+        this.scrollToRow(nextIndex);
+        return;
+      }
+
+      // Navigate up the list
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        const prevIndex = (safeIndex - 1 + this.item.length) % this.item.length;
+        this.selectedItem = this.item[prevIndex];
+        this.currentIndex = prevIndex;
+        this.scrollToRow(prevIndex);
+        return;
+      }
+
+      // Enter key - go to item form
+      if (event.key === 'Enter' && this.selectedItem) {
+        event.preventDefault();
+        const itemId = this.selectedItem.id;
+        this.showDialog = false;
+
+        // Fetch purchase order details
+        this.loadPurchaseOrderData(this.selectedItem.itemName);
+
+        // Force component reload then navigate
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['purch-order-form', itemId]);
+        });
+        return;
+      }
+    }
+
+    // F8 - open search dialog
+    if (event.key === 'F8') {
+      event.preventDefault();
+      this.openSearchDialog();
     }
   }
 
-  // F8 - open search dialog
-  if (event.key === 'F8') {
-    event.preventDefault();
-    this.openSearchDialog();
-  }
-}
-
   openSearchDialog(): void {
-  this.showDialog = true;
-  this.filter.itemName = '';
-  // this.item = [];
-  // this.selectedItem = null;
+    this.showDialog = true;
+    this.filter.itemName = '';
 
-  //this.getItemList(); // Load data first
-
-  // Focus input after dialog is rendered
-  setTimeout(() => {
-    this.searchInput?.nativeElement?.focus();
-  }, 100);
-}
+    // Focus input after dialog is rendered
+    setTimeout(() => {
+      this.searchInput?.nativeElement?.focus();
+    }, 100);
+  }
 
   getItemList(): void {
   const itemName = this.filter.itemName || 'All';

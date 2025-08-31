@@ -167,7 +167,7 @@
                                                                                             appRowNavigation
                                                                                             tabindex="0"
                                                                                             [rowIndex]="i"
-                                                                                            (rowFocused)="tdChange(purcDtl[$event])"
+                                                                                            (rowFocused)="tdChange(purcDtl[i])"
                                                                                             (click)="setFocusedRow(i, user)"
                                                                                             [class.selected-row]="focusedRowIndex === i"
                                                                                             [ngClass]="{'highlighted': user.barcode == searchedItemName}">

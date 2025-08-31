@@ -53,7 +53,7 @@
                                                     </div>
                                                     <div class="col-md-6 col-sm-12 px-4">
                                                         <label for="lastname"><span class="text-danger">
-                                                            </span>Mobile Num</label>
+                                                            </span>Mobile No</label>
                                                         <input type="number"
                                                             class="form-control form-control-sm col-md-12 txt"
                                                             placeholder="Mobile Num" id="Salary"
@@ -84,6 +84,14 @@
                                                             [(ngModel)]="userData.userTypeId"
                                                             placeholder="Select a User" optionLabel="userType1"
                                                             optionValue="userTypeId"></p-dropdown>
+                                                    </div>
+                                                        <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="usertypr">Location <span class="text-danger">*
+                                                            </span></label>
+                                                        <p-dropdown [options]="location"
+                                                            [(ngModel)]="userData.locationId"
+                                                            placeholder="Select Location" optionLabel="name"
+                                                            optionValue="id"></p-dropdown>
                                                     </div>
                                                 </div>
 

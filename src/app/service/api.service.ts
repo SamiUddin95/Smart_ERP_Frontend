@@ -26,6 +26,7 @@ export class ApiService {
 		return this.app.get('getAllGroup');
 	}
 	createUser(obj: any) {
+		debugger
 		return this.app.post('createUser', obj);
 	}
 	createGroup(obj: any) {
