@@ -331,69 +331,6 @@
 
     </section>
 </div>
-<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog">
-    <div class="card shadow-3">
-        <div class="card-body">
-            <div class="grid">
-                <div class="row px-2 col-12">
-                    <div class="col-md-12">
-                        <input type="text" class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
-                            (input)="itemSearchFromDialog($event)" [(ngModel)]="searchedItemName">
-                    </div>
-                    <div class="mt-2 col-md-12">
-                        <div class="mt-2 pad-wrapper">
-                            <div class="box">
-                                <div class="content">
-                                    <div class="row">
-                                        <p-table #dt responsiveLayout="scroll" [value]="itemDtl"
-                                            styleClass="p-datatable-sm p-datatable-gridlines"
-                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                                            [rows]="10" [showCurrentPageReport]="true"
-                                            [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true">
-
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th pSortableColumn="code">No.
-                                                        <p-sortIcon field="code"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="name">BarCode
-                                                        <p-sortIcon field="name"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="price">Item Name
-                                                        <p-sortIcon field="price"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="price">Purchase Price
-                                                        <p-sortIcon field="price"></p-sortIcon>
-                                                    </th>
-                                                    <th pSortableColumn="price">Sale Price
-                                                        <p-sortIcon field="price"></p-sortIcon>
-                                                    </th>
-                                                </tr>
-                                            </ng-template>
-
-                                            <ng-template pTemplate="body" let-itm let-i="rowIndex">
-                                                <tr>
-                                                    <td>{{ i + 1 }}</td>
-                                                    <td>{{itm.aliasName}}</td>
-                                                    <td>{{itm.itemName}}</td>
-                                                    <td>{{itm.purchasePrice}}</td>
-                                                    <td>{{itm.salePrice}}</td>
-                                                </tr>
-                                            </ng-template>
-
-                                        </p-table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</p-dialog>
-
 <p-dialog header="Product Searching Form"
           [(visible)]="showDialog"
           [modal]="true"
@@ -476,5 +413,30 @@
       </ng-template>
     </p-table>
   </div>
+</p-dialog>
+<p-dialog header="Search with Item Name" [modal]="true" [(visible)]="itemSearchDialog" (onShow)="focusSearchInput()">
+    <div class="card shadow-3">
+        <div class="card-body">
+            <div class="grid">
+                <div class="row px-2 col-12">
+                    <div class="col-md-12">
+                        <input type="text" [(ngModel)]="itemSearchTextBox" #searchItemInput
+                            class="p-3 form-control form-control-sm" placeholder="Search With Item Name"
+                            (keydown.enter)="itemSearchFromDialog($event)" (keydown.enter)="onSearchDialogEnter($event)"
+                            [(ngModel)]="searchedItemName">
+                    </div>
+                    <div class="mt-2 col-md-12">
+                        <div class="mt-2 pad-wrapper">
+                            <div class="box">
+                                <div class="content">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </p-dialog>
 <p-toast position="top-right"></p-toast>

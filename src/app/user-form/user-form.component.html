@@ -85,6 +85,14 @@
                                                             placeholder="Select a User" optionLabel="userType1"
                                                             optionValue="userTypeId"></p-dropdown>
                                                     </div>
+                                                    <div class="col-md-6 col-sm-12 px-4">
+                                                        <label for="usertypr">Location <span class="text-danger">*
+                                                            </span></label>
+                                                        <p-dropdown [options]="location"
+                                                            [(ngModel)]="userData.locationId"
+                                                            placeholder="Select a Location" optionLabel="name"
+                                                            optionValue="id"></p-dropdown>
+                                                    </div>
                                                 </div>
 
                                             </div>

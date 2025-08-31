@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 
@@ -13,12 +13,14 @@ import jsPDF from 'jspdf';
 })
 export class PurhaseFormComponent {
 
-  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
+  constructor(private confirmationService: ConfirmationService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
   @ViewChild('tableRef') tableRef!: ElementRef;
   formData: any = {};
-  visible: boolean = false;
+  prodSearchFormVisible: boolean = false;
+  prntChldItmSrchFrmVisible: boolean = false;
   childItemSearch: any;
   childItems: any = [];
+  parentChildAltItems: any = [];
   urlId: any = 0;
   party: any = [];
   totalQty: number = 0;
@@ -69,14 +71,17 @@ export class PurhaseFormComponent {
   }
   @HostListener('document:keydown.F8', ['$event'])
   onF8Pressed(event: any, user: any) {
-    this.selectedChildItem=[];
-    this.childItemSearch='';
-    this.visible = true;
+    this.childItems = [];
+    this.selectedChildItem = [];
+    this.childItemSearch = '';
+    this.prodSearchFormVisible = true;
   }
-  searchChildItem(barCode: string) {
+  searchParentAltChildItem(barCode: string) {
     if (barCode.length > 1) {
       this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
-        this.childItems = res;
+        debugger
+        this.parentChildAltItems = JSON.parse(res)
+        this.childItems = this.parentChildAltItems.item;
         this.selectedChildItem = this.childItems[0]; // highlight first row
       });
     }
@@ -119,39 +124,105 @@ export class PurhaseFormComponent {
 
   @HostListener('document:keydown.arrowdown', ['$event'])
   handleArrowDown(event: KeyboardEvent) {
-    if (this.visible && this.childItems?.length) {
-      const currentIndex = this.childItems.findIndex(
-        (item: any) => item === this.selectedChildItem
-      );
-      if (this.visible && this.childItems?.length > 0) {
-        event.preventDefault();
-        const nextIndex = (currentIndex + 1) % this.childItems.length;
-        this.selectedChildItem = this.childItems[nextIndex];
-        this.scrollToRow(nextIndex);
-      }
+    if (this.prodSearchFormVisible && this.childItems?.length) {
+      this.moveinDialogSelection(event, this.childItems, 'child');
+    } else if (this.prntChldItmSrchFrmVisible && this.concatParentChildItems?.length) {
+      this.moveinDialogSelection(event, this.concatParentChildItems, 'parentChild');
+    } else if (this.callForPOModal && this.calledPODetails?.length) {
+      this.moveinDialogSelection(event, this.calledPODetails, 'calledPO');
     }
   }
 
   @HostListener('document:keydown.arrowup', ['$event'])
   handleArrowUp(event: KeyboardEvent) {
-    const currentIndex = this.childItems.findIndex(
-      (item: any) => item === this.selectedChildItem
-    );
-    if (this.visible && this.childItems?.length > 0) {
-      event.preventDefault();
-      const nextIndex = (currentIndex + 1) % this.childItems.length;
-      this.selectedChildItem = this.childItems[nextIndex];
-      this.scrollToRow(nextIndex);
+    if (this.prodSearchFormVisible && this.childItems?.length) {
+      this.moveinDialogSelection(event, this.childItems, 'child', true);
+    } else if (this.prntChldItmSrchFrmVisible && this.concatParentChildItems?.length) {
+      this.moveinDialogSelection(event, this.concatParentChildItems, 'parentChild', true);
+    } else if (this.callForPOModal && this.calledPODetails?.length) {
+      this.moveinDialogSelection(event, this.calledPODetails, 'calledPO', true);
+    }
+  }
+  private scrollToDialogRow(index: number, type: 'child' | 'parentChild' | 'calledPO' = 'child') {
+    let rows: NodeListOf<Element>;
+
+    if (type === 'child') {
+      rows = document.querySelectorAll('p-dialog:nth-of-type(1) .p-datatable tbody tr');
+    } else if (type === 'parentChild') {
+      rows = document.querySelectorAll('p-dialog:nth-of-type(2) .p-datatable tbody tr');
+    } else {
+      rows = document.querySelectorAll('p-dialog:nth-of-type(3) .p-datatable tbody tr');
+    }
+
+    if (rows && rows[index]) {
+      (rows[index] as HTMLElement).scrollIntoView({ block: 'nearest' });
+      (rows[index] as HTMLElement).focus();
     }
   }
 
+  private moveinDialogSelection(
+    event: KeyboardEvent,
+    items: any[],
+    type: 'child' | 'parentChild' | 'calledPO',
+    isUp: boolean = false
+  ) {
+    event.preventDefault();
+
+    let selectedItem =
+      type === 'child' ? this.selectedChildItem :
+        type === 'parentChild' ? this.selectedParentChildItem :
+          this.selectedCalledPOItem;
+
+    const currentIndex = items.findIndex((item) => item === selectedItem);
+
+    let nextIndex;
+    if (isUp) {
+      nextIndex = (currentIndex - 1 + items.length) % items.length;
+    } else {
+      nextIndex = (currentIndex + 1) % items.length;
+    }
+
+    if (type === 'child') {
+      this.selectedChildItem = items[nextIndex];
+    } else if (type === 'parentChild') {
+      this.selectedParentChildItem = items[nextIndex];
+    } else {
+      this.selectedCalledPOItem = items[nextIndex];
+    }
+
+    this.scrollToDialogRow(nextIndex, type);
+  }
+
+  concatParentChildItems: any = [];
   @HostListener('document:keydown.enter', ['$event'])
   handleEnterKey(event: KeyboardEvent) {
-    if (this.visible && this.selectedChildItem) {
+    if (this.prodSearchFormVisible && this.selectedChildItem) {
       event.preventDefault();
-      this.addChildItemToPurchaseList(this.selectedChildItem);
-      this.visible = false;
+      if (this.parentChildAltItems.childItems.length > 0 || this.parentChildAltItems.altItems.length > 0) {
+        this.prodSearchFormVisible = false;
+        this.prntChldItmSrchFrmVisible = true;
+        this.concatParentChildItems = this.parentChildAltItems.childItems.concat(this.parentChildAltItems.altItems);
+        this.selectedParentChildItem = this.concatParentChildItems[0];
+      } else {
+        this.addParentChildAltItemToPurchaseList(this.selectedChildItem);
+        this.prodSearchFormVisible = false;
+      }
     }
+  }
+
+  handleParentChildItemEnterKey(item: any) {
+    if (this.parentChildAltItems.childItems.length > 0 || this.parentChildAltItems.altItems.length > 0) {
+      this.prodSearchFormVisible = false;
+      this.prntChldItmSrchFrmVisible = true;
+      this.concatParentChildItems = this.parentChildAltItems.childItems.concat(this.parentChildAltItems.altItems);
+      this.selectedParentChildItem = this.concatParentChildItems[0];
+    } else {
+      this.addParentChildAltItemToPurchaseList(item);
+      this.prodSearchFormVisible = false;
+    }
+  }
+  addConcatParentChildItemToPurchaseList(item: any) {
+    this.addParentChildAltItemToPurchaseList(item);
   }
 
   onKey(event: any, user: any) {
@@ -409,7 +480,7 @@ export class PurhaseFormComponent {
     this.netProfitInValue = this.netSaleTotal - this.netCostTotal;
     this.netProfitInValue = Number(Math.abs(this.netProfitInValue).toFixed(2));
   }
-  addChildItemToPurchaseList(item: any) {
+  addParentChildAltItemToPurchaseList(item: any) {
     this.purcDtl.push({
       no: 0, barcode: item.barCode, ItemName: item.itemName, quantity: 0, disableBarcode: false,
       bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
@@ -547,14 +618,14 @@ export class PurhaseFormComponent {
           purchasePrice: e.purchasePrice
         });
       }
-    }); 
+    });
     barcodeMap.forEach((indexes) => {
       if (indexes.length > 1) {
         indexes.slice(1).forEach(i => {
           duplicateInfo.push({ row: i + 1, itemName: this.purcDtl[i].ItemName });
         });
       }
-    }); 
+    });
     if (duplicateInfo.length > 0) {
       const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
       this.messageService.add({
@@ -563,7 +634,7 @@ export class PurhaseFormComponent {
         detail: 'Duplicate Items at: ' + message
       });
       return;
-    } 
+    }
     if (lowPriceInfo.length > 0) {
       const message = lowPriceInfo.map(d =>
         `Row ${d.row} (${d.itemName}) - Sale: ${d.salePrice}, Purchase: ${d.purchasePrice}`
@@ -747,6 +818,7 @@ export class PurhaseFormComponent {
     });
   }
   selectedChildItem: any;
+  selectedParentChildItem: any;
   @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
   focusProductSearchInput(): void {
     setTimeout(() => {
@@ -806,6 +878,96 @@ export class PurhaseFormComponent {
     this.highlightedRowId = item.purchaseId;
     this.itemSearchDialog = false;
     this.searchedItemName = "";
+  }
+  callForPOModal: boolean = false;
+  calledPODetails: any = [];
+  selectedCalledPOItem: any = [];
+  calledPOItemSearch: string = '';
+  callForPO() {
+    this.callForPOModal = true;
+    this.api.getCallForPO().subscribe(res => {
+      this.calledPODetails = res;
+      if (this.calledPODetails?.length > 0) {
+        // ✅ select first row
+        this.selectedCalledPOItem = this.calledPODetails[0];
+
+        // ✅ also set focus to first row so arrow keys work immediately
+        setTimeout(() => {
+          const firstRow = document.querySelector(
+            'p-dialog .p-datatable tbody tr'
+          ) as HTMLElement;
+          if (firstRow) {
+            firstRow.focus();
+          }
+        });
+      }
+    });
+  }
+
+
+
+  searchCalledPOItem(barCode: string) {
+    if (barCode.length > 1) {
+      this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
+        this.calledPODetails = res;
+        if (this.calledPODetails?.length > 0) {
+          this.selectedCalledPOItem = this.calledPODetails[0];
+        }
+      });
+    }
+  }
+  calledPurcOrderDetails: any = [];
+  addCalledPOToPurchaseList(item: any) {
+    this.confirmAddToPurcList(item);
+  }
+  poQtyChange(user: any) {
+    user.netQuantity = parseFloat((user.requiredQty + user.netSaleQty).toFixed(2));
+    user.subTotal = parseFloat((user.purchasePrice * user.quantity).toFixed(2));
+    user.discountByValue = isNaN(parseFloat(((user.discountByPercent * 100) / user.subTotal).toFixed(2))) ? 0 : parseFloat(((user.discountByPercent * 100) / user.subTotal).toFixed(2));
+    user.discountByPercent = isNaN(parseFloat(((user.subTotal * user.discountByValue) / 100).toFixed(2))) ? 0 : parseFloat(((user.subTotal * user.discountByValue) / 100).toFixed(2));
+    user.totalIncDisc = parseFloat((user.subTotal - user.discountByValue).toFixed(2));
+    this.purcDtl.forEach(x => {
+      if (typeof x.netQuantity === 'number' && !isNaN(x.netQuantity)) {
+        this.netQuantity += x.netQuantity;
+      }
+    });
+    user.totalIncGst = parseFloat((user.totalIncDisc + user.gstByValue).toFixed(2));
+    user.netRate = parseFloat((user.totalIncGst / user.netQuantity).toFixed(2));
+    user.salePrice = Number(user.netRate.toFixed(2));
+    user.netSalePrice = parseFloat((user.salePrice - user.saleDiscountByValue).toFixed(2));
+    user.totalSalePrice = parseFloat((user.netQuantity * user.netSalePrice).toFixed(2));
+    user.marginPercent = parseFloat((((user.netSalePrice - user.netRate) / user.netRate) * 100).toFixed(2));
+    this.resetTotals();
+    this.calculateTotals();
+  }
+  confirmAddToPurcList(item: any) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        debugger
+        this.api.getPurchaseOrderDetailById(item.id).subscribe(res => {
+          this.calledPurcOrderDetails = res;
+          if (this.calledPurcOrderDetails.length > 0) {
+            this.calledPurcOrderDetails.forEach((poItem: any, index: number) => {
+              this.purcDtl.push({
+                no: this.purcDtl.length + 1, barcode: poItem.barCode || '',
+                ItemName: poItem.itemName || '',
+                quantity: poItem.requiredQty || 0,
+                disableBarcode: false, bonusQuantity: 0, netQuantity: 0, purchasePrice: poItem.rate || 0,          // rate from PO
+                subTotal: 0, discountByPercent: 0, iscountByValue: 0, totalIncDisc: 0, gstByPercent: 0,
+                gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
+                saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0
+              });
+              this.poQtyChange(poItem);
+              this.callForPOModal=false;
+            });
+          }
+        })
+      },
+      reject: () => {
+
+      }
+    });
   }
 
 }

@@ -1,21 +1,19 @@
 <div class="container-fluid mt-2 pt-1">
     <h3 class="font-bold ml-1 mb-2">TILL CLOSE</h3>
-    <div class="row">  
+    <div class="row">
         <div class="col-md-4">
             <div class="card h-100 shadow-3">
                 <div class="card-header font-bold border-100 border-bottom ">Detail Info</div>
                 <div class="card-body">
                     <div class="row mt-2">
                         <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Till No</label>
+                            <label class="mt-1 font-bold text-success">Till No</label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Till No"
-                                   [(ngModel)]="formData.tillNo">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Till No"
+                                [(ngModel)]="formData.tillNo">
                         </div>
-                    </div> 
+                    </div>
                     <!-- <div class="row mt-2">
                         <div class="col-md-3">
                            <label class="mt-1 font-bold text-success">Till Name</label>
@@ -29,15 +27,13 @@
                     </div>  -->
                     <div class="row mt-2">
                         <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">User</label>
+                            <label class="mt-1 font-bold text-success">User</label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter User" 
-                                   [(ngModel)]="formData.userId">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter User"
+                                [(ngModel)]="formData.userId">
                         </div>
-                    </div> 
+                    </div>
                     <!-- <div class="row mt-2">
                         <div class="col-md-3">
                            <label class="mt-1 font-bold text-success">Shift</label>
@@ -73,28 +69,32 @@
                     </div>  -->
                     <div class="row mt-2">
                         <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Amount</label>
+                            <label class="mt-1 font-bold text-success">Amount</label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.tillCloseAmount">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.tillCloseAmount">
                         </div>
-                    </div> 
+                    </div>
                     <div class="row mt-2">
                         <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Notes.</label>
+                            <label class="mt-1 font-bold text-success">Location</label>
                         </div>
                         <div class="col-md-9">
-                            <textarea class="border-green-200"
-                                rows="5"
-                                cols="38" 
-                                pInputTextarea 
+                            <p-dropdown class="w-100" [options]="location" [(ngModel)]="formData.locationId"
+                                placeholder="Select a Location" optionLabel="name" optionValue="id"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-3">
+                            <label class="mt-1 font-bold text-success">Notes.</label>
+                        </div>
+                        <div class="col-md-9">
+                            <textarea class="border-green-200" rows="5" cols="38" pInputTextarea
                                 [(ngModel)]="formData.notes">
                             </textarea>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,294 +104,204 @@
                 <div class="card-body">
                     <div class="row mt-1">
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="5000"
-                                   [disabled]="true" value="5000"
-                                   [(ngModel)]="tillCloseForm.five000">
+                            <input type="number" class="form-control form-control-sm" placeholder="5000"
+                                [disabled]="true" value="5000" [(ngModel)]="tillCloseForm.five000">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             X
                         </div>
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="false" (input)="amountfive000Changes($event)" 
-                                   [(ngModel)]="tillCloseForm.five000v">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="false"
+                                (input)="amountfive000Changes($event)" [(ngModel)]="tillCloseForm.five000v">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             =
                         </div>
                         <div class="col-md-4">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="true"
-                                   [(ngModel)]="tillCloseForm.five000t">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="true"
+                                [(ngModel)]="tillCloseForm.five000t">
                         </div>
-                    </div> 
+                    </div>
                     <div class="row mt-1">
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="1000"
-                                   [disabled]="true" value="1000"
-                                   [(ngModel)]="tillCloseForm.one0000">
+                            <input type="number" class="form-control form-control-sm" placeholder="1000"
+                                [disabled]="true" value="1000" [(ngModel)]="tillCloseForm.one0000">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             X
                         </div>
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="false" (input)="amountone000Changes($event)" 
-                                   [(ngModel)]="tillCloseForm.one0000v">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="false"
+                                (input)="amountone000Changes($event)" [(ngModel)]="tillCloseForm.one0000v">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             =
                         </div>
                         <div class="col-md-4">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="true"
-                                   [(ngModel)]="tillCloseForm.one0000t">
+                            <input type="text" class="form-control form-control-sm" placeholder="0" [disabled]="true"
+                                [(ngModel)]="tillCloseForm.one0000t">
                         </div>
-                    </div> 
+                    </div>
                     <div class="row mt-1">
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="500"
-                                   [disabled]="true" value="500"
-                                   [(ngModel)]="tillCloseForm.five00">
+                            <input type="number" class="form-control form-control-sm" placeholder="500"
+                                [disabled]="true" value="500" [(ngModel)]="tillCloseForm.five00">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             X
                         </div>
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="false" (input)="amountfive00Changes($event)" 
-                                   [(ngModel)]="tillCloseForm.five00v">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="false"
+                                (input)="amountfive00Changes($event)" [(ngModel)]="tillCloseForm.five00v">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             =
                         </div>
                         <div class="col-md-4">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="true"
-                                   [(ngModel)]="tillCloseForm.five00t">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="true"
+                                [(ngModel)]="tillCloseForm.five00t">
                         </div>
-                    </div> 
+                    </div>
                     <div class="row mt-1">
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="100"
-                                   [disabled]="true" value="100"
-                                   [(ngModel)]="tillCloseForm.one00">
+                            <input type="number" class="form-control form-control-sm" placeholder="100"
+                                [disabled]="true" value="100" [(ngModel)]="tillCloseForm.one00">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             X
                         </div>
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="false" (input)="amountone00Changes($event)" 
-                                   [(ngModel)]="tillCloseForm.one00v">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="false"
+                                (input)="amountone00Changes($event)" [(ngModel)]="tillCloseForm.one00v">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             =
                         </div>
                         <div class="col-md-4">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="true"
-                                   [(ngModel)]="tillCloseForm.one00t">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="true"
+                                [(ngModel)]="tillCloseForm.one00t">
                         </div>
-                    </div> 
+                    </div>
                     <div class="row mt-1">
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="50"
-                                   [disabled]="true" value="50"
-                                   [(ngModel)]="tillCloseForm.five0">
+                            <input type="number" class="form-control form-control-sm" placeholder="50" [disabled]="true"
+                                value="50" [(ngModel)]="tillCloseForm.five0">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             X
                         </div>
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="false" (input)="amount50Changes($event)" 
-                                   [(ngModel)]="tillCloseForm.five0v">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="false"
+                                (input)="amount50Changes($event)" [(ngModel)]="tillCloseForm.five0v">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             =
                         </div>
                         <div class="col-md-4">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="true"
-                                   [(ngModel)]="tillCloseForm.five0t">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="true"
+                                [(ngModel)]="tillCloseForm.five0t">
                         </div>
-                    </div> 
+                    </div>
                     <div class="row mt-1">
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="20"
-                                   [disabled]="true" value="20"
-                                   [(ngModel)]="tillCloseForm.two0">
+                            <input type="number" class="form-control form-control-sm" placeholder="20" [disabled]="true"
+                                value="20" [(ngModel)]="tillCloseForm.two0">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             X
                         </div>
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="false" (input)="amounttwo0Changes($event)" 
-                                   [(ngModel)]="tillCloseForm.two0v">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="false"
+                                (input)="amounttwo0Changes($event)" [(ngModel)]="tillCloseForm.two0v">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             =
                         </div>
                         <div class="col-md-4">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="true"
-                                   [(ngModel)]="tillCloseForm.two0t">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="true"
+                                [(ngModel)]="tillCloseForm.two0t">
                         </div>
-                    </div> 
+                    </div>
                     <div class="row mt-1">
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="10"
-                                   [disabled]="true" value="10"
-                                   [(ngModel)]="tillCloseForm.one0">
+                            <input type="number" class="form-control form-control-sm" placeholder="10" [disabled]="true"
+                                value="10" [(ngModel)]="tillCloseForm.one0">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             X
                         </div>
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="false" (input)="amountOne0Changes($event)" 
-                                   [(ngModel)]="tillCloseForm.one0v">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="false"
+                                (input)="amountOne0Changes($event)" [(ngModel)]="tillCloseForm.one0v">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             =
                         </div>
                         <div class="col-md-4">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="true"
-                                   [(ngModel)]="tillCloseForm.one0t">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="true"
+                                [(ngModel)]="tillCloseForm.one0t">
                         </div>
-                    </div> 
+                    </div>
                     <div class="row mt-1">
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="5"
-                                   [disabled]="true" value="5"
-                                   [(ngModel)]="tillCloseForm.five">
+                            <input type="number" class="form-control form-control-sm" placeholder="5" [disabled]="true"
+                                value="5" [(ngModel)]="tillCloseForm.five">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             X
                         </div>
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="false" (input)="amountfiveChanges($event)" 
-                                   [(ngModel)]="tillCloseForm.fivev">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="false"
+                                (input)="amountfiveChanges($event)" [(ngModel)]="tillCloseForm.fivev">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             =
                         </div>
                         <div class="col-md-4">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="true"
-                                   [(ngModel)]="tillCloseForm.fivet">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="true"
+                                [(ngModel)]="tillCloseForm.fivet">
                         </div>
-                    </div> 
+                    </div>
                     <div class="row mt-1">
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="2"
-                                   [disabled]="true" value="2"
-                                   [(ngModel)]="tillCloseForm.two">
+                            <input type="number" class="form-control form-control-sm" placeholder="2" [disabled]="true"
+                                value="2" [(ngModel)]="tillCloseForm.two">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             X
                         </div>
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="false" (input)="amounttwoChanges($event)" 
-                                   [(ngModel)]="tillCloseForm.twov">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="false"
+                                (input)="amounttwoChanges($event)" [(ngModel)]="tillCloseForm.twov">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             =
                         </div>
                         <div class="col-md-4">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="true"
-                                   [(ngModel)]="tillCloseForm.twot">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="true"
+                                [(ngModel)]="tillCloseForm.twot">
                         </div>
-                    </div> 
+                    </div>
                     <div class="row mt-1">
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="1"
-                                   [disabled]="true" value="1"
-                                   [(ngModel)]="tillCloseForm.one">
+                            <input type="number" class="form-control form-control-sm" placeholder="1" [disabled]="true"
+                                value="1" [(ngModel)]="tillCloseForm.one">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             X
                         </div>
                         <div class="col-md-3">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="false" (input)="amountOneChanges($event)" 
-                                   [(ngModel)]="tillCloseForm.onev">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="false"
+                                (input)="amountOneChanges($event)" [(ngModel)]="tillCloseForm.onev">
                         </div>
                         <div class="col-md-1 d-flex align-items-center justify-content-center">
                             =
                         </div>
                         <div class="col-md-4">
-                            <input type="number"
-                                   class="form-control form-control-sm"
-                                   placeholder="0"
-                                   [disabled]="true"
-                                   [(ngModel)]="tillCloseForm.onet">
+                            <input type="number" class="form-control form-control-sm" placeholder="0" [disabled]="true"
+                                [(ngModel)]="tillCloseForm.onet">
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
 
@@ -402,145 +312,121 @@
                 <div class="card-body">
                     <div class="row mt-2">
                         <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Gross Sale</label>
+                            <label class="mt-1 font-bold text-success">Gross Sale</label>
                         </div>
                         <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Till No" 
-                                   [(ngModel)]="formData.grossSale">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Total Disc(+)</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter User" 
-                                   [(ngModel)]="formData.totalDisc">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Total GST(-)</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.totalGST">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Misc(+)</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.misc">
-                        </div>
-                    </div> 
-                     <div class="row mt-2">
-                        <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Credit Sale(-)</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.totalCreditAmount">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Cash SaleReturn(-)</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.cashSaleReturn">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Till Open</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.tillOpenAmount">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Cash In(+)</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.cashIn">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Cash Out(-)</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.cashOut">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Net Cash(-)</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.netCash">
-                        </div>
-                    </div> 
-                    <div class="row mt-2">
-                        <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Shortage(-)</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.shortage">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Till No"
+                                [(ngModel)]="formData.grossSale">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success">Net Sale(-)</label>
+                            <label class="mt-1 font-bold text-success">Total Disc(+)</label>
                         </div>
                         <div class="col-md-7">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Amount" 
-                                   [(ngModel)]="formData.netSale">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter User"
+                                [(ngModel)]="formData.totalDisc">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-5">
-                           <label class="mt-1 font-bold text-success"></label>
+                            <label class="mt-1 font-bold text-success">Total GST(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.totalGst">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <label class="mt-1 font-bold text-success">Misc(+)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.misc">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <label class="mt-1 font-bold text-success">Credit Sale(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.totalCreditAmount">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <label class="mt-1 font-bold text-success">Cash SaleReturn(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.cashSaleReturn">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <label class="mt-1 font-bold text-success">Till Open</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.tillOpenAmount">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <label class="mt-1 font-bold text-success">Cash In(+)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.cashIn">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <label class="mt-1 font-bold text-success">Cash Out(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.cashOut">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <label class="mt-1 font-bold text-success">Net Cash(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.netCash">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <label class="mt-1 font-bold text-success">Shortage(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.shortage">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <label class="mt-1 font-bold text-success">Net Sale(-)</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Amount"
+                                [(ngModel)]="formData.netSale">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <label class="mt-1 font-bold text-success"></label>
                         </div>
                         <div class="col-md-7">
                             <button pButton pRipple type="button" icon="pi pi-shopping-bag" (click)="dummyTillClose()"
-                            label="Dummy Till Close" class="float-end p-button-sm p-button-success"> </button>
+                                label="Dummy Till Close" class="float-end p-button-sm p-button-success"> </button>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
@@ -548,13 +434,12 @@
     <div class="row mt-4">
         <div class="col-md-12">
             <div class="card shadow-3 ">
-                <div class="card-body"> 
+                <div class="card-body">
                     <button pButton pRipple type="button" icon="pi pi-save" (click)="createSaleTIll()"
-                    label="Till Close" class="mr-3 float-end p-button-sm p-button-success"> </button>
-                    <button style="margin-right: 3px" pButton pRipple type="button"
-                    icon="pi pi-arrow-left" (click)="cancel()" label="Back"
-                    class="float-end p-button-sm p-button-danger"> </button>
-            
+                        label="Till Close" class="mr-3 float-end p-button-sm p-button-success"> </button>
+                    <button style="margin-right: 3px" pButton pRipple type="button" icon="pi pi-arrow-left"
+                        (click)="cancel()" label="Back" class="float-end p-button-sm p-button-danger"> </button>
+
                 </div>
             </div>
         </div>
