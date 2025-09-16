@@ -14,7 +14,10 @@ export class PurcOrderFormComponent {
   @ViewChild('tableRef') tableRef!: ElementRef;
   @ViewChild('searchInput') searchInput!: ElementRef;
   constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
-  formData: any = {};
+  formData: any = {
+    startDate: new Date(), 
+    endDate: new Date()    
+  };
   userTypes: any = [];
   genders: any = [{ label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }];
   urlId: any;
@@ -91,7 +94,8 @@ export class PurcOrderFormComponent {
         this.purchOrderDtlData = [...result.purchaseOrderDetails];
         if (result.purchaseOrders.length > 0) {
           const firstOrder = result.purchaseOrders[0];
-          this.formData = { ...this.formData, ...firstOrder };
+          //this.formData = { ...this.formData, ...firstOrder };
+          Object.assign(this.formData, firstOrder);
         }
       });
   }
@@ -197,19 +201,33 @@ export class PurcOrderFormComponent {
   }
 
   AddData() {
+    this.isBarcodeEnabled = true;
     const lastItem = this.purchOrderDtlData[this.purchOrderDtlData.length - 1];
-    if (!lastItem || (lastItem.barcode && lastItem.barcode.trim() !== '')) {
-      this.purchOrderDtlData.push({
-      no: 0, barCode: '', itemName: '', bonusQty: '',
-      salePrice: 0, desc: 0, flatDesconeachQty: 0, gST: 0, gSTPer2: 0, remakrs: ''
-      });
-    }
-    
+    //if (!lastItem || (lastItem.barcode && lastItem.barcode.trim() !== '')) {
+      //this.purchOrderDtlData.push({
+      //no: 0, barCode: '', itemName: '', bonusQty: '',
+      //salePrice: 0, desc: 0, flatDesconeachQty: 0, gST: 0, gSTPer2: 0, remakrs: ''
+      //});
+    //}
+    const newRow = {
+    no: 0,
+    barCode: '',
+    itemName: '',
+    soldQty: 0,
+    rtnQty: 0,
+    netSaleQty: 0,
+    rate: 0,
+    currentStock: 0,
+    requiredQty: 0,
+    total: 0
+  };
+  this.purchOrderDtlData = [...this.purchOrderDtlData, newRow];
   }
   RemoveData() {
     this.purchOrderDtlData = [];
   }
   RemoveCol(index: number) {
+    this.isBarcodeEnabled = false;
     this.purchOrderDtlData.splice(index, 1);
   }
 
@@ -520,5 +538,5 @@ export class PurcOrderFormComponent {
     };
   }
 
-
+isBarcodeEnabled: boolean = false;
 }

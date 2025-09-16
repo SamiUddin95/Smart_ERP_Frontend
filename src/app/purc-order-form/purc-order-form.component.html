@@ -228,7 +228,7 @@
                                                                                         class="form-control form-control-sm col-md-12 pwd"
                                                                                         placeholder="No"
                                                                                         (keypress)="onKey($event,user)"
-                                                                                        autofocus [disabled]="true"
+                                                                                        autofocus [disabled]="!isBarcodeEnabled"
                                                                                         [id]="'barCode-' + i"
                                                                                         (keydown)="moveFocus($event, i, 'barCode')"
                                                                                         [(ngModel)]="user.barCode"></td>
