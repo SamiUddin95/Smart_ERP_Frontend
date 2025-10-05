@@ -38,7 +38,7 @@ import { PartyPriceListComponent } from './party-price-list/party-price-list.com
 import { PartyPriceFormComponent } from './party-price-form/party-price-form.component';
 import { PurcReturnFormComponent } from './purc-return-form/purc-return-form.component';
 import { PurcReturnListComponent } from './purc-return-list/purc-return-list.component';
-import { ItemComponent } from './item/item.component';
+// import { ItemComponent } from './item/item.component';
 import { BrandsComponent } from './brands/brands.component';
 import { CategoryComponent } from './category/category.component';
 import { ClassComponent } from './class/class.component';
@@ -144,7 +144,7 @@ const routes: Routes = [
   { path: 'purch-order-list', component: PurcOrderListComponent, },
   { path: 'purch-order-form', component: PurcOrderFormComponent,},
   { path: 'purch-order-form/:id', component: PurcOrderFormComponent ,},
-  { path: 'item', component: ItemComponent ,},
+  // { path: 'item', component: ItemComponent ,},
   { path: 'item-form', component: ItemFormComponent,},
   { path: 'item-form/:id', component: ItemFormComponent,},
   { path: 'stck-adj-list', component: StckAdjListComponent ,},

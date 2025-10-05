@@ -16,10 +16,10 @@ export class PurhaseFormComponent {
   constructor(private confirmationService: ConfirmationService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
   @ViewChild('tableRef') tableRef!: ElementRef;
   formData: any = {};
-  prodSearchFormVisible: boolean = false;
+  parentProdSearchFormVisible: boolean = false;
   prntChldItmSrchFrmVisible: boolean = false;
-  childItemSearch: any;
-  childItems: any = [];
+  parentItemSearch: any;
+  parentItems: any = [];
   parentChildAltItems: any = [];
   urlId: any = 0;
   party: any = [];
@@ -71,18 +71,18 @@ export class PurhaseFormComponent {
   }
   @HostListener('document:keydown.F8', ['$event'])
   onF8Pressed(event: any, user: any) {
-    this.childItems = [];
-    this.selectedChildItem = [];
-    this.childItemSearch = '';
-    this.prodSearchFormVisible = true;
+    this.parentItems = [];
+    this.selectedParentItem = [];
+    this.parentItemSearch = '';
+    this.parentProdSearchFormVisible = true;
   }
-  searchParentAltChildItem(barCode: string) {
+  searchParentItem(barCode: string) {
     if (barCode.length > 1) {
       this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
-        debugger
         this.parentChildAltItems = JSON.parse(res)
-        this.childItems = this.parentChildAltItems.item;
-        this.selectedChildItem = this.childItems[0]; // highlight first row
+        this.parentItems = this.parentChildAltItems.item;
+        this.selectFirstRow(this.concatParentChildItems, 'parentChild');
+        this.selectedParentItem = this.parentItems[0]; // highlight first row
       });
     }
   }
@@ -121,11 +121,27 @@ export class PurhaseFormComponent {
     this.tdChange(user); // ✅ Call automatically when row focus changes
   }
 
+  selectFirstRow(items: any[], type: 'child' | 'parentChild' | 'calledPO') {
+    if (items && items.length) {
+      if (type === 'child') {
+        this.selectedParentItem = items[0];
+      } else if (type === 'parentChild') {
+        this.selectedParentChildItem = items[0];
+      } else {
+        this.selectedCalledPOItem = items[0];
+      }
 
+      // Force PrimeNG to paint the highlight
+      setTimeout(() => {
+        this.cdr.detectChanges();
+        this.scrollToDialogRow(0, type); // scroll + focus first row
+      }, 0);
+    }
+  }
   @HostListener('document:keydown.arrowdown', ['$event'])
   handleArrowDown(event: KeyboardEvent) {
-    if (this.prodSearchFormVisible && this.childItems?.length) {
-      this.moveinDialogSelection(event, this.childItems, 'child');
+    if (this.parentProdSearchFormVisible && this.parentItems?.length) {
+      this.moveinDialogSelection(event, this.parentItems, 'child');
     } else if (this.prntChldItmSrchFrmVisible && this.concatParentChildItems?.length) {
       this.moveinDialogSelection(event, this.concatParentChildItems, 'parentChild');
     } else if (this.callForPOModal && this.calledPODetails?.length) {
@@ -135,8 +151,8 @@ export class PurhaseFormComponent {
 
   @HostListener('document:keydown.arrowup', ['$event'])
   handleArrowUp(event: KeyboardEvent) {
-    if (this.prodSearchFormVisible && this.childItems?.length) {
-      this.moveinDialogSelection(event, this.childItems, 'child', true);
+    if (this.parentProdSearchFormVisible && this.parentItems?.length) {
+      this.moveinDialogSelection(event, this.parentItems, 'child', true);
     } else if (this.prntChldItmSrchFrmVisible && this.concatParentChildItems?.length) {
       this.moveinDialogSelection(event, this.concatParentChildItems, 'parentChild', true);
     } else if (this.callForPOModal && this.calledPODetails?.length) {
@@ -169,7 +185,7 @@ export class PurhaseFormComponent {
     event.preventDefault();
 
     let selectedItem =
-      type === 'child' ? this.selectedChildItem :
+      type === 'child' ? this.selectedParentItem :
         type === 'parentChild' ? this.selectedParentChildItem :
           this.selectedCalledPOItem;
 
@@ -183,7 +199,7 @@ export class PurhaseFormComponent {
     }
 
     if (type === 'child') {
-      this.selectedChildItem = items[nextIndex];
+      this.selectedParentItem = items[nextIndex];
     } else if (type === 'parentChild') {
       this.selectedParentChildItem = items[nextIndex];
     } else {
@@ -193,36 +209,55 @@ export class PurhaseFormComponent {
     this.scrollToDialogRow(nextIndex, type);
   }
 
-  concatParentChildItems: any = [];
+
   @HostListener('document:keydown.enter', ['$event'])
-  handleEnterKey(event: KeyboardEvent) {
-    if (this.prodSearchFormVisible && this.selectedChildItem) {
+  handleProdParentFormEnterKey(event: KeyboardEvent) {
+    if (this.parentProdSearchFormVisible && this.selectedParentItem) {
       event.preventDefault();
-      if (this.parentChildAltItems.childItems.length > 0 || this.parentChildAltItems.altItems.length > 0) {
-        this.prodSearchFormVisible = false;
-        this.prntChldItmSrchFrmVisible = true;
-        this.concatParentChildItems = this.parentChildAltItems.childItems.concat(this.parentChildAltItems.altItems);
-        this.selectedParentChildItem = this.concatParentChildItems[0];
-      } else {
-        this.addParentChildAltItemToPurchaseList(this.selectedChildItem);
-        this.prodSearchFormVisible = false;
-      }
+      this.handleParentItemEnterKey(this.selectedParentItem);
+    } else if (this.prntChldItmSrchFrmVisible && this.selectedParentChildItem) {
+      event.preventDefault();
+      this.addConcatParentChildItemToPurchaseList(this.selectedParentChildItem);
+
+    } else if (this.callForPOModal && this.selectedCalledPOItem) {
+      event.preventDefault();
+      // this.handleCalledPOEnterKey(this.selectedCalledPOItem);
     }
   }
+  concatParentChildItems: any = [];
+  handleParentItemEnterKey(item: any) {
+    this.api.getAllAlternateItemDetailbyItemName(item.itemId).subscribe(res => {
+      let itemRes = JSON.parse(res);
+      this.concatParentChildItems = itemRes.altItems.concat(itemRes.childItems);
+      if (this.concatParentChildItems.length > 0) {
+        this.selectedParentChildItem = this.concatParentChildItems[0];
+        this.parentProdSearchFormVisible = false;
+        this.prntChldItmSrchFrmVisible = true;
+      } else {
+        this.addParentChildAltItemToPurchaseList(item);
 
-  handleParentChildItemEnterKey(item: any) {
-    if (this.parentChildAltItems.childItems.length > 0 || this.parentChildAltItems.altItems.length > 0) {
-      this.prodSearchFormVisible = false;
-      this.prntChldItmSrchFrmVisible = true;
-      this.concatParentChildItems = this.parentChildAltItems.childItems.concat(this.parentChildAltItems.altItems);
-      this.selectedParentChildItem = this.concatParentChildItems[0];
-    } else {
-      this.addParentChildAltItemToPurchaseList(item);
-      this.prodSearchFormVisible = false;
-    }
+      }
+
+
+    })
   }
   addConcatParentChildItemToPurchaseList(item: any) {
-    this.addParentChildAltItemToPurchaseList(item);
+    debugger
+    const lastItem = this.purcDtl[this.purcDtl.length - 1];
+
+    // If last row exists and barcode is empty -> remove it
+    if (lastItem && (!lastItem.barcode || lastItem.barcode.trim() === '')) {
+      this.purcDtl.pop();
+    }
+    this.purcDtl.push({
+      no: 0, barcode: item.barCode, ItemName: item.itemName, quantity: 0, disableBarcode: false,
+      bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
+      discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
+      saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0
+    });
+
+
+    this.prntChldItmSrchFrmVisible = false;
   }
 
   onKey(event: any, user: any) {
@@ -481,12 +516,19 @@ export class PurhaseFormComponent {
     this.netProfitInValue = Number(Math.abs(this.netProfitInValue).toFixed(2));
   }
   addParentChildAltItemToPurchaseList(item: any) {
+    const lastItem = this.purcDtl[this.purcDtl.length - 1];
+
+    // If last row exists and barcode is empty -> remove it
+    if (lastItem && (!lastItem.barcode || lastItem.barcode.trim() === '')) {
+      this.purcDtl.pop();
+    }
     this.purcDtl.push({
       no: 0, barcode: item.barCode, ItemName: item.itemName, quantity: 0, disableBarcode: false,
       bonusQuantity: 0, netQuantity: 0, purchasePrice: 0, subTotal: 0, discountByPercent: 0,
       discountByValue: 0, totalIncDisc: 0, gstByPercent: 0, gstByValue: 0, totalIncGst: 0, netRate: 0, salePrice: 0,
       saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0
     });
+    this.parentProdSearchFormVisible = false;
   }
 
   getParty() {
@@ -710,7 +752,7 @@ export class PurhaseFormComponent {
 
   }
   unPostPurchase() {
-    debugger
+
     this.isPosted = false;
     this.barCodes = this.purcDtl.map(x => x.barcode).join(',');
     this.purchasePrice = this.purcDtl.map(x => x.purchasePrice).join(',');
@@ -817,10 +859,10 @@ export class PurhaseFormComponent {
       this.searchItemInput?.nativeElement?.focus();
     });
   }
-  selectedChildItem: any;
+  selectedParentItem: any;
   selectedParentChildItem: any;
   @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
-  focusProductSearchInput(): void {
+  focusParentProductSearchInput(): void {
     setTimeout(() => {
       this.searchProdItemInput?.nativeElement?.focus();
     });
@@ -944,7 +986,7 @@ export class PurhaseFormComponent {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to perform this action?',
       accept: () => {
-        debugger
+
         this.api.getPurchaseOrderDetailById(item.id).subscribe(res => {
           this.calledPurcOrderDetails = res;
           if (this.calledPurcOrderDetails.length > 0) {
@@ -959,7 +1001,7 @@ export class PurhaseFormComponent {
                 saleDiscountByValue: 0, netSalePrice: 0, totalSalePrice: 0, marginPercent: 0
               });
               this.poQtyChange(poItem);
-              this.callForPOModal=false;
+              this.callForPOModal = false;
             });
           }
         })

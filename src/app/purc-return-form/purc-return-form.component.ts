@@ -77,7 +77,6 @@ export class PurcReturnFormComponent {
   getUserById(id: any) {
 		this.api.getPurchaseReturnById(String(id)).subscribe(res => { 
       var res=JSON.parse(res); 
-      debugger
       this.purcRetDtl=res.purchaseOrderDetails;
       this.formData.id=res.purchaseOrders[0].id;
       this.formData.remarks=res.purchaseOrders[0].remarks;
@@ -305,38 +304,30 @@ export class PurcReturnFormComponent {
     this.searchedItemName="";
   }
   barCodes: string = '';
-  currentStock: string = '';
+  currentStock: any = '';
   salePrice: string = '';
   purchasePrice: string = '';
   saleDisc: string = '';
   netSalePrice: string = '';
   postPurchase() {
-    debugger
-    this.barCodes = this.purcRetDtl.map((x: { barcode: any; }) => x.barcode).join(',');
-    this.purchasePrice = this.purcRetDtl.map((x: { purchasePrice: any; }) => x.purchasePrice).join(',');
-    this.salePrice = this.purcRetDtl.map((x: { netSalePrice: any; }) => x.netSalePrice).join(',');
-    this.currentStock = this.purcRetDtl.map((x: { netQuantity: any; }) => x.netQuantity).join(',');
-    this.saleDisc = this.purcRetDtl.map((x: { saleDiscountByValue: any; }) => x.saleDiscountByValue).join(',');
-    this.netSalePrice = this.purcRetDtl.map((x: { netSalePrice: any; }) => x.netSalePrice).join(',');
-    const name = localStorage.getItem("Name")?.toString() ?? '';
-    this.api.postPurchaseReturn(name, this.urlId, this.barCodes, this.currentStock, this.salePrice,
-      this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
+    let formData:any={
+      purchaseId:this.urlId?this.formData.id=this.urlId:undefined,
+      postedBy:localStorage.getItem("Name")?.toString() ?? '',
+      PostUnPostRtnDtlModel:this.purcRetDtl 
+    }
+    this.api.postPurchaseReturn(formData).subscribe(res => {
         if (res.status == "OK")
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
       });
     
   }
   unPostPurchase() {
-    debugger
-    this.barCodes = this.purcRetDtl.map((x: { barcode: any; }) => x.barcode).join(',');
-    this.purchasePrice = this.purcRetDtl.map((x: { purchasePrice: any; }) => x.purchasePrice).join(',');
-    this.salePrice = this.purcRetDtl.map((x: { netSalePrice: any; }) => x.netSalePrice).join(',');
-    this.currentStock = this.purcRetDtl.map((x: { netQuantity: any; }) => x.netQuantity).join(',');
-    this.saleDisc = this.purcRetDtl.map((x: { saleDiscountByValue: any; }) => x.saleDiscountByValue).join(',');
-    this.netSalePrice = this.purcRetDtl.map((x: { netSalePrice: any; }) => x.netSalePrice).join(',');
-    const name = localStorage.getItem("Name")?.toString() ?? '';
-    this.api.unPostPurchaseReturn(name, this.urlId, this.barCodes, this.currentStock, this.salePrice,
-      this.purchasePrice, this.saleDisc, this.netSalePrice).subscribe(res => {
+    let formData:any={
+      purchaseId:this.urlId?this.formData.id=this.urlId:undefined,
+      postedBy:localStorage.getItem("Name")?.toString() ?? '',
+      PostUnPostRtnDtlModel:this.purcRetDtl 
+    }
+    this.api.unPostPurchaseReturn(formData).subscribe(res => {
         if (res.status == "OK")
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.msg });
       });

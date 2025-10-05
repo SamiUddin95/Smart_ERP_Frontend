@@ -61,7 +61,7 @@ import { PurcOrderListComponent } from './purc-order-list/purc-order-list.compon
 import { PurcOrderFormComponent } from './purc-order-form/purc-order-form.component';
 import { PurcReturnListComponent } from './purc-return-list/purc-return-list.component';
 import { PurcReturnFormComponent } from './purc-return-form/purc-return-form.component';
-import { ItemComponent } from './item/item.component';
+// import { ItemComponent } from './item/item.component';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { BrandsComponent } from './brands/brands.component';
 import { BrandsFormComponent } from './brands-form/brands-form.component';
@@ -148,7 +148,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     SaleListComponent,
     SaleFormComponent,
     SalesManFormComponent,CategoryComponent,CategoryFormComponent,ClassComponent,ClassFormComponent,
-    SalesManListComponent, ItemComponent,ItemFormComponent,BrandsComponent,BrandsFormComponent,ManufacturerComponent,ManufacturerFormComponent,
+    SalesManListComponent,
+    //  ItemComponent,
+    ItemFormComponent,BrandsComponent,BrandsFormComponent,ManufacturerComponent,ManufacturerFormComponent,
     PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent,
      PurcReturnListComponent, PurcReturnFormComponent, PurcOrderListComponent, PurcOrderFormComponent, 
      SaleCashInComponent, SaleCashOutComponent, SaleTillOpenComponent, SaleTillCloseComponent,

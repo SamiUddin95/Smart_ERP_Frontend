@@ -457,18 +457,18 @@
         </div>
     </section>
 </div>
-<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="prodSearchFormVisible"
-    [style]="{ width: '75rem' }" (onShow)="focusProductSearchInput()">
+<p-dialog header="Product Searching Form" [modal]="true" [(visible)]="parentProdSearchFormVisible"
+    [style]="{ width: '75rem' }" (onShow)="focusParentProductSearchInput()">
     <div class="flex items-center gap-4 mb-4">
         <label for="username" class="font-semibold w-25">Searching Criteria</label>
-        <input type="text" #searchProdItemInput class="w-75" (input)="searchParentAltChildItem(childItemSearch)"
-            class="form-control form-control-sm" placeholder="Enter Item Here" [(ngModel)]="childItemSearch">
+        <input type="text" #searchProdItemInput class="w-75" (input)="searchParentItem(parentItemSearch)"
+            class="form-control form-control-sm" placeholder="Enter Item Here" [(ngModel)]="parentItemSearch">
     </div>
     <div class="pad-wrapper">
         <div class="box">
             <div class="content">
-                <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="childItems"
-                    styleClass="p-datatable-sm p-datatable-gridlines" [(selection)]="selectedChildItem"
+                <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll" [value]="parentItems"
+                    styleClass="p-datatable-sm p-datatable-gridlines" [(selection)]="selectedParentItem"
                     selectionMode="single" dataKey="barCode"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
                     [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10">
@@ -484,14 +484,14 @@
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-itm>
-                        <tr (keydown.enter)="handleParentChildItemEnterKey(itm)" [pSelectableRow]="itm">
+                        <tr (keydown.enter)="handleParentItemEnterKey(itm)" [pSelectableRow]="itm">
                             <td>{{itm.barCode}}</td>
                             <td>{{itm.itemName}}</td>
                             <td>{{itm.cost}}</td>
                             <td>{{itm.salePrice}}</td>
                             <button style="margin-right: 3px" pButton pRipple label="Add"
                                 class="p-button-rounded p-button-info"
-                                (click)="handleParentChildItemEnterKey(itm)"></button>
+                                (click)="handleParentItemEnterKey(itm)"></button>
                         </tr>
                     </ng-template>
 

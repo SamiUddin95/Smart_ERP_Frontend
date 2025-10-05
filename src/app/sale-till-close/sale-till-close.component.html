@@ -14,17 +14,6 @@
                                 [(ngModel)]="formData.tillNo">
                         </div>
                     </div>
-                    <!-- <div class="row mt-2">
-                        <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Till Name</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Till Name" 
-                                   [(ngModel)]="formData.tillName">
-                        </div>
-                    </div>  -->
                     <div class="row mt-2">
                         <div class="col-md-3">
                             <label class="mt-1 font-bold text-success">User</label>
@@ -34,39 +23,6 @@
                                 [(ngModel)]="formData.userId">
                         </div>
                     </div>
-                    <!-- <div class="row mt-2">
-                        <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Shift</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Shift" 
-                                   [(ngModel)]="formData.shiftId">
-                        </div>
-                    </div>  -->
-                    <!-- <div class="row mt-2">
-                        <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Branch</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Branch" 
-                                   [(ngModel)]="formData.branchId">
-                        </div>
-                    </div>  -->
-                    <!-- <div class="row mt-2">
-                        <div class="col-md-3">
-                           <label class="mt-1 font-bold text-success">Company</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control form-control-sm"
-                                   placeholder="Enter Company" 
-                                   [(ngModel)]="formData.companyId">
-                        </div>
-                    </div>  -->
                     <div class="row mt-2">
                         <div class="col-md-3">
                             <label class="mt-1 font-bold text-success">Amount</label>
@@ -429,6 +385,108 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p-tabView>
+                <!-- Credit Sale -->
+                <p-tabPanel header="Credit Sale">
+                    <div class="border summary-table">
+                        <p-table [style]="{'width':'100%'}" scrollHeight="400px" responsiveLayout="scroll"
+                            styleClass="p-datatable-sm p-datatable-gridlines summary-table">
+
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Account</th>
+                                    <th>Default Bank</th>
+                                    <th>Amount</th>
+                                    <th>Slip</th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body">
+                                <tr>
+                                    <td>Account 1</td>
+                                    <td>Bank 1</td>
+                                    <td>0.00</td>
+                                    <td>10</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-tabPanel>
+
+                <!-- Cash In -->
+                <p-tabPanel header="Cash In">
+                    <div class="border summary-table">
+                        <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll"
+                            [value]="todaysCashIn" styleClass="p-datatable-sm p-datatable-gridlines"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+                            [rows]="10">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>TOSNO</th>
+                                    <th>Cash in S.No.</th>
+                                    <th>Opening Date</th>
+                                    <th>Notes</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-user>
+                                <tr>
+                                    <td>{{user.tillOpenNo}}</td>
+                                    <td>{{user.tillOpenNo}}</td>
+                                    <td>{{user.cashInDateTime}}</td>
+                                    <td>{{user.notes}}</td>
+                                    <td>{{user.status}}</td>
+                                    <td style="position: relative;" class="d-flex">
+                                        {{user.cashInAmount}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-tabPanel>
+
+                <!-- Cash Out -->
+                <p-tabPanel header="Cash Out">
+                    <div class="border summary-table">
+                        <p-table #dt [scrollable]="true" scrollHeight="600px" responsiveLayout="scroll"
+                            [value]="todaysCashOut" styleClass="p-datatable-sm p-datatable-gridlines"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="10"
+                            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+                            [rows]="10">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>TOSNO</th>
+                                    <th>Cash out S.No.</th>
+                                    <th>Opening Date</th>
+                                    <th>Notes</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-user>
+                                <tr>
+                                    <td>{{user.tillCloseNo}}</td>
+                                    <td>{{user.tillCloseNo}}</td>
+                                    <td>{{user.cashOutDateTime}}</td>
+                                    <td>{{user.tillCloseNo}}</td>
+                                    <td>{{user.cashOutAmount}}</td>
+                                    <td>{{user.notes}}</td>
+                                    <td style="position: relative;" class="d-flex">
+                                        {{user.cashOutAmount}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-tabPanel>
+            </p-tabView>
+
         </div>
     </div>
     <div class="row mt-4">

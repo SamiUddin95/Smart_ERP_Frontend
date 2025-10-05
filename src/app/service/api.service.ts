@@ -402,23 +402,27 @@ export class ApiService {
 			+ "&postedBy=" + postedBy);
 	}
 
-	postPurchaseReturn(postedBy: string, purchaseId: number, barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
-		return this.app.get('postPurchaseReturn?barCodes=' + barCodes + "&currentStock=" + currentStock +
-			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice + "&purchaseId=" + purchaseId
-			+ "&postedBy=" + postedBy);
+	postPurchaseReturn(obj:any) {
+		return this.app.post('postPurchaseReturn',obj);
 	}
-	unPostPurchaseReturn(postedBy: string, purchaseId: number, barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any) {
-		debugger
-		return this.app.get('unPostPurchaseReturn?barCodes=' + barCodes + "&currentStock=" + currentStock +
-			"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice + "&purchaseId=" + purchaseId
-			+ "&postedBy=" + postedBy);
+	unPostPurchaseReturn(obj:any) {
+		return this.app.post('postPurchaseReturn',obj);
 	}
-	//Stock Adjustment
-	// getAllStockAdjustment(dateFrom:string,dateTo:string,postedDate:string,postedBy:number,partyId:number,
-	// 	invNo:number) {
-	// 	return this.app.get('getAllPurchases?dateFrom='+dateFrom+'&dateTo='+dateTo+
-	// 		'&postedDate='+postedDate+'&postedBy='+postedBy+'&partyId='+partyId+'&invNo='+invNo);
+
+	// postPurchaseReturn(barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, netSalePrice: any,postedBy: string, purchaseId: number,) {
+	// 	return this.app.get('postPurchaseReturn?barCodes=' + barCodes + "&currentStock=" + currentStock +
+	// 		"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice + "&purchaseId=" + purchaseId
+	// 		+ "&postedBy=" + postedBy);
 	// }
+	// unPostPurchaseReturn(barCodes: any, currentStock: any, lastNetSalePrice: any, lastNetCost: any, saleDisc: any, 
+	// 	netSalePrice: any,postedBy: string, purchaseId: number,) {
+	// 	debugger
+	// 	return this.app.get('unPostPurchaseReturn?barCodes=' + barCodes + "&currentStock=" + currentStock +
+	// 		"&lastNetSalePrice=" + lastNetSalePrice + "&lastNetCost=" + lastNetCost + '&saleDisc=' + saleDisc + "&netSaleePrice=" + netSalePrice + "&purchaseId=" + purchaseId
+	// 		+ "&postedBy=" + postedBy);
+	// }
+
+	//Stock Adjustment
 	getAllStockAdjustment() {
 		return this.app.get('getAllStockAdj');
 	}
@@ -536,6 +540,9 @@ export class ApiService {
 	getAllItemDetailbyBarCode(name: string) {
 		return this.app.get('getAllItemDetailbyItemName?name=' + name);
 	}
+	getAllAlternateItemDetailbyItemName(id: string) {
+		return this.app.get('getAllAlternateItemDetailbyItemName?id=' + id);
+	}
 	deleteItemsById(id: any) {
 		return this.app.get('deleteItemById?id=' + id, id);
 	}
@@ -636,6 +643,15 @@ export class ApiService {
 	}
 	getDummyTillClose() {
 		return this.app.get('getDummyTillClose');
+	}
+	getAllTodaysCashIn() {
+		return this.app.get('getAllTodaysCashIn');
+	}
+	getAllTodaysCashOut() {
+		return this.app.get('getAllTodaysCashOut');
+	}
+	getAllTodaysCreditSale() {
+		return this.app.get('getAllTodaysCreditSale');
 	}
 	getAllTillClose() {
 		return this.app.get('getAllTillClose');
