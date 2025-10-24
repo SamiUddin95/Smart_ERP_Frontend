@@ -105,7 +105,7 @@ export class SaleFormComponent {
     return str;
   }
   cashReceivedChange() {
-    
+
     if (this.cashReceived > this.grandTotal) {
       this.cashBack = this.cashReceived - this.grandTotal;
       this.cashCharged = this.grandTotal;
@@ -297,7 +297,7 @@ export class SaleFormComponent {
     // }
   }
   salePriceChange(saleDtl: any) {
-    
+
     saleDtl.netSalePrice = saleDtl.salePrice - saleDtl.discount;
     this.resetTotal();
     this.calculateTotal();
@@ -418,12 +418,12 @@ export class SaleFormComponent {
     if (lastItem.itemName === '')
       this.saleDtl.pop();
     this.paymentDetails = [];
-    
+
     this.invoiceType = "Cash";
     this.invoiceTypeChange({ value: "Cash" });
   }
   addSale() {
-    
+
     this.searchedItemName = '';
     if (this.saleDtl.length == 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please Add Item first!" });
@@ -620,7 +620,7 @@ export class SaleFormComponent {
         this.cashBack = this.grandSaleRtnTotal;
         this.saleReturnDialog = false;
       }
-      
+
       this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Return Detail Saved Successfully" });
     }, (err: any) => {
 
@@ -754,7 +754,6 @@ export class SaleFormComponent {
       row?.scrollIntoView({ block: 'nearest' });
     }, 10);
   }
-
   selectedParentItem: any;
   selectedParentChildItem: any;
   @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
@@ -785,16 +784,14 @@ export class SaleFormComponent {
   parentChildAltItems: any = [];
   searchParentItem(barCode: string) {
     if (barCode.length > 1) {
-      
       this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
         this.parentChildAltItems = JSON.parse(res)
         this.parentItems = this.parentChildAltItems.item;
         this.selectFirstRow(this.concatParentChildItems, 'parentChild');
-        this.selectedParentItem = this.parentItems[0]; // highlight first row
+        this.selectedParentItem = this.parentItems[0];
       });
     }
   }
-
   @HostListener('document:keydown.F8', ['$event'])
   onF8Pressed(event: any, user: any) {
     this.parentItems = [];
@@ -811,9 +808,6 @@ export class SaleFormComponent {
 
     }
   }
-
-
-
   @HostListener('document:keydown.arrowup', ['$event'])
   handleArrowUp(event: KeyboardEvent) {
     if (this.parentProdSearchFormVisible && this.parentItems?.length) {
@@ -822,8 +816,6 @@ export class SaleFormComponent {
       this.moveinDialogSelection(event, this.concatParentChildItems, 'parentChild', true);
     }
   }
-
-
   @HostListener('document:keydown.enter', ['$event'])
   handleProdParentFormEnterKey(event: KeyboardEvent) {
     if (this.parentProdSearchFormVisible && this.selectedParentItem) {
@@ -841,22 +833,14 @@ export class SaleFormComponent {
       this.saleDtl.pop();
     }
     this.saleDtl.push({
-      no: 0, barCode: item.barCode,itemName:item.itemName, itemId: 0, qty: 1, discount: 0, netSalePrice: 0,
+      no: 0, barCode: item.barCode, itemName: item.itemName, itemId: 0, qty: 1, discount: 0, netSalePrice: 0,
       salePrice: item.salePrice, disc: 0, total: 0, netTotal: 0
     });
-
-
     this.prntChldItmSrchFrmVisible = false;
   }
 
-
-
-
-
   addParentChildAltItemToPurchaseList(item: any) {
     const lastItem = this.saleDtl[this.saleDtl.length - 1];
-
-    // If last row exists and barcode is empty -> remove it
     if (lastItem && (!lastItem.barcode || lastItem.barcode.trim() === '')) {
       this.saleDtl.pop();
     }

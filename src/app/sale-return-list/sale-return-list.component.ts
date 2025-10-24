@@ -7,31 +7,38 @@ import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable';
 
 @Component({
-  selector: 'app-sale-return-list',
-  templateUrl: './sale-return-list.component.html',
-  styleUrls: ['./sale-return-list.component.css']
+	selector: 'app-sale-return-list',
+	templateUrl: './sale-return-list.component.html',
+	styleUrls: ['./sale-return-list.component.css']
 })
 export class SaleReturnListComponent {
-  constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+	constructor(private router: Router, private api: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 	title = 'BMSFrontEnd';
-	filter: any={};
-	saleDetails:any=[];
+	filter: any = {};
+	saleDetails: any = [];
 	ngOnInit(): void {
 		this.getSalesDetail();
 	}
-	getSalesDetail(){
-		this.api.getAllSaleReturn().subscribe((res: any)=>{
-			this.saleDetails=res;
+	getSalesDetail() {
+		this.api.getAllSaleReturn().subscribe((res: any) => {
+			this.saleDetails = res;
 		});
 	}
 	partyPrice: any = [];
 	getPartyPriceList() {
-		this.api.getAllPartyPrice().subscribe((res: any) => { 
+		this.api.getAllPartyPrice().subscribe((res: any) => {
 			this.partyPrice = res;
 		})
 	}
 	addUser() {
-		this.router.navigate(['sale-return-form']);
+		this.api.getCheckTillOpen().subscribe((res: any) => {
+			if (res.msg == "please till open first!")
+				this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please Till Oprn First" });
+			else {
+				this.router.navigate(['sale-return-form']);
+
+			}
+		})
 	}
 	cancel() {
 
@@ -65,13 +72,13 @@ export class SaleReturnListComponent {
 		const doc = new jsPDF('l', 'mm', 'a4');
 		const head = [['userId', 'Name', 'Is Active', 'Name', 'Email', 'joiningDate', 'Phone']]
 		let body = this.partyPrice.map((elemento: { [s: string]: unknown; } | ArrayLike<unknown>) => Object.values(elemento));
-			autoTable(doc, {
-				head: head,
-				body: body,
-				didDrawCell: (data: any) => {
-					data = this.partyPrice;
-				},
-			});
+		autoTable(doc, {
+			head: head,
+			body: body,
+			didDrawCell: (data: any) => {
+				data = this.partyPrice;
+			},
+		});
 
 		doc.save('Gro.pdf');
 	}
