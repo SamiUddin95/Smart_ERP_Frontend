@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
 })
 export class SaleFormComponent {
   @ViewChild('tableRef') tableRef!: ElementRef;
-  constructor(private cdr: ChangeDetectorRef,private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
+  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
   formData: any = {};
   userTypes: any = [];
   genders: any = [{ label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }];
@@ -105,7 +105,7 @@ export class SaleFormComponent {
     return str;
   }
   cashReceivedChange() {
-    debugger
+    
     if (this.cashReceived > this.grandTotal) {
       this.cashBack = this.cashReceived - this.grandTotal;
       this.cashCharged = this.grandTotal;
@@ -297,7 +297,7 @@ export class SaleFormComponent {
     // }
   }
   salePriceChange(saleDtl: any) {
-    debugger
+    
     saleDtl.netSalePrice = saleDtl.salePrice - saleDtl.discount;
     this.resetTotal();
     this.calculateTotal();
@@ -391,7 +391,7 @@ export class SaleFormComponent {
           duplicateInfo.push({ row: i + 1, itemName: this.saleDtl[i].itemName });
         });
       }
-    }); 
+    });
     if (duplicateInfo.length > 0) {
       const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
       this.messageService.add({
@@ -400,7 +400,7 @@ export class SaleFormComponent {
         detail: 'Duplicate Items at: ' + message
       });
       return;
-    } 
+    }
     if (lowPriceInfo.length > 0) {
       const message = lowPriceInfo.map(d =>
         `Row ${d.row} (${d.itemName}) - Sale: ${d.salePrice}, Purchase: ${d.purchasePrice}`
@@ -418,12 +418,12 @@ export class SaleFormComponent {
     if (lastItem.itemName === '')
       this.saleDtl.pop();
     this.paymentDetails = [];
-    debugger
+    
     this.invoiceType = "Cash";
     this.invoiceTypeChange({ value: "Cash" });
   }
   addSale() {
-    debugger
+    
     this.searchedItemName = '';
     if (this.saleDtl.length == 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Please Add Item first!" });
@@ -482,7 +482,7 @@ export class SaleFormComponent {
     }
     this.api.createCounterSale(formData).subscribe((res: any) => {
       if (res.id > 0) {
-        
+
         this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Detail Saved Successfully" });
         // if(this.invoiceType=="Credit")
         //   this.paymentDetails.push({account:this.cardNumber,amount:this.cashCharged,extraChargesPer:this.extraChargesPer,
@@ -491,11 +491,11 @@ export class SaleFormComponent {
         //   this.paymentDetails.push({account:'',amount:this.cashCharged,extraChargesPer:0,
         //     extraCharges:0,total:this.cashReceived,remarks:''});
         this.displayModal = false;
-        this.saleDtl=[];
+        this.saleDtl = [];
         this.saleDtl.push({
-            no: 0, barCode: '', itemName: '', qty: 1, disableBarcode: false,
-            salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0
-          });
+          no: 0, barCode: '', itemName: '', qty: 1, disableBarcode: false,
+          salePrice: 0, discount: 0, netSalePrice: 0, purchasePrice: 0
+        });
         this.resetTotal();
       } else if (res.id == 0) {
         this.messageService.add({ severity: 'error', summary: 'Success', detail: "Please Till Open First!" });
@@ -620,7 +620,7 @@ export class SaleFormComponent {
         this.cashBack = this.grandSaleRtnTotal;
         this.saleReturnDialog = false;
       }
-      debugger
+      
       this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sale Return Detail Saved Successfully" });
     }, (err: any) => {
 
@@ -633,54 +633,11 @@ export class SaleFormComponent {
       this.searchItemInput?.nativeElement?.focus();
     });
   }
-  @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
-  focusProductSearchInput(): void {
-    setTimeout(() => {
-      this.searchProdItemInput?.nativeElement?.focus();
-    });
-  }
   saleReturnDialog: boolean = false;
   itemSearchDialog: boolean = false;
   itemDtl: any = [];
   searchedItemName: string = '';
-  @HostListener('document:keydown', ['$event'])
-  handleKeydownEvents(event: KeyboardEvent): void {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
-      event.preventDefault();
-      this.itemSearchDialog = true;
-      return;
-    }
-    if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
-      event.preventDefault();
-      this.saleReturnDialog = true;
-      return;
-    }
-    if (this.visibleProdSrchMdl && this.childItems?.length) {
-      const currentIndex = this.childItems.findIndex(
-        (item: any) => item === this.selectedChildItem
-      );
 
-      if (event.key === 'ArrowDown') {
-        event.preventDefault();
-        const nextIndex = (currentIndex + 1) % this.childItems.length;
-        this.selectedChildItem = this.childItems[nextIndex];
-        this.scrollToRow(nextIndex);
-      }
-
-      if (event.key === 'ArrowUp') {
-        event.preventDefault();
-        const prevIndex =
-          (currentIndex - 1 + this.childItems.length) % this.childItems.length;
-        this.selectedChildItem = this.childItems[prevIndex];
-        this.scrollToRow(prevIndex);
-      }
-
-      if (event.key === 'Enter' && this.selectedChildItem) {
-        event.preventDefault();
-        this.addChildItemToPurchaseList(this.selectedChildItem);
-      }
-    }
-  }
 
 
   itemNotFound: boolean = false;
@@ -773,11 +730,6 @@ export class SaleFormComponent {
     this.cashChargedChange();
     this.cashBackChange();
   }
-  visibleProdSrchMdl: boolean = false;
-  @HostListener('document:keydown.F8', ['$event'])
-  onF8Pressed(event: any, user: any) {
-    this.visibleProdSrchMdl = true;
-  }
   childItems: any = [];
   childItemSearch: any;
   selectedChildItem: any;
@@ -790,7 +742,8 @@ export class SaleFormComponent {
     }
 
   }
-
+  parentItemSearch: any;
+  parentItems: any = [];
   scrollToRow(index: number): void {
     setTimeout(() => {
       const tableBody = document.querySelector('.p-datatable-scrollable-body');
@@ -801,20 +754,178 @@ export class SaleFormComponent {
       row?.scrollIntoView({ block: 'nearest' });
     }, 10);
   }
-  addChildItemToPurchaseList(item: any) {
-    const lastIndex = this.saleDtl.length - 1;
 
-    const newItem = {
-      no: 0, barCode: item.barCode, itemName: item.itemName, qty: 1, salePrice: item.salePrice,
-      discount: 0, netSalePrice: 0
-    };
-
-    if (this.saleDtl.length > 0 && !this.saleDtl[lastIndex].barCode) {
-      this.saleDtl[lastIndex] = newItem;
-    } else {
-      this.saleDtl.push(newItem);
-    }
-    this.visibleProdSrchMdl = false;
-    this.childItemSearch = "";
+  selectedParentItem: any;
+  selectedParentChildItem: any;
+  @ViewChild('searchProdItemInput') searchProdItemInput!: ElementRef;
+  focusParentProductSearchInput(): void {
+    setTimeout(() => {
+      this.searchProdItemInput?.nativeElement?.focus();
+    });
   }
+  concatParentChildItems: any = [];
+  handleParentItemEnterKey(item: any) {
+    this.api.getAllAlternateItemDetailbyItemName(item.itemId).subscribe(res => {
+      let itemRes = JSON.parse(res);
+      this.concatParentChildItems = itemRes.altItems.concat(itemRes.childItems);
+      if (this.concatParentChildItems.length > 0) {
+        this.selectedParentChildItem = this.concatParentChildItems[0];
+        this.parentProdSearchFormVisible = false;
+        this.prntChldItmSrchFrmVisible = true;
+      } else {
+        this.addParentChildAltItemToPurchaseList(item);
+
+      }
+
+
+    })
+  }
+  parentProdSearchFormVisible: boolean = false;
+  prntChldItmSrchFrmVisible: boolean = false;
+  parentChildAltItems: any = [];
+  searchParentItem(barCode: string) {
+    if (barCode.length > 1) {
+      
+      this.api.getAllItemDetailbyBarCode(barCode).subscribe(res => {
+        this.parentChildAltItems = JSON.parse(res)
+        this.parentItems = this.parentChildAltItems.item;
+        this.selectFirstRow(this.concatParentChildItems, 'parentChild');
+        this.selectedParentItem = this.parentItems[0]; // highlight first row
+      });
+    }
+  }
+
+  @HostListener('document:keydown.F8', ['$event'])
+  onF8Pressed(event: any, user: any) {
+    this.parentItems = [];
+    this.selectedParentItem = [];
+    this.parentItemSearch = '';
+    this.parentProdSearchFormVisible = true;
+  }
+  @HostListener('document:keydown.arrowdown', ['$event'])
+  handleArrowDown(event: KeyboardEvent) {
+    if (this.parentProdSearchFormVisible && this.parentItems?.length) {
+      this.moveinDialogSelection(event, this.parentItems, 'child');
+    } else if (this.prntChldItmSrchFrmVisible && this.concatParentChildItems?.length) {
+      this.moveinDialogSelection(event, this.concatParentChildItems, 'parentChild');
+
+    }
+  }
+
+
+
+  @HostListener('document:keydown.arrowup', ['$event'])
+  handleArrowUp(event: KeyboardEvent) {
+    if (this.parentProdSearchFormVisible && this.parentItems?.length) {
+      this.moveinDialogSelection(event, this.parentItems, 'child', true);
+    } else if (this.prntChldItmSrchFrmVisible && this.concatParentChildItems?.length) {
+      this.moveinDialogSelection(event, this.concatParentChildItems, 'parentChild', true);
+    }
+  }
+
+
+  @HostListener('document:keydown.enter', ['$event'])
+  handleProdParentFormEnterKey(event: KeyboardEvent) {
+    if (this.parentProdSearchFormVisible && this.selectedParentItem) {
+      event.preventDefault();
+      this.handleParentItemEnterKey(this.selectedParentItem);
+    } else if (this.prntChldItmSrchFrmVisible && this.selectedParentChildItem) {
+      event.preventDefault();
+      this.addConcatParentChildItemToPurchaseList(this.selectedParentChildItem);
+
+    }
+  }
+  addConcatParentChildItemToPurchaseList(item: any) {
+    const lastItem = this.saleDtl[this.saleDtl.length - 1];
+    if (lastItem && (!lastItem.barcode || lastItem.barcode.trim() === '')) {
+      this.saleDtl.pop();
+    }
+    this.saleDtl.push({
+      no: 0, barCode: item.barCode,itemName:item.itemName, itemId: 0, qty: 1, discount: 0, netSalePrice: 0,
+      salePrice: item.salePrice, disc: 0, total: 0, netTotal: 0
+    });
+
+
+    this.prntChldItmSrchFrmVisible = false;
+  }
+
+
+
+
+
+  addParentChildAltItemToPurchaseList(item: any) {
+    const lastItem = this.saleDtl[this.saleDtl.length - 1];
+
+    // If last row exists and barcode is empty -> remove it
+    if (lastItem && (!lastItem.barcode || lastItem.barcode.trim() === '')) {
+      this.saleDtl.pop();
+    }
+    this.saleDtl.push({
+      no: 0, barCode: item.barCode, itemId: 0, qty: 0, discount: 0, netSalePrice: 0,
+      salePrice: 0, disc: 0, total: 0, netTotal: 0
+    });
+    this.parentProdSearchFormVisible = false;
+  }
+  private moveinDialogSelection(
+    event: KeyboardEvent,
+    items: any[],
+    type: 'child' | 'parentChild' | 'calledPO',
+    isUp: boolean = false
+  ) {
+    event.preventDefault();
+
+    let selectedItem =
+      type === 'child' ? this.selectedParentItem :
+        type === 'parentChild' ? this.selectedParentChildItem :
+          this.selectedParentChildItem;
+
+    const currentIndex = items.findIndex((item) => item === selectedItem);
+
+    let nextIndex;
+    if (isUp) {
+      nextIndex = (currentIndex - 1 + items.length) % items.length;
+    } else {
+      nextIndex = (currentIndex + 1) % items.length;
+    }
+
+    if (type === 'child') {
+      this.selectedParentItem = items[nextIndex];
+    } else if (type === 'parentChild') {
+      this.selectedParentChildItem = items[nextIndex];
+    }
+
+    this.scrollToDialogRow(nextIndex, type);
+  }
+  private scrollToDialogRow(index: number, type: 'child' | 'parentChild' | 'calledPO' = 'child') {
+    let rows: NodeListOf<Element>;
+
+    if (type === 'child') {
+      rows = document.querySelectorAll('p-dialog:nth-of-type(1) .p-datatable tbody tr');
+    } else if (type === 'parentChild') {
+      rows = document.querySelectorAll('p-dialog:nth-of-type(2) .p-datatable tbody tr');
+    } else {
+      rows = document.querySelectorAll('p-dialog:nth-of-type(3) .p-datatable tbody tr');
+    }
+
+    if (rows && rows[index]) {
+      (rows[index] as HTMLElement).scrollIntoView({ block: 'nearest' });
+      (rows[index] as HTMLElement).focus();
+    }
+  }
+  selectFirstRow(items: any[], type: 'child' | 'parentChild' | 'calledPO') {
+    if (items && items.length) {
+      if (type === 'child') {
+        this.selectedParentItem = items[0];
+      } else if (type === 'parentChild') {
+        this.selectedParentChildItem = items[0];
+      }
+    }
+
+    // Force PrimeNG to paint the highlight
+    setTimeout(() => {
+      this.cdr.detectChanges();
+      this.scrollToDialogRow(0, type); // scroll + focus first row
+    }, 0);
+  }
+
 }
