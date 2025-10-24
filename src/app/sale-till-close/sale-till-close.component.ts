@@ -18,7 +18,6 @@ export class SaleTillCloseComponent {
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.getCurrentUser();
     this.getLocation();
-    // this.getAllTodaysCreditSale();
   }
   location: any = [];
   getLocation() {
@@ -38,9 +37,10 @@ export class SaleTillCloseComponent {
       this.todaysCashOut = res;
     })
   }
+  todaysCreditSale:any=[];
   getAllTodaysCreditSale() {
     this.api.getAllTodaysCreditSale().subscribe(res => {
-
+      this.todaysCreditSale=res;
     })
   }
   createSaleTIll() {
@@ -75,6 +75,7 @@ export class SaleTillCloseComponent {
     })
     this.getAllTodaysCashIn();
     this.getAllTodaysCashOut();
+    this.getAllTodaysCreditSale();
   }
   currentUser: any = {};
   getCurrentUser() {
