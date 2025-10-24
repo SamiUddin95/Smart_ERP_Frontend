@@ -108,6 +108,7 @@ import { PriceCheckFormComponent } from './price-check-form/price-check-form.com
 import { PurcOrderDashboardComponent } from './purc-order-dashboard/purc-order-dashboard.component';
 import { MinimunQtyAlertComponent } from './minimun-qty-alert/minimun-qty-alert.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { ItemComponent } from './item/item.component';
 
 @NgModule({
   declarations: [
@@ -149,7 +150,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     SaleFormComponent,
     SalesManFormComponent,CategoryComponent,CategoryFormComponent,ClassComponent,ClassFormComponent,
     SalesManListComponent,
-    //  ItemComponent,
+    ItemComponent,
     ItemFormComponent,BrandsComponent,BrandsFormComponent,ManufacturerComponent,ManufacturerFormComponent,
     PartyFormComponent, PartyListComponent, PartyPriceListComponent, PartyPriceFormComponent,
      PurcReturnListComponent, PurcReturnFormComponent, PurcOrderListComponent, PurcOrderFormComponent, 
