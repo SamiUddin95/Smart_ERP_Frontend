@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-sale-form',
@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
 })
 export class SaleFormComponent {
   @ViewChild('tableRef') tableRef!: ElementRef;
-  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
+  constructor(private confirmationService: ConfirmationService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private api: ApiService, private messageService: MessageService,) { }
   formData: any = {};
   userTypes: any = [];
   genders: any = [{ label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }];
@@ -363,64 +363,132 @@ export class SaleFormComponent {
     this.router.navigate(['counter-sales']);
   }
   paymentDetails = [{ account: '', amount: 0, extraChargesPer: 0, extraCharges: 0, total: 0, remarks: '' }];
+  // openCashCreditModal() {
+  //   const barcodeMap = new Map<string, number[]>();
+  //   const duplicateInfo: { row: number, itemName: string }[] = [];
+  //   const lowPriceInfo: { row: number, itemName: string, salePrice: number, purchasePrice: number }[] = [];
+  //   this.saleDtl.forEach((e, index) => {
+  //     if (e.barCode) {
+  //       if (!barcodeMap.has(e.barCode)) {
+  //         barcodeMap.set(e.barCode, []);
+  //       }
+  //       barcodeMap.get(e.barCode)!.push(index);
+  //     }
+  //     if (e.salePrice < e.purchasePrice) {
+  //       lowPriceInfo.push({
+  //         row: index + 1,
+  //         itemName: e.itemName,
+  //         salePrice: e.salePrice,
+  //         purchasePrice: e.purchasePrice
+  //       });
+  //     }
+  //   });
+
+  //   // Collect duplicate barcode info
+  //   barcodeMap.forEach((indexes) => {
+  //     if (indexes.length > 1) {
+  //       indexes.slice(1).forEach(i => {
+  //         duplicateInfo.push({ row: i + 1, itemName: this.saleDtl[i].itemName });
+  //       });
+  //     }
+  //   });
+  //   if (duplicateInfo.length > 0) {
+  //     const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
+  //     this.messageService.add({
+  //       severity: 'error',
+  //       summary: 'Error',
+  //       detail: 'Duplicate Items at: ' + message
+  //     });
+  //     return;
+  //   }
+  //   if (lowPriceInfo.length > 0) {
+  //     const message = lowPriceInfo.map(d =>
+  //       `Row ${d.row} (${d.itemName}) - Sale: ${d.salePrice}, Purchase: ${d.purchasePrice}`
+  //     ).join(', ');
+  //     this.messageService.add({
+  //       severity: 'error',
+  //       summary: 'Error',
+  //       detail: 'Sale Price less than Purchase Price at: ' + message
+  //     });
+  //     return;
+  //   }
+
+  //   this.displayModal = true;
+  //   const lastItem = this.saleDtl[this.saleDtl.length - 1];
+  //   if (lastItem.itemName === '')
+  //     this.saleDtl.pop();
+  //   this.paymentDetails = [];
+
+  //   this.invoiceType = "Cash";
+  //   this.invoiceTypeChange({ value: "Cash" });
+  // }
   openCashCreditModal() {
-    const barcodeMap = new Map<string, number[]>();
-    const duplicateInfo: { row: number, itemName: string }[] = [];
-    const lowPriceInfo: { row: number, itemName: string, salePrice: number, purchasePrice: number }[] = [];
-    this.saleDtl.forEach((e, index) => {
-      if (e.barCode) {
-        if (!barcodeMap.has(e.barCode)) {
-          barcodeMap.set(e.barCode, []);
+    debugger
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        const barcodeMap = new Map<string, number[]>();
+        const duplicateInfo: { row: number, itemName: string }[] = [];
+        const lowPriceInfo: { row: number, itemName: string, salePrice: number, purchasePrice: number }[] = [];
+        this.saleDtl.forEach((e, index) => {
+          if (e.barCode) {
+            if (!barcodeMap.has(e.barCode)) {
+              barcodeMap.set(e.barCode, []);
+            }
+            barcodeMap.get(e.barCode)!.push(index);
+          }
+          if (e.salePrice < e.purchasePrice) {
+            lowPriceInfo.push({
+              row: index + 1,
+              itemName: e.itemName,
+              salePrice: e.salePrice,
+              purchasePrice: e.purchasePrice
+            });
+          }
+        });
+
+        // Collect duplicate barcode info
+        barcodeMap.forEach((indexes) => {
+          if (indexes.length > 1) {
+            indexes.slice(1).forEach(i => {
+              duplicateInfo.push({ row: i + 1, itemName: this.saleDtl[i].itemName });
+            });
+          }
+        });
+        if (duplicateInfo.length > 0) {
+          const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Duplicate Items at: ' + message
+          });
+          return;
         }
-        barcodeMap.get(e.barCode)!.push(index);
-      }
-      if (e.salePrice < e.purchasePrice) {
-        lowPriceInfo.push({
-          row: index + 1,
-          itemName: e.itemName,
-          salePrice: e.salePrice,
-          purchasePrice: e.purchasePrice
-        });
+        if (lowPriceInfo.length > 0) {
+          const message = lowPriceInfo.map(d =>
+            `Row ${d.row} (${d.itemName}) - Sale: ${d.salePrice}, Purchase: ${d.purchasePrice}`
+          ).join(', ');
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Sale Price less than Purchase Price at: ' + message
+          });
+          return;
+        }
+
+        this.displayModal = true;
+        const lastItem = this.saleDtl[this.saleDtl.length - 1];
+        if (lastItem.itemName === '')
+          this.saleDtl.pop();
+        this.paymentDetails = [];
+
+        this.invoiceType = "Cash";
+        this.invoiceTypeChange({ value: "Cash" });
+      },
+      reject: () => {
+
       }
     });
-
-    // Collect duplicate barcode info
-    barcodeMap.forEach((indexes) => {
-      if (indexes.length > 1) {
-        indexes.slice(1).forEach(i => {
-          duplicateInfo.push({ row: i + 1, itemName: this.saleDtl[i].itemName });
-        });
-      }
-    });
-    if (duplicateInfo.length > 0) {
-      const message = duplicateInfo.map(d => `Row ${d.row} (${d.itemName})`).join(', ');
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Duplicate Items at: ' + message
-      });
-      return;
-    }
-    if (lowPriceInfo.length > 0) {
-      const message = lowPriceInfo.map(d =>
-        `Row ${d.row} (${d.itemName}) - Sale: ${d.salePrice}, Purchase: ${d.purchasePrice}`
-      ).join(', ');
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Sale Price less than Purchase Price at: ' + message
-      });
-      return;
-    }
-
-    this.displayModal = true;
-    const lastItem = this.saleDtl[this.saleDtl.length - 1];
-    if (lastItem.itemName === '')
-      this.saleDtl.pop();
-    this.paymentDetails = [];
-
-    this.invoiceType = "Cash";
-    this.invoiceTypeChange({ value: "Cash" });
   }
   addSale() {
 
