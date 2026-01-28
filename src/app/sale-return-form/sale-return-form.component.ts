@@ -87,9 +87,8 @@ export class SaleReturnFormComponent {
     })
   }
   qtyChange(saleDtl: any) {
-    saleDtl.total = saleDtl.qty * saleDtl.salePrice;
-    saleDtl.netTotal = saleDtl.qty * saleDtl.salePrice;
-    saleDtl.netSalePrice = saleDtl.salePrice - saleDtl.discount;
+    debugger;
+    saleDtl.netSalePrice = (saleDtl.qty * saleDtl.salePrice) - saleDtl.discount;
     this.resetTotal();
     this.calculateTotal();
   }
@@ -396,7 +395,7 @@ export class SaleReturnFormComponent {
       this.saleDtl.pop();
     }
     this.saleDtl.push({
-      no: 0, barCode: item.barCode, ItemName: item.itemName, itemId: 0, qty: 1, discount: item.saleDisc, netSalePrice: item.salePrice-item.saleDisc,
+      no: 0, barCode: item.barCode, ItemName: item.itemName, itemId: 0, qty: 1, discount: item.saleDisc, netSalePrice: item.salePrice - item.saleDisc,
       salePrice: item.salePrice, disc: 0, total: 0, netTotal: 0
     });
     this.prntChldItmSrchFrmVisible = false;
@@ -409,7 +408,7 @@ export class SaleReturnFormComponent {
       this.saleDtl.pop();
     }
     this.saleDtl.push({
-      no: 0, barCode: item.barCode,ItemName:item.itemName, itemId: 0, qty: 1, discount: item.saleDisc, netSalePrice: item.salePrice-item.saleDisc,
+      no: 0, barCode: item.barCode, ItemName: item.itemName, itemId: 0, qty: 1, discount: item.saleDisc, netSalePrice: item.salePrice - item.saleDisc,
       salePrice: item.salePrice, disc: 0, total: 0, netTotal: 0
     });
     this.parentProdSearchFormVisible = false;
