@@ -138,7 +138,16 @@ showDialog: boolean = false;
       { key: 'manufacturerId', message: 'Manufacturer is required.' },
       { key: 'brandId', message: 'Brand is required.' },
     ];
-
+      const netCost = Number(this.formData.purchasePrice) || 0;
+     const netSale = Number(this.formData.netSalePrice) || 0;
+      if (netSale < netCost) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Validation Error',
+          detail: 'Net Sale Price cannot be less than Net Cost'
+    });
+    return; // ⛔ stop saving
+  }
     for (const field of requiredFields) {
         if (!this.formData[field.key]) {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: field.message });
@@ -454,7 +463,8 @@ showDialog: boolean = false;
         acceptLabel: 'Yes',
         rejectLabel: 'No',
         accept: () => {
-          this.getItemsById(res.id);
+          //this.getItemsById(res.id);
+          this.router.navigate(['item-form', res.id]);
         },
         
         closeOnEscape: true
@@ -752,5 +762,12 @@ addSupplier() {
     this.supplierPriorityList.push({ ...this.selectedSupplier, priority });
   }
 }
+
+calculateNetSalePrice() {
+  const salePrice = Number(this.formData.salePrice) || 0;
+  const saleDisc = Number(this.formData.discflat) || 0;
+  this.formData.netSalePrice = salePrice - saleDisc;
+  }
+
 }
 

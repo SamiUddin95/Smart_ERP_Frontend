@@ -73,24 +73,30 @@
                                                         </label>
                                                         <input type="number" id="purchasePrice-0"
                                                             class="form-control col-md-12 " placeholder="Purchase Price"
+                                                            [(ngModel)]="formData.purchasePrice"
+                                                            (ngModelChange)="calculateNetSalePrice()"
                                                             (keydown)="moveFocus($event, 0, 'purchasePrice')"
-                                                            [(ngModel)]="formData.purchasePrice">
+                                                            >
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="lastname">Sale Price
                                                         </label>
                                                         <input type="number" id="salePrice-0"
                                                             class="form-control col-md-12 " placeholder="Sale Price"
+                                                            [(ngModel)]="formData.salePrice"
+                                                            (ngModelChange)="calculateNetSalePrice()"
                                                             (keydown)="moveFocus($event, 0, 'salePrice')"
-                                                            [(ngModel)]="formData.salePrice">
+                                                            >
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
                                                             </span>Sale Disc</label>
                                                         <input type="number" class="form-control  col-md-12 "
                                                             placeholder="Sale Disc" id="discflat-0"
+                                                            [(ngModel)]="formData.discflat"
+                                                            (ngModelChange)="calculateNetSalePrice()"
                                                             (keydown)="moveFocus($event, 0, 'discflat')"
-                                                            [(ngModel)]="formData.discflat">
+                                                            >
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
@@ -98,7 +104,8 @@
                                                         <input type="number" class="form-control  col-md-12 "
                                                             placeholder="Net Sale Price" id="netSalePrice-0"
                                                             (keydown)="moveFocus($event, 0, 'netSalePrice')"
-                                                            [(ngModel)]="formData.netSalePrice">
+                                                            [(ngModel)]="formData.netSalePrice" readonly 
+                                                            [ngClass]="{'is-invalid': formData.netSalePrice < formData.purchasePrice}">
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <label for="lastname"><span class="text-danger">
